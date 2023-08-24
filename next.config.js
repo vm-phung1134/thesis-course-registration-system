@@ -2,7 +2,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ['images.pexels.com'],
+    domains: ['images.pexels.com', 'cdn-icons-png.flaticon.com', 'yu.ctu.edu.vn'],
   },
 };
 
