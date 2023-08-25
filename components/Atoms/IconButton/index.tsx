@@ -22,7 +22,7 @@ export const IconButton: FC<IIconButtonProps> = ({
     <button
       onClick={() => setToggleForm?.(!toggleForm)}
       type="button"
-      className={`btn font-medium capitalize ${className}`}
+      className={`btn rounded-none font-medium capitalize ${className}`}
     >
       <Image className={classNameIcon} src={srcIcon} width="20" height="20" alt="icon-social-login" />
       <p>{title}</p>

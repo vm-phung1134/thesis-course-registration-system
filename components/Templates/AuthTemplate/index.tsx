@@ -25,7 +25,7 @@ export const AuthTemplate: FC<IAuthTemplateProps> = ({ children, title }) => {
             objectPosition="center"
             alt="background login page"
           />
-          <div className="relative bg-gray-900 bg-opacity-75 min-h-screen max-h-fit">
+          <div className="relative bg-gray-900 bg-opacity-80 min-h-screen max-h-fit">
             <div className="">
               {children}
             </div>

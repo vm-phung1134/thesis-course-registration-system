@@ -39,7 +39,7 @@ function SignInPage() {
           <IntroPage />
         </div>
         <div className="flex justify-end items-center w-full">
-          <div className="bg-white rounded-lg shadow-2xl p-7 w-full sm:p-10">
+          <div className="bg-white rounded-none shadow-2xl p-7 w-full sm:p-10">
             <AuthForm />
           </div>
         </div>

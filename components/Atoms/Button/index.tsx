@@ -19,7 +19,7 @@ export const Button: FC<IButtonProps> = ({
     <button
       onClick={() => setToggleForm?.(!toggleForm)}
       type={type}
-      className={`${className} btn w-full normal-case font-normal`}
+      className={`${className} btn rounded-none w-full normal-case font-normal`}
     >
       {title}
     </button>
