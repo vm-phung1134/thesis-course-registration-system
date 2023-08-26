@@ -4,22 +4,22 @@ export interface IButtonProps {
   type?: "button" | "submit" | "reset";
   className: string;
   title: string;
-  setToggleForm?: React.Dispatch<React.SetStateAction<boolean>>;
-  toggleForm?: boolean;
+  setToggle?: React.Dispatch<React.SetStateAction<boolean>>;
+  toggle?: boolean;
 }
 
 export const Button: FC<IButtonProps> = ({
   type,
   className,
   title,
-  toggleForm, //Using for the props of login form
-  setToggleForm,
+  toggle, //Using for the props of toggle
+  setToggle,
 }) => {
   return (
     <button
-      onClick={() => setToggleForm?.(!toggleForm)}
+      onClick={() => setToggle?.(!toggle)}
       type={type}
-      className={`${className} btn rounded-none w-full normal-case font-normal`}
+      className={`${className} btn rounded-none capitalize font-normal`}
     >
       {title}
     </button>

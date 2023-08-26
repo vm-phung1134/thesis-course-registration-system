@@ -1,5 +1,3 @@
-import { LearnMoreBtn } from "@/components/Atoms";
-import { AuthForm } from "@/components/Organisms/AuthForm";
 import Head from "next/head";
 import Image from "next/image";
 import { FC } from "react";

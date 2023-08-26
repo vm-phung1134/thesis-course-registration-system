@@ -34,7 +34,7 @@ export const EmailLogin: FC<IEmailLoginProps> = ({
       <FormField type="email" label="Email" nameField="email" />
       <FormField type="password" label="Password" nameField="password" />
       <ActionFormField />
-      <Button className="bg-green-600 text-white" title="Sign In" />
+      <Button className="bg-green-600 w-full text-white" title="Sign In" />
       <LineUnder />
       <IconButton
         setToggleForm={setToggleForm}

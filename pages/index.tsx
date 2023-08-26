@@ -1,5 +1,5 @@
 import { LearnMoreBtn } from "@/components/Atoms";
-import { AuthForm } from "@/components/Organisms/AuthForm";
+import { AuthForm } from "@/components/Organisms";
 import { AuthTemplate } from "@/components/Templates";
 import Image from "next/image";
 
