@@ -44,7 +44,9 @@ export const CardCourse: FC<ICardCourseProps> = ({ item }) => {
           <ul>
             <li className="text-sm flex gap-2">
               <span>Major:</span>
-              <span className="font-medium capitalize">{item.major}</span>
+              <span className="font-medium capitalize">
+                {item.lecturer.major}
+              </span>
             </li>
             <li className="text-sm flex gap-2">
               <span>Email:</span>
@@ -52,7 +54,7 @@ export const CardCourse: FC<ICardCourseProps> = ({ item }) => {
             </li>
             <li className="text-sm flex gap-2">
               <span>Phone:</span>
-              <span className="font-medium">{item.phone}</span>
+              <span className="font-medium">{item.lecturer.phone}</span>
             </li>
           </ul>
           <p className="text-sm uppercase text-gray-500 py-2">Topics</p>

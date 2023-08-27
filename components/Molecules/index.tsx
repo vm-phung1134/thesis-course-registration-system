@@ -3,3 +3,7 @@ export * from "./EmailLogin";
 export * from "./SocialLogin";
 export * from "./CardCourse";
 export * from "./ModalConfirm";
+export * from "./CardStudent";
+export * from "./CardStudentShort";
+export * from "./CommentForm";
+export * from "./ContentComment";
