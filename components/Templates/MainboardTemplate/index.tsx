@@ -1,5 +1,5 @@
 import { ModalConfirm } from "@/components/Molecules";
-import { Header, Sidebar } from "@/components/Organisms";
+import { Header, SidebarLecturerView } from "@/components/Organisms";
 import classNames from "classnames";
 import Head from "next/head";
 import { useState, FC } from "react";
@@ -22,7 +22,10 @@ export const MainboardTemplate: FC<IMainboardProps> = ({ children, title }) => {
       </Head>
       <main>
         <div className="grid grid-cols-12 bg-base-100">
-          <Sidebar openModal={openModal} setOpenModal={setOpenModal} />
+          <SidebarLecturerView
+            openModal={openModal}
+            setOpenModal={setOpenModal}
+          />
           <ModalConfirm
             openModal={openModal}
             setOpenModal={setOpenModal}
@@ -30,9 +33,9 @@ export const MainboardTemplate: FC<IMainboardProps> = ({ children, title }) => {
             title="TCR Message!!!"
             message="Press ESC key or click the button below to close"
           />
-          <div className="col-span-10 p-5">
+          <div className="col-span-10">
             <Header />
-            <div>{children}</div>
+            <div className="px-5">{children}</div>
           </div>
         </div>
       </main>

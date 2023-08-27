@@ -1,24 +1,17 @@
 import { MainboardTemplate } from "@/components/Templates";
 import { DATA_CARD_COURSE } from "../../components/Molecules/CardCourse/mock-data";
 import { CardCourse } from "@/components/Molecules";
+import { Breadcrumb } from "@/components/Atoms";
+import { BREADCRUMB_MAINBOARD } from "./mock-data";
 
 function MainboardPage() {
   return (
     <>
       <MainboardTemplate title="Mainboard Thesis | Thesis course registration system">
         <div className="flex justify-between items-center">
-          <div className="text-[15px] breadcrumbs mt-2">
-            <ul>
-              <li>
-                <a>TCR System</a>
-              </li>
-              <li>Course registration</li>
-            </ul>
-          </div>
+          <Breadcrumb dataBreadcrumb={BREADCRUMB_MAINBOARD} />
           <select className="select font-normal select-sm select-bordered rounded-none focus:outline-none max-w-xs">
-            <option>
-              Filter topics
-            </option>
+            <option>Filter topics</option>
             <option>Large Apple</option>
             <option>Large Orange</option>
             <option>Large Tomato</option>

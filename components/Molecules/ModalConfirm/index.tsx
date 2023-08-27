@@ -26,7 +26,7 @@ export const ModalConfirm: FC<IModalConfirmProp> = ({
             setToggle={setOpenModal}
             toggle={openModal}
             title="cancel"
-            className="bg-transparent hover:bg-transparent"
+            className="bg-transparent border-none hover:border-none hover:bg-transparent"
           />
           <Button
             title="accept"

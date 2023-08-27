@@ -1,3 +1,4 @@
+import { Avatar } from "@/components/Atoms";
 import Image from "next/image";
 import { FC } from "react";
 
@@ -5,7 +6,7 @@ export interface IHeaderProps {}
 
 export const Header: FC<IHeaderProps> = () => {
   return (
-    <div className="navbar border-b">
+    <div className="navbar border-b p-5">
       <div className="justify-between w-full">
         <form action="">
           <div className="flex border w-96 px-3 items-center">
@@ -59,16 +60,11 @@ export const Header: FC<IHeaderProps> = () => {
                 <p>Ariana.CMF@gmail.com</p>
                 <p className="text-green-800 text-sm">Pov: Student</p>
               </div>
-              <div className="avatar online">
-                <div className="w-10 rounded-full">
-                  <Image
-                    src="https://images.pexels.com/photos/713312/pexels-photo-713312.jpeg?auto=compress&cs=tinysrgb&w=600"
-                    width="100"
-                    height="100"
-                    alt=""
-                  />
-                </div>
-              </div>
+              <Avatar
+                online={true}
+                widthStr="w-10"
+                srcImg="https://images.pexels.com/photos/713312/pexels-photo-713312.jpeg?auto=compress&cs=tinysrgb&w=600"
+              />
             </div>
             <ul
               tabIndex={0}

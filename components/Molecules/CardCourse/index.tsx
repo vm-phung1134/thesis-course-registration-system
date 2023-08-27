@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { FC } from "react";
 import { ICourseObject } from "./mock-data";
+import { Avatar, Button } from "@/components/Atoms";
 
 interface ICardCourseProps {
   item: ICourseObject;
@@ -24,61 +25,59 @@ export const CardCourse: FC<ICardCourseProps> = ({ item }) => {
             </p>
             <p className="text-sm flex gap-2">
               <span>Students:</span>
-              <span className="font-normal">{item.quantity}/15</span>
+              <span className="font-normal">
+                {item.quantity}/15 <small>{`(10 available)`}</small>
+              </span>
             </p>
           </div>
         </div>
       </div>
       <div className="max-h-fit p-3 border relative">
         <div className="absolute -top-8 right-3">
-          <div className="avatar">
-            <div className="w-16 rounded-full">
-              <Image
-                src="https://images.pexels.com/photos/1130624/pexels-photo-1130624.jpeg?auto=compress&cs=tinysrgb&w=600"
-                width="100"
-                height="100"
-                alt=""
-              />
-            </div>
-          </div>
+          <Avatar
+            widthStr="w-16"
+            srcImg="https://images.pexels.com/photos/1130624/pexels-photo-1130624.jpeg?auto=compress&cs=tinysrgb&w=600"
+          />
         </div>
         <div className="flex flex-col">
-          <div className="">
-            <p className="text-sm uppercase text-gray-500 py-2">Information</p>
-            <ul className="">
-              <li className="text-sm flex gap-2">
-                <span>Major:</span>
-                <span className="font-medium capitalize">{item.major}</span>
-              </li>
-              <li className="text-sm flex gap-2">
-                <span>Email:</span>
-                <span className="font-medium">{item.lecturer.email}</span>
-              </li>
-              <li className="text-sm flex gap-2">
-                <span>Phone:</span>
-                <span className="font-medium">{item.phone}</span>
-              </li>
-            </ul>
-            <p className="text-sm uppercase text-gray-500 py-2">Topics</p>
-            <ul className="flex gap-2 flex-wrap cursor-pointer">
-              {item.topicTags.map((tag) => {
-                return (
-                  <li
-                    key={tag.id}
-                    className="py-1 px-2 bg-gray-600 text-white text-xs w-fit"
-                  >
-                    {tag.title}
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
+          <p className="text-sm uppercase text-gray-500 py-2">Information</p>
+          <ul>
+            <li className="text-sm flex gap-2">
+              <span>Major:</span>
+              <span className="font-medium capitalize">{item.major}</span>
+            </li>
+            <li className="text-sm flex gap-2">
+              <span>Email:</span>
+              <span className="font-medium">{item.lecturer.email}</span>
+            </li>
+            <li className="text-sm flex gap-2">
+              <span>Phone:</span>
+              <span className="font-medium">{item.phone}</span>
+            </li>
+          </ul>
+          <p className="text-sm uppercase text-gray-500 py-2">Topics</p>
+          <ul className="flex gap-2 flex-wrap cursor-pointer">
+            {item.topicTags.map((tag) => {
+              return (
+                <li
+                  key={tag.id}
+                  className="py-1 px-2 bg-gray-600 text-white text-xs w-fit"
+                >
+                  {tag.title}
+                </li>
+              );
+            })}
+          </ul>
         </div>
-        <div className="flex justify-end mt-6">
-          <button className="px-4 py-3 rounded-none text-sm">Detail</button>
-          <button className="px-4 py-3 bg-[#018739] text-white rounded-none text-sm">
-            Subscribe
-          </button>
+        <div className="flex justify-end mt-6 items-center">
+          <Button
+            title="Detail"
+            className="bg-transparent border-none hover:border-none hover:bg-transparent"
+          />
+          <Button
+            title="Subscribe"
+            className="hover:bg-[#165b31] btn-sm bg-[#018937] text-white"
+          />
         </div>
       </div>
     </div>
