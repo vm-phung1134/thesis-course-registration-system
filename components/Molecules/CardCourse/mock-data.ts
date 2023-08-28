@@ -1,27 +1,4 @@
-export interface IAuthObject {
-  id: string;
-  name: string;
-  photoSrc: string;
-  token: string;
-  email: string;
-  phone?: string;
-  major?: string;
-  class?: string;
-}
-
-export interface ITopicKeyObject {
-  id: string;
-  title: string;
-}
-
-export interface ICourseObject {
-  id: string;
-  lecturer: IAuthObject;
-  date: Date;
-  codeCourse: string;
-  quantity: number;
-  topicTags: ITopicKeyObject[];
-}
+import { ICourseObject } from "@/interface/course";
 
 export const DATA_CARD_COURSE: ICourseObject[] = [
   {
@@ -37,7 +14,6 @@ export const DATA_CARD_COURSE: ICourseObject[] = [
     },
 
     codeCourse: "HK1",
-    date: new Date("20/08/2023"),
     quantity: 5,
     topicTags: [
       {
@@ -67,7 +43,6 @@ export const DATA_CARD_COURSE: ICourseObject[] = [
     },
 
     codeCourse: "HK1",
-    date: new Date("20/08/2023"),
     quantity: 5,
     topicTags: [
       {

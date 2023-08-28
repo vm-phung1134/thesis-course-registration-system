@@ -7,3 +7,4 @@ export * from "./CardStudent";
 export * from "./CardStudentShort";
 export * from "./CommentForm";
 export * from "./ContentComment";
+export * from "./StateReportThesis"

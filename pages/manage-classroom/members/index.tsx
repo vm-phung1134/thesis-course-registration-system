@@ -1,5 +1,3 @@
-import { Avatar } from "@/components/Atoms";
-import { IAuthObject } from "@/components/Molecules/CardCourse/mock-data";
 import { ClassroomTemplate } from "@/components/Templates";
 import { DATA_CARD_STUDENT } from "./mock-data";
 import { CardStudent } from "@/components/Molecules";

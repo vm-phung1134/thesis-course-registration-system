@@ -1,4 +1,4 @@
-import { IAuthObject } from "@/components/Molecules/CardCourse/mock-data";
+import { IAuthObject } from "@/interface/auth";
 
 export const DATA_CARD_STUDENT: IAuthObject[] = [
   {

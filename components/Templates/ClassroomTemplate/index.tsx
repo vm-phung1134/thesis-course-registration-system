@@ -3,7 +3,6 @@ import { ModalConfirm } from "@/components/Molecules";
 import { Header, SidebarLecturerView } from "@/components/Organisms";
 import classNames from "classnames";
 import Head from "next/head";
-import Link from "next/link";
 import { useState, FC } from "react";
 import { DATA_MENU_CLASSROOM } from "./mock-data";
 
@@ -85,12 +84,12 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
                 <div className="bg-gray-800 col-span-8 h-fit w-full text-white">
                   <div className="p-5">
                     <MenuClassroom listMenu={DATA_MENU_CLASSROOM} />
-                    <div className="flex justify-center mt-5 gap-4 items-center">
+                    <div className="flex justify-center mt-5 gap-4 items-center cursor-pointer">
                       <Avatar
                         widthStr="w-10"
                         srcImg="https://images.pexels.com/photos/39866/entrepreneur-startup-start-up-man-39866.jpeg?auto=compress&cs=tinysrgb&w=600"
                       />
-                      <p>Write a message for your class today</p>
+                      <p className="hover:text-orange-600 ease-in-out duration-200">Write a message for your class today</p>
                     </div>
                     <CodeClass />
                   </div>

@@ -1,6 +1,6 @@
 import { Avatar } from "@/components/Atoms";
+import { IAuthObject } from "@/interface/auth";
 import { FC } from "react";
-import { IAuthObject } from "../CardCourse/mock-data";
 
 export interface ICardStudentShortClassProps {
   student: IAuthObject;
