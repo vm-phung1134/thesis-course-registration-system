@@ -1,5 +1,5 @@
 import { Avatar, MenuClassroom } from "@/components/Atoms";
-import { ModalConfirm } from "@/components/Molecules";
+import { CreatePostForm, ModalConfirm } from "@/components/Molecules";
 import { Header, SidebarLecturerView } from "@/components/Organisms";
 import classNames from "classnames";
 import Head from "next/head";
@@ -52,9 +52,14 @@ const CodeClass = () => {
 
 export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
   const [openModal, setOpenModal] = useState<boolean>(false);
+  const [openCreatePostModal, setCreatePostModal] = useState<boolean>(false);
   const modalClass = classNames({
     "modal modal-bottom sm:modal-middle": true,
     "modal-open": openModal,
+  });
+  const modalClassPost = classNames({
+    "modal modal-bottom sm:modal-middle": true,
+    "modal-open": openCreatePostModal,
   });
   return (
     <>
@@ -66,13 +71,6 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
           <SidebarLecturerView
             openModal={openModal}
             setOpenModal={setOpenModal}
-          />
-          <ModalConfirm
-            openModal={openModal}
-            setOpenModal={setOpenModal}
-            modalClass={modalClass}
-            title="TCR Message!!!"
-            message="Press ESC key or click the button below to close"
           />
           <div className="col-span-10">
             <Header />
@@ -89,7 +87,12 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
                         widthStr="w-10"
                         srcImg="https://images.pexels.com/photos/39866/entrepreneur-startup-start-up-man-39866.jpeg?auto=compress&cs=tinysrgb&w=600"
                       />
-                      <p className="hover:text-orange-600 ease-in-out duration-200">Write a message for your class today</p>
+                      <p
+                        onClick={() => setCreatePostModal(!openCreatePostModal)}
+                        className="hover:text-orange-600 ease-in-out duration-200"
+                      >
+                        Write a message for your class today
+                      </p>
                     </div>
                     <CodeClass />
                   </div>
@@ -98,6 +101,21 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
               {children}
             </div>
           </div>
+          <ModalConfirm
+            openModal={openModal}
+            setOpenModal={setOpenModal}
+            modalClass={modalClass}
+            title="TCR Message!!!"
+            message="Press ESC key or click the button below to close"
+          />
+          <dialog id="my_modal_3" className={modalClassPost}>
+            <div className="w-5/12 bg-white p-5 h-[75%] shadow-2xl">
+              <CreatePostForm
+                setToggleForm={setCreatePostModal}
+                toggleForm={openCreatePostModal}
+              />
+            </div>
+          </dialog>
         </div>
       </main>
     </>

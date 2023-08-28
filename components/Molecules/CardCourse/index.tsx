@@ -1,7 +1,6 @@
-import Image from "next/image";
 import { FC } from "react";
-import { ICourseObject } from "./mock-data";
 import { Avatar, Button } from "@/components/Atoms";
+import { ICourseObject } from "@/interface/course";
 
 interface ICardCourseProps {
   item: ICourseObject;

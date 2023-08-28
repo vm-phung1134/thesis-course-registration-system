@@ -30,7 +30,10 @@ export const EmailLogin: FC<IEmailLoginProps> = ({
 }) => {
   return (
     <Form>
-      <TitleFormField title="Sign in with email account" />
+      <TitleFormField
+        className="font-semibold sm:text-center my-4 sm:my-6 sm:text-2xl text-xl "
+        title="Sign in with email account"
+      />
       <FormField type="email" label="Email" nameField="email" />
       <FormField type="password" label="Password" nameField="password" />
       <ActionFormField />

@@ -46,7 +46,6 @@ const TaskHeader: FC<ITaskHeaderProps> = ({ setOpenModalEx, openModalEx }) => {
             <small>20, August 2023 - 20:30 PM</small>
           </div>
         </div>
-
         <button>...</button>
       </div>
     </div>

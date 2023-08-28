@@ -2,11 +2,17 @@ import { FC } from "react";
 
 export interface ITitleFormFieldProps {
   title: string;
+  className: string;
 }
 
-export const TitleFormField: FC<ITitleFormFieldProps> = ({ title }) => {
+export const TitleFormField: FC<ITitleFormFieldProps> = ({
+  title,
+  className,
+}) => {
   return (
-    <h3 className="my-4 text-xl font-semibold sm:text-center sm:my-6 sm:text-2xl">
+    <h3
+      className={`${className}`}
+    >
       {title}
     </h3>
   );
