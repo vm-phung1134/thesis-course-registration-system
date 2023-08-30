@@ -1,4 +1,10 @@
-import { IconButton, LineUnder, TitleFormField } from "@/components/Atoms";
+import {
+  IconButton,
+  IconButtonLogin,
+  LineUnder,
+  TitleFormField,
+} from "@/components/Atoms";
+import { useAuthContext } from "@/contexts/authContext";
 import { FC } from "react";
 
 export interface ISocialLoginProps {
@@ -10,28 +16,29 @@ export const SocialLogin: FC<ISocialLoginProps> = ({
   toggleForm,
   setToggleForm,
 }) => {
+  const { signInWithGoogle, message } = useAuthContext();
   return (
     <div className="flex flex-col mt-4 gap-3 text-sm">
       <TitleFormField
         className="font-semibold sm:text-center my-4 sm:my-6 sm:text-2xl text-xl "
         title="Sign in with social"
       />
-      <IconButton
+      <p className="text-red-600 text-xs text-center">
+        {message}
+      </p>
+      <IconButtonLogin
         title="Continue with Google"
-        className=""
-        classNameIcon=""
+        methodLogin={signInWithGoogle}
         srcIcon="https://cdn-icons-png.flaticon.com/128/300/300221.png"
       />
-      <IconButton
+      <IconButtonLogin
+        methodLogin={() => {}}
         title="Continue with Github"
-        className=""
-        classNameIcon=""
         srcIcon="https://cdn-icons-png.flaticon.com/128/2111/2111432.png"
       />
-      <IconButton
+      <IconButtonLogin
+        methodLogin={() => {}}
         title="Continue with Facebook"
-        className=""
-        classNameIcon=""
         srcIcon="https://cdn-icons-png.flaticon.com/128/5968/5968764.png"
       />
       <LineUnder />

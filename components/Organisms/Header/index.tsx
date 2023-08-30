@@ -1,10 +1,11 @@
 import { Avatar } from "@/components/Atoms";
-import Image from "next/image";
+import { useAuthContext } from "@/contexts/authContext";
 import { FC } from "react";
 
 export interface IHeaderProps {}
 
 export const Header: FC<IHeaderProps> = () => {
+  const { user, logout } = useAuthContext();
   return (
     <div className="navbar border-b p-5">
       <div className="justify-between w-full">
@@ -57,8 +58,8 @@ export const Header: FC<IHeaderProps> = () => {
               className="flex gap-3 items-center cursor-pointer"
             >
               <div className="flex flex-col text-[15px] font-normal items-end">
-                <p>Ariana.CMF@gmail.com</p>
-                <p className="text-green-800 text-sm">Pov: Student</p>
+                <p>{user?.email || "example@ctu.edu.vn"}</p>
+                <p className="text-green-800 text-sm">Pov: Lecturer</p>
               </div>
               <Avatar
                 online={true}
@@ -73,8 +74,8 @@ export const Header: FC<IHeaderProps> = () => {
               <li>
                 <a className="rounded-none">Item 1</a>
               </li>
-              <li>
-                <a className="rounded-none">Item 2</a>
+              <li onClick={logout}>
+                <a className="rounded-none">Sign out</a>
               </li>
             </ul>
           </div>

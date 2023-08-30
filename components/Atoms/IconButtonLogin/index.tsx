@@ -1,26 +1,24 @@
 import Image from "next/image";
 import { FC } from "react";
 
-export interface IIconButtonProps {
-  className: string;
-  classNameIcon: string;
+export interface IIconButtonLoginProps {
+  className?: string;
+  classNameIcon?: string;
   srcIcon: string;
   title: string;
-  setToggleForm?: React.Dispatch<React.SetStateAction<boolean>>;
-  toggleForm?: boolean;
+  methodLogin: () => void;
 }
 
-export const IconButton: FC<IIconButtonProps> = ({
+export const IconButtonLogin: FC<IIconButtonLoginProps> = ({
   className,
   classNameIcon,
   srcIcon,
   title,
-  setToggleForm, //Using for the props of login form
-  toggleForm,
+  methodLogin,
 }) => {
   return (
     <button
-      onClick={() => setToggleForm?.(!toggleForm)}
+      onClick={methodLogin}
       type="button"
       className={`btn rounded-none font-medium capitalize ${className}`}
     >
