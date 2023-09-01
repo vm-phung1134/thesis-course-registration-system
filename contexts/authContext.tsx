@@ -20,6 +20,11 @@ interface AuthProviderProps {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+export enum ROLE_ASSIGNMENT {
+  STUDENT = "student",
+  LECTURER = "lecturer",
+}
+
 export const useAuthContext = () => {
   const context = useContext(AuthContext);
   if (!context) {
@@ -67,10 +72,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   const roleAssignment = (email: string) => {
-    if (email.includes("student")) {
-      return "student";
+    if (email.includes(ROLE_ASSIGNMENT.STUDENT)) {
+      return ROLE_ASSIGNMENT.STUDENT;
     } else {
-      return "lecturer";
+      return ROLE_ASSIGNMENT.LECTURER;
     }
   };
 

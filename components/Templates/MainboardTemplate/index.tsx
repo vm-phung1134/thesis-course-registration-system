@@ -1,5 +1,10 @@
 import { ModalConfirm } from "@/components/Molecules";
-import { Header, SidebarLecturerView } from "@/components/Organisms";
+import {
+  Header,
+  SidebarLecturerView,
+  SidebarStudentView,
+} from "@/components/Organisms";
+import { ROLE_ASSIGNMENT, useAuthContext } from "@/contexts/authContext";
 import classNames from "classnames";
 import Head from "next/head";
 import { useState, FC } from "react";
@@ -10,6 +15,7 @@ export interface IMainboardProps {
 }
 
 export const MainboardTemplate: FC<IMainboardProps> = ({ children, title }) => {
+  const { user } = useAuthContext();
   const [openModal, setOpenModal] = useState<boolean>(false);
   const modalClass = classNames({
     "modal modal-bottom sm:modal-middle": true,
@@ -22,10 +28,17 @@ export const MainboardTemplate: FC<IMainboardProps> = ({ children, title }) => {
       </Head>
       <main>
         <div className="grid grid-cols-12 bg-base-100">
-          <SidebarLecturerView
-            openModal={openModal}
-            setOpenModal={setOpenModal}
-          />
+          {user?.role === ROLE_ASSIGNMENT.STUDENT ? (
+            <SidebarStudentView
+              openModal={openModal}
+              setOpenModal={setOpenModal}
+            />
+          ) : (
+            <SidebarLecturerView
+              openModal={openModal}
+              setOpenModal={setOpenModal}
+            />
+          )}
           <ModalConfirm
             openModal={openModal}
             setOpenModal={setOpenModal}

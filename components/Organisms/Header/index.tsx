@@ -64,7 +64,7 @@ export const Header: FC<IHeaderProps> = () => {
               <Avatar
                 online={true}
                 widthStr="w-10"
-                srcImg="https://images.pexels.com/photos/713312/pexels-photo-713312.jpeg?auto=compress&cs=tinysrgb&w=600"
+                srcImg={user?.photoSrc || ""}
               />
             </div>
             <ul
@@ -72,7 +72,13 @@ export const Header: FC<IHeaderProps> = () => {
               className="dropdown-content z-[1] menu mt-5 p-2 shadow-lg bg-base-100 rounded-none w-56"
             >
               <li>
-                <a className="rounded-none">Item 1</a>
+                <a className="rounded-none">Profile</a>
+              </li>
+              <li>
+                <a className="rounded-none">Theme</a>
+              </li>
+              <li>
+                <a className="rounded-none">Setting</a>
               </li>
               <li onClick={logout}>
                 <a className="rounded-none">Sign out</a>

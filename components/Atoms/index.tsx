@@ -8,3 +8,4 @@ export * from "./LineUnder";
 export * from "./Breadcrumb";
 export * from "./Avatar";
 export * from "./MenuClassroom";
+export * from "./Spinner";

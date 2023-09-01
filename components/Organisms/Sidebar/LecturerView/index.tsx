@@ -1,4 +1,5 @@
 import { LogoApp } from "@/components/Molecules";
+import Link from "next/link";
 import { FC } from "react";
 
 export interface ISidebarLecturerViewProps {
@@ -19,7 +20,10 @@ export const SidebarLecturerView: FC<ISidebarLecturerViewProps> = ({
       />
       <ul className="menu gap-3">
         <li>
-          <a className="rounded-none hover:bg-[#018937] hover:text-white">
+          <Link
+            className="rounded-none hover:bg-[#018937] hover:text-white"
+            href="/mainboard"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
@@ -35,12 +39,12 @@ export const SidebarLecturerView: FC<ISidebarLecturerViewProps> = ({
               />
             </svg>
             <span className="mx-2 text-[15px] font-medium">Mainboard</span>
-          </a>
+          </Link>
         </li>
         <li onClick={() => setOpenModal?.(!openModal)}>
-          <a
+          <Link
             className="rounded-none hover:bg-[#018937] hover:text-white"
-            href="#"
+            href="/manage-classroom"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -57,7 +61,7 @@ export const SidebarLecturerView: FC<ISidebarLecturerViewProps> = ({
               />
             </svg>
             <span className="mx-2 text-[15px] font-medium">Manage class</span>
-          </a>
+          </Link>
         </li>
         <li>
           <a

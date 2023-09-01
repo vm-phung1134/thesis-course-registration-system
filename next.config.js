@@ -7,7 +7,8 @@ const nextConfig = {
       "cdn-icons-png.flaticon.com",
       "yu.ctu.edu.vn",
       "images.pexels.com",
-      "img.icons8.com"
+      "img.icons8.com",
+      "lh3.googleusercontent.com"
     ],
   },
 };
