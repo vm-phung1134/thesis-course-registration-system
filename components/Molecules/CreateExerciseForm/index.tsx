@@ -1,32 +1,15 @@
-import {
-  Button,
-  FormField,
-  IOptionItem,
-  SelectBox,
-  TitleFormField,
-} from "@/components/Atoms";
+import { Button, FormField, TitleFormField } from "@/components/Atoms";
 import { Form, Formik } from "formik";
-import { FC, useState } from "react";
+import { FC } from "react";
 
-export interface ICreatePostFormProps {
+export interface ICreateExerciseFormProps {
   setToggleForm: React.Dispatch<React.SetStateAction<boolean>>;
   toggleForm: boolean;
 }
-export const CreatePostForm: FC<ICreatePostFormProps> = ({
+export const CreateExerciseForm: FC<ICreateExerciseFormProps> = ({
   setToggleForm,
   toggleForm,
 }) => {
-  const DATA_LIST_OPTIONS: IOptionItem[] = [
-    {
-      label: "Create post",
-      value: "Một",
-    },
-    {
-      label: "Create Exercise",
-      value: "Hai",
-    },
-  ];
-  const [selected, setSelected] = useState<IOptionItem>(DATA_LIST_OPTIONS[0]);
   return (
     <Formik
       initialValues={{
@@ -34,7 +17,7 @@ export const CreatePostForm: FC<ICreatePostFormProps> = ({
         description: "",
         stage: "",
         file: "",
-        type: "exercise",
+        type: "post",
       }}
       validate={(values) => {
         const errors = {};
@@ -52,25 +35,25 @@ export const CreatePostForm: FC<ICreatePostFormProps> = ({
       }}
     >
       <Form>
-        <div className="flex justify-between items-center">
-          <TitleFormField
-            className="font-medium uppercase text-green-700 text-lg mb-5"
-            title="Create new notification"
-          />
-          <div className="w-40">
-            <SelectBox
-              setSelected={setSelected}
-              selected={selected}
-              options={DATA_LIST_OPTIONS}
-            />
-          </div>
-        </div>
+        <TitleFormField
+          className="font-medium uppercase text-green-700 text-lg mb-5"
+          title="Create new notification"
+        />
         <FormField
           placeholder="Ex: Report progress"
           type="text"
           label="Post title"
           nameField="title"
         />
+        <div className="flex gap-5">
+          <FormField
+            placeholder="Ex: Requirement gathering"
+            type="text"
+            label="Choose Stage"
+            nameField="stage"
+          />
+          <FormField type="date" label="Set Deadline" nameField="deadline" />
+        </div>
         <FormField type="text" label="Description" nameField="description" />
         <div className="border h-20 w-full cursor-pointer border-dashed border-gray-400">
           <div className="flex justify-center items-center h-full">

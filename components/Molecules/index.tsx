@@ -11,3 +11,4 @@ export * from "./StateReportThesis";
 export * from "./CreatePostForm";
 export * from "./RegistrationTopicForm";
 export * from "./InforUserForm";
+export * from "./CreateExerciseForm";

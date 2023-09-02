@@ -122,7 +122,7 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
             message="Press ESC key or click the button below to close"
           />
           <dialog id="my_modal_3" className={modalClassPost}>
-            <div className="w-5/12 bg-white p-5 h-[75%] shadow-2xl">
+            <div className="w-5/12 bg-white p-5 h-fit shadow-2xl">
               <CreatePostForm
                 setToggleForm={setCreatePostModal}
                 toggleForm={openCreatePostModal}
