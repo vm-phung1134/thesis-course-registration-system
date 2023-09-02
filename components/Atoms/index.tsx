@@ -9,4 +9,5 @@ export * from "./Breadcrumb";
 export * from "./Avatar";
 export * from "./MenuClassroom";
 export * from "./Spinner";
-export * from "./SelectBox"
+export * from "./SelectBox";
+export * from "./SelectInForm"

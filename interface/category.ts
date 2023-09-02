@@ -1,5 +1,6 @@
 export interface ICategoryObject {
   id: string;
-  title: string;
+  label: string;
   description: string;
+  value?: string;
 }

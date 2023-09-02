@@ -1,4 +1,4 @@
-import { ImenuClassroomItem } from "@/components/Atoms";
+import { IOptionItem, ImenuClassroomItem } from "@/components/Atoms";
 
 export const DATA_MENU_CLASSROOM: ImenuClassroomItem[] = [
   {
@@ -20,5 +20,16 @@ export const DATA_MENU_CLASSROOM: ImenuClassroomItem[] = [
     id: "4",
     href: "/manage-classroom/",
     title: "point",
+  },
+];
+
+export const DATA_LIST_OPTIONS: IOptionItem[] = [
+  {
+    label: "Create Exercise",
+    value: "create_exercise",
+  },
+  {
+    label: "Create post",
+    value: "create_post",
   },
 ];

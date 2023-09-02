@@ -1,3 +1,4 @@
+import { ICategoryObject } from "@/interface/category";
 import React, { useState, FC } from "react";
 import Select, { ActionMeta, SingleValue } from "react-select";
 
@@ -7,9 +8,11 @@ export interface IOptionItem {
 }
 
 export interface ISelectBoxProps {
-  options: IOptionItem[];
-  selected: IOptionItem;
-  setSelected: React.Dispatch<React.SetStateAction<IOptionItem>>;
+  options: IOptionItem[] | ICategoryObject[];
+  selected: IOptionItem | ICategoryObject;
+  setSelected: React.Dispatch<
+    React.SetStateAction<IOptionItem | ICategoryObject>
+  >;
 }
 
 export const SelectBox: FC<ISelectBoxProps> = ({
@@ -18,10 +21,10 @@ export const SelectBox: FC<ISelectBoxProps> = ({
   selected,
 }) => {
   const handleSelected = (
-    newValue: SingleValue<IOptionItem>,
-    actionMeta: ActionMeta<IOptionItem>
+    newValue: SingleValue<IOptionItem | ICategoryObject>,
+    actionMeta: ActionMeta<IOptionItem | ICategoryObject>
   ) => {
-    setSelected(newValue as IOptionItem);
+    setSelected(newValue as IOptionItem | ICategoryObject);
   };
   return (
     <Select
@@ -43,7 +46,8 @@ export const SelectBox: FC<ISelectBoxProps> = ({
         menu: (provided) => ({
           ...provided,
           borderRadius: "none",
-          boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)"
+          boxShadow:
+            "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
         }),
       }}
       defaultValue={selected}

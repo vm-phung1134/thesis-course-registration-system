@@ -1,15 +1,39 @@
-import { Button, FormField, TitleFormField } from "@/components/Atoms";
+import {
+  Button,
+  FormField,
+  IOptionItem,
+  SelectBox,
+  SelectInForm,
+  TitleFormField,
+} from "@/components/Atoms";
+import { ICategoryObject } from "@/interface/category";
+import { DATA_STATE_REPORT } from "@/pages/manage-classroom/report-progress/mock-data";
 import { Form, Formik } from "formik";
-import { FC } from "react";
+import { FC, useState } from "react";
 
 export interface ICreateExerciseFormProps {
   setToggleForm: React.Dispatch<React.SetStateAction<boolean>>;
   toggleForm: boolean;
+  setSelected: React.Dispatch<
+    React.SetStateAction<IOptionItem | ICategoryObject>
+  >;
+  selected: IOptionItem | ICategoryObject;
+  options: IOptionItem[] | ICategoryObject[];
 }
 export const CreateExerciseForm: FC<ICreateExerciseFormProps> = ({
   setToggleForm,
   toggleForm,
+  selected,
+  setSelected,
+  options,
 }) => {
+  const [selectedStage, setSelectedStage] = useState<ICategoryObject>({
+    id: "",
+    label: "",
+    value: "",
+    description: "",
+  });
+  console.log(selectedStage)
   return (
     <Formik
       initialValues={{
@@ -35,10 +59,19 @@ export const CreateExerciseForm: FC<ICreateExerciseFormProps> = ({
       }}
     >
       <Form>
-        <TitleFormField
-          className="font-medium uppercase text-green-700 text-lg mb-5"
-          title="Create new notification"
-        />
+        <div className="flex justify-between items-center">
+          <TitleFormField
+            className="font-medium uppercase text-green-700 text-lg mb-5"
+            title="Create new exercise"
+          />
+          <div className="w-40">
+            <SelectBox
+              setSelected={setSelected}
+              selected={selected}
+              options={options}
+            />
+          </div>
+        </div>
         <FormField
           placeholder="Ex: Report progress"
           type="text"
@@ -46,12 +79,14 @@ export const CreateExerciseForm: FC<ICreateExerciseFormProps> = ({
           nameField="title"
         />
         <div className="flex gap-5">
-          <FormField
-            placeholder="Ex: Requirement gathering"
-            type="text"
-            label="Choose Stage"
-            nameField="stage"
-          />
+          <div className="w-full">
+            <SelectInForm
+              title="Choose stage"
+              options={DATA_STATE_REPORT}
+              selectedStage={selectedStage}
+              setSelectedStage={setSelectedStage}
+            />
+          </div>
           <FormField type="date" label="Set Deadline" nameField="deadline" />
         </div>
         <FormField type="text" label="Description" nameField="description" />

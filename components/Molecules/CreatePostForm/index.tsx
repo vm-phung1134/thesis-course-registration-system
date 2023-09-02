@@ -5,28 +5,26 @@ import {
   SelectBox,
   TitleFormField,
 } from "@/components/Atoms";
+import { ICategoryObject } from "@/interface/category";
 import { Form, Formik } from "formik";
 import { FC, useState } from "react";
 
 export interface ICreatePostFormProps {
   setToggleForm: React.Dispatch<React.SetStateAction<boolean>>;
   toggleForm: boolean;
+  setSelected: React.Dispatch<
+    React.SetStateAction<IOptionItem | ICategoryObject>
+  >;
+  selected: IOptionItem | ICategoryObject;
+  options: IOptionItem[] | ICategoryObject[];
 }
 export const CreatePostForm: FC<ICreatePostFormProps> = ({
   setToggleForm,
   toggleForm,
+  selected,
+  setSelected,
+  options,
 }) => {
-  const DATA_LIST_OPTIONS: IOptionItem[] = [
-    {
-      label: "Create post",
-      value: "Một",
-    },
-    {
-      label: "Create Exercise",
-      value: "Hai",
-    },
-  ];
-  const [selected, setSelected] = useState<IOptionItem>(DATA_LIST_OPTIONS[0]);
   return (
     <Formik
       initialValues={{
@@ -61,7 +59,7 @@ export const CreatePostForm: FC<ICreatePostFormProps> = ({
             <SelectBox
               setSelected={setSelected}
               selected={selected}
-              options={DATA_LIST_OPTIONS}
+              options={options}
             />
           </div>
         </div>

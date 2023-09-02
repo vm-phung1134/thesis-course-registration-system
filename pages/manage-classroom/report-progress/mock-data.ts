@@ -3,31 +3,36 @@ import { ICategoryObject } from "@/interface/category";
 export const DATA_STATE_REPORT: ICategoryObject[] = [
   {
     id: "1",
-    title: "Requirement gathering",
+    label: "Requirement gathering",
+    value: "",
     description:
       "Lookout flogging bilge rat main sheet bilge water nipper fluke to go on account heave down clap",
   },
   {
     id: "2",
-    title: "Design",
+    label: "Design",
+    value: "",
     description:
       "Lookout flogging bilge rat main sheet bilge water nipper fluke to go on account heave down clap",
   },
   {
     id: "3",
-    title: "Development",
+    label: "Development",
+    value: "",
     description:
       "Lookout flogging bilge rat main sheet bilge water nipper fluke to go on account heave down clap",
   },
   {
     id: "4",
-    title: "Testing",
+    label: "Testing",
+    value: "",
     description:
       "Lookout flogging bilge rat main sheet bilge water nipper fluke to go on account heave down clap",
   },
   {
     id: "5",
-    title: "Deployment",
+    label: "Deployment",
+    value: "",
     description:
       "Lookout flogging bilge rat main sheet bilge water nipper fluke to go on account heave down clap",
   },
