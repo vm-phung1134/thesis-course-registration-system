@@ -39,6 +39,10 @@ export const MainboardTemplate: FC<IMainboardProps> = ({ children, title }) => {
               setOpenModal={setOpenModal}
             />
           )}
+          <div className="col-span-10">
+            <Header />
+            <div className="px-5">{children}</div>
+          </div>
           <ModalConfirm
             openModal={openModal}
             setOpenModal={setOpenModal}
@@ -46,10 +50,6 @@ export const MainboardTemplate: FC<IMainboardProps> = ({ children, title }) => {
             title="TCR Message!!!"
             message="Press ESC key or click the button below to close"
           />
-          <div className="col-span-10">
-            <Header />
-            <div className="px-5">{children}</div>
-          </div>
         </div>
       </main>
     </>

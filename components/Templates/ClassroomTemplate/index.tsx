@@ -1,10 +1,15 @@
 import { Avatar, MenuClassroom } from "@/components/Atoms";
 import { CreatePostForm, ModalConfirm } from "@/components/Molecules";
-import { Header, SidebarLecturerView } from "@/components/Organisms";
+import {
+  Header,
+  SidebarLecturerView,
+  SidebarStudentView,
+} from "@/components/Organisms";
 import classNames from "classnames";
 import Head from "next/head";
 import { useState, FC } from "react";
 import { DATA_MENU_CLASSROOM } from "./mock-data";
+import { ROLE_ASSIGNMENT, useAuthContext } from "@/contexts/authContext";
 
 export interface IClassroomProps {
   children: React.ReactNode;
@@ -51,6 +56,7 @@ const CodeClass = () => {
 };
 
 export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
+  const { user } = useAuthContext();
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [openCreatePostModal, setCreatePostModal] = useState<boolean>(false);
   const modalClass = classNames({
@@ -68,10 +74,17 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
       </Head>
       <main>
         <div className="grid grid-cols-12 bg-base-100">
-          <SidebarLecturerView
-            openModal={openModal}
-            setOpenModal={setOpenModal}
-          />
+          {user?.role === ROLE_ASSIGNMENT.STUDENT ? (
+            <SidebarStudentView
+              openModal={openModal}
+              setOpenModal={setOpenModal}
+            />
+          ) : (
+            <SidebarLecturerView
+              openModal={openModal}
+              setOpenModal={setOpenModal}
+            />
+          )}
           <div className="col-span-10">
             <Header />
             <div className="px-5">

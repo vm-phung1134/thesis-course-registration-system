@@ -9,3 +9,5 @@ export * from "./CommentForm";
 export * from "./ContentComment";
 export * from "./StateReportThesis";
 export * from "./CreatePostForm";
+export * from "./RegistrationTopicForm";
+export * from "./InforUserForm";
