@@ -20,7 +20,7 @@ export const SidebarStudentView: FC<ISidebarStudentViewProps> = ({
       />
       <ul className="menu gap-3">
         <li>
-          <a className="rounded-none hover:bg-[#018937] hover:text-white">
+          <Link href="/mainboard" className="rounded-none hover:bg-[#018937] hover:text-white">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
@@ -36,7 +36,7 @@ export const SidebarStudentView: FC<ISidebarStudentViewProps> = ({
               />
             </svg>
             <span className="mx-2 text-[15px] font-medium">Mainboard</span>
-          </a>
+          </Link>
         </li>
         <li>
           <details open>
