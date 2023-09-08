@@ -30,7 +30,7 @@ export const PostModal: FC<IPostModalProps> = ({
           <div className="col-span-8 border-r px-3">
             <div className="border-b pb-5">
               <h3 className="font-medium text-lg uppercase text-green-700">
-                Report grogress - {post.category.title} stage
+                Report grogress - {post.category.label} stage
               </h3>
               <p className="text-base font-medium uppercase py-1">
                 {post.lecturer.name}

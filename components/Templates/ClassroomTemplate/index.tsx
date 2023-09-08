@@ -1,5 +1,6 @@
-import { Avatar, IOptionItem, MenuClassroom } from "@/components/Atoms";
+import { Avatar, MenuClassroom } from "@/components/Atoms";
 import {
+  CountDown,
   CreateExerciseForm,
   CreatePostForm,
   ModalConfirm,
@@ -11,10 +12,11 @@ import {
 } from "@/components/Organisms";
 import classNames from "classnames";
 import Head from "next/head";
-import { useState, FC } from "react";
+import { useState, FC, useEffect } from "react";
 import { DATA_LIST_OPTIONS, DATA_MENU_CLASSROOM } from "./mock-data";
 import { ROLE_ASSIGNMENT, useAuthContext } from "@/contexts/authContext";
 import { ICategoryObject } from "@/interface/category";
+import { IOptionItem } from "@/interface/filter";
 
 export interface IClassroomProps {
   children: React.ReactNode;
@@ -75,6 +77,19 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
     "modal modal-bottom sm:modal-middle": true,
     "modal-open": openCreatePostModal,
   });
+  const [timeLeft, setTimeLeft] = useState<number>(0);
+
+  useEffect(() => {
+    const calculateTimeLeft = () => {
+      const countdownDate = new Date("2023-10-01T00:00:00Z").getTime();
+      const now = new Date().getTime();
+      const difference = countdownDate - now;
+
+      setTimeLeft(Math.floor(difference / 1000));
+    };
+    const timer = setInterval(calculateTimeLeft, 1000);
+    return () => clearInterval(timer);
+  }, []);
   return (
     <>
       <Head>
@@ -103,18 +118,31 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
                 <div className="bg-gray-800 col-span-8 h-fit w-full text-white">
                   <div className="p-5">
                     <MenuClassroom listMenu={DATA_MENU_CLASSROOM} />
-                    <div className="flex justify-center mt-5 gap-4 items-center cursor-pointer">
-                      <Avatar
-                        widthStr="w-10"
-                        srcImg="https://images.pexels.com/photos/39866/entrepreneur-startup-start-up-man-39866.jpeg?auto=compress&cs=tinysrgb&w=600"
-                      />
-                      <p
-                        onClick={() => setCreatePostModal(!openCreatePostModal)}
-                        className="hover:text-orange-600 ease-in-out duration-200"
-                      >
-                        Write a message for your class today
-                      </p>
+                    <div className="mt-5 flex flex-col items-center gap-3">
+                      <p className="text-sm capitalize">CountDown Report</p>
+                      <div className="flex justify-center gap-4 items-center cursor-pointer">
+                        <Avatar
+                          widthStr="w-10"
+                          srcImg={
+                            user?.photoSrc ||
+                            "https://images.pexels.com/photos/39866/entrepreneur-startup-start-up-man-39866.jpeg?auto=compress&cs=tinysrgb&w=600"
+                          }
+                        />
+                        {user?.role === ROLE_ASSIGNMENT.STUDENT ? (
+                          <CountDown timeLeft={timeLeft} />
+                        ) : (
+                          <p
+                            onClick={() =>
+                              setCreatePostModal(!openCreatePostModal)
+                            }
+                            className="hover:text-orange-600 ease-in-out duration-200"
+                          >
+                            Write a message for your class today
+                          </p>
+                        )}
+                      </div>
                     </div>
+
                     <CodeClass />
                   </div>
                 </div>

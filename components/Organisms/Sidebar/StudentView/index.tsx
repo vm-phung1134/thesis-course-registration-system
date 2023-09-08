@@ -38,6 +38,47 @@ export const SidebarStudentView: FC<ISidebarStudentViewProps> = ({
             <span className="mx-2 text-[15px] font-medium">Mainboard</span>
           </a>
         </li>
+        <li>
+          <details open>
+            <summary className="rounded-none hover:bg-[#018937] hover:text-white">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="w-5 h-5"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z"
+                />
+              </svg>
+              <span className="mx-2 text-[15px] font-medium">Account</span>
+            </summary>
+            <ul className="flex gap-2 flex-col ml-7 mt-4 text-[15px] font-medium">
+              <li>
+                <Link
+                  href="/account/account-student"
+                  className="rounded-none hover:bg-[#018937] hover:text-white"
+                >
+                  Topic registration
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/account/account-student"
+                  className="rounded-none hover:bg-[#018937] hover:text-white"
+                >
+                  Information
+                </Link>
+              </li>
+            </ul>
+          </details>
+        </li>
+
+        <div className="w-full h-[1px] bg-[#018937]"></div>
         <li onClick={() => setOpenModal?.(!openModal)}>
           <Link
             className="rounded-none hover:bg-[#018937] hover:text-white"
@@ -60,29 +101,6 @@ export const SidebarStudentView: FC<ISidebarStudentViewProps> = ({
             <span className="mx-2 text-[15px] font-medium">Manage class</span>
           </Link>
         </li>
-        <li>
-          <Link
-            className="rounded-none hover:bg-[#018937] hover:text-white"
-            href="/account/account-student"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-              className="w-5 h-5"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
-              />
-            </svg>
-            <span className="mx-2 text-[15px] font-medium">Account</span>
-          </Link>
-        </li>
-        <div className="w-full h-[1px] bg-[#018937]"></div>
         <li>
           <details open>
             <summary className="rounded-none hover:bg-[#018937] hover:text-white">
@@ -107,7 +125,7 @@ export const SidebarStudentView: FC<ISidebarStudentViewProps> = ({
             <ul className="flex gap-2 flex-col ml-7 mt-4 text-[15px] font-medium">
               <li>
                 <Link
-                  href="/"
+                  href="/tasks/critical-tasks"
                   className="rounded-none hover:bg-[#018937] hover:text-white"
                 >
                   Critical tasks
@@ -115,7 +133,7 @@ export const SidebarStudentView: FC<ISidebarStudentViewProps> = ({
               </li>
               <li>
                 <Link
-                  href="/"
+                  href="/tasks/completed-tasks"
                   className="rounded-none hover:bg-[#018937] hover:text-white"
                 >
                   Completed tasks
@@ -123,6 +141,28 @@ export const SidebarStudentView: FC<ISidebarStudentViewProps> = ({
               </li>
             </ul>
           </details>
+        </li>
+        <li>
+          <Link
+            className="rounded-none hover:bg-[#018937] hover:text-white"
+            href="/"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
+              ></path>
+            </svg>
+            <span className="mx-2 text-[15px] font-medium">I Point</span>
+          </Link>
         </li>
         <div className="w-full h-[1px] bg-[#018937]"></div>
         <li>

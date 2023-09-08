@@ -18,7 +18,7 @@ function ReportProgressTab() {
         </div>
         <div className="grid gap-8 row-gap-0 lg:grid-cols-5">
           {DATA_STATE_REPORT.map((stage) => {
-            return <StateReportThesis key={stage.title} stage={stage} />;
+            return <StateReportThesis key={stage.value} stage={stage} />;
           })}
         </div>
       </div>

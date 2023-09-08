@@ -1,13 +1,10 @@
 import { ICategoryObject } from "@/interface/category";
-import React, { useState, FC } from "react";
+import { IOptionItem } from "@/interface/filter";
+import React, { FC } from "react";
 import Select, { ActionMeta, SingleValue } from "react-select";
 
-export interface IOptionItem {
-  value: string;
-  label: string;
-}
-
 export interface ISelectBoxProps {
+  setPadding?: string;
   options: IOptionItem[] | ICategoryObject[];
   selected: IOptionItem | ICategoryObject;
   setSelected: React.Dispatch<
@@ -19,6 +16,7 @@ export const SelectBox: FC<ISelectBoxProps> = ({
   options,
   setSelected,
   selected,
+  setPadding,
 }) => {
   const handleSelected = (
     newValue: SingleValue<IOptionItem | ICategoryObject>,
@@ -33,13 +31,14 @@ export const SelectBox: FC<ISelectBoxProps> = ({
           ...provided,
           borderRadius: "none",
           fontSize: "13px",
+          padding: `${setPadding === "lg" ? "5px" : ""}`,
           boxShadow: state.isFocused ? "none" : provided.boxShadow,
           borderColor: state.isFocused ? "initial" : provided.borderColor,
         }),
         option: (provided, state) => ({
           ...provided,
-          backgroundColor: state.isSelected ? "#018739" : "white",
-          color: state.isSelected ? "white" : "black",
+          backgroundColor: state.isFocused ? "#018739" : "white",
+          color: state.isFocused ? "white" : "black",
           cursor: "pointer",
           fontSize: "13px",
         }),

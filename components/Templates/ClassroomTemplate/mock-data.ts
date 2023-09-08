@@ -1,4 +1,5 @@
-import { IOptionItem, ImenuClassroomItem } from "@/components/Atoms";
+import { ImenuClassroomItem } from "@/components/Atoms";
+import { IOptionItem } from "@/interface/filter";
 
 export const DATA_MENU_CLASSROOM: ImenuClassroomItem[] = [
   {

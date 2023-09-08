@@ -1,12 +1,12 @@
 import {
   Button,
   FormField,
-  IOptionItem,
   SelectBox,
   SelectInForm,
   TitleFormField,
 } from "@/components/Atoms";
 import { ICategoryObject } from "@/interface/category";
+import { IOptionItem } from "@/interface/filter";
 import { DATA_STATE_REPORT } from "@/pages/manage-classroom/report-progress/mock-data";
 import { Form, Formik } from "formik";
 import { FC, useState } from "react";
@@ -33,7 +33,6 @@ export const CreateExerciseForm: FC<ICreateExerciseFormProps> = ({
     value: "",
     description: "",
   });
-  console.log(selectedStage)
   return (
     <Formik
       initialValues={{

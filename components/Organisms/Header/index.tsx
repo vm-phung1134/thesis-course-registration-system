@@ -59,7 +59,7 @@ export const Header: FC<IHeaderProps> = () => {
             >
               <div className="flex flex-col text-[15px] font-normal items-end">
                 <p>{user?.email || "example@ctu.edu.vn"}</p>
-                <p className="text-green-800 text-sm">Pov: Lecturer</p>
+                <p className="text-green-800 text-sm capitalize">Pov: {user?.role || "Student"}</p>
               </div>
               <Avatar
                 online={true}

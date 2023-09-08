@@ -1,11 +1,11 @@
 import {
   Button,
   FormField,
-  IOptionItem,
   SelectBox,
   TitleFormField,
 } from "@/components/Atoms";
 import { ICategoryObject } from "@/interface/category";
+import { IOptionItem } from "@/interface/filter";
 import { Form, Formik } from "formik";
 import { FC, useState } from "react";
 

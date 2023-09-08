@@ -1,12 +1,12 @@
 import { ICategoryObject } from "@/interface/category";
-import React, { useState, FC } from "react";
+import React, { FC } from "react";
 import Select, { ActionMeta, SingleValue } from "react-select";
 
 export interface ISelectInFormProps {
   title?: string;
   options: ICategoryObject[];
-  selectedStage: ICategoryObject;
-  setSelectedStage: React.Dispatch<React.SetStateAction<ICategoryObject>>;
+  selectedStage?: ICategoryObject;
+  setSelectedStage?: React.Dispatch<React.SetStateAction<ICategoryObject>>;
 }
 
 export const SelectInForm: FC<ISelectInFormProps> = ({
@@ -15,11 +15,11 @@ export const SelectInForm: FC<ISelectInFormProps> = ({
   setSelectedStage,
   title,
 }) => {
-  const handleSelected = (
+  const handleSelectedStage = (
     newValue: SingleValue<ICategoryObject>,
     actionMeta: ActionMeta<ICategoryObject>
   ) => {
-    setSelectedStage(newValue as ICategoryObject);
+    setSelectedStage?.(newValue as ICategoryObject);
   };
   return (
     <>
@@ -36,8 +36,8 @@ export const SelectInForm: FC<ISelectInFormProps> = ({
           }),
           option: (provided, state) => ({
             ...provided,
-            backgroundColor: state.isSelected ? "#018739" : "white",
-            color: state.isSelected ? "white" : "black",
+            backgroundColor: state.isFocused ? "#018739" : "white",
+            color: state.isFocused ? "white" : "black",
             cursor: "pointer",
             fontSize: "13px",
           }),
@@ -49,7 +49,7 @@ export const SelectInForm: FC<ISelectInFormProps> = ({
           }),
         }}
         defaultValue={selectedStage}
-        onChange={handleSelected}
+        onChange={handleSelectedStage}
         options={options}
       />
     </>
