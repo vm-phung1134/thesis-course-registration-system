@@ -13,3 +13,6 @@ export * from "./RegistrationTopicForm";
 export * from "./InforUserForm";
 export * from "./CreateExerciseForm";
 export * from "./CountDown";
+export * from "./ExerciseCard";
+export * from "./PostReportCard";
+export * from "./TargetTable";

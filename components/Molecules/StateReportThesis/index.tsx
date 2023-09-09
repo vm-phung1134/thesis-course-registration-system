@@ -1,5 +1,6 @@
 import { Button } from "@/components/Atoms";
 import { ICategoryObject } from "@/interface/category";
+import Link from "next/link";
 import { FC } from "react";
 
 export interface IStateReportThesisProps {
@@ -24,14 +25,16 @@ export const StateReportThesis: FC<IStateReportThesisProps> = ({ stage }) => {
           />
         </svg>
       </div>
-      <h6 className="mb-2 text-base font-medium capitalize">{stage.title}</h6>
+      <h6 className="mb-2 text-base font-medium capitalize">{stage.label}</h6>
       <p className="max-w-md mb-3 text-sm text-gray-900 sm:mx-auto">
         {stage.description}
       </p>
-      <Button
-        title="View report"
-        className="inline-flex bg-transparent border-none text-sm items-center"
-      />
+      <Link href="/manage-classroom/report-progress/report-detail/123">
+        <Button
+          title="View report"
+          className="inline-flex bg-transparent border-none text-sm items-center"
+        />
+      </Link>
       <div className="top-0 right-3 flex items-center justify-center h-24 lg:-mr-8 lg:absolute">
         <svg
           className="w-4 text-gray-700 transform rotate-90 lg:rotate-0"
