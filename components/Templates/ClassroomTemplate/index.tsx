@@ -79,17 +79,17 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
   });
   const [timeLeft, setTimeLeft] = useState<number>(0);
 
-  useEffect(() => {
-    const calculateTimeLeft = () => {
-      const countdownDate = new Date("2023-10-01T00:00:00Z").getTime();
-      const now = new Date().getTime();
-      const difference = countdownDate - now;
+  // useEffect(() => {
+  //   const calculateTimeLeft = () => {
+  //     const countdownDate = new Date("2023-10-01T00:00:00Z").getTime();
+  //     const now = new Date().getTime();
+  //     const difference = countdownDate - now;
 
-      setTimeLeft(Math.floor(difference / 1000));
-    };
-    const timer = setInterval(calculateTimeLeft, 1000);
-    return () => clearInterval(timer);
-  }, []);
+  //     setTimeLeft(Math.floor(difference / 1000));
+  //   };
+  //   const timer = setInterval(calculateTimeLeft, 1000);
+  //   return () => clearInterval(timer);
+  // }, []);
   return (
     <>
       <Head>

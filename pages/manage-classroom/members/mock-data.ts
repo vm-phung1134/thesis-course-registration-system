@@ -1,4 +1,5 @@
 import { IAuthObject } from "@/interface/auth";
+import { IOptionItem } from "@/interface/filter";
 
 export const DATA_CARD_STUDENT: IAuthObject[] = [
   {
@@ -36,5 +37,20 @@ export const DATA_CARD_STUDENT: IAuthObject[] = [
     phone: "0941234437",
     major: "information technology",
     class: "di19v7a8",
+  },
+];
+
+export const DATA_FILTER_MEMBER: IOptionItem[] = [
+  {
+    value: "name-a-z",
+    label: "Sort Name A - Z",
+  },
+  {
+    value: "name-z-a",
+    label: "Sort Name Z - A",
+  },
+  {
+    value: "class",
+    label: "Sort class",
   },
 ];
