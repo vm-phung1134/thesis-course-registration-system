@@ -2,16 +2,17 @@ import { IPostObject } from "@/interface/post";
 
 export const DATA_POST_MODAL: IPostObject = {
   id: "1",
+  title: "",
   category: {
     id: "C_1",
-    title: "Design",
+    label: "Design",
+    value: "",
     description: "",
   },
   lecturer: {
     id: "L_1",
     name: "le huynh quoc bao",
     photoSrc: "",
-    token: "",
     email: "lhqbao@ctu.edu.vn",
     phone: "",
     major: "",

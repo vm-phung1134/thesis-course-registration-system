@@ -1,12 +1,12 @@
 import { IAuthObject } from "./auth";
 
 export interface ITopicKeyObject {
-  id: string;
+  id?: string;
   title: string;
 }
 
 export interface ICourseObject {
-  id: string;
+  id?: string;
   lecturer: IAuthObject;
   codeCourse: string;
   quantity: number;

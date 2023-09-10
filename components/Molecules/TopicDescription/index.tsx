@@ -2,10 +2,10 @@ import { ITopicObject } from "@/interface/topic";
 import { FC } from "react";
 
 export interface ITopicDescriptionProps {
-  topic: ITopicObject;
+  // topic: ITopicObject;
 }
 
-export const TopicDescription: FC<ITopicDescriptionProps> = ({ topic }) => {
+export const TopicDescription: FC<ITopicDescriptionProps> = () => {
   return (
     <div>
       <h5 className="mb-5 font-medium capitalize">Topic researching</h5>

@@ -5,7 +5,10 @@ import {
   SelectInForm,
   TitleFormField,
 } from "@/components/Atoms";
+import { useAuthContext } from "@/contexts/authContext";
+import { INITIATE_AUTH } from "@/data";
 import { ICategoryObject } from "@/interface/category";
+import { IExerciseObject } from "@/interface/exercise";
 import { IOptionItem } from "@/interface/filter";
 import { DATA_STATE_REPORT } from "@/pages/manage-classroom/report-progress/mock-data";
 import { Form, Formik } from "formik";
@@ -33,15 +36,23 @@ export const CreateExerciseForm: FC<ICreateExerciseFormProps> = ({
     value: "",
     description: "",
   });
+  const { user } = useAuthContext();
+  const initialValues: IExerciseObject = {
+    title: "",
+    category: {
+      id: "",
+      label: "",
+      description: "",
+      value: "",
+    },
+    lecturer: user || INITIATE_AUTH,
+    description: "",
+    deadline: new Date(""),
+    score: 0,
+  };
   return (
     <Formik
-      initialValues={{
-        title: "",
-        description: "",
-        stage: "",
-        file: "",
-        type: "post",
-      }}
+      initialValues={initialValues}
       validate={(values) => {
         const errors = {};
         if (!values.title) {

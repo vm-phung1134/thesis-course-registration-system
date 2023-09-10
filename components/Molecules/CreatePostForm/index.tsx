@@ -4,8 +4,11 @@ import {
   SelectBox,
   TitleFormField,
 } from "@/components/Atoms";
+import { useAuthContext } from "@/contexts/authContext";
+import { INITIATE_AUTH } from "@/data";
 import { ICategoryObject } from "@/interface/category";
 import { IOptionItem } from "@/interface/filter";
+import { IPostObject } from "@/interface/post";
 import { Form, Formik } from "formik";
 import { FC, useState } from "react";
 
@@ -25,15 +28,21 @@ export const CreatePostForm: FC<ICreatePostFormProps> = ({
   setSelected,
   options,
 }) => {
+  const { user } = useAuthContext();
+  const initialValues: IPostObject = {
+    title: "",
+    category: {
+      id: "",
+      label: "",
+      description: "",
+      value: "",
+    },
+    lecturer: user || INITIATE_AUTH,
+    description: "",
+  };
   return (
     <Formik
-      initialValues={{
-        title: "",
-        description: "",
-        stage: "",
-        file: "",
-        type: "exercise",
-      }}
+      initialValues={initialValues}
       validate={(values) => {
         const errors = {};
         if (!values.title) {
