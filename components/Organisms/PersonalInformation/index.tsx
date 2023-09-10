@@ -34,11 +34,11 @@ export const PersonalInformation: FC<IPersonalInformationProps> = () => {
       }}
     >
       <>
-        <div className="p-5">
-          <h4 className="text-base font-medium w-[90%] bg-green-600 text-white uppercase p-3">
+        <div className="p-5 w-[90%]">
+          <h4 className="text-base font-medium bg-green-600 text-white uppercase p-3">
             Information personal
           </h4>
-          <ul className="py-5 w-[90%] flex flex-col gap-3 px-3">
+          <ul className="py-5 flex flex-col gap-3 px-3">
             <li className="flex justify-between">
               <span className="text-gray-600">Full name:</span>
               <span className="capitalize">vo minh phung</span>

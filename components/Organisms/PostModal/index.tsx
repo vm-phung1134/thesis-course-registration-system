@@ -25,7 +25,7 @@ export const PostModal: FC<IPostModalProps> = ({
   const { user } = useAuthContext();
   return (
     <dialog id="my_modal_2" className={modalClass}>
-      <div className="w-8/12 bg-white p-5 h-[70%] shadow-2xl overflow-y-scroll">
+      <div className="w-8/12 bg-white p-5 h-fit shadow-2xl overflow-y-scroll">
         <div className="grid grid-cols-12 h-full">
           <div className="col-span-8 border-r px-3">
             <div className="border-b pb-5">
