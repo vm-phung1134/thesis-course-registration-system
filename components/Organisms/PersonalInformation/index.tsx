@@ -1,7 +1,10 @@
 import { Button, FormField, TitleFormField } from "@/components/Atoms";
 import { InforUserForm } from "@/components/Molecules";
+import { useAuthContext } from "@/contexts/authContext";
+import { INITIATE_AUTH } from "@/data";
+import { IAuthObject } from "@/interface/auth";
 import classNames from "classnames";
-import { Form, Formik } from "formik";
+import { Formik } from "formik";
 import { FC, useState } from "react";
 
 export interface IPersonalInformationProps {}
@@ -12,16 +15,11 @@ export const PersonalInformation: FC<IPersonalInformationProps> = () => {
     "modal modal-bottom sm:modal-middle": true,
     "modal-open": toggle,
   });
+  const { user } = useAuthContext();
+  const initialValues: IAuthObject = user || INITIATE_AUTH;
   return (
     <Formik
-      initialValues={{
-        name: "",
-        class: "",
-        email: "",
-        phone: "",
-        major: "",
-        avt: "",
-      }}
+      initialValues={initialValues}
       validate={(values) => {
         const errors = {};
         return errors;
@@ -41,23 +39,41 @@ export const PersonalInformation: FC<IPersonalInformationProps> = () => {
           <ul className="py-5 flex flex-col gap-3 px-3">
             <li className="flex justify-between">
               <span className="text-gray-600">Full name:</span>
-              <span className="capitalize">vo minh phung</span>
+              <span className="capitalize">{initialValues?.name}</span>
             </li>
             <li className="flex justify-between">
               <span className="text-gray-600">Class:</span>
-              <span className="uppercase">DIV9V7A7</span>
+              {initialValues?.class ? (
+                <span className="uppercase">{initialValues?.class}</span>
+              ) : (
+                <span className="text-xs font-thin italic text-gray-400">
+                  Please fill out your information
+                </span>
+              )}
             </li>
             <li className="flex justify-between">
               <span className="text-gray-600">Email:</span>
-              <span>phungb1910282@student.ctu.edu.vn</span>
+              <span>{initialValues?.email}</span>
             </li>
             <li className="flex justify-between">
               <span className="text-gray-600">Phone:</span>
-              <span>0945738212</span>
+              {initialValues?.phone ? (
+                <span className="uppercase">{initialValues?.phone}</span>
+              ) : (
+                <span className="text-xs font-thin italic text-gray-400">
+                  Please fill out your information
+                </span>
+              )}
             </li>
             <li className="flex justify-between">
               <span className="text-gray-600">Major:</span>
-              <span className="capitalize">Information technology</span>
+              {initialValues?.major ? (
+                <span className="uppercase">{initialValues?.major}</span>
+              ) : (
+                <span className="text-xs font-thin italic text-gray-400">
+                  Please fill out your information
+                </span>
+              )}
             </li>
             <div className="flex justify-end mt-5">
               <Button
