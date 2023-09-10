@@ -1,20 +1,26 @@
 import { Button, FormField, TitleFormField } from "@/components/Atoms";
+import { useAuthContext } from "@/contexts/authContext";
+import { ITopicObject } from "@/interface/topic";
 import { Form, Formik } from "formik";
 import { FC } from "react";
 
 export interface IRegistrationTopicFormProps {}
 
 export const RegistrationTopicForm: FC<IRegistrationTopicFormProps> = () => {
+  const { user } = useAuthContext();
   return (
     <Formik
-      initialValues={{
-        title: "",
-        typeTopic: "",
-        description: "",
-        languages: "",
-        quantity: "",
-        nameDual: "",
-      }}
+      initialValues={
+        {
+          title: "",
+          type: "",
+          technologies: [],
+          memberQuantiy: 0,
+          student: user,
+          memberEmail: "",
+          description: "",
+        } as ITopicObject
+      }
       validate={(values) => {
         const errors = {};
         return errors;
