@@ -1,4 +1,4 @@
-import { Button, FormField, TitleFormField } from "@/components/Atoms";
+import { Avatar, Button, FormField, TitleFormField } from "@/components/Atoms";
 import { InforUserForm } from "@/components/Molecules";
 import { useAuthContext } from "@/contexts/authContext";
 import { INITIATE_AUTH } from "@/data";
@@ -36,6 +36,10 @@ export const PersonalInformation: FC<IPersonalInformationProps> = () => {
           <h4 className="text-base font-medium bg-green-600 text-white uppercase p-3">
             Information personal
           </h4>
+          <div className="flex flex-col items-center gap-2 justify-center mt-3">
+            <Avatar widthStr="w-20" srcImg={initialValues.photoSrc || ""} />
+            <p className="text-xs italic text-gray-500">Upload your photo</p>
+          </div>
           <ul className="py-5 flex flex-col gap-3 px-3">
             <li className="flex justify-between">
               <span className="text-gray-600">Full name:</span>
