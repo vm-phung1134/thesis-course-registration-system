@@ -12,4 +12,6 @@ export * from "./Spinner";
 export * from "./SelectBox";
 export * from "./SelectInForm"
 export * from "./IConTitle";
-export * from "./CheckBoxField"
+export * from "./CheckBoxField";
+export * from "./SnipperRound";
+

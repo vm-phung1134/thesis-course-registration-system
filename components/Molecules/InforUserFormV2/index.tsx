@@ -26,28 +26,31 @@ export const InforUserFormV2: FC<IInforUserFormV2Props> = ({
         }, 400);
       }}
     >
-      <Form>
-        <TitleFormField
-          className="text-base uppercase text-green-700 font-medium mb-5"
-          title="Update personal information"
-        />
-        <FormField type="text" label="Full name" nameField="name" />
-        <FormField type="text" label="Email address" nameField="email" />
-        <div className="flex gap-5 w-full">
-          <FormField type="text" label="Phone number" nameField="phone" />
-          <FormField type="text" label="Class" nameField="class" />
-        </div>
-        <FormField type="text" label="Major" nameField="major" />
-        <div className="flex justify-end items-center">
-          <button
-            onClick={() => setSwitchingForm(switchingForm + 1)}
-            type="submit"
-            className="hover:bg-[#165b31] btn rounded-none font-normal normal-case w-28 bg-[#018937] text-white px-5"
-          >
-            Next step
-          </button>
-        </div>
-      </Form>
+      <>
+        <h3 className="text-xs mb-3">Step {switchingForm} of 2</h3>
+        <Form>
+          <TitleFormField
+            className="text-base uppercase text-green-700 font-medium mb-5"
+            title="Update personal information"
+          />
+          <FormField type="text" label="Full name" nameField="name" />
+          <FormField type="text" label="Email address" nameField="email" />
+          <div className="flex gap-5 w-full">
+            <FormField type="text" label="Phone number" nameField="phone" />
+            <FormField type="text" label="Class" nameField="class" />
+          </div>
+          <FormField type="text" label="Major" nameField="major" />
+          <div className="flex justify-end items-center">
+            <button
+              onClick={() => setSwitchingForm(switchingForm + 1)}
+              type="submit"
+              className="hover:bg-[#165b31] btn rounded-none font-normal normal-case w-28 bg-[#018937] text-white px-5"
+            >
+              Next step
+            </button>
+          </div>
+        </Form>
+      </>
     </Formik>
   );
 };

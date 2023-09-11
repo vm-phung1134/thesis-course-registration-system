@@ -21,7 +21,6 @@ function CreateClassroomPage() {
         </div>
         <div className="flex h-full items-center">
           <div className="p-5 border w-[70%] shadow-xl">
-            <h3 className="text-xs mb-3">Step {switchingForm} of 2</h3>
             {switchingForm === 1 ? (
               <InforUserFormV2
                 setSwitchingForm={setSwitchingForm}

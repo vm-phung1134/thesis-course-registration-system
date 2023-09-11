@@ -140,16 +140,9 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
                         )}
                       </div>
                     </div>
-                    {user?.role === ROLE_ASSIGNMENT.LECTURER ? (
-                      <div className="flex justify-between items-center">
-                        <CountDown timeLeft={timeLeft} />
-                        <CodeClass />
-                      </div>
-                    ) : (
-                      <div className="flex items-end justify-end">
-                        <CodeClass />
-                      </div>
-                    )}
+                    <div className="flex items-end justify-end">
+                      <CodeClass />
+                    </div>
                   </div>
                 </div>
               </div>
