@@ -107,9 +107,12 @@ export const SidebarLecturerView: FC<ISidebarLecturerViewProps> = ({
             </summary>
             <ul className="flex gap-2 flex-col ml-7 mt-4 text-[15px] font-medium">
               <li>
-                <a className="rounded-none hover:bg-[#018937] hover:text-white">
+                <Link
+                  href="/activities/assignment-tasks"
+                  className="rounded-none hover:bg-[#018937] hover:text-white"
+                >
                   Assignment
-                </a>
+                </Link>
               </li>
               <li>
                 <a className="rounded-none hover:bg-[#018937] hover:text-white">
