@@ -6,45 +6,50 @@ export interface ICountDownProps {
 
 export const CountDown: FC<ICountDownProps> = ({ timeLeft }) => {
   return (
-    <div className="flex gap-5">
-      <div>
-        <span className="countdown text-2xl">
-          <span
-            style={
-              {
-                "--value":
-                  Math.floor(timeLeft / (24 * 60 * 60)) > 100
-                    ? 99
-                    : Math.floor(timeLeft / (24 * 60 * 60)),
-              } as {}
-            }
-          ></span>
-        </span>
-        days
-      </div>
-      <div>
-        <span className="countdown text-2xl">
-          <span
-            style={
-              {
-                "--value": Math.floor((timeLeft % (24 * 60 * 60)) / (60 * 60)),
-              } as {}
-            }
-          ></span>
-        </span>
-        hours
-      </div>
-      <div>
-        <span className="countdown text-2xl">
-          <span
-            style={
-              {
-                "--value": Math.floor((timeLeft % (60 * 60)) / 60),
-              } as {}
-            }
-          ></span>
-        </span>
-        min
+    <div className="flex flex-col">
+      <p className="text-sm capitalize text-center pb-2">CountDown Report</p>
+      <div className="flex gap-5">
+        <div>
+          <span className="countdown text-2xl">
+            <span
+              style={
+                {
+                  "--value":
+                    Math.floor(timeLeft / (24 * 60 * 60)) > 100
+                      ? 99
+                      : Math.floor(timeLeft / (24 * 60 * 60)),
+                } as {}
+              }
+            ></span>
+          </span>
+          days
+        </div>
+        <div>
+          <span className="countdown text-2xl">
+            <span
+              style={
+                {
+                  "--value": Math.floor(
+                    (timeLeft % (24 * 60 * 60)) / (60 * 60)
+                  ),
+                } as {}
+              }
+            ></span>
+          </span>
+          hours
+        </div>
+        <div>
+          <span className="countdown text-2xl">
+            <span
+              style={
+                {
+                  "--value": Math.floor((timeLeft % (60 * 60)) / 60),
+                } as {}
+              }
+            ></span>
+          </span>
+          min
+        </div>
       </div>
     </div>
   );

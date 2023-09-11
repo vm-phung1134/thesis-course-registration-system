@@ -1,4 +1,4 @@
-import { Avatar, MenuClassroom } from "@/components/Atoms";
+import { Avatar, Button, MenuClassroom } from "@/components/Atoms";
 import {
   CountDown,
   CreateExerciseForm,
@@ -40,9 +40,10 @@ const CardLecturerClass = () => {
         </li>
       </ul>
       <div className="flex justify-end items-end">
-        <button className="btn rounded-none bg-transparent border-red-500 text-red-600 font-normal capitalize">
-          Leave Group
-        </button>
+        <Button
+          className="bg-transparent border-red-500 text-red-600 font-normal capitalize"
+          title="Leave Group"
+        />
       </div>
     </>
   );
@@ -50,14 +51,12 @@ const CardLecturerClass = () => {
 
 const CodeClass = () => {
   return (
-    <div className="flex justify-center flex-col items-end">
-      <div className="border w-fit p-2">
-        <div className="flex justify-between items-center">
-          <small>Code</small>
-          <button>...</button>
-        </div>
-        <p className="font-medium text-md px-5 py-2">zggbvj3</p>
+    <div className="border w-fit p-2">
+      <div className="flex justify-between items-center">
+        <small>Code</small>
+        <button>...</button>
       </div>
+      <p className="font-medium text-md px-5 py-2">zggbvj3</p>
     </div>
   );
 };
@@ -119,7 +118,6 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
                   <div className="p-5">
                     <MenuClassroom listMenu={DATA_MENU_CLASSROOM} />
                     <div className="mt-5 flex flex-col items-center gap-3">
-                      <p className="text-sm capitalize">CountDown Report</p>
                       <div className="flex justify-center gap-4 items-center cursor-pointer">
                         <Avatar
                           widthStr="w-10"
@@ -142,8 +140,16 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
                         )}
                       </div>
                     </div>
-
-                    <CodeClass />
+                    {user?.role === ROLE_ASSIGNMENT.LECTURER ? (
+                      <div className="flex justify-between items-center">
+                        <CountDown timeLeft={timeLeft} />
+                        <CodeClass />
+                      </div>
+                    ) : (
+                      <div className="flex items-end justify-end">
+                        <CodeClass />
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
