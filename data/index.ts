@@ -1,4 +1,5 @@
 import { IAuthObject } from "@/interface/auth";
+import { ICourseObject } from "@/interface/course";
 import { IExerciseObject } from "@/interface/exercise";
 import { IPostObject } from "@/interface/post";
 
@@ -50,4 +51,18 @@ export const INITIATE_EXERCISE: IExerciseObject = {
   description: "",
   deadline: new Date(""),
   score: 0,
+};
+
+export const INITIATE_COURSE: ICourseObject = {
+  lecturer: {
+    name: "",
+    photoSrc: "",
+    email: "",
+    phone: "",
+    class: "",
+    major: "",
+    role: "",
+  },
+  codeCourse: "",
+  quantity: 0,
 };

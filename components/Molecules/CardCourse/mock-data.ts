@@ -7,7 +7,6 @@ export const DATA_CARD_COURSE: ICourseObject[] = [
       id: "GV_1",
       name: "le huynh quoc bao",
       photoSrc: "",
-      token: "",
       email: "lhqbao@ctu.edu.vn",
       phone: "123456789",
       major: "Sercurity information",
@@ -18,15 +17,18 @@ export const DATA_CARD_COURSE: ICourseObject[] = [
     topicTags: [
       {
         id: "T_1",
-        title: "Blockchain",
+        label: "Blockchain",
+        value: "block-chain",
       },
       {
         id: "T_2",
-        title: "Web",
+        label: "Website",
+        value: "web",
       },
       {
         id: "T_3",
-        title: "Mobile",
+        label: "Mobile",
+        value: "mobile",
       },
     ],
   },
@@ -36,7 +38,6 @@ export const DATA_CARD_COURSE: ICourseObject[] = [
       id: "GV_2",
       name: "lam nhut khang",
       photoSrc: "",
-      token: "",
       email: "lnkhang@ctu.edu.vn",
       phone: "123456789",
       major: "computer networks",
@@ -47,15 +48,18 @@ export const DATA_CARD_COURSE: ICourseObject[] = [
     topicTags: [
       {
         id: "T_1",
-        title: "AI",
+        label: "AI",
+        value: "ai",
       },
       {
         id: "T_2",
-        title: "Embedded",
+        label: "Embedded",
+        value: "embedded",
       },
       {
         id: "T_3",
-        title: "Networks",
+        label: "Networks",
+        value: "networks",
       },
     ],
   },

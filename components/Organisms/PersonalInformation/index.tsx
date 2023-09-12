@@ -37,7 +37,7 @@ export const PersonalInformation: FC<IPersonalInformationProps> = () => {
             Information personal
           </h4>
           <div className="flex flex-col items-center gap-2 justify-center mt-3">
-            <Avatar widthStr="w-20" srcImg={initialValues.photoSrc || ""} />
+            <Avatar widthStr="w-14" srcImg={initialValues.photoSrc || ""} />
             <p className="text-xs italic text-gray-500">Upload your photo</p>
           </div>
           <ul className="py-5 flex flex-col gap-3 px-3">

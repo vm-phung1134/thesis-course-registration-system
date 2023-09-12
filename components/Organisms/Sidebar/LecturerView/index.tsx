@@ -67,7 +67,7 @@ export const SidebarLecturerView: FC<ISidebarLecturerViewProps> = ({
         <li onClick={() => setOpenModal?.(!openModal)}>
           <Link
             className="rounded-none hover:bg-[#018937] hover:text-white"
-            href="/manage-classroom"
+            href="/manage-classroom/create-classroom"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

@@ -2,7 +2,8 @@ import { IAuthObject } from "./auth";
 
 export interface ITopicKeyObject {
   id?: string;
-  title: string;
+  value: string;
+  label: string;
 }
 
 export interface ICourseObject {
@@ -10,5 +11,5 @@ export interface ICourseObject {
   lecturer: IAuthObject;
   codeCourse: string;
   quantity: number;
-  topicTags: ITopicKeyObject[];
+  topicTags?: ITopicKeyObject[];
 }

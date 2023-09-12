@@ -64,7 +64,7 @@ export const CardCourse: FC<ICardCourseProps> = ({ item }) => {
                   key={tag.id}
                   className="py-1 px-2 bg-gray-600 text-white text-xs w-fit"
                 >
-                  {tag.title}
+                  {tag.label}
                 </li>
               );
             })}

@@ -20,7 +20,7 @@ export const FormField: FC<IFormFieldProps> = ({
         {label}
       </label>
       <Field
-        className="input border-gray-300 rounded-none text-sm focus:outline-none w-full"
+        className="input placeholder:text-sm border-gray-300 rounded-none text-sm focus:outline-none w-full"
         type={type}
         id={nameField}
         placeholder={placeholder}

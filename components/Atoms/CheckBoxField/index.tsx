@@ -14,6 +14,7 @@ export const CheckBoxField: FC<ICheckBoxFieldProps> = ({
     <div className="form-control mt-1">
       <label className="cursor-pointer flex gap-3" htmlFor={nameField}>
         <Field
+          type="checkbox"
           className="checkbox checkbox-xs"
           id={nameField}
           name={nameField}

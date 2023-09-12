@@ -38,7 +38,7 @@ const TaskHeader: FC<ITaskHeaderProps> = ({ setOpenModalEx, openModalEx }) => {
           <div className="flex flex-col">
             <p
               onClick={() => setOpenModalEx?.(!openModalEx)}
-              className="cursor-pointer hover:text-black ease-in-out duration-300"
+              className="cursor-pointer ease-in-out duration-300"
             >
               <span className="font-medium">Le Huynh Quoc Bao</span> has been
               added a new report

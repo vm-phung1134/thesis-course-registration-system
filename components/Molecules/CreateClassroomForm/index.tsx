@@ -2,12 +2,16 @@ import {
   Button,
   CheckBoxField,
   FormField,
-  SelectBox,
+  SelectMulti,
   SnipperRound,
   TitleFormField,
 } from "@/components/Atoms";
 import { Form, Formik } from "formik";
 import { FC, useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { INITIATE_COURSE } from "@/data";
+import { SELECT_MULTI_TOPIC_KEY } from "@/components/Atoms/SelectMulti/mock-data";
+import { ITopicKeyObject } from "@/interface/course";
 
 export interface ICreateClassroomFormProps {
   switchingForm: number;
@@ -19,6 +23,11 @@ export const CreateClassroomForm: FC<ICreateClassroomFormProps> = ({
   switchingForm,
 }) => {
   const [loading, setLoading] = useState<boolean>(false);
+  const [selected, setSelected] = useState<ITopicKeyObject[]>([
+    SELECT_MULTI_TOPIC_KEY[0],
+    SELECT_MULTI_TOPIC_KEY[1],
+  ]);
+  const router = useRouter();
   useEffect(() => {
     setLoading(true);
     const timeOutLoading = setTimeout(() => {
@@ -28,16 +37,18 @@ export const CreateClassroomForm: FC<ICreateClassroomFormProps> = ({
   }, []);
   return (
     <Formik
-      initialValues={{}}
+      initialValues={INITIATE_COURSE}
       validate={(values) => {
         const errors = {};
         return errors;
       }}
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
-          alert(JSON.stringify(values, null, 2));
+          console.log({ topicTags: selected, ...INITIATE_COURSE });
           setSubmitting(false);
         }, 400);
+
+        //router.push("/manage-classroom");
       }}
     >
       <>
@@ -68,15 +79,14 @@ export const CreateClassroomForm: FC<ICreateClassroomFormProps> = ({
                   placeholder="Ex: jhkldop"
                   type="text"
                   label="Code classroom"
-                  nameField="quantity"
+                  nameField="codeCourse"
                 />
               </div>
               <div className="mb-4">
-                <SelectBox
-                  setPadding="lg"
-                  options={[]}
-                  selected={{ value: "", label: "" }}
-                  setSelected={() => {}}
+                <SelectMulti
+                  setSelected={setSelected}
+                  selected={selected}
+                  options={SELECT_MULTI_TOPIC_KEY}
                 />
               </div>
               <CheckBoxField
