@@ -17,6 +17,7 @@ import { DATA_LIST_OPTIONS, DATA_MENU_CLASSROOM } from "./mock-data";
 import { ROLE_ASSIGNMENT, useAuthContext } from "@/contexts/authContext";
 import { ICategoryObject } from "@/interface/category";
 import { IOptionItem } from "@/interface/filter";
+import Image from "next/image";
 
 export interface IClassroomProps {
   children: React.ReactNode;
@@ -57,6 +58,29 @@ const CodeClass = () => {
         <button>...</button>
       </div>
       <p className="font-medium text-md px-5 py-2">zggbvj3</p>
+    </div>
+  );
+};
+
+const ClassroomNotFound = () => {
+  return (
+    <div className="h-[80%] w-full flex flex-col justify-center items-center">
+      <Image
+        src="https://carolinametrotech.com/wp-content/uploads/2022/12/undraw_Push_notifications_re_t84m.png"
+        width="400"
+        height="400"
+        className="-hue-rotate-[38deg] saturate-[.85]"
+        objectFit="cover"
+        objectPosition="center"
+        alt=""
+      />
+      <p className="py-5 text-gray-500 uppercase">
+        Ops! We have not found your classroom yet
+      </p>
+      <Button
+        className="px-10 bg-green-700 text-white hover:bg-green-600"
+        title="Back to mainboard"
+      />
     </div>
   );
 };
@@ -148,6 +172,8 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
               </div>
               {children}
             </div>
+            {/* CHECK CLASSROOM OF STUDENT */}
+            {/* <ClassroomNotFound /> */}
           </div>
           <ModalConfirm
             openModal={openModal}

@@ -8,7 +8,8 @@ const nextConfig = {
       "yu.ctu.edu.vn",
       "images.pexels.com",
       "img.icons8.com",
-      "lh3.googleusercontent.com"
+      "lh3.googleusercontent.com",
+      "carolinametrotech.com"
     ],
   },
 };
