@@ -115,9 +115,12 @@ export const SidebarLecturerView: FC<ISidebarLecturerViewProps> = ({
                 </Link>
               </li>
               <li>
-                <a className="rounded-none hover:bg-[#018937] hover:text-white">
+                <Link
+                  href="/activities/requirements"
+                  className="rounded-none hover:bg-[#018937] hover:text-white"
+                >
                   Requirement
-                </a>
+                </Link>
               </li>
             </ul>
           </details>
