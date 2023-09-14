@@ -23,7 +23,33 @@ export const InforUserFormV2: FC<IInforUserFormV2Props> = ({
     <Formik
       initialValues={INITIATE_AUTH}
       validate={(values) => {
-        const errors = {};
+        let errors: any = {};
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+        const phoneNumberRegex = /^0\d{9,10}$/;
+        // name
+        if (!values.name) {
+          errors.name = "! Name is required";
+        } else if (values.name.length > 30) {
+          errors.name = "! Name less than 30 characters";
+        }
+        // email
+        if (!values.email) {
+          errors.email = "! Email is required";
+        } else if (!emailRegex.test(values.email)) {
+          errors.email = "! Email invalid";
+        } else if (values.email.length > 30) {
+          errors.email = "! Email less than 30 characters";
+        }
+        // phone
+        if (!values.phone) {
+          errors.phone = "! Phone number is required";
+        } else if (!phoneNumberRegex.test(values.phone)) {
+          errors.phone = "! Phone number invalid";
+        }
+        // major
+        if (!values.major) {
+          errors.major = "! Major number is required";
+        }
         return errors;
       }}
       onSubmit={(values, { setSubmitting }) => {

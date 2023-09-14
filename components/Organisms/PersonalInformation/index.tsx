@@ -32,8 +32,8 @@ export const PersonalInformation: FC<IPersonalInformationProps> = () => {
       }}
     >
       <>
-        <div className="p-5 w-[90%]">
-          <h4 className="text-base font-medium bg-green-600 text-white uppercase p-3">
+        <div className="p-5 w-[90%] text-sm">
+          <h4 className="font-medium bg-green-600 text-white uppercase p-3">
             Information personal
           </h4>
           <div className="flex flex-col items-center gap-2 justify-center mt-3">

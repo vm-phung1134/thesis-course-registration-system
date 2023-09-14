@@ -58,7 +58,7 @@ export const CardCourse: FC<ICardCourseProps> = ({ item }) => {
           </ul>
           <p className="text-sm uppercase text-gray-500 py-2">Topics</p>
           <ul className="flex gap-2 flex-wrap cursor-pointer">
-            {item.topicTags.map((tag) => {
+            {item.topicTags?.map((tag) => {
               return (
                 <li
                   key={tag.id}
@@ -76,6 +76,8 @@ export const CardCourse: FC<ICardCourseProps> = ({ item }) => {
             className="bg-transparent border-none hover:border-none hover:bg-transparent"
           />
           <Button
+            id={item.id}
+            otherType="subscribe"
             title="Subscribe"
             className="hover:bg-[#165b31] btn-sm bg-[#018937] text-white"
           />

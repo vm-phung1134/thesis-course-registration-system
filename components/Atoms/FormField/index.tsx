@@ -27,7 +27,7 @@ export const FormField: FC<IFormFieldProps> = ({
         name={nameField}
       />
       <ErrorMessage
-        className="text-red-500 text-[13px]"
+        className="text-red-500 text-[13px] mt-[-7px]"
         name={nameField}
         component="div"
       />

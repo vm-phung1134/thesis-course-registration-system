@@ -3,6 +3,7 @@ import { ICourseObject } from "@/interface/course";
 export const DATA_CARD_COURSE: ICourseObject[] = [
   {
     id: "C_1",
+    title: "",
     lecturer: {
       id: "GV_1",
       name: "le huynh quoc bao",
@@ -34,6 +35,7 @@ export const DATA_CARD_COURSE: ICourseObject[] = [
   },
   {
     id: "C_2",
+    title: "",
     lecturer: {
       id: "GV_2",
       name: "lam nhut khang",

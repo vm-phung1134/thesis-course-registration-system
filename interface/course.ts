@@ -8,6 +8,7 @@ export interface ITopicKeyObject {
 
 export interface ICourseObject {
   id?: string;
+  title: string;
   lecturer: IAuthObject;
   codeCourse: string;
   quantity: number;

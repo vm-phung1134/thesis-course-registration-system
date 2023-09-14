@@ -41,7 +41,7 @@ export const MainboardTemplate: FC<IMainboardProps> = ({ children, title }) => {
           )}
           <div className="col-span-10">
             <Header />
-            <div className="px-5">{children}</div>
+            <div className="px-5 h-full">{children}</div>
           </div>
           <ModalConfirm
             openModal={openModal}

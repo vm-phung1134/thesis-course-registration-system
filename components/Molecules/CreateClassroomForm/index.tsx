@@ -39,7 +39,22 @@ export const CreateClassroomForm: FC<ICreateClassroomFormProps> = ({
     <Formik
       initialValues={INITIATE_COURSE}
       validate={(values) => {
-        const errors = {};
+        let errors: any = {};
+        if (!values.title) {
+          errors.title = "! Title classroom is required";
+        } else if (values.title.length > 30) {
+          errors.title = "! Title less than 30 characters";
+        }
+        if (!values.codeCourse) {
+          errors.codeCourse = "! Code is required";
+        } else if (values.codeCourse.length > 30) {
+          errors.codeCourse = "! CodeCourse less than 30 characters";
+        }
+        if (!values.quantity) {
+          errors.quantity = "! Quantity is required";
+        } else if (values.quantity > 30) {
+          errors.quantity = "! Quantity less than 15 members";
+        }
         return errors;
       }}
       onSubmit={(values, { setSubmitting }) => {
@@ -66,8 +81,8 @@ export const CreateClassroomForm: FC<ICreateClassroomFormProps> = ({
               <FormField
                 placeholder="Ex: Le Huynh Quoc Bao"
                 type="text"
-                label="Name class"
-                nameField="name"
+                label="Title class"
+                nameField="title"
               />
               <div className="flex gap-3">
                 <FormField

@@ -34,7 +34,7 @@ export const RegistrationTopicForm: FC<IRegistrationTopicFormProps> = () => {
     >
       <Form>
         <TitleFormField
-          className="text-lg uppercase text-green-600 font-medium mb-5"
+          className="text-base uppercase text-green-600 font-medium mb-5"
           title="Registration of research topics"
         />
         <FormField

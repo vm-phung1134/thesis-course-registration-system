@@ -54,6 +54,7 @@ export const INITIATE_EXERCISE: IExerciseObject = {
 };
 
 export const INITIATE_COURSE: ICourseObject = {
+  title: "",
   lecturer: {
     name: "",
     photoSrc: "",
