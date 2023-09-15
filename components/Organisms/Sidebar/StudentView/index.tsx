@@ -14,7 +14,7 @@ export const SidebarStudentView: FC<ISidebarStudentViewProps> = ({
 }) => {
   const { t } = useLanguageContext();
   return (
-    <div className="col-span-2 border-r min-h-screen max-h-fit">
+    <div className="col-span-2 border-r dark:border-gray-500 min-h-screen max-h-fit">
       <LogoApp
         width={30}
         height={30}

@@ -8,10 +8,9 @@
 }
 
 body {
-  color: #202020;
-  background: #f8f8f7;
   font-family: "Red Hat Text", sans-serif;
 }
+
 .three-body {
   --uib-size: 35px;
   --uib-speed: 0.8s;

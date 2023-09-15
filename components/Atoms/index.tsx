@@ -14,4 +14,5 @@ export * from "./SelectInForm"
 export * from "./IConTitle";
 export * from "./CheckBoxField";
 export * from "./SnipperRound";
-export * from "./SelectMulti"
+export * from "./SelectMulti";
+export * from "./ToggleDarkMode";

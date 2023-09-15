@@ -27,7 +27,7 @@ export const MainboardTemplate: FC<IMainboardProps> = ({ children, title }) => {
         <title>{title}</title>
       </Head>
       <main>
-        <div className="grid grid-cols-12 bg-base-100">
+        <div className="grid grid-cols-12 bg-base-100 dark:bg-[#0d0d0e] dark:text-[#dedede]">
           {user?.role === ROLE_ASSIGNMENT.STUDENT ? (
             <SidebarStudentView
               openModal={openModal}

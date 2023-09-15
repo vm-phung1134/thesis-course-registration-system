@@ -10,6 +10,7 @@ import {
 } from "./mock-data";
 import { IOptionItem } from "@/interface/filter";
 import { ICategoryObject } from "@/interface/category";
+import DarkModeToggle from "@/components/Atoms/ToggleDarkMode";
 
 function MainboardPage() {
   const [loading, setLoading] = useState<boolean>(false);

@@ -1,4 +1,5 @@
 import { Avatar } from "@/components/Atoms";
+import DarkModeToggle from "@/components/Atoms/ToggleDarkMode";
 import { useAuthContext } from "@/contexts/authContext";
 import { useLanguageContext } from "@/contexts/languageContext";
 import Image from "next/image";
@@ -10,7 +11,7 @@ export const Header: FC<IHeaderProps> = () => {
   const { user, logout } = useAuthContext();
   const { handleChangeLanguage, localeValue } = useLanguageContext();
   return (
-    <div className="navbar border-b p-5">
+    <div className="navbar border-b dark:border-gray-500 p-5">
       <div className="justify-between w-full">
         <form action="">
           <div className="flex border w-96 px-3 items-center">
@@ -31,7 +32,7 @@ export const Header: FC<IHeaderProps> = () => {
             <input
               placeholder="Search for anything..."
               type="text"
-              className="input h-10 text-[15px] focus:outline-none rounded-none flex-1"
+              className="input dark:bg-black h-10 text-[15px] focus:outline-none rounded-none flex-1"
             />
           </div>
         </form>
@@ -97,19 +98,28 @@ export const Header: FC<IHeaderProps> = () => {
             </div>
             <ul
               tabIndex={0}
-              className="dropdown-content z-[1] menu mt-5 p-2 shadow-lg bg-base-100 rounded-none w-56"
+              className="dropdown-content z-[1] menu mt-5 p-2 shadow-lg bg-base-100 dark:bg-black rounded-none w-56"
             >
               <li>
-                <a className="rounded-none">Profile</a>
+                <a className="rounded-none dark:bg-[#1f1f1f] dark:text-white dark:hover:bg-green-600">
+                  Profile
+                </a>
               </li>
               <li>
-                <a className="rounded-none">Theme</a>
+                <div className="rounded-none flex justify-between dark:bg-[#000000] dark:text-white dark:hover:bg-green-600">
+                  <a href="">Dark mode</a>
+                  <DarkModeToggle />
+                </div>
               </li>
               <li>
-                <a className="rounded-none">Setting</a>
+                <a className="rounded-none dark:bg-[#000000] dark:text-white dark:hover:bg-green-600">
+                  Setting
+                </a>
               </li>
               <li onClick={logout}>
-                <a className="rounded-none">Sign out</a>
+                <a className="rounded-none dark:bg-[#000000] dark:text-white dark:hover:bg-green-600">
+                  Sign out
+                </a>
               </li>
             </ul>
           </div>
