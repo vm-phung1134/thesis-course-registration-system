@@ -16,7 +16,7 @@ function SubscribeCourseDetail() {
       {loading ? (
         <SnipperRound />
       ) : (
-        <div className="flex gap-2 justify-center items-center h-full border">
+        <div className="flex gap-2 justify-center items-center min-h-[70%] max-h-full">
           <Image
             src="https://tailwindcomponents.com/svg/queue-animate.svg"
             alt="bg-create-class"

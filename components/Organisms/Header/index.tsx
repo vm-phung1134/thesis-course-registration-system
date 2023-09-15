@@ -1,11 +1,14 @@
 import { Avatar } from "@/components/Atoms";
 import { useAuthContext } from "@/contexts/authContext";
+import { useLanguageContext } from "@/contexts/languageContext";
+import Image from "next/image";
 import { FC } from "react";
 
 export interface IHeaderProps {}
 
 export const Header: FC<IHeaderProps> = () => {
   const { user, logout } = useAuthContext();
+  const { handleChangeLanguage, localeValue } = useLanguageContext();
   return (
     <div className="navbar border-b p-5">
       <div className="justify-between w-full">
@@ -33,7 +36,30 @@ export const Header: FC<IHeaderProps> = () => {
           </div>
         </form>
         <div className="flex gap-10">
-          <div className="flex">
+          <div className="flex items-center">
+            {/* CHANGE LANGUAGE */}
+            <div className="font-medium text-xs mr-5 flex">
+              <Image
+                src="https://www.honorofkings.com/img/language_icon.png"
+                width="17"
+                height="15"
+                alt="icon-language"
+              />
+              <button
+                className={`${localeValue === "en" && "text-green-600 "} px-3`}
+                onClick={() => handleChangeLanguage("en")}
+              >
+                English
+              </button>
+              <span className="border-r border-gray-300"></span>
+              <button
+                className={`${localeValue === "vi" && "text-green-600 "} px-3`}
+                onClick={() => handleChangeLanguage("vi")}
+              >
+                Vietnam
+              </button>
+            </div>
+
             <button className="btn btn-ghost btn-circle">
               <div className="indicator text-lg p-1">
                 <i className="fa-regular fa-bookmark"></i>
@@ -59,7 +85,9 @@ export const Header: FC<IHeaderProps> = () => {
             >
               <div className="flex flex-col text-[15px] font-normal items-end">
                 <p>{user?.email || "example@ctu.edu.vn"}</p>
-                <p className="text-green-800 text-sm capitalize">Pov: {user?.role || "Student"}</p>
+                <p className="text-green-800 text-sm capitalize">
+                  Pov: {user?.role || "Student"}
+                </p>
               </div>
               <Avatar
                 online={true}

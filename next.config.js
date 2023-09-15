@@ -9,8 +9,13 @@ const nextConfig = {
       "images.pexels.com",
       "img.icons8.com",
       "lh3.googleusercontent.com",
-      "carolinametrotech.com"
+      "carolinametrotech.com",
+      "www.honorofkings.com",
     ],
+  },
+  i18n: {
+    locales: ['en', 'vi'],
+    defaultLocale: 'en',
   },
 };
 
