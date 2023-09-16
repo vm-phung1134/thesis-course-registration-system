@@ -10,7 +10,7 @@ import { ICategoryObject } from "@/interface/category";
 import { IOptionItem } from "@/interface/filter";
 import { IPostObject } from "@/interface/post";
 import { Form, Formik } from "formik";
-import { FC, useState } from "react";
+import { FC } from "react";
 
 export interface ICreatePostFormProps {
   setToggleForm: React.Dispatch<React.SetStateAction<boolean>>;

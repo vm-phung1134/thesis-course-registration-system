@@ -22,3 +22,4 @@ export * from "./InforUserFormV2";
 export * from "./CreateClassroomForm";
 export * from "./CardRequireMember";
 export * from "./Pagination"
+export * from "./UploadFileForm"

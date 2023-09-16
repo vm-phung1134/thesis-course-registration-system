@@ -3,6 +3,7 @@ import {
   CardStudentShort,
   CommentForm,
   ContentComment,
+  UploadFileForm,
 } from "@/components/Molecules";
 import { ROLE_ASSIGNMENT, useAuthContext } from "@/contexts/authContext";
 import { IPostObject } from "@/interface/post";
@@ -29,10 +30,10 @@ export const PostModal: FC<IPostModalProps> = ({
         <div className="grid grid-cols-12 h-full">
           <div className="col-span-8 border-r px-3">
             <div className="border-b pb-5">
-              <h3 className="font-medium text-lg uppercase text-green-700">
+              <h3 className="font-medium uppercase text-green-700">
                 Report grogress - {post.category.label} stage
               </h3>
-              <p className="text-base font-medium uppercase py-1">
+              <p className="font-medium uppercase py-1">
                 {post.lecturer.name}
               </p>
               <div className="flex justify-between items-center">
@@ -58,12 +59,15 @@ export const PostModal: FC<IPostModalProps> = ({
               <p className="text-[15px]">2 Comment for this report</p>
               <CommentForm />
               <ContentComment />
-              <Button className="rounded-none w-full" title="View more comments" />
+              <Button
+                className="rounded-none w-full"
+                title="View more comments"
+              />
             </div>
           </div>
           <div className="col-span-4 px-3">
             <div className="flex justify-between">
-              <h3 className="font-medium text-lg uppercase text-green-700">
+              <h3 className="font-medium uppercase text-green-700">
                 Status report
               </h3>
               <button
@@ -123,15 +127,7 @@ export const ReportStatusStudentView = () => {
           </h4>
           <p className="text-sm text-red-600">Lack</p>
         </div>
-        <div className="w-full h-20 border mb-5">
-          <div className="flex h-full w-full items-center justify-center">
-            <p className="text-sm font-thin">Upload file</p>
-          </div>
-        </div>
-        <Button
-          className="rounded-none hover:bg-green-600 w-full my-5 bg-green-700 text-white"
-          title="Submit your report"
-        />
+        <UploadFileForm />
       </div>
     </>
   );
