@@ -21,12 +21,26 @@ export const PersonalInformation: FC<IPersonalInformationProps> = () => {
     <Formik
       initialValues={initialValues}
       validate={(values) => {
-        const errors = {};
+        let errors: any = {};
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+        // Email
+        if (!values.email) {
+          errors.email = "! Email is required";
+        } else if (!emailRegex.test(values.email)) {
+          errors.email = "! Email invalid";
+        }
+        // Full Name
+        if (!values.name) {
+          errors.name = "! Full name is required";
+        } else if (values.name.length > 50) {
+          errors.name = "! Full name less than 50 characters";
+        }
+
         return errors;
       }}
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
-          alert(JSON.stringify(values, null, 2));
+          console.log(values)
           setSubmitting(false);
         }, 400);
       }}

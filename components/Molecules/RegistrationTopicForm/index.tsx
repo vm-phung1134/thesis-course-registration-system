@@ -1,6 +1,6 @@
 import { Button, FormField, TitleFormField } from "@/components/Atoms";
 import { useAuthContext } from "@/contexts/authContext";
-import { ITopicObject } from "@/interface/topic";
+import { INITIATE_TOPIC } from "@/data";
 import { Form, Formik } from "formik";
 import { FC } from "react";
 
@@ -10,19 +10,40 @@ export const RegistrationTopicForm: FC<IRegistrationTopicFormProps> = () => {
   const { user } = useAuthContext();
   return (
     <Formik
-      initialValues={
-        {
-          title: "",
-          type: "",
-          technologies: [],
-          memberQuantiy: 0,
-          student: user,
-          memberEmail: "",
-          description: "",
-        } as ITopicObject
-      }
+      initialValues={INITIATE_TOPIC}
       validate={(values) => {
-        const errors = {};
+        let errors: any = {};
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+        // Title
+        if (!values.title) {
+          errors.title = "! Title topic is required";
+        } else if (values.title.length > 100) {
+          errors.title = "! Title less than 100 characters";
+        }
+        // Member quantity
+        if (!values.memberQuantiy) {
+          errors.memberQuantiy = "! Quantity is required";
+        } else if (values.memberQuantiy > 3) {
+          errors.memberQuantiy = "! Quantity not exceed than 3 members";
+        }
+        // Type topic
+        if (!values.typeTopic) {
+          errors.typeTopic = "! Type topic is required";
+        } else if (values.typeTopic.length > 20) {
+          errors.typeTopic = "! Type topic less than 50 characters";
+        }
+        // Email member
+        if (!values.memberEmail) {
+          errors.memberEmail = "! Email member is required";
+        } else if (!emailRegex.test(values.memberEmail)) {
+          errors.email = "! Email invalid";
+        }
+        // Discription
+        if (!values.description) {
+          errors.description = "! Discription is required";
+        } else if (values.description.length > 20) {
+          errors.description = "! Discription less than 500 characters";
+        }
         return errors;
       }}
       onSubmit={(values, { setSubmitting }) => {
@@ -47,27 +68,21 @@ export const RegistrationTopicForm: FC<IRegistrationTopicFormProps> = () => {
           <FormField
             placeholder="Ex: Website, Mobile, AI..."
             type="text"
-            label="Type"
+            label="Type of topic"
             nameField="typeTopic"
-          />
-          <FormField
-            placeholder="Ex: C#, Python, Java..."
-            type="text"
-            label="Programming language"
-            nameField="languages"
           />
           <FormField
             placeholder="Ex: 2"
             type="number"
             label="Number of team member"
-            nameField="quantity"
+            nameField="memberQuantiy"
           />
         </div>
         <FormField
           placeholder="Ex: nameb1910xxx@student.ctu.edu.vn"
           type="text"
           label="Email member"
-          nameField="nameDual"
+          nameField="memberEmail"
         />
         <FormField type="text" label="Description" nameField="description" />
         <div className="flex justify-end items-center">

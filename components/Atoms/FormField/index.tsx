@@ -16,7 +16,7 @@ export const FormField: FC<IFormFieldProps> = ({
 }) => {
   return (
     <div className="flex flex-col gap-2 mb-4 w-full">
-      <label className="text-sm capitalize" htmlFor={nameField}>
+      <label className="text-sm font-normal" htmlFor={nameField}>
         {label}
       </label>
       <Field

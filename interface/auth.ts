@@ -1,5 +1,5 @@
 export interface IAuthObject {
-  id?: string;
+  id: string;
   name: string;
   photoSrc: string;
   role?: string;

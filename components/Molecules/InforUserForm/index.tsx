@@ -17,13 +17,33 @@ export const InforUserForm: FC<IInforUserFormProps> = ({
         className="text-lg uppercase text-green-600 font-medium mb-5"
         title="Update personal information"
       />
-      <FormField type="text" label="Full name" nameField="name" />
-      <FormField type="text" label="Email address" nameField="email" />
+      <FormField
+        type="text"
+        label="Full name"
+        nameField="name"
+        placeholder="Ex: Nguyen Van Anh"
+      />
+      <FormField
+        type="text"
+        label="Email address"
+        nameField="email"
+        placeholder="Ex: Nameb1910xxx@student.ctu.edu.vn"
+      />
       <div className="flex gap-5 w-full">
         <FormField type="text" label="Phone number" nameField="phone" />
-        <FormField type="text" label="Class" nameField="class" />
+        <FormField
+          type="text"
+          label="Class"
+          nameField="class"
+          placeholder="Ex: DI19VXXX"
+        />
       </div>
-      <FormField type="text" label="Major" nameField="major" />
+      <FormField
+        type="text"
+        label="Major"
+        nameField="major"
+        placeholder="Ex: Computer Sciented"
+      />
       <div className="flex justify-end items-center">
         <Button
           setToggle={setToggleForm}

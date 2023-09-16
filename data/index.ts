@@ -48,8 +48,7 @@ export const INITIATE_COURSE: ICourseObject = {
 
 export const INITIATE_TOPIC: ITopicObject = {
   title: "",
-  type: "",
-  technologies: [],
+  typeTopic: "",
   memberQuantiy: 0,
   student: INITIATE_AUTH,
   memberEmail: "",
