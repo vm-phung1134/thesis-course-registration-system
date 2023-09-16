@@ -2,9 +2,20 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch } from "react-redux";
 import logger from "redux-logger";
 import { useSelector } from "react-redux";
-
 // Import reducers
-const rootReducer = combineReducers({});
+import authSlice from "./reducer/auth";
+import classroomSlice from "./reducer/classroom";
+import memberSlice from "./reducer/member";
+import requirementSlice from "./reducer/requirement";
+import topicSlice from "./reducer/topic";
+
+const rootReducer = combineReducers({
+  authReducer: authSlice,
+  classroomReducer: classroomSlice,
+  memberReducer: memberSlice,
+  requirementReducer: requirementSlice,
+  topicReducer: topicSlice,
+});
 
 const store = configureStore({
   reducer: rootReducer,
