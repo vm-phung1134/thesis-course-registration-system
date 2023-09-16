@@ -19,8 +19,8 @@ function CreateClassroomPage() {
             objectPosition="center"
           />
         </div>
-        <div className="flex h-fit border items-center">
-          <div className="p-5 border w-[70%] mt-5 shadow-xl">
+        <div className="flex h-fit items-center">
+          <div className="p-5 w-[70%] mt-5 shadow-xl">
             {switchingForm === 1 ? (
               <InforUserFormV2
                 setSwitchingForm={setSwitchingForm}
