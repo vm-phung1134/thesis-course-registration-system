@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { MainboardTemplate } from "@/components/Templates";
 import { DATA_CARD_COURSE } from "../../components/Molecules/CardCourse/mock-data";
-import { CardCourse } from "@/components/Molecules";
+import { CardCourse, Pagination } from "@/components/Molecules";
 import { Breadcrumb, SelectBox, Spinner } from "@/components/Atoms";
 import {
   BREADCRUMB_MAINBOARD,
@@ -26,6 +26,15 @@ function MainboardPage() {
       value: "",
     }
   );
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalPages] = useState<number>(10);
+  const handlePrevPage = () => {
+    setCurrentPage((prevPage) => prevPage - 1);
+  };
+
+  const handleNextPage = () => {
+    setCurrentPage((prevPage) => prevPage + 1);
+  };
   useEffect(() => {
     setLoading(true);
     setTimeout(() => {
@@ -63,6 +72,14 @@ function MainboardPage() {
             {DATA_CARD_COURSE.map((item, index) => {
               return <CardCourse key={item.id} item={item} />;
             })}
+          </div>
+          <div className="flex justify-center mt-10">
+            <Pagination
+              handleNextPage={handleNextPage}
+              handlePrevPage={handlePrevPage}
+              totalPages={totalPages}
+              currentPage={currentPage}
+            />
           </div>
         </MainboardTemplate>
       )}

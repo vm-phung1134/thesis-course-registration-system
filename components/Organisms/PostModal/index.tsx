@@ -58,7 +58,7 @@ export const PostModal: FC<IPostModalProps> = ({
               <p className="text-[15px]">2 Comment for this report</p>
               <CommentForm />
               <ContentComment />
-              <Button className="rounded-none" title="View more comments" />
+              <Button className="rounded-none w-full" title="View more comments" />
             </div>
           </div>
           <div className="col-span-4 px-3">
@@ -129,7 +129,7 @@ export const ReportStatusStudentView = () => {
           </div>
         </div>
         <Button
-          className="rounded-none w-full my-5 bg-green-600 text-white"
+          className="rounded-none hover:bg-green-600 w-full my-5 bg-green-700 text-white"
           title="Submit your report"
         />
       </div>

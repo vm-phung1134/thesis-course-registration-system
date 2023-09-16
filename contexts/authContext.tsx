@@ -23,6 +23,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export enum ROLE_ASSIGNMENT {
   STUDENT = "student",
   LECTURER = "lecturer",
+  ADMIN = "admin",
 }
 
 export const useAuthContext = () => {
@@ -44,12 +45,26 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       .then(async (result) => {
         const token = await result.user.getIdToken();
         Cookies.set("token", token);
+        //return checkStatusAuth(result.user.uid);
       })
       .then(() => router.push("/mainboard"))
+      // .then((response) => {
+      //   if (response === "api_success") {
+      //     router.push("/mainboard");
+      //   } else {
+      //     router.push("/error");
+      //   }
+      // })
       .catch((error) => {
         console.error(error);
       });
   };
+
+  // checkStatusAuth(uid của user firebase);
+  // dung api de check trang thai user trong lop hoc o mainboard
+  // TH1: Chua dang ky thì {status: "NOT_REGISTER"}
+  // TH2: Nếu trong trạng thái subscribe nhưng chưa dược add {status: "WAITING", classroom: {}}
+  // TH3: Nếu đã đăng ký + added thì {status: "ADDED", classroom: {}}
 
   const logout = () => {
     signOut(auth)

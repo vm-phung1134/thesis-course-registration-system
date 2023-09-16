@@ -34,14 +34,23 @@ function SubscribeCourseDetail() {
                 You subscribed classroom of{" "}
                 <span className="uppercase font-medium">Le huynh quoc bao</span>
               </h4>
-              <p className="font-thin text-sm">
+              {/* <p className="font-thin text-sm">
                 Please waiting until the lecturer add you into class
+              </p> */}
+              <p className="font-thin text-sm">
+                <span className="font-medium">Congratulation </span>! You have been added into class
               </p>
-              <span className="loading loading-dots loading-md text-green-700"></span>
-              <Button
-                title="Unsubcribe"
-                className="px-5 bg-green-700 text-white"
-              />
+              {/* <span className="loading loading-dots loading-md text-green-700"></span> */}
+              <div className="flex gap-3">
+                <Button
+                  title="Unsubcribe"
+                  className="px-5 bg-transparent hover:bg-transparent hover:border-none border-none"
+                />
+                <Button
+                  title="Go to your class"
+                  className="px-5 bg-green-700 text-white hover:bg-green-600"
+                />
+              </div>
             </div>
           </div>
         </>
