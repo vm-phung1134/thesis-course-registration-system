@@ -1,10 +1,11 @@
 import { Breadcrumb, Button, SnipperRound } from "@/components/Atoms";
-import { MainboardTemplate } from "@/components/Templates";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import { BREADCRUMB_MAINBOARD } from "../mock-data";
 
-function SubscribeCourseDetail() {
+export interface IUnSubscribeViewProps {}
+
+export const UnSubscribeView: FC<IUnSubscribeViewProps> = () => {
   const [loading, setLoading] = useState<boolean>(false);
   useEffect(() => {
     setLoading(true);
@@ -13,7 +14,7 @@ function SubscribeCourseDetail() {
     }, 2000);
   }, []);
   return (
-    <MainboardTemplate title="Subcribed | Thesis couse registration system">
+    <>
       {loading ? (
         <SnipperRound />
       ) : (
@@ -34,13 +35,10 @@ function SubscribeCourseDetail() {
                 You subscribed classroom of{" "}
                 <span className="uppercase font-medium">Le huynh quoc bao</span>
               </h4>
-              {/* <p className="font-thin text-sm">
-                Please waiting until the lecturer add you into class
-              </p> */}
               <p className="font-thin text-sm">
-                <span className="font-medium">Congratulation </span>! You have been added into class
+                <span className="font-medium">Congratulation </span>! You have
+                been added into class
               </p>
-              {/* <span className="loading loading-dots loading-md text-green-700"></span> */}
               <div className="flex gap-3">
                 <Button
                   title="Unsubcribe"
@@ -55,8 +53,6 @@ function SubscribeCourseDetail() {
           </div>
         </>
       )}
-    </MainboardTemplate>
+    </>
   );
-}
-
-export default SubscribeCourseDetail;
+};

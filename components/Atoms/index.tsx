@@ -16,3 +16,4 @@ export * from "./CheckBoxField";
 export * from "./SnipperRound";
 export * from "./SelectMulti";
 export * from "./ToggleDarkMode";
+export * from "./CodeClass";
