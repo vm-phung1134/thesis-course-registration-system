@@ -3,13 +3,16 @@ import DarkModeToggle from "@/components/Atoms/ToggleDarkMode";
 import { useAuthContext } from "@/contexts/authContext";
 import { useLanguageContext } from "@/contexts/languageContext";
 import Image from "next/image";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 
 export interface IHeaderProps {}
 
 export const Header: FC<IHeaderProps> = () => {
-  const { user, logout } = useAuthContext();
+  const { user, logout, checkUserLoginState} = useAuthContext();
   const { handleChangeLanguage, localeValue } = useLanguageContext();
+  useEffect(() => {
+    checkUserLoginState()
+  }, [checkUserLoginState])
   return (
     <div className="navbar border-b dark:border-gray-500 p-5">
       <div className="justify-between w-full">

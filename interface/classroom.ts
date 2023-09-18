@@ -6,7 +6,7 @@ export interface ITopicKeyObject {
   label: string;
 }
 
-export interface ICourseObject {
+export interface IClassroomObject {
   id?: string;
   title: string;
   lecturer: IAuthObject;

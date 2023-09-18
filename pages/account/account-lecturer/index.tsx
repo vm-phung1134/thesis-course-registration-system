@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { MainboardTemplate } from "@/components/Templates";
 import { Breadcrumb, Spinner } from "@/components/Atoms";
-import { RegistrationTopicForm } from "@/components/Molecules";
 import { PersonalInformation } from "@/components/Organisms";
 import { BREADCRUMB_ACCOUNT_LECTURER } from "./mock-data";
 

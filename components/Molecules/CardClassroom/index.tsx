@@ -1,12 +1,12 @@
 import { FC } from "react";
 import { Avatar, Button } from "@/components/Atoms";
-import { ICourseObject } from "@/interface/course";
+import { IClassroomObject } from "@/interface/classroom";
 
-interface ICardCourseProps {
-  item: ICourseObject;
+interface ICardClassroomProps {
+  item: IClassroomObject;
 }
 
-export const CardCourse: FC<ICardCourseProps> = ({ item }) => {
+export const CardClassroom: FC<ICardClassroomProps> = ({ item }) => {
   return (
     <div className="w-80 shadow-xl">
       <div className="bg-cover bg-[url('https://images.pexels.com/photos/301943/pexels-photo-301943.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load')]">

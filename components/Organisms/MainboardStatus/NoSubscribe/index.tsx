@@ -1,6 +1,6 @@
 import { Breadcrumb, SelectBox } from "@/components/Atoms";
-import { CardCourse, Pagination } from "@/components/Molecules";
-import { DATA_CARD_COURSE } from "@/components/Molecules/CardCourse/mock-data";
+import { CardClassroom, Pagination } from "@/components/Molecules";
+import { DATA_CARD_COURSE } from "@/components/Molecules/CardClassroom/mock-data";
 import { ICategoryObject } from "@/interface/category";
 import { IOptionItem } from "@/interface/filter";
 import { FC, useState } from "react";
@@ -59,7 +59,7 @@ export const NoSubscribeView: FC<INoSubscribeViewProps> = ({}) => {
       </div>
       <div className="flex flex-wrap gap-5 mt-5">
         {DATA_CARD_COURSE.map((item, index) => {
-          return <CardCourse key={item.id} item={item} />;
+          return <CardClassroom key={item.id} item={item} />;
         })}
       </div>
       <div className="flex justify-center mt-10">

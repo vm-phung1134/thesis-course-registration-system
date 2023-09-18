@@ -1,6 +1,6 @@
-import { ICourseObject } from "@/interface/course";
+import { IClassroomObject } from "@/interface/classroom";
 
-export const DATA_CARD_COURSE: ICourseObject[] = [
+export const DATA_CARD_COURSE: IClassroomObject[] = [
   {
     id: "C_1",
     title: "",

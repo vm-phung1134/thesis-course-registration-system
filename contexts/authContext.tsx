@@ -12,6 +12,7 @@ interface AuthContextType {
   isAuthenticated: boolean;
   signInWithGoogle: () => void;
   logout: () => void;
+  checkUserLoginState: () => void;
 }
 
 interface AuthProviderProps {
@@ -70,16 +71,25 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     signOut(auth)
       .then(() => {
         Cookies.remove("token");
+        router.push("/");
       })
-      .then(() => router.push("/"))
       .catch((error) => {
         console.log(error);
       });
     setIsAuthenticated(false);
   };
 
+  const checkUserLoginState = () => {
+    const token = Cookies.get("token");
+    if (!token && !isAuthenticated) {
+      logout();
+      router.push("/");
+    }
+  };
+  
   const authContextValue: AuthContextType = {
     message,
+    checkUserLoginState,
     user,
     isAuthenticated,
     signInWithGoogle,

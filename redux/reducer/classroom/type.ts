@@ -1,9 +1,9 @@
-import { ICourseObject } from "@/interface/course";
+import { IClassroomObject } from "@/interface/classroom";
 import Cookies from "js-cookie";
 
 export interface ClassroomState {
-  classrooms: ICourseObject[];
-  classroom: ICourseObject;
+  classrooms: IClassroomObject[];
+  classroom: IClassroomObject;
   isLoading: boolean;
   error: string | null;
 }

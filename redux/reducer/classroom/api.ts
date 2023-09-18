@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { token } from "./type";
-import { ICourseObject } from "@/interface/course";
+import { IClassroomObject } from "@/interface/classroom";
 
 // GET ALL CLASSROOM
 const getAllClassrooms = createAsyncThunk(
@@ -38,7 +38,7 @@ const getClassroom = createAsyncThunk(
 // CREATE CLASSROOM
 const createClassroom = createAsyncThunk(
   "classroom/createClassroom",
-  async (postData: ICourseObject) => {
+  async (postData: IClassroomObject) => {
     const response = await axios.post("", postData, {
       headers: {
         Authorization: `Bearer ${token}`,

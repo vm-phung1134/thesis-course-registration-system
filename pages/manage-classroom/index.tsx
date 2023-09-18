@@ -41,10 +41,14 @@ const TaskHeader: FC<ITaskHeaderProps> = ({ setOpenModalEx, openModalEx }) => {
               onClick={() => setOpenModalEx?.(!openModalEx)}
               className="cursor-pointer ease-in-out duration-300"
             >
+              <div className="flex gap-3 items-center">
+                <p className="text-xs px-3 py-1 bg-green-900 w-fit">Exercise</p>
+              <small>20, August 2023 - 20:30 PM</small>
+              </div>
+              
               <span className="font-medium">Le Huynh Quoc Bao</span> has been
-              added a new report
+              added a new exercise
             </p>
-            <small>20, August 2023 - 20:30 PM</small>
           </div>
         </div>
         <button>...</button>
@@ -66,6 +70,10 @@ function ManageClassroomTab() {
         <div className="grid grid-cols-12 gap-4">
           <div className="col-span-4">
             <CriticalTask />
+            {/* WAITING TIME */}
+            {/* <div className="h-52 flex justify-center items-center p-5 border shadow-xl">
+              <p className="uppercase text-green-700">OPS! Not have any critiacal task for you</p>
+            </div> */}
           </div>
           <div className="col-span-8">
             <div className="h-fit w-full">
@@ -83,6 +91,10 @@ function ManageClassroomTab() {
                   />
                 </div>
               </div>
+              {/* WAITING TIME */}
+              {/* <div className="h-20 flex justify-center items-center border p-5 shadow-xl">
+                <p className="uppercase text-green-700">Ops! We do not have post for you</p>
+              </div> */}
             </div>
           </div>
         </div>

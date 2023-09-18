@@ -1,7 +1,7 @@
 import { IAuthObject } from "./auth";
-import { ICourseObject } from "./course";
+import { IClassroomObject } from "./classroom";
 
 export interface IMemberObject {
-  classroom: ICourseObject; // classroomId
+  classroom: IClassroomObject; // classroomId
   members: IAuthObject[];
 }

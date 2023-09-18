@@ -1,4 +1,4 @@
-import { ITopicKeyObject } from "@/interface/course";
+import { ITopicKeyObject } from "@/interface/classroom";
 
 export const SELECT_MULTI_TOPIC_KEY: ITopicKeyObject[] = [
   {

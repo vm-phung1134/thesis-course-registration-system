@@ -1,5 +1,5 @@
 import { IAuthObject } from "@/interface/auth";
-import { ICourseObject } from "@/interface/course";
+import { IClassroomObject } from "@/interface/classroom";
 import { IExerciseObject } from "@/interface/exercise";
 import { IMemberObject } from "@/interface/member";
 import { IPostObject } from "@/interface/post";
@@ -13,6 +13,7 @@ export const INITIATE_AUTH: IAuthObject = {
   class: "",
   major: "",
   role: "",
+  id: ""
 };
 
 export const INITIATE_POST: IPostObject = {
@@ -39,7 +40,7 @@ export const INITIATE_EXERCISE: IExerciseObject = {
   score: 0,
 };
 
-export const INITIATE_COURSE: ICourseObject = {
+export const INITIATE_COURSE: IClassroomObject = {
   title: "",
   lecturer: INITIATE_AUTH,
   codeCourse: "",

@@ -11,7 +11,7 @@ import { FC, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { INITIATE_COURSE } from "@/data";
 import { SELECT_MULTI_TOPIC_KEY } from "@/components/Atoms/SelectMulti/mock-data";
-import { ITopicKeyObject } from "@/interface/course";
+import { ITopicKeyObject } from "@/interface/classroom";
 
 export interface ICreateClassroomFormProps {
   switchingForm: number;

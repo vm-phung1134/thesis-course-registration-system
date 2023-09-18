@@ -1,4 +1,4 @@
-import { ITopicKeyObject } from "@/interface/course";
+import { ITopicKeyObject } from "@/interface/classroom";
 import { FC } from "react";
 import Select, { ActionMeta, MultiValue } from "react-select";
 
