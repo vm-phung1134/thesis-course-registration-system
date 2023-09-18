@@ -5,8 +5,8 @@ import { NoSubscribeView, UnSubscribeView, WaitingView } from "@/components/Orga
 
 function MainboardPage() {
   const [loading, setLoading] = useState<boolean>(false);
-  //const KEY_STATUS = "NO_SUBSCRIBE"
-  const KEY_STATUS = "WAITING"
+  const KEY_STATUS = "NO_SUBSCRIBE"
+  //const KEY_STATUS = "WAITING"
   // const KEY_STATUS = "UN_SUBSCRIBE"
   useEffect(() => {
     setLoading(true);
@@ -20,12 +20,12 @@ function MainboardPage() {
         <Spinner />
       ) : (
         <MainboardTemplate title="Mainboard Thesis | Thesis course registration system">
-          {/* {
-            KEY_STATUS === "NO_SUBSCRIBE" && <NoSubscribeView />
-          } */}
           {
-            KEY_STATUS === "WAITING" && <WaitingView />
+            KEY_STATUS === "NO_SUBSCRIBE" && <NoSubscribeView />
           }
+          {/* {
+            KEY_STATUS === "WAITING" && <WaitingView />
+          } */}
           {/* {
             KEY_STATUS === "UN_SUBSCRIBE" && <UnSubscribeView />
           } */}

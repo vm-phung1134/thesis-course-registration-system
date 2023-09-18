@@ -70,13 +70,13 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
           )}
           <div className="col-span-10">
             <Header />
-            {/* <ClassroomFound
+            <ClassroomFound
               setCreatePostModal={setCreatePostModal}
               openCreatePostModal={openCreatePostModal}
             >
               {children}
-            </ClassroomFound> */}
-            <ClassroomNotFound />
+            </ClassroomFound>
+            {/* <ClassroomNotFound /> */}
           </div>
           <ModalConfirm
             openModal={openModal}

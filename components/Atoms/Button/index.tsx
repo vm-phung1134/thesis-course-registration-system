@@ -17,24 +17,22 @@ export const Button: FC<IButtonProps> = ({
   otherType,
   className,
   title,
-  toggle, //Using for the props of toggle
+  toggle,
   setToggle,
 }) => {
   const handleChangeSubcribe = () => {
-    // call api get course with id as props
+    // call api check status
   };
   return (
     <div>
       {otherType === "subscribe" && (
-        <Link href={`mainboard/subscribe-course/${id}`}>
-          <button
-            onClick={handleChangeSubcribe}
-            type={type}
-            className={`${className} btn rounded-none capitalize font-normal`}
-          >
-            {title}
-          </button>
-        </Link>
+        <button
+          onClick={handleChangeSubcribe}
+          type={type}
+          className={`${className} btn rounded-none capitalize font-normal`}
+        >
+          {title}
+        </button>
       )}
 
       {/* Default button */}

@@ -5,6 +5,7 @@ import classNames from "classnames";
 import { FC, useState } from "react";
 import { PostModal } from "@/components/Organisms";
 import { DATA_POST_MODAL } from "@/components/Organisms/PostModal/mock-data";
+import { ICommentObject } from "@/interface/comment";
 
 const CriticalTask = () => {
   return (
@@ -58,6 +59,7 @@ function ManageClassroomTab() {
     "modal modal-bottom sm:modal-middle": true,
     "modal-open": openModalEx,
   });
+  const [arrComment, setArrComment] = useState<ICommentObject[]>([]);
   return (
     <>
       <ClassroomTemplate title="Manage Class | Thesis course registration system">
@@ -74,8 +76,11 @@ function ManageClassroomTab() {
                 />
                 <div className="p-5 flex flex-col gap-1 border">
                   <p className="text-[15px]">2 Comment for class</p>
-                  <ContentComment />
-                  <CommentForm />
+                  <ContentComment arrComment={arrComment} />
+                  <CommentForm
+                    arrComment={arrComment}
+                    setArrComment={setArrComment}
+                  />
                 </div>
               </div>
             </div>
