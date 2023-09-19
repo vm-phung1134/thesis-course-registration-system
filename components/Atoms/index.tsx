@@ -10,10 +10,12 @@ export * from "./Avatar";
 export * from "./MenuClassroom";
 export * from "./Spinner";
 export * from "./SelectBox";
-export * from "./SelectInForm"
+export * from "./SelectInForm";
 export * from "./IConTitle";
 export * from "./CheckBoxField";
 export * from "./SnipperRound";
 export * from "./SelectMulti";
 export * from "./ToggleDarkMode";
 export * from "./CodeClass";
+export * from "./TopicTag";
+export * from "./ItemUserInfor";

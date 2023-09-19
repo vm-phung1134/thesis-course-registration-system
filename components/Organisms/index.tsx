@@ -6,3 +6,4 @@ export * from "./PersonalInformation";
 export * from "./InforMemberModal";
 export * from "./MainboardStatus";
 export * from "./ClassroomStatus";
+export * from "./ClassroomCard";

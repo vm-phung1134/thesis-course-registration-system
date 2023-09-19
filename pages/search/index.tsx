@@ -1,7 +1,7 @@
 import { Breadcrumb } from "@/components/Atoms";
 import { MainboardTemplate } from "@/components/Templates";
 import { BREADCRUMB_SEARCH_PAGE } from "./mock-data";
-import { DATA_CARD_COURSE } from "@/components/Molecules/CardClassroom/mock-data";
+import { DATA_CARD_COURSE } from "@/components/Molecules/ClassroomContentCard/mock-data";
 import { CardClassroom } from "@/components/Molecules";
 
 function SearchPage() {
