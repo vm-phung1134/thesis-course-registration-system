@@ -9,6 +9,12 @@
 
 body {
   font-family: "Red Hat Text", sans-serif;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar {
+  display: none;
 }
 
 .three-body {

@@ -8,13 +8,13 @@ import { FC, useEffect } from "react";
 export interface IHeaderProps {}
 
 export const Header: FC<IHeaderProps> = () => {
-  const { user, logout, checkUserLoginState} = useAuthContext();
+  const { user, logout, checkUserLoginState } = useAuthContext();
   const { handleChangeLanguage, localeValue } = useLanguageContext();
   useEffect(() => {
-    checkUserLoginState()
-  }, [checkUserLoginState])
+    checkUserLoginState();
+  }, [checkUserLoginState]);
   return (
-    <div className="navbar border-b dark:border-gray-500 p-5">
+    <div className="navbar border-b dark:border-gray-500 p-5 top-0 sticky bg-white z-10">
       <div className="justify-between w-full">
         <form action="">
           <div className="flex border w-96 px-3 items-center">
@@ -96,7 +96,10 @@ export const Header: FC<IHeaderProps> = () => {
               <Avatar
                 online={true}
                 widthStr="w-10"
-                srcImg={user?.photoSrc || "https://images.pexels.com/photos/445109/pexels-photo-445109.jpeg?auto=compress&cs=tinysrgb&w=600"}
+                srcImg={
+                  user?.photoSrc ||
+                  "https://images.pexels.com/photos/445109/pexels-photo-445109.jpeg?auto=compress&cs=tinysrgb&w=600"
+                }
               />
             </div>
             <ul

@@ -12,8 +12,8 @@ import {
 } from "@/components/Organisms";
 import classNames from "classnames";
 import Head from "next/head";
-import { useState, FC} from "react";
-import { DATA_LIST_OPTIONS} from "./mock-data";
+import { useState, FC } from "react";
+import { DATA_LIST_OPTIONS } from "./mock-data";
 import { ROLE_ASSIGNMENT, useAuthContext } from "@/contexts/authContext";
 import { ICategoryObject } from "@/interface/category";
 import { IOptionItem } from "@/interface/filter";
@@ -57,17 +57,19 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
       </Head>
       <main>
         <div className="grid grid-cols-12 bg-base-100">
-          {user?.role === ROLE_ASSIGNMENT.STUDENT ? (
-            <SidebarStudentView
-              openModal={openModal}
-              setOpenModal={setOpenModal}
-            />
-          ) : (
-            <SidebarLecturerView
-              openModal={openModal}
-              setOpenModal={setOpenModal}
-            />
-          )}
+          <div className="col-span-2 border-r h-screen dark:border-gray-500">
+            {user?.role === ROLE_ASSIGNMENT.STUDENT ? (
+              <SidebarStudentView
+                openModal={openModal}
+                setOpenModal={setOpenModal}
+              />
+            ) : (
+              <SidebarLecturerView
+                openModal={openModal}
+                setOpenModal={setOpenModal}
+              />
+            )}
+          </div>
           <div className="col-span-10">
             <Header />
             <ClassroomFound

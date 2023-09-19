@@ -28,17 +28,20 @@ export const MainboardTemplate: FC<IMainboardProps> = ({ children, title }) => {
       </Head>
       <main>
         <div className="grid grid-cols-12 bg-base-100 dark:bg-[#0d0d0e] dark:text-[#dedede]">
-          {user?.role === ROLE_ASSIGNMENT.STUDENT ? (
-            <SidebarStudentView
-              openModal={openModal}
-              setOpenModal={setOpenModal}
-            />
-          ) : (
-            <SidebarLecturerView
-              openModal={openModal}
-              setOpenModal={setOpenModal}
-            />
-          )}
+          <div className="col-span-2 border-r h-screen dark:border-gray-500">
+            {user?.role === ROLE_ASSIGNMENT.STUDENT ? (
+              <SidebarStudentView
+                openModal={openModal}
+                setOpenModal={setOpenModal}
+              />
+            ) : (
+              <SidebarLecturerView
+                openModal={openModal}
+                setOpenModal={setOpenModal}
+              />
+            )}
+          </div>
+
           <div className="col-span-10">
             <Header />
             <div className="px-5 h-full">{children}</div>
