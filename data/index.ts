@@ -1,5 +1,6 @@
 import { IAuthObject } from "@/interface/auth";
 import { IClassroomObject } from "@/interface/classroom";
+import { ICommentObject } from "@/interface/comment";
 import { IExerciseObject } from "@/interface/exercise";
 import { IMemberObject } from "@/interface/member";
 import { IPostObject } from "@/interface/post";
@@ -13,7 +14,7 @@ export const INITIATE_AUTH: IAuthObject = {
   class: "",
   major: "",
   role: "",
-  id: ""
+  id: "",
 };
 
 export const INITIATE_POST: IPostObject = {
@@ -59,4 +60,10 @@ export const INITIATE_TOPIC: ITopicObject = {
 export const INITIATE_MEMBER: IMemberObject = {
   classroom: INITIATE_COURSE,
   members: [INITIATE_AUTH],
+};
+
+export const INITIATE_COMMENT: ICommentObject = {
+  user: INITIATE_AUTH,
+  content: "",
+  postId: "",
 };

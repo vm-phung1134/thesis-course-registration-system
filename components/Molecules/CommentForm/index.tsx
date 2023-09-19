@@ -17,6 +17,7 @@ export const CommentForm: FC<ICommentFormProps> = ({
   const initialValues = {
     user: user || INITIATE_AUTH,
     content: "",
+    postId: "",
   };
   return (
     <Formik
