@@ -37,7 +37,7 @@ const TaskHeader: FC<ITaskHeaderProps> = ({ setOpenModalEx, openModalEx }) => {
             srcImg="https://images.pexels.com/photos/39866/entrepreneur-startup-start-up-man-39866.jpeg?auto=compress&cs=tinysrgb&w=600"
           />
           <div className="flex flex-col">
-            <p
+            <div
               onClick={() => setOpenModalEx?.(!openModalEx)}
               className="cursor-pointer ease-in-out duration-300"
             >
@@ -48,7 +48,7 @@ const TaskHeader: FC<ITaskHeaderProps> = ({ setOpenModalEx, openModalEx }) => {
               
               <span className="font-medium">Le Huynh Quoc Bao</span> has been
               added a new exercise
-            </p>
+            </div>
           </div>
         </div>
         <button>...</button>

@@ -87,6 +87,30 @@ export const SidebarLecturerView: FC<ISidebarLecturerViewProps> = ({
           </Link>
         </li>
         <li>
+          <Link
+            className="rounded-none hover:bg-[#018937] hover:text-white"
+            href="/manage-classroom/create-classroom"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+            <span className="mx-2 text-[15px] font-medium">
+              Schedule report
+            </span>
+          </Link>
+        </li>
+        <li>
           <details open>
             <summary className="rounded-none hover:bg-[#018937] hover:text-white">
               <svg

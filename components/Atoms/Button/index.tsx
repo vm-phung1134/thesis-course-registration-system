@@ -4,7 +4,7 @@ import { FC } from "react";
 export interface IButtonProps {
   id?: string;
   type?: "button" | "submit" | "reset";
-  otherType?: "subscribe";
+  otherType?: "subscribe" | "detail";
   className: string;
   title: string;
   setToggle?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -28,6 +28,16 @@ export const Button: FC<IButtonProps> = ({
       {otherType === "subscribe" && (
         <button
           onClick={handleChangeSubcribe}
+          type={type}
+          className={`${className} btn rounded-none capitalize font-normal`}
+        >
+          {title}
+        </button>
+      )}
+
+      {otherType === "detail" && (
+        <button
+          onClick={() => setToggle?.(!toggle)}
           type={type}
           className={`${className} btn rounded-none capitalize font-normal`}
         >
