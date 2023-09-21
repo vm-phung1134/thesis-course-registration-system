@@ -6,6 +6,7 @@ export interface IFormFieldProps {
   type: string;
   nameField: string;
   placeholder?: string;
+  value: string;
 }
 
 export const FormField: FC<IFormFieldProps> = ({
@@ -13,6 +14,7 @@ export const FormField: FC<IFormFieldProps> = ({
   type,
   nameField,
   placeholder,
+  value,
 }) => {
   return (
     <div className="flex flex-col gap-2 mb-4 w-full">
@@ -25,6 +27,7 @@ export const FormField: FC<IFormFieldProps> = ({
         id={nameField}
         placeholder={placeholder}
         name={nameField}
+        value={value}
       />
       <ErrorMessage
         className="text-red-500 text-[13px] mt-[-7px]"

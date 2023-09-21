@@ -5,10 +5,14 @@ import { auth, provider } from "../config/firebase-config";
 import Cookies from "js-cookie";
 import { IAuthObject } from "@/interface/auth";
 import { useRouter } from "next/router";
+import { useMutation } from "@tanstack/react-query";
+import { loginAuth } from "@/redux/reducer/auth/api";
+import { useAppDispatch } from "@/redux/store";
+import { INITIATE_AUTH } from "@/data";
 
 interface AuthContextType {
   message: string;
-  user: IAuthObject | null;
+  user: IAuthObject;
   isAuthenticated: boolean;
   signInWithGoogle: () => void;
   logout: () => void;
@@ -37,10 +41,29 @@ export const useAuthContext = () => {
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const router = useRouter();
-  const [user, setUser] = useState<IAuthObject | null>(null);
+  const dispatch = useAppDispatch();
+  const [user, setUser] = useState<IAuthObject>(INITIATE_AUTH);
   const [message, setMessage] = useState<string>("");
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-
+  const addMutation = useMutation(
+    (postData: IAuthObject) => {
+      return new Promise((resolve, reject) => {
+        dispatch(loginAuth(postData))
+          .unwrap()
+          .then((data) => {
+            resolve(data);
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      });
+    },
+    {
+      onSuccess: () => {
+        console.log("Save the user's information");
+      },
+    }
+  );
   const signInWithGoogle = () => {
     signInWithPopup(auth, provider)
       .then(async (result) => {
@@ -86,7 +109,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       router.push("/");
     }
   };
-  
+
   const authContextValue: AuthContextType = {
     message,
     checkUserLoginState,
@@ -117,7 +140,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           email: currentUser.email,
           role: roleAssignment(currentUser.email || ""),
         };
+        addMutation.mutate(authObject);
         setUser(authObject);
+        Cookies.set("user", JSON.stringify(authObject));
         setIsAuthenticated(true);
       } else {
         currentUser

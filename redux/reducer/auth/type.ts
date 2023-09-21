@@ -9,4 +9,6 @@ export interface AuthState {
   error: string | null;
 }
 
-export const token = Cookies.get('token')
+export const token = Cookies.get("token");
+const userJson = Cookies.get("user");
+export const user: IAuthObject = userJson ? JSON.parse(userJson) : null;

@@ -5,18 +5,19 @@ import { Provider } from "react-redux";
 import { AuthProvider } from "@/contexts/authContext";
 import { LanguageProvider } from "@/contexts/languageContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import React from "react";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const queryClient = new QueryClient();
+  const [queryClient] = React.useState(() => new QueryClient());
   return (
     <Provider store={store}>
-      <AuthProvider>
-        <QueryClientProvider client={queryClient}>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
           <LanguageProvider>
             <Component {...pageProps} />
           </LanguageProvider>
-        </QueryClientProvider>
-      </AuthProvider>
+        </AuthProvider>
+      </QueryClientProvider>
     </Provider>
   );
 }
