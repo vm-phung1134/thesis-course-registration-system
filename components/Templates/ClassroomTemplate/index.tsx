@@ -5,7 +5,6 @@ import {
 } from "@/components/Molecules";
 import {
   ClassroomFound,
-  ClassroomNotFound,
   Header,
   SidebarLecturerView,
   SidebarStudentView,
@@ -14,9 +13,10 @@ import classNames from "classnames";
 import Head from "next/head";
 import { useState, FC } from "react";
 import { DATA_LIST_OPTIONS } from "./mock-data";
-import { ROLE_ASSIGNMENT, useAuthContext } from "@/contexts/authContext";
+import { ROLE_ASSIGNMENT } from "@/contexts/authContext";
 import { ICategoryObject } from "@/interface/category";
 import { IOptionItem } from "@/interface/filter";
+import { useUserCookies } from "@/hooks/useCookies";
 
 export interface IClassroomProps {
   children: React.ReactNode;
@@ -24,7 +24,7 @@ export interface IClassroomProps {
 }
 
 export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
-  const { user } = useAuthContext();
+  const [userCookies] = useUserCookies();
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [selected, setSelected] = useState<IOptionItem | ICategoryObject>(
     DATA_LIST_OPTIONS[0]
@@ -58,7 +58,7 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
       <main>
         <div className="grid grid-cols-12 bg-base-100">
           <div className="col-span-2 border-r h-screen dark:border-gray-500">
-            {user?.role === ROLE_ASSIGNMENT.STUDENT ? (
+            {userCookies?.role === ROLE_ASSIGNMENT.STUDENT ? (
               <SidebarStudentView
                 openModal={openModal}
                 setOpenModal={setOpenModal}

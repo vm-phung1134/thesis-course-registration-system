@@ -1,13 +1,14 @@
 import { Button, FormField, TitleFormField } from "@/components/Atoms";
-import { useAuthContext } from "@/contexts/authContext";
 import { INITIATE_TOPIC } from "@/data";
+import { useUserCookies } from "@/hooks/useCookies";
 import { Form, Formik } from "formik";
 import { FC } from "react";
 
 export interface IRegistrationTopicFormProps {}
 
 export const RegistrationTopicForm: FC<IRegistrationTopicFormProps> = () => {
-  const { user } = useAuthContext();
+  const [userCookies] = useUserCookies();
+
   return (
     <Formik
       initialValues={INITIATE_TOPIC}
@@ -63,6 +64,7 @@ export const RegistrationTopicForm: FC<IRegistrationTopicFormProps> = () => {
           type="text"
           label="Name of research topic"
           nameField="title"
+          value=""
         />
         <div className="flex justify-between w-full gap-3">
           <FormField
@@ -70,12 +72,14 @@ export const RegistrationTopicForm: FC<IRegistrationTopicFormProps> = () => {
             type="text"
             label="Type of topic"
             nameField="typeTopic"
+            value=""
           />
           <FormField
             placeholder="Ex: 2"
             type="number"
             label="Number of team member"
             nameField="memberQuantiy"
+            value=""
           />
         </div>
         <FormField
@@ -83,8 +87,14 @@ export const RegistrationTopicForm: FC<IRegistrationTopicFormProps> = () => {
           type="text"
           label="Email member"
           nameField="memberEmail"
+          value=""
         />
-        <FormField type="text" label="Description" nameField="description" />
+        <FormField
+          type="text"
+          label="Description"
+          nameField="description"
+          value=""
+        />
         <div className="flex justify-end items-center">
           <Button
             type="button"

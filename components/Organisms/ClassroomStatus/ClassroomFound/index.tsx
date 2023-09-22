@@ -3,6 +3,7 @@ import { ROLE_ASSIGNMENT, useAuthContext } from "@/contexts/authContext";
 import { FC, useState } from "react";
 import { DATA_MENU_CLASSROOM } from "../mock-data";
 import { CardLecturerInClass, CountDown } from "@/components/Molecules";
+import { useUserCookies } from "@/hooks/useCookies";
 
 export interface IClassroomFoundProps {
   children: React.ReactNode;
@@ -14,7 +15,7 @@ export const ClassroomFound: FC<IClassroomFoundProps> = ({
   setCreatePostModal,
   openCreatePostModal,
 }) => {
-  const { user } = useAuthContext();
+  const [userCookies] = useUserCookies();
   const [timeLeft, setTimeLeft] = useState<number>(0);
 
   return (
@@ -31,11 +32,11 @@ export const ClassroomFound: FC<IClassroomFoundProps> = ({
                 <Avatar
                   widthStr="w-10"
                   srcImg={
-                    user?.photoSrc ||
+                    userCookies?.photoSrc ||
                     "https://images.pexels.com/photos/39866/entrepreneur-startup-start-up-man-39866.jpeg?auto=compress&cs=tinysrgb&w=600"
                   }
                 />
-                {user?.role === ROLE_ASSIGNMENT.STUDENT ? (
+                {userCookies?.role === ROLE_ASSIGNMENT.STUDENT ? (
                   <CountDown timeLeft={timeLeft} />
                 ) : (
                   <p

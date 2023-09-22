@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth";
 import { auth, provider } from "../config/firebase-config";
@@ -8,11 +9,10 @@ import { useRouter } from "next/router";
 import { useMutation } from "@tanstack/react-query";
 import { loginAuth } from "@/redux/reducer/auth/api";
 import { useAppDispatch } from "@/redux/store";
-import { INITIATE_AUTH } from "@/data";
+import { useUserCookies } from "@/hooks/useCookies";
 
 interface AuthContextType {
   message: string;
-  user: IAuthObject;
   isAuthenticated: boolean;
   signInWithGoogle: () => void;
   logout: () => void;
@@ -42,9 +42,10 @@ export const useAuthContext = () => {
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const [user, setUser] = useState<IAuthObject>(INITIATE_AUTH);
+  const [, setUserCookies] = useUserCookies();
   const [message, setMessage] = useState<string>("");
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+
   const addMutation = useMutation(
     (postData: IAuthObject) => {
       return new Promise((resolve, reject) => {
@@ -84,12 +85,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       });
   };
 
-  // checkStatusAuth(uid của user firebase);
-  // dung api de check trang thai user trong lop hoc o mainboard
-  // TH1: Chua dang ky thì {status: "NOT_REGISTER"}
-  // TH2: Nếu trong trạng thái subscribe nhưng chưa dược add {status: "WAITING", classroom: {}}
-  // TH3: Nếu đã đăng ký + added thì {status: "ADDED", classroom: {}}
-
   const logout = () => {
     signOut(auth)
       .then(() => {
@@ -113,7 +108,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const authContextValue: AuthContextType = {
     message,
     checkUserLoginState,
-    user,
     isAuthenticated,
     signInWithGoogle,
     logout,
@@ -141,8 +135,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           role: roleAssignment(currentUser.email || ""),
         };
         addMutation.mutate(authObject);
-        setUser(authObject);
-        Cookies.set("user", JSON.stringify(authObject));
+        setUserCookies(authObject);
         setIsAuthenticated(true);
       } else {
         currentUser

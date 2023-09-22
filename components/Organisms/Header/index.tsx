@@ -2,13 +2,15 @@ import { Avatar } from "@/components/Atoms";
 import DarkModeToggle from "@/components/Atoms/ToggleDarkMode";
 import { useAuthContext } from "@/contexts/authContext";
 import { useLanguageContext } from "@/contexts/languageContext";
+import { useUserCookies } from "@/hooks/useCookies";
 import Image from "next/image";
 import { FC, useEffect } from "react";
 
 export interface IHeaderProps {}
 
 export const Header: FC<IHeaderProps> = () => {
-  const { user, logout, checkUserLoginState } = useAuthContext();
+  const { logout, checkUserLoginState } = useAuthContext();
+  const [userCookies] = useUserCookies();
   const { handleChangeLanguage, localeValue } = useLanguageContext();
   useEffect(() => {
     checkUserLoginState();
@@ -88,16 +90,16 @@ export const Header: FC<IHeaderProps> = () => {
               className="flex gap-3 items-center cursor-pointer"
             >
               <div className="flex flex-col text-[15px] font-normal items-end">
-                <p>{user?.email || "example@ctu.edu.vn"}</p>
+                <p>{userCookies?.email || "example@ctu.edu.vn"}</p>
                 <p className="text-green-800 text-sm capitalize">
-                  Pov: {user?.role || "Student"}
+                  Pov: {userCookies?.role || "Student"}
                 </p>
               </div>
               <Avatar
                 online={true}
                 widthStr="w-10"
                 srcImg={
-                  user?.photoSrc ||
+                  userCookies?.photoSrc ||
                   "https://images.pexels.com/photos/445109/pexels-photo-445109.jpeg?auto=compress&cs=tinysrgb&w=600"
                 }
               />

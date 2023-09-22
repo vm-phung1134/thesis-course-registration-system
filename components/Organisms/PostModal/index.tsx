@@ -6,9 +6,11 @@ import {
   UploadFileForm,
 } from "@/components/Molecules";
 import { ROLE_ASSIGNMENT, useAuthContext } from "@/contexts/authContext";
+import { useUserCookies } from "@/hooks/useCookies";
+import { ICommentObject } from "@/interface/comment";
 import { IPostObject } from "@/interface/post";
 import { DATA_CARD_STUDENT } from "@/pages/manage-classroom/members/mock-data";
-import { FC } from "react";
+import { FC, SetStateAction } from "react";
 
 export interface IPostModalProps {
   modalClass: string;
@@ -23,7 +25,7 @@ export const PostModal: FC<IPostModalProps> = ({
   openModalEx,
   post,
 }) => {
-  const { user } = useAuthContext();
+  const [userCookies] = useUserCookies();
   return (
     <dialog id="my_modal_2" className={modalClass}>
       <div className="w-8/12 bg-white p-5 h-fit shadow-2xl overflow-y-scroll">
@@ -33,9 +35,7 @@ export const PostModal: FC<IPostModalProps> = ({
               <h3 className="font-medium uppercase text-green-700">
                 Report grogress - {post.category.label} stage
               </h3>
-              <p className="font-medium uppercase py-1">
-                {post.lecturer.name}
-              </p>
+              <p className="font-medium uppercase py-1">{post.lecturer.name}</p>
               <div className="flex justify-between items-center">
                 <p className="text-sm">
                   {`20, August 2023 - `}
@@ -57,8 +57,8 @@ export const PostModal: FC<IPostModalProps> = ({
             </div>
             <div className="py-5 flex flex-col gap-3">
               <p className="text-[15px]">2 Comment for this report</p>
-              <CommentForm />
-              <ContentComment />
+              <CommentForm arrComment={[]} setArrComment={() => {}} />
+              <ContentComment arrComment={[]} />
               <Button
                 className="rounded-none w-full"
                 title="View more comments"
@@ -77,7 +77,7 @@ export const PostModal: FC<IPostModalProps> = ({
                 ✕
               </button>
             </div>
-            {user?.role === ROLE_ASSIGNMENT.STUDENT ? (
+            {userCookies?.role === ROLE_ASSIGNMENT.STUDENT ? (
               <ReportStatusStudentView />
             ) : (
               <ReportStatusLecturerView />

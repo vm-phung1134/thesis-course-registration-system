@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { Field, Form, Formik } from "formik";
 import { ICommentObject } from "@/interface/comment";
-import { useAuthContext } from "@/contexts/authContext";
 import { INITIATE_AUTH } from "@/data";
+import { useUserCookies } from "@/hooks/useCookies";
 
 export interface ICommentFormProps {
   arrComment: ICommentObject[];
@@ -13,9 +13,9 @@ export const CommentForm: FC<ICommentFormProps> = ({
   arrComment,
   setArrComment,
 }) => {
-  const { user } = useAuthContext();
+  const [userCookies] = useUserCookies();
   const initialValues = {
-    user: user || INITIATE_AUTH,
+    user: userCookies || INITIATE_AUTH,
     content: "",
     postId: "",
   };

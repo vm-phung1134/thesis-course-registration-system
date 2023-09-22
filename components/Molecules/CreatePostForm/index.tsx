@@ -6,6 +6,7 @@ import {
 } from "@/components/Atoms";
 import { useAuthContext } from "@/contexts/authContext";
 import { INITIATE_AUTH } from "@/data";
+import { useUserCookies } from "@/hooks/useCookies";
 import { ICategoryObject } from "@/interface/category";
 import { IOptionItem } from "@/interface/filter";
 import { IPostObject } from "@/interface/post";
@@ -28,7 +29,7 @@ export const CreatePostForm: FC<ICreatePostFormProps> = ({
   setSelected,
   options,
 }) => {
-  const { user } = useAuthContext();
+  const [userCookies] = useUserCookies();
   const initialValues: IPostObject = {
     title: "",
     category: {
@@ -37,7 +38,7 @@ export const CreatePostForm: FC<ICreatePostFormProps> = ({
       description: "",
       value: "",
     },
-    lecturer: user || INITIATE_AUTH,
+    lecturer: userCookies || INITIATE_AUTH,
     description: "",
   };
   return (
@@ -77,8 +78,14 @@ export const CreatePostForm: FC<ICreatePostFormProps> = ({
           type="text"
           label="Post title"
           nameField="title"
+          value=""
         />
-        <FormField type="text" label="Description" nameField="description" />
+        <FormField
+          type="text"
+          label="Description"
+          nameField="description"
+          value=""
+        />
         <div className="border h-20 w-full cursor-pointer border-dashed border-gray-400">
           <div className="flex justify-center items-center h-full">
             <p className="text-gray-600 text-sm">Upload additional file</p>

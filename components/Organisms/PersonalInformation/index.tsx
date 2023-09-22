@@ -1,6 +1,7 @@
 import { Avatar, Button } from "@/components/Atoms";
 import { InforUserForm } from "@/components/Molecules";
 import { INITIATE_AUTH } from "@/data";
+import { useUserCookies } from "@/hooks/useCookies";
 import { IAuthObject } from "@/interface/auth";
 import { getAuth } from "@/redux/reducer/auth/api";
 import { useAppDispatch } from "@/redux/store";
@@ -18,10 +19,11 @@ export const PersonalInformation: FC<IPersonalInformationProps> = () => {
     "modal modal-bottom sm:modal-middle": true,
     "modal-open": toggle,
   });
+  const [userCookies] = useUserCookies();
   const { data, isLoading } = useQuery<IAuthObject>({
-    queryKey: ["auth"],
+    queryKey: ["auth", userCookies],
     queryFn: async () => {
-      const action = await dispatch(getAuth());
+      const action = await dispatch(getAuth(userCookies));
       return action.payload;
     },
     initialData: INITIATE_AUTH,
