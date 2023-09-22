@@ -1,7 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { AuthState } from "./type";
 import { INITIATE_AUTH } from "@/data";
-import { getAllAuths, getOneAuth, loginAuth, updateAuth } from "./api";
+import {
+  checkStateSubscribe,
+  getAllAuths,
+  getOneAuth,
+  loginAuth,
+  updateAuth,
+} from "./api";
 
 const initialState: AuthState = {
   auths: [],
@@ -9,6 +15,7 @@ const initialState: AuthState = {
   isLoading: false,
   isSuccess: false,
   error: null,
+  stateAuth: "",
 };
 
 const authSlice = createSlice({
@@ -68,6 +75,19 @@ const authSlice = createSlice({
       state.auth = action.payload;
     });
     builder.addCase(updateAuth.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.error.message ?? "Something went wrong.";
+    });
+
+    //CHECK STATE SUUBCRIBE
+    builder.addCase(checkStateSubscribe.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(checkStateSubscribe.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.stateAuth = action.payload;
+    });
+    builder.addCase(checkStateSubscribe.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.error.message ?? "Something went wrong.";
     });

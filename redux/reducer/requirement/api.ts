@@ -24,7 +24,7 @@ const createRequirement = createAsyncThunk(
   "requirement/createRequirement",
   async (postData: IMemberObject) => {
     const response = await axios.post(
-      "http://localhost:5000/blogs/",
+      "http://localhost:5000/api/requirement",
       postData,
       {
         headers: {

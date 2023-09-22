@@ -2,6 +2,6 @@ import { IAuthObject } from "./auth";
 import { IClassroomObject } from "./classroom";
 
 export interface IMemberObject {
-  classroom: IClassroomObject; // classroomId
-  members: IAuthObject[];
+  classroom: IClassroomObject;
+  member: IAuthObject;
 }

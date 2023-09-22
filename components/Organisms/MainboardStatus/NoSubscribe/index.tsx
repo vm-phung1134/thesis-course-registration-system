@@ -1,9 +1,8 @@
 import { Breadcrumb, SelectBox, SnipperRound } from "@/components/Atoms";
 import { Pagination } from "@/components/Molecules";
-import { DATA_CARD_COURSE } from "@/components/Molecules/ClassroomContentCard/mock-data";
 import { ICategoryObject } from "@/interface/category";
 import { IOptionItem } from "@/interface/filter";
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
 import {
   BREADCRUMB_MAINBOARD,
   DATA_FILTER_COURSE,
@@ -31,6 +30,7 @@ export const NoSubscribeView: FC<INoSubscribeViewProps> = ({}) => {
     }
   );
   const dispatch = useAppDispatch();
+  const [loading, setLoading] = useState<boolean>(false);
   const { data, isLoading } = useQuery<IClassroomObject[]>({
     queryKey: ["classrooms"],
     queryFn: async () => {
@@ -48,9 +48,15 @@ export const NoSubscribeView: FC<INoSubscribeViewProps> = ({}) => {
   const handleNextPage = () => {
     setCurrentPage((prevPage) => prevPage + 1);
   };
+  useEffect(() => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1300);
+  }, []);
   return (
     <>
-      {isLoading ? (
+      {loading && data ? (
         <SnipperRound />
       ) : (
         <div>

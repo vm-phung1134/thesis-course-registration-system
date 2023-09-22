@@ -7,6 +7,7 @@ export interface IClassroomDetailModalProps {
   setOpenModalClassroomDetail: React.Dispatch<React.SetStateAction<boolean>>;
   openModalClassroomDetail: boolean;
   modalClass: string;
+  handleSubcribeClass: (classroom: IClassroomObject) => void;
 }
 
 export const ClassroomDetailModal: FC<IClassroomDetailModalProps> = ({
@@ -30,7 +31,9 @@ export const ClassroomDetailModal: FC<IClassroomDetailModalProps> = ({
                 srcImg="https://images.pexels.com/photos/1130624/pexels-photo-1130624.jpeg?auto=compress&cs=tinysrgb&w=600"
               />
               <div>
-                <p className="text-xs uppercase bg-red-700 text-white w-fit px-3">CT550</p>
+                <p className="text-xs uppercase bg-red-700 text-white w-fit px-3">
+                  CT550
+                </p>
                 <h4 className="uppercase font-medium ">Le huynh quoc bao</h4>
               </div>
             </div>

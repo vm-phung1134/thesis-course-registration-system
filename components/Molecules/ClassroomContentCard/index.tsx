@@ -6,6 +6,7 @@ interface IClassroomContentCardProps {
   item: IClassroomObject;
   setOpenModalClassroomDetail: React.Dispatch<React.SetStateAction<boolean>>;
   openModalClassroomDetail: boolean;
+  handleSubcribeClass: (classroom: IClassroomObject) => void;
 }
 
 export const ClassroomContentCard: FC<IClassroomContentCardProps> = ({
@@ -13,7 +14,6 @@ export const ClassroomContentCard: FC<IClassroomContentCardProps> = ({
   setOpenModalClassroomDetail,
   openModalClassroomDetail,
 }) => {
-  console.log(item)
   return (
     <>
       <div className="max-h-fit p-3 border dark:border-none dark:shadow-lg dark:shadow-gray-600 relative">

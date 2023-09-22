@@ -7,6 +7,7 @@ export interface AuthState {
   isLoading: boolean;
   isSuccess: boolean;
   error: string | null;
+  stateAuth: string;
 }
 
 export const token = Cookies.get("token");
