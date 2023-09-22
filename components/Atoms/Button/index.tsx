@@ -1,3 +1,4 @@
+import { IClassroomObject } from "@/interface/classroom";
 import Link from "next/link";
 import { FC } from "react";
 
@@ -9,6 +10,7 @@ export interface IButtonProps {
   title: string;
   setToggle?: React.Dispatch<React.SetStateAction<boolean>>;
   toggle?: boolean;
+  handleSubcribeClass?: () => void;
 }
 
 export const Button: FC<IButtonProps> = ({
@@ -19,15 +21,13 @@ export const Button: FC<IButtonProps> = ({
   title,
   toggle,
   setToggle,
+  handleSubcribeClass,
 }) => {
-  const handleChangeSubcribe = () => {
-    // call api check status
-  };
   return (
     <div>
       {otherType === "subscribe" && (
         <button
-          onClick={handleChangeSubcribe}
+          onClick={handleSubcribeClass}
           type={type}
           className={`${className} btn rounded-none capitalize font-normal`}
         >

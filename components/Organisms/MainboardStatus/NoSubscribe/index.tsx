@@ -16,7 +16,7 @@ import { getAllClassrooms } from "@/redux/reducer/classroom/api";
 
 export interface INoSubscribeViewProps {}
 
-export const NoSubscribeView: FC<INoSubscribeViewProps> = ({}) => {
+export const NoSubscribeView: FC<INoSubscribeViewProps> = () => {
   const [filterCourse, setFilterCourse] = useState<
     IOptionItem | ICategoryObject
   >({

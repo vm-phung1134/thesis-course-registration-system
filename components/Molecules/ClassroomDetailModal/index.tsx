@@ -7,7 +7,7 @@ export interface IClassroomDetailModalProps {
   setOpenModalClassroomDetail: React.Dispatch<React.SetStateAction<boolean>>;
   openModalClassroomDetail: boolean;
   modalClass: string;
-  handleSubcribeClass: (classroom: IClassroomObject) => void;
+  handleSubcribeClass: () => void;
 }
 
 export const ClassroomDetailModal: FC<IClassroomDetailModalProps> = ({

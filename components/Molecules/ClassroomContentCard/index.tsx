@@ -6,13 +6,14 @@ interface IClassroomContentCardProps {
   item: IClassroomObject;
   setOpenModalClassroomDetail: React.Dispatch<React.SetStateAction<boolean>>;
   openModalClassroomDetail: boolean;
-  handleSubcribeClass: (classroom: IClassroomObject) => void;
+  handleSubcribeClass: () => void;
 }
 
 export const ClassroomContentCard: FC<IClassroomContentCardProps> = ({
   item,
   setOpenModalClassroomDetail,
   openModalClassroomDetail,
+  handleSubcribeClass
 }) => {
   return (
     <>
@@ -49,6 +50,7 @@ export const ClassroomContentCard: FC<IClassroomContentCardProps> = ({
             id={item.id}
             otherType="subscribe"
             title="Subscribe"
+            handleSubcribeClass={handleSubcribeClass}
             className="hover:bg-[#165b31] border-none btn-sm bg-[#018937] text-white"
           />
         </div>

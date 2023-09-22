@@ -6,6 +6,10 @@ import { CardRequireMember } from "@/components/Molecules";
 import { useState } from "react";
 import classNames from "classnames";
 import { InforMemberModal } from "@/components/Organisms";
+import { useQuery } from "@tanstack/react-query";
+import { IMemberObject } from "@/interface/member";
+import { getAllRequirements } from "@/redux/reducer/requirement/api";
+import { useAppDispatch } from "@/redux/store";
 
 function RequirementPage() {
   const [openModalMemberDetail, setOpenModalMemberDetail] =
@@ -13,6 +17,15 @@ function RequirementPage() {
   const modalClass = classNames({
     "modal modal-bottom sm:modal-middle": true,
     "modal-open": openModalMemberDetail,
+  });
+  const dispatch = useAppDispatch();
+  const { data } = useQuery<IMemberObject[]>({
+    queryKey: ["subscribe-state"],
+    queryFn: async () => {
+      const action = await dispatch(getAllRequirements());
+      return action.payload;
+    },
+    initialData: [],
   });
   return (
     <MainboardTemplate title="Requirements | Thesis manage registration">
@@ -22,13 +35,13 @@ function RequirementPage() {
           List requirements
         </h4>
         <div className="grid grid-cols-3 gap-3 mt-3">
-          {DATA_CARD_STUDENT.map((student) => {
+          {data?.map((listRequirement) => {
             return (
               <CardRequireMember
                 setOpenMemberModal={setOpenModalMemberDetail}
                 openMemberModal={openModalMemberDetail}
-                key={student.id}
-                student={student}
+                key={listRequirement.id}
+                require={listRequirement}
               />
             );
           })}

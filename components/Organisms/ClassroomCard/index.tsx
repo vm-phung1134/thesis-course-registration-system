@@ -8,7 +8,7 @@ import {
 } from "@/components/Molecules";
 import { createRequirement } from "@/redux/reducer/requirement/api";
 import { IMemberObject } from "@/interface/member";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAppDispatch } from "@/redux/store";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 
@@ -16,7 +16,9 @@ interface IClassroomCardProps {
   item: IClassroomObject;
 }
 
-export const ClassroomCard: FC<IClassroomCardProps> = ({ item }) => {
+export const ClassroomCard: FC<IClassroomCardProps> = ({
+  item,
+}) => {
   const [openModalClassroomDetail, setOpenModalClassroomDetail] =
     useState<boolean>(false);
   const modalClass = classNames({
@@ -25,6 +27,7 @@ export const ClassroomCard: FC<IClassroomCardProps> = ({ item }) => {
   });
 
   // HANDLE CALL API
+  const queryClient = useQueryClient();
   const dispatch = useAppDispatch();
   const addRequirementMutation = useMutation(
     (postData: IMemberObject) => {
@@ -41,15 +44,13 @@ export const ClassroomCard: FC<IClassroomCardProps> = ({ item }) => {
     },
     {
       onSuccess: () => {
-        console.log("Create new requirement success");
+        queryClient.invalidateQueries(["subscribe-state"]);
       },
     }
   );
-  const {user} = useCurrentUser();
-  const handleSubcribeClass = (classroom: IClassroomObject) => {
-    addRequirementMutation.mutate({classroom, member: user})
-    // Call api check status mainboard
-    
+  const { currentUser } = useCurrentUser();
+  const handleSubcribeClass = () => {
+    addRequirementMutation.mutate({ classroom: item, member: currentUser });
   };
 
   return (

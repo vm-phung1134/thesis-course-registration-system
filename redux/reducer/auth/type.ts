@@ -1,4 +1,5 @@
 import { IAuthObject } from "@/interface/auth";
+import { IMemberObject } from "@/interface/member";
 import Cookies from "js-cookie";
 
 export interface AuthState {
@@ -7,9 +8,7 @@ export interface AuthState {
   isLoading: boolean;
   isSuccess: boolean;
   error: string | null;
-  stateAuth: string;
+  stateAuth: IMemberObject;
 }
 
 export const token = Cookies.get("token");
-const userJson = Cookies.get("user");
-export const user: IAuthObject = userJson ? JSON.parse(userJson) : null;

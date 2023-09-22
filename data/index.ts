@@ -59,7 +59,7 @@ export const INITIATE_TOPIC: ITopicObject = {
 
 export const INITIATE_MEMBER: IMemberObject = {
   classroom: INITIATE_COURSE,
-  members: [INITIATE_AUTH],
+  member: INITIATE_AUTH,
 };
 
 export const INITIATE_COMMENT: ICommentObject = {

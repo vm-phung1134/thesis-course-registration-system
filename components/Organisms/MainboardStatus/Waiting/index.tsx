@@ -2,10 +2,13 @@ import { Breadcrumb, Button, SnipperRound } from "@/components/Atoms";
 import Image from "next/image";
 import { FC, useEffect, useState } from "react";
 import { BREADCRUMB_MAINBOARD } from "../mock-data";
+import { IClassroomObject } from "@/interface/classroom";
 
-export interface IWaitingViewProps {}
+export interface IWaitingViewProps {
+  classroom?: IClassroomObject
+}
 
-export const WaitingView: FC<IWaitingViewProps> = () => {
+export const WaitingView: FC<IWaitingViewProps> = ({classroom}) => {
   const [loading, setLoading] = useState<boolean>(false);
   useEffect(() => {
     setLoading(true);
@@ -33,7 +36,7 @@ export const WaitingView: FC<IWaitingViewProps> = () => {
             <div className="flex gap-3 flex-col items-center">
               <h4 className="">
                 You subscribed classroom of{" "}
-                <span className="uppercase font-medium">Le huynh quoc bao</span>
+                <span className="uppercase font-medium">{classroom?.title}</span>
               </h4>
               <p className="font-thin text-sm">
                 Please waiting until the lecturer add you into class

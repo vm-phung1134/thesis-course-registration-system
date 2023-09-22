@@ -2,10 +2,13 @@ import { Breadcrumb, Button, SnipperRound } from "@/components/Atoms";
 import Image from "next/image";
 import { FC, useEffect, useState } from "react";
 import { BREADCRUMB_MAINBOARD } from "../mock-data";
+import { IClassroomObject } from "@/interface/classroom";
 
-export interface IUnSubscribeViewProps {}
+export interface IUnSubscribeViewProps {
+  classroom?: IClassroomObject;
+}
 
-export const UnSubscribeView: FC<IUnSubscribeViewProps> = () => {
+export const UnSubscribeView: FC<IUnSubscribeViewProps> = ({ classroom }) => {
   const [loading, setLoading] = useState<boolean>(false);
   useEffect(() => {
     setLoading(true);

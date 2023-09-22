@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { AuthState } from "./type";
-import { INITIATE_AUTH } from "@/data";
+import { INITIATE_AUTH, INITIATE_COURSE } from "@/data";
 import {
   checkStateSubscribe,
   getAllAuths,
@@ -15,7 +15,10 @@ const initialState: AuthState = {
   isLoading: false,
   isSuccess: false,
   error: null,
-  stateAuth: "",
+  stateAuth: {
+    classroom: INITIATE_COURSE,
+    member: INITIATE_AUTH,
+  },
 };
 
 const authSlice = createSlice({
@@ -79,7 +82,7 @@ const authSlice = createSlice({
       state.error = action.error.message ?? "Something went wrong.";
     });
 
-    //CHECK STATE SUUBCRIBE
+    //CHECK STATE SUBCRIBE
     builder.addCase(checkStateSubscribe.pending, (state) => {
       state.isLoading = true;
     });

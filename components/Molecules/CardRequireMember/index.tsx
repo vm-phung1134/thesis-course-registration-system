@@ -1,32 +1,14 @@
 import { Avatar, Button } from "@/components/Atoms";
-import { IAuthObject } from "@/interface/auth";
-import classNames from "classnames";
+import { IMemberObject } from "@/interface/member";
 import { FC } from "react";
-import { useState } from "react";
 
 export interface ICardRequireMemberProps {
-  student: IAuthObject;
+  require: IMemberObject;
   setOpenMemberModal: React.Dispatch<React.SetStateAction<boolean>>;
   openMemberModal: boolean;
 }
-
-// export const ResearchTopic = () => {
-//   return (
-//     <div className="py-1">
-//       <p className="text-[15px] py-2">Topic: Build Blog App</p>
-//       <div className="flex justify-between items-center">
-//         <div className="flex gap-3 pt-2">
-//           <i className="fa-regular fa-envelope"></i>
-//           <i className="fa-regular fa-message"></i>
-//         </div>
-//         <button className="text-green-600 text-sm">View detail</button>
-//       </div>
-//     </div>
-//   );
-// };
-
 export const CardRequireMember: FC<ICardRequireMemberProps> = ({
-  student,
+  require,
   setOpenMemberModal,
   openMemberModal,
 }) => {
@@ -39,14 +21,18 @@ export const CardRequireMember: FC<ICardRequireMemberProps> = ({
           srcImg="https://images.pexels.com/photos/39866/entrepreneur-startup-start-up-man-39866.jpeg?auto=compress&cs=tinysrgb&w=600"
         />
         <div className="flex flex-col text-sm">
-          <p
-            onClick={() => setOpenMemberModal(!openMemberModal)}
-            className="uppercase font-medium cursor-pointer"
-          >
-            {student.name}
-          </p>
-          <p className="uppercase">{student.class}</p>
-          <p className="capitalize">{student.major}</p>
+          <div className="flex gap-3">
+            <p
+              onClick={() => setOpenMemberModal(!openMemberModal)}
+              className="uppercase font-medium cursor-pointer"
+            >
+              {require?.member?.name}
+            </p>
+            <span>-</span>
+            <p className="font-normal">{require?.member?.class}</p>
+          </div>
+
+          <p className="capitalize">{require?.member?.major}</p>
         </div>
       </div>
       <div className="py-1">
@@ -67,10 +53,7 @@ export const CardRequireMember: FC<ICardRequireMemberProps> = ({
             />
           </div>
         </div>
-
-        <div></div>
       </div>
-      {/* <ResearchTopic /> */}
     </div>
   );
 };

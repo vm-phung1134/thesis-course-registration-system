@@ -7,7 +7,7 @@ import { IMemberObject } from "@/interface/member";
 const getAllRequirements = createAsyncThunk(
   "requirement/getAllRequirements",
   async () => {
-    const response = await axios.get("", {
+    const response = await axios.get("http://localhost:5000/api/requirement", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -43,11 +43,14 @@ const createRequirement = createAsyncThunk(
 const deleteRequirement = createAsyncThunk(
   "requirement/deleteRequirement",
   async (postData: IMemberObject) => {
-    const response = await axios.delete("", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axios.delete(
+      `http://localhost:5000/api/requirement/${postData?.id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     if (response.status === 200) {
       return response.data;
     }
