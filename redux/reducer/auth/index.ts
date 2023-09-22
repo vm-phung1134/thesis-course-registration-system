@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { AuthState } from "./type";
 import { INITIATE_AUTH } from "@/data";
-import { getAllAuths, getAuth, loginAuth, updateAuth } from "./api";
+import { getAllAuths, getOneAuth, loginAuth, updateAuth } from "./api";
 
 const initialState: AuthState = {
   auths: [],
@@ -17,15 +17,15 @@ const authSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     // GET ONE AUTH
-    builder.addCase(getAuth.pending, (state) => {
+    builder.addCase(getOneAuth.pending, (state) => {
       state.isLoading = true;
       state.error = null;
     });
-    builder.addCase(getAuth.fulfilled, (state, action) => {
+    builder.addCase(getOneAuth.fulfilled, (state, action) => {
       state.isLoading = false;
       state.auth = action.payload;
     });
-    builder.addCase(getAuth.rejected, (state, action) => {
+    builder.addCase(getOneAuth.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.error.message ?? "Something went wrong.";
     });

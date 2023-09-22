@@ -1,7 +1,16 @@
-import { FormField, SnipperRound, TitleFormField } from "@/components/Atoms";
-import { INITIATE_AUTH } from "@/data";
+import {
+  Button,
+  FormField,
+  SnipperRound,
+  TitleFormField,
+} from "@/components/Atoms";
+import { useCurrentUser } from "@/hooks/useGetCurrentUser";
+import { IAuthObject } from "@/interface/auth";
+import { updateAuth } from "@/redux/reducer/auth/api";
+import { useAppDispatch } from "@/redux/store";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Form, Formik } from "formik";
-import { FC, useState, useEffect } from "react";
+import { FC } from "react";
 
 export interface IInforUserFormV2Props {
   switchingForm: number;
@@ -12,16 +21,31 @@ export const InforUserFormV2: FC<IInforUserFormV2Props> = ({
   setSwitchingForm,
   switchingForm,
 }) => {
-  const [loading, setLoading] = useState<boolean>(false);
-  useEffect(() => {
-    const timeOutLoading = setTimeout(() => {
-      setLoading(false);
-    }, 2000);
-    return () => clearTimeout(timeOutLoading);
-  }, []);
+  const queryClient = useQueryClient();
+  const { currentUser, isLoading, userCookies } = useCurrentUser();
+  const dispatch = useAppDispatch();
+  const updateMutation = useMutation(
+    (postData: IAuthObject) => {
+      return new Promise((resolve, reject) => {
+        dispatch(updateAuth(postData))
+          .unwrap()
+          .then((data) => {
+            resolve(data);
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      });
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["auth", userCookies]);
+      },
+    }
+  );
   return (
     <Formik
-      initialValues={INITIATE_AUTH}
+      initialValues={currentUser}
       validate={(values) => {
         let errors: any = {};
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
@@ -52,68 +76,79 @@ export const InforUserFormV2: FC<IInforUserFormV2Props> = ({
         }
         return errors;
       }}
+      enableReinitialize
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
-          console.log(values);
+          updateMutation.mutate(values);
           setSwitchingForm(switchingForm + 1);
           setSubmitting(false);
-          setLoading(true);
         }, 400);
       }}
     >
-      {loading ? (
-        <SnipperRound />
-      ) : (
-        <>
-          <h3 className="text-xs mb-3">Step {switchingForm} of 2</h3>
-          <Form>
-            <TitleFormField
-              className="text-base uppercase text-green-700 font-medium mb-5"
-              title="Update personal information"
-            />
-            <FormField
-              placeholder="Ex: Nguyen Van Anh"
-              type="text"
-              label="Full name"
-              nameField="name"
-            />
-            <FormField
-              type="text"
-              placeholder="Ex: nvan@ctu.edu.vn"
-              label="Email address"
-              nameField="email"
-            />
-            <div className="flex gap-5 w-full">
-              <FormField
-                placeholder="Ex: 0953252xxx"
-                type="text"
-                label="Phone number"
-                nameField="phone"
-              />
-              <FormField
-                placeholder="Ex: IT colleage"
-                type="text"
-                label="School"
-                nameField="School"
-              />
-            </div>
-            <FormField
-              placeholder="Ex: Network computer"
-              type="text"
-              label="Major"
-              nameField="major"
-            />
-            <div className="flex justify-end items-center">
-              <button
-                type="submit"
-                className="hover:bg-[#165b31] btn rounded-none font-normal normal-case w-28 bg-[#018937] text-white px-5"
-              >
-                Next step
-              </button>
-            </div>
-          </Form>
-        </>
-      )}
+      {(formik) => {
+        const { values } = formik;
+        return (
+          <>
+            {isLoading ? (
+              <SnipperRound />
+            ) : (
+              <div>
+                <h3 className="text-xs mb-3">Step {switchingForm} of 2</h3>
+                <Form>
+                  <TitleFormField
+                    className="text-base uppercase text-green-700 font-medium mb-5"
+                    title="Update personal information"
+                  />
+                  <FormField
+                    placeholder="Ex: Nguyen Van Anh"
+                    type="text"
+                    label="Full name"
+                    nameField="name"
+                    value={values?.name}
+                  />
+                  <FormField
+                    type="text"
+                    placeholder="Ex: nvan@ctu.edu.vn"
+                    label="Email address"
+                    nameField="email"
+                    value={values?.email}
+                  />
+                  <div className="flex gap-5 w-full">
+                    <FormField
+                      placeholder="Ex: 0953252xxx"
+                      type="text"
+                      label="Phone number"
+                      nameField="phone"
+                      value={values?.phone || ""}
+                    />
+                    <FormField
+                      placeholder="Ex: IT colleage"
+                      type="text"
+                      label="class"
+                      nameField="class"
+                      value={values?.class || ""}
+                    />
+                  </div>
+                  <FormField
+                    placeholder="Ex: Network computer"
+                    type="text"
+                    label="Major"
+                    nameField="major"
+                    value={values?.major || ""}
+                  />
+                  <div className="flex justify-end items-center">
+                    <Button
+                      type="submit"
+                      title="Next step"
+                      className="hover:bg-[#165b31] btn rounded-none font-normal normal-case w-28 bg-[#018937] text-white px-5"
+                    />
+                  </div>
+                </Form>
+              </div>
+            )}
+          </>
+        );
+      }}
     </Formik>
   );
 };

@@ -4,11 +4,11 @@ import { token } from "./type";
 import { IAuthObject } from "@/interface/auth";
 
 // GET ONE AUTH
-const getAuth = createAsyncThunk(
-  "auth/getAuth",
+const getOneAuth = createAsyncThunk(
+  "auth/getOneAuth",
   async (postData: IAuthObject) => {
     const response = await axios.get(
-      `http://localhost:8081/api/user/${postData.id}`,
+      `http://localhost:5000/api/auth/${postData.id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -16,7 +16,7 @@ const getAuth = createAsyncThunk(
       }
     );
     if (response.status === 200) {
-      return response.data.user;
+      return response.data;
     }
     throw new Error("Failed to get one auth");
   }
@@ -24,7 +24,7 @@ const getAuth = createAsyncThunk(
 
 // GET ALL AUTHS
 const getAllAuths = createAsyncThunk("authors/getAllAuths", async () => {
-  const response = await axios.get(`http://localhost:8081/api/user`, {
+  const response = await axios.get(`http://localhost:5000/api/auth`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -40,8 +40,8 @@ const loginAuth = createAsyncThunk(
   "auth/loginAuth",
   async (postData: IAuthObject) => {
     const response = await axios.post(
-      "http://localhost:8081/api/user",
-      { user: postData },
+      "http://localhost:5000/api/auth",
+      postData,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -60,8 +60,8 @@ const updateAuth = createAsyncThunk(
   "auth/updateAuth",
   async (postData: IAuthObject) => {
     const response = await axios.put(
-      ``,
-      { user: postData },
+      `http://localhost:5000/api/auth/${postData.id}`,
+      postData,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -75,4 +75,4 @@ const updateAuth = createAsyncThunk(
   }
 );
 
-export { getAllAuths, getAuth, loginAuth, updateAuth };
+export { getAllAuths, getOneAuth, loginAuth, updateAuth };

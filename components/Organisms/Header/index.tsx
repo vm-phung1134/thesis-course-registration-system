@@ -99,8 +99,8 @@ export const Header: FC<IHeaderProps> = () => {
                 online={true}
                 widthStr="w-10"
                 srcImg={
-                  userCookies?.photoSrc ||
-                  "https://images.pexels.com/photos/445109/pexels-photo-445109.jpeg?auto=compress&cs=tinysrgb&w=600"
+                  userCookies?.photoSrc
+                  
                 }
               />
             </div>

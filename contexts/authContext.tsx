@@ -89,6 +89,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     signOut(auth)
       .then(() => {
         Cookies.remove("token");
+        Cookies.remove("user");
         router.push("/");
       })
       .catch((error) => {

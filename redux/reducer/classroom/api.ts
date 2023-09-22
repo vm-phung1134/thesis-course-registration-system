@@ -7,7 +7,7 @@ import { IClassroomObject } from "@/interface/classroom";
 const getAllClassrooms = createAsyncThunk(
   "classroom/getAllClassroom",
   async () => {
-    const response = await axios.get("", {
+    const response = await axios.get("http://localhost:5000/api/classroom", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -22,12 +22,15 @@ const getAllClassrooms = createAsyncThunk(
 // GET ONE CLASSROOM
 const getClassroom = createAsyncThunk(
   "classroom/getClassroom",
-  async (classroomId: string) => {
-    const response = await axios.get(``, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+  async (postData: IClassroomObject) => {
+    const response = await axios.get(
+      `http://localhost:5000/api/classroom/${postData.id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     if (response.status === 200) {
       return response.data;
     }
@@ -39,11 +42,15 @@ const getClassroom = createAsyncThunk(
 const createClassroom = createAsyncThunk(
   "classroom/createClassroom",
   async (postData: IClassroomObject) => {
-    const response = await axios.post("", postData, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axios.post(
+      "http://localhost:5000/api/classroom",
+      postData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     if (response.status === 200) {
       return response.data;
     }

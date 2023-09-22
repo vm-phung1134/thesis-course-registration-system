@@ -13,6 +13,7 @@ export const ClassroomContentCard: FC<IClassroomContentCardProps> = ({
   setOpenModalClassroomDetail,
   openModalClassroomDetail,
 }) => {
+  console.log(item)
   return (
     <>
       <div className="max-h-fit p-3 border dark:border-none dark:shadow-lg dark:shadow-gray-600 relative">
@@ -27,14 +28,14 @@ export const ClassroomContentCard: FC<IClassroomContentCardProps> = ({
           <ul>
             <ItemUserInfor
               title="Major"
-              content={item.lecturer.major || ""}
+              content={item?.lecturer?.major}
               className="capitalize"
             />
-            <ItemUserInfor title="Email" content={item.lecturer.email || ""} />
-            <ItemUserInfor title="Phone" content={item.lecturer.phone || ""} />
+            <ItemUserInfor title="Email" content={item?.lecturer?.email} />
+            <ItemUserInfor title="Phone" content={item?.lecturer?.phone} />
           </ul>
           <p className="text-sm uppercase text-gray-500 py-2">Topics</p>
-          <TopicTag arrTopics={item.topicTags} />
+          <TopicTag arrTopics={item?.topicTags} />
         </div>
         <div className="flex justify-end mt-6 items-center">
           <Button

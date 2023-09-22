@@ -6,7 +6,7 @@ export interface IFormFieldProps {
   type: string;
   nameField: string;
   placeholder?: string;
-  value: string;
+  value: string | number;
 }
 
 export const FormField: FC<IFormFieldProps> = ({

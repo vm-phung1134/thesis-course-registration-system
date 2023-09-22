@@ -1,4 +1,4 @@
-import { Breadcrumb, SelectBox } from "@/components/Atoms";
+import { Breadcrumb, SelectBox, SnipperRound } from "@/components/Atoms";
 import { Pagination } from "@/components/Molecules";
 import { DATA_CARD_COURSE } from "@/components/Molecules/ClassroomContentCard/mock-data";
 import { ICategoryObject } from "@/interface/category";
@@ -10,6 +10,10 @@ import {
   DATA_FILTER_TOPICS,
 } from "../mock-data";
 import { ClassroomCard } from "../..";
+import { useAppDispatch } from "@/redux/store";
+import { useQuery } from "@tanstack/react-query";
+import { IClassroomObject } from "@/interface/classroom";
+import { getAllClassrooms } from "@/redux/reducer/classroom/api";
 
 export interface INoSubscribeViewProps {}
 
@@ -26,6 +30,15 @@ export const NoSubscribeView: FC<INoSubscribeViewProps> = ({}) => {
       value: "",
     }
   );
+  const dispatch = useAppDispatch();
+  const { data, isLoading } = useQuery<IClassroomObject[]>({
+    queryKey: ["classrooms"],
+    queryFn: async () => {
+      const action = await dispatch(getAllClassrooms());
+      return action.payload || [];
+    },
+    initialData: [],
+  });
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages] = useState<number>(10);
   const handlePrevPage = () => {
@@ -37,40 +50,46 @@ export const NoSubscribeView: FC<INoSubscribeViewProps> = ({}) => {
   };
   return (
     <>
-      <div className="flex justify-between items-center">
-        <Breadcrumb dataBreadcrumb={BREADCRUMB_MAINBOARD} />
-        <div className="mt-3 flex gap-3 w-1/3">
-          <div className="flex-grow">
-            <SelectBox
-              setSelected={setFilterCourse}
-              selected={filterCourse}
-              options={DATA_FILTER_COURSE}
-              setPadding="lg"
-            />
+      {isLoading ? (
+        <SnipperRound />
+      ) : (
+        <div>
+          <div className="flex justify-between items-center">
+            <Breadcrumb dataBreadcrumb={BREADCRUMB_MAINBOARD} />
+            <div className="mt-3 flex gap-3 w-1/3">
+              <div className="flex-grow">
+                <SelectBox
+                  setSelected={setFilterCourse}
+                  selected={filterCourse}
+                  options={DATA_FILTER_COURSE}
+                  setPadding="lg"
+                />
+              </div>
+              <div className="flex-grow">
+                <SelectBox
+                  setSelected={setFilterTopic}
+                  selected={filterTopic}
+                  options={DATA_FILTER_TOPICS}
+                  setPadding="lg"
+                />
+              </div>
+            </div>
           </div>
-          <div className="flex-grow">
-            <SelectBox
-              setSelected={setFilterTopic}
-              selected={filterTopic}
-              options={DATA_FILTER_TOPICS}
-              setPadding="lg"
+          <div className="flex flex-wrap gap-5 mt-5">
+            {data?.map((item, index) => {
+              return <ClassroomCard key={item.id} item={item} />;
+            })}
+          </div>
+          <div className="flex justify-center mt-10">
+            <Pagination
+              handleNextPage={handleNextPage}
+              handlePrevPage={handlePrevPage}
+              totalPages={totalPages}
+              currentPage={currentPage}
             />
           </div>
         </div>
-      </div>
-      <div className="flex flex-wrap gap-5 mt-5">
-        {DATA_CARD_COURSE.map((item, index) => {
-          return <ClassroomCard key={item.id} item={item} />;
-        })}
-      </div>
-      <div className="flex justify-center mt-10">
-        <Pagination
-          handleNextPage={handleNextPage}
-          handlePrevPage={handlePrevPage}
-          totalPages={totalPages}
-          currentPage={currentPage}
-        />
-      </div>
+      )}
     </>
   );
 };
