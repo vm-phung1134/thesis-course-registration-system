@@ -5,18 +5,28 @@ import {
 } from "@/components/Molecules";
 import {
   ClassroomFound,
+  ClassroomNotFound,
   Header,
   SidebarLecturerView,
   SidebarStudentView,
 } from "@/components/Organisms";
 import classNames from "classnames";
 import Head from "next/head";
-import { useState, FC } from "react";
+import { useState, FC, useEffect } from "react";
 import { DATA_LIST_OPTIONS } from "./mock-data";
 import { ROLE_ASSIGNMENT } from "@/contexts/authContext";
 import { ICategoryObject } from "@/interface/category";
 import { IOptionItem } from "@/interface/filter";
 import { useUserCookies } from "@/hooks/useCookies";
+import { SnipperRound } from "@/components/Atoms";
+import { useQuery } from "@tanstack/react-query";
+import { IClassroomObject } from "@/interface/classroom";
+import { useAppDispatch } from "@/redux/store";
+import { getClassroom } from "@/redux/reducer/classroom/api";
+import { IMemberObject } from "@/interface/member";
+import { INITIATE_AUTH, INITIATE_COURSE, INITIATE_MEMBER } from "@/data";
+import { useCurrentUser } from "@/hooks/useGetCurrentUser";
+import { checkStateSubscribe } from "@/redux/reducer/auth/api";
 
 export interface IClassroomProps {
   children: React.ReactNode;
@@ -38,7 +48,6 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
     "modal modal-bottom sm:modal-middle": true,
     "modal-open": openCreatePostModal,
   });
-
   // useEffect(() => {
   //   const calculateTimeLeft = () => {
   //     const countdownDate = new Date("2023-10-01T00:00:00Z").getTime();
@@ -50,6 +59,28 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
   //   const timer = setInterval(calculateTimeLeft, 1000);
   //   return () => clearInterval(timer);
   // }, []);
+
+  // HANDLE API
+  const dispatch = useAppDispatch();
+  const { currentUser } = useCurrentUser();
+  const { data } = useQuery<IMemberObject>({
+    queryKey: ["subscribe-state", currentUser],
+    queryFn: async () => {
+      const action = await dispatch(checkStateSubscribe(currentUser));
+      return action.payload;
+    },
+    initialData: {
+      classroom: INITIATE_COURSE,
+      member: INITIATE_AUTH,
+    },
+  });
+  const [loading, setLoading] = useState<boolean>(false);
+  useEffect(() => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  }, []);
   return (
     <>
       <Head>
@@ -72,13 +103,19 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
           </div>
           <div className="col-span-10">
             <Header />
-            <ClassroomFound
-              setCreatePostModal={setCreatePostModal}
-              openCreatePostModal={openCreatePostModal}
-            >
-              {children}
-            </ClassroomFound>
-            {/* <ClassroomNotFound /> */}
+            {loading && data!==INITIATE_MEMBER ? (
+              <SnipperRound />
+            ) : data?.classroom ? (
+              <ClassroomFound
+                classroom={data.classroom}
+                setCreatePostModal={setCreatePostModal}
+                openCreatePostModal={openCreatePostModal}
+              >
+                {children}
+              </ClassroomFound>
+            ) : (
+              <ClassroomNotFound />
+            )}
           </div>
           <ModalConfirm
             openModal={openModal}

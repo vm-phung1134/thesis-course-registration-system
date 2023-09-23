@@ -4,25 +4,27 @@ import { FC, useState } from "react";
 import { DATA_MENU_CLASSROOM } from "../mock-data";
 import { CardLecturerInClass, CountDown } from "@/components/Molecules";
 import { useUserCookies } from "@/hooks/useCookies";
+import { IClassroomObject } from "@/interface/classroom";
 
 export interface IClassroomFoundProps {
   children: React.ReactNode;
   setCreatePostModal: React.Dispatch<React.SetStateAction<boolean>>;
   openCreatePostModal: boolean;
+  classroom: IClassroomObject;
 }
 export const ClassroomFound: FC<IClassroomFoundProps> = ({
   children,
   setCreatePostModal,
   openCreatePostModal,
+  classroom
 }) => {
   const [userCookies] = useUserCookies();
   const [timeLeft, setTimeLeft] = useState<number>(0);
-
   return (
     <div className="px-5">
       <div className="grid grid-cols-12 gap-4 py-5">
         <div className="col-span-4 p-5 border">
-          <CardLecturerInClass />
+          <CardLecturerInClass lecturer={classroom.lecturer} />
         </div>
         <div className="bg-gray-800 col-span-8 h-fit w-full text-white">
           <div className="p-5">
