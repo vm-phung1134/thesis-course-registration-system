@@ -7,6 +7,16 @@ import { useState } from "react";
 import { CardMember } from "@/components/Molecules";
 import classNames from "classnames";
 import { InforMemberModal } from "@/components/Organisms";
+import { useQuery } from "@tanstack/react-query";
+import { IMemberObject } from "@/interface/member";
+import {
+  getAllMemberClassroom,
+  getAllMembers,
+} from "@/redux/reducer/member/api";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { getTopic } from "@/redux/reducer/topic/api";
+import { useSubscribeStateContext } from "@/contexts/subscribeState";
+import { INITIATE_COURSE } from "@/data";
 
 function MemberTab() {
   const [selectedFilter, setSelectedFilter] = useState<
@@ -21,6 +31,24 @@ function MemberTab() {
     "modal modal-bottom sm:modal-middle": true,
     "modal-open": openModalMemberDetail,
   });
+
+  // HANDLE API MEMBER ARRAY
+  const dispatch = useAppDispatch();
+  const { subscribeState } = useSubscribeStateContext();
+  const { topic } = useAppSelector((state) => state.topicReducer);
+  const { data: members } = useQuery<IMemberObject[]>({
+    queryKey: ["members"],
+    queryFn: async () => {
+      const action = await dispatch(
+        getAllMemberClassroom(subscribeState.classroom)
+      );
+      return action.payload || [];
+    },
+    initialData: [],
+  });
+  const handleGetTopicMember = (member: IMemberObject) => {
+    dispatch(getTopic(member?.member));
+  };
   return (
     <ClassroomTemplate title="Members | Thesis course registration system">
       <div className="py-5">
@@ -34,20 +62,21 @@ function MemberTab() {
             setSelected={setSelectedFilter}
           />
         </div>
-        <div className="grid grid-cols-4 gap-3 mt-5">
-          {DATA_CARD_STUDENT.map((student) => {
+        <div className="grid grid-cols-3 gap-5 mt-5">
+          {members?.map((member) => {
             return (
               <CardMember
+                handleGetTopicMember={handleGetTopicMember}
                 setOpenMemberModal={setOpenModalMemberDetail}
                 openMemberModal={openModalMemberDetail}
-                key={student.id}
-                student={student}
+                key={member.id}
+                member={member}
               />
             );
           })}
         </div>
         <InforMemberModal
-          member={DATA_CARD_STUDENT[1]}
+          topic={topic}
           modalClass={modalClass}
           setOpenMemberModal={setOpenModalMemberDetail}
           openMemberModal={openModalMemberDetail}

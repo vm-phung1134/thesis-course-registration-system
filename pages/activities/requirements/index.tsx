@@ -21,8 +21,8 @@ function RequirementPage() {
     "modal-open": openModalMemberDetail,
   });
   const dispatch = useAppDispatch();
-  const { data: subscribeState } = useQuery<IMemberObject[]>({
-    queryKey: ["subscribe-state"],
+  const { data: requirements } = useQuery<IMemberObject[]>({
+    queryKey: ["requirements"],
     queryFn: async () => {
       const action = await dispatch(getAllRequirements());
       return action.payload;
@@ -42,7 +42,7 @@ function RequirementPage() {
   }, []);
   return (
     <MainboardTemplate title="Requirements | Thesis manage registration">
-      {loading && subscribeState ? (
+      {loading && requirements ? (
         <SnipperRound />
       ) : (
         <div>
@@ -52,7 +52,7 @@ function RequirementPage() {
               List requirements
             </h4>
             <div className="grid grid-cols-3 gap-3 mt-3">
-              {subscribeState?.map((listRequirement) => {
+              {requirements?.map((listRequirement) => {
                 return (
                   <CardRequireMember
                     handleGetTopicRequire={handleGetTopicRequire}

@@ -4,7 +4,7 @@ import {
   SidebarLecturerView,
   SidebarStudentView,
 } from "@/components/Organisms";
-import { ROLE_ASSIGNMENT, useAuthContext } from "@/contexts/authContext";
+import { ROLE_ASSIGNMENT } from "@/contexts/authContext";
 import { useUserCookies } from "@/hooks/useCookies";
 import classNames from "classnames";
 import Head from "next/head";
@@ -31,15 +31,9 @@ export const MainboardTemplate: FC<IMainboardProps> = ({ children, title }) => {
         <div className="grid grid-cols-12 bg-base-100 dark:bg-[#0d0d0e] dark:text-[#dedede]">
           <div className="col-span-2 border-r h-screen dark:border-gray-500">
             {userCookies?.role === ROLE_ASSIGNMENT.STUDENT ? (
-              <SidebarStudentView
-                openModal={openModal}
-                setOpenModal={setOpenModal}
-              />
+              <SidebarStudentView />
             ) : (
-              <SidebarLecturerView
-                openModal={openModal}
-                setOpenModal={setOpenModal}
-              />
+              <SidebarLecturerView />
             )}
           </div>
 

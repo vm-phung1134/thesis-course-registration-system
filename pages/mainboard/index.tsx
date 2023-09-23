@@ -13,22 +13,12 @@ import { useAppDispatch } from "@/redux/store";
 import { IMemberObject } from "@/interface/member";
 import { INITIATE_AUTH, INITIATE_COURSE } from "@/data";
 import { deleteRequirement } from "@/redux/reducer/requirement/api";
+import { useSubscribeStateContext } from "@/contexts/subscribeState";
 
 function MainboardPage() {
   const [loading, setLoading] = useState<boolean>(false);
-  const { currentUser } = useCurrentUser();
   const dispatch = useAppDispatch();
-  const { data } = useQuery<IMemberObject>({
-    queryKey: ["subscribe-state", currentUser],
-    queryFn: async () => {
-      const action = await dispatch(checkStateSubscribe(currentUser));
-      return action.payload;
-    },
-    initialData: {
-      classroom: INITIATE_COURSE,
-      member: INITIATE_AUTH,
-    },
-  });
+  const { subscribeState } = useSubscribeStateContext();
 
   const handleUnScribeClass = (requirement: IMemberObject) => {
     dispatch(deleteRequirement(requirement));
@@ -46,12 +36,12 @@ function MainboardPage() {
         <Spinner />
       ) : (
         <MainboardTemplate title="Mainboard Thesis | Thesis course registration system">
-          {data?.status === "NO_SUBSCRIBE" && <NoSubscribeView />}
-          {data?.status === "WAITING" && (
-            <WaitingView classroom={data?.classroom} />
+          {subscribeState?.status === "NO_SUBSCRIBE" && <NoSubscribeView />}
+          {subscribeState?.status === "WAITING" && (
+            <WaitingView classroom={subscribeState?.classroom} />
           )}
-          {data?.status === "UN_SUBSCRIBE" && (
-            <UnSubscribeView classroom={data?.classroom} />
+          {subscribeState?.status === "UN_SUBSCRIBE" && (
+            <UnSubscribeView classroom={subscribeState?.classroom} />
           )}
         </MainboardTemplate>
       )}

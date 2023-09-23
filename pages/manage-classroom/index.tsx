@@ -43,9 +43,8 @@ const TaskHeader: FC<ITaskHeaderProps> = ({ setOpenModalEx, openModalEx }) => {
             >
               <div className="flex gap-3 items-center">
                 <p className="text-xs px-3 py-1 bg-green-900 w-fit">Exercise</p>
-              <small>20, August 2023 - 20:30 PM</small>
+                <small>20, August 2023 - 20:30 PM</small>
               </div>
-              
               <span className="font-medium">Le Huynh Quoc Bao</span> has been
               added a new exercise
             </div>
@@ -98,12 +97,12 @@ function ManageClassroomTab() {
             </div>
           </div>
         </div>
-        {/* <PostModal
+        <PostModal
           modalClass={modalClass}
           post={DATA_POST_MODAL}
           setOpenModalEx={setOpenModalEx}
           openModalEx={openModalEx}
-        /> */}
+        />
       </ClassroomTemplate>
     </>
   );

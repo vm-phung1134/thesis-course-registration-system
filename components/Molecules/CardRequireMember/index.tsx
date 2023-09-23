@@ -1,6 +1,10 @@
 import { Avatar, Button } from "@/components/Atoms";
 import { IMemberObject } from "@/interface/member";
+import { createMember } from "@/redux/reducer/member/api";
+import { deleteRequirement } from "@/redux/reducer/requirement/api";
+import { useAppDispatch } from "@/redux/store";
 import { convertToUnaccentedString } from "@/utils/convertString";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { FC } from "react";
 
 export interface ICardRequireMemberProps {
@@ -15,9 +19,58 @@ export const CardRequireMember: FC<ICardRequireMemberProps> = ({
   openMemberModal,
   handleGetTopicRequire,
 }) => {
+  const dispatch = useAppDispatch();
+  const queryClient = useQueryClient();
+  // HANDLE GET TOPIC BECAUSE IN TOPIC HAVE MEMBER AND TOPIC
   const handleShowModalRequire = (require: IMemberObject) => {
     setOpenMemberModal(!openMemberModal);
     handleGetTopicRequire(require);
+  };
+  // HANDLE ADD TO CLASS
+  const addMutation = useMutation(
+    (postData: IMemberObject) => {
+      return new Promise((resolve, reject) => {
+        dispatch(createMember(postData))
+          .unwrap()
+          .then((data) => {
+            resolve(data);
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      });
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["requirements"]);
+      },
+    }
+  );
+  const deleteMutation = useMutation(
+    (postData: IMemberObject) => {
+      return new Promise((resolve, reject) => {
+        dispatch(deleteRequirement(postData))
+          .unwrap()
+          .then((data) => {
+            resolve(data);
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      });
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["requirements"]);
+      },
+    }
+  );
+  const handleAcceptClass = () => {
+    addMutation.mutate({
+      member: require.member,
+      classroom: require.classroom,
+    });
+    deleteMutation.mutate(require);
   };
   return (
     <div className="p-3 border shadow-lg">
@@ -55,7 +108,9 @@ export const CardRequireMember: FC<ICardRequireMemberProps> = ({
               className="text-red-700 btn-sm border-none  bg-transparent"
             />
             <Button
+              handleSubcribeClass={handleAcceptClass}
               title="Accept"
+              otherType="subscribe"
               className="bg-green-700 text-white btn-sm px-5"
             />
           </div>

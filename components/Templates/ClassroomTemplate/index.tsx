@@ -19,14 +19,7 @@ import { ICategoryObject } from "@/interface/category";
 import { IOptionItem } from "@/interface/filter";
 import { useUserCookies } from "@/hooks/useCookies";
 import { SnipperRound } from "@/components/Atoms";
-import { useQuery } from "@tanstack/react-query";
-import { IClassroomObject } from "@/interface/classroom";
-import { useAppDispatch } from "@/redux/store";
-import { getClassroom } from "@/redux/reducer/classroom/api";
-import { IMemberObject } from "@/interface/member";
-import { INITIATE_AUTH, INITIATE_COURSE, INITIATE_MEMBER } from "@/data";
-import { useCurrentUser } from "@/hooks/useGetCurrentUser";
-import { checkStateSubscribe } from "@/redux/reducer/auth/api";
+import { useSubscribeStateContext } from "@/contexts/subscribeState";
 
 export interface IClassroomProps {
   children: React.ReactNode;
@@ -61,25 +54,14 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
   // }, []);
 
   // HANDLE API
-  const dispatch = useAppDispatch();
-  const { currentUser } = useCurrentUser();
-  const { data } = useQuery<IMemberObject>({
-    queryKey: ["subscribe-state", currentUser],
-    queryFn: async () => {
-      const action = await dispatch(checkStateSubscribe(currentUser));
-      return action.payload;
-    },
-    initialData: {
-      classroom: INITIATE_COURSE,
-      member: INITIATE_AUTH,
-    },
-  });
+  const { subscribeState } = useSubscribeStateContext();
   const [loading, setLoading] = useState<boolean>(false);
   useEffect(() => {
     setLoading(true);
-    setTimeout(() => {
+    const timeOutLoading = setTimeout(() => {
       setLoading(false);
     }, 1300);
+    return () => clearTimeout(timeOutLoading);
   }, []);
   return (
     <>
@@ -90,24 +72,18 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
         <div className="grid grid-cols-12 bg-base-100">
           <div className="col-span-2 border-r h-screen dark:border-gray-500">
             {userCookies?.role === ROLE_ASSIGNMENT.STUDENT ? (
-              <SidebarStudentView
-                openModal={openModal}
-                setOpenModal={setOpenModal}
-              />
+              <SidebarStudentView />
             ) : (
-              <SidebarLecturerView
-                openModal={openModal}
-                setOpenModal={setOpenModal}
-              />
+              <SidebarLecturerView />
             )}
           </div>
           <div className="col-span-10">
             <Header />
             {loading ? (
               <SnipperRound />
-            ) : data?.classroom ? (
+            ) : subscribeState?.classroom ? (
               <ClassroomFound
-                classroom={data.classroom}
+                classroom={subscribeState.classroom}
                 setCreatePostModal={setCreatePostModal}
                 openCreatePostModal={openCreatePostModal}
               >
@@ -117,13 +93,7 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
               <ClassroomNotFound />
             )}
           </div>
-          <ModalConfirm
-            openModal={openModal}
-            setOpenModal={setOpenModal}
-            modalClass={modalClass}
-            title="TCR Message!!!"
-            message="Press ESC key or click the button below to close"
-          />
+          {/* POST / EXERCISE */}
           <dialog id="my_modal_3" className={modalClassPost}>
             <div className="w-5/12 bg-white p-5 h-fit shadow-2xl">
               {selected === DATA_LIST_OPTIONS[0] ? (
@@ -150,3 +120,12 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
     </>
   );
 };
+{
+  /* <ModalConfirm
+            openModal={openModal}
+            setOpenModal={setOpenModal}
+            modalClass={modalClass}
+            title="TCR Message!!!"
+            message="Press ESC key or click the button below to close"
+          /> */
+}

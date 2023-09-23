@@ -1,16 +1,14 @@
 import { LogoApp } from "@/components/Molecules";
+import { useSubscribeStateContext } from "@/contexts/subscribeState";
+import { useCurrentUser } from "@/hooks/useGetCurrentUser";
+import { useAppDispatch } from "@/redux/store";
 import Link from "next/link";
 import { FC } from "react";
 
-export interface ISidebarLecturerViewProps {
-  setOpenModal?: React.Dispatch<React.SetStateAction<boolean>>;
-  openModal?: boolean;
-}
+export interface ISidebarLecturerViewProps {}
 
-export const SidebarLecturerView: FC<ISidebarLecturerViewProps> = ({
-  openModal,
-  setOpenModal,
-}) => {
+export const SidebarLecturerView: FC<ISidebarLecturerViewProps> = ({}) => {
+  const { subscribeState } = useSubscribeStateContext();
   return (
     <div className="col-span-2 border-r h-screen">
       <LogoApp
@@ -64,10 +62,14 @@ export const SidebarLecturerView: FC<ISidebarLecturerViewProps> = ({
           </Link>
         </li>
         <div className="w-full h-[1px] bg-[#018937]"></div>
-        <li onClick={() => setOpenModal?.(!openModal)}>
+        <li>
           <Link
             className="rounded-none hover:bg-[#018937] hover:text-white"
-            href="/manage-classroom/create-classroom"
+            href={
+              subscribeState?.classroom
+                ? "/manage-classroom"
+                : "/manage-classroom/create-classroom"
+            }
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

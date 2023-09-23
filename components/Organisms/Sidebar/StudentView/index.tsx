@@ -3,15 +3,9 @@ import { useLanguageContext } from "@/contexts/languageContext";
 import Link from "next/link";
 import { FC } from "react";
 
-export interface ISidebarStudentViewProps {
-  setOpenModal?: React.Dispatch<React.SetStateAction<boolean>>;
-  openModal?: boolean;
-}
+export interface ISidebarStudentViewProps {}
 
-export const SidebarStudentView: FC<ISidebarStudentViewProps> = ({
-  openModal,
-  setOpenModal,
-}) => {
+export const SidebarStudentView: FC<ISidebarStudentViewProps> = ({}) => {
   const { t } = useLanguageContext();
   return (
     <div className="sticky top-0 left-0 bottom-0">
@@ -88,7 +82,7 @@ export const SidebarStudentView: FC<ISidebarStudentViewProps> = ({
         </li>
 
         <div className="w-full h-[1px] bg-[#018937]"></div>
-        <li onClick={() => setOpenModal?.(!openModal)}>
+        <li>
           <Link
             className="rounded-none hover:bg-[#018937] hover:text-white"
             href="/manage-classroom"

@@ -42,6 +42,7 @@ export const INITIATE_EXERCISE: IExerciseObject = {
 };
 
 export const INITIATE_COURSE: IClassroomObject = {
+  id: "",
   title: "",
   lecturer: INITIATE_AUTH,
   codeCourse: "",
