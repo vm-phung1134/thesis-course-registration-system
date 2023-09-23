@@ -24,7 +24,7 @@ export const ClassroomFound: FC<IClassroomFoundProps> = ({
     <div className="px-5">
       <div className="grid grid-cols-12 gap-4 py-5">
         <div className="col-span-4 p-5 border">
-          <CardLecturerInClass lecturer={classroom.lecturer} />
+          <CardLecturerInClass lecturer={classroom?.lecturer} />
         </div>
         <div className="bg-gray-800 col-span-8 h-fit w-full text-white">
           <div className="p-5">
@@ -51,7 +51,7 @@ export const ClassroomFound: FC<IClassroomFoundProps> = ({
               </div>
             </div>
             <div className="flex items-end justify-end">
-              <CodeClass />
+              <CodeClass code={classroom?.codeCourse} />
             </div>
           </div>
         </div>

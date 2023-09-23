@@ -79,7 +79,7 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-    }, 1000);
+    }, 1300);
   }, []);
   return (
     <>
@@ -103,7 +103,7 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
           </div>
           <div className="col-span-10">
             <Header />
-            {loading && data!==INITIATE_MEMBER ? (
+            {loading ? (
               <SnipperRound />
             ) : data?.classroom ? (
               <ClassroomFound

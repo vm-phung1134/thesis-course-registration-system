@@ -1,4 +1,5 @@
 import { IAuthObject } from "@/interface/auth";
+import { convertToUnaccentedString } from "@/utils/convertString";
 import { FC } from "react";
 
 export interface IPersonalInforProps {
@@ -12,23 +13,23 @@ export const PersonalInfor: FC<IPersonalInforProps> = ({ member }) => {
       <ul className="text-sm flex flex-col gap-3">
         <li className="flex gap-3">
           <p className="text-gray-500">Fullname: </p>
-          <p className="uppercase">Vo Minh Phung</p>
+          <p className="uppercase">{convertToUnaccentedString(member?.name)}</p>
         </li>
         <li className="flex gap-3">
           <p className="text-gray-500">Class: </p>
-          <p className="uppercase">DI19V7A7</p>
+          <p className="uppercase">{member?.class}</p>
         </li>
         <li className="flex gap-3">
           <p className="text-gray-500">Email: </p>
-          <p className="">phungb1910282@student.ctu.edu.vn</p>
+          <p className="">{member?.email}</p>
         </li>
         <li className="flex gap-3">
           <p className="text-gray-500">Phone: </p>
-          <p className="">0591593175</p>
+          <p className="">{member?.phone}</p>
         </li>
         <li className="flex gap-3">
           <p className="text-gray-500">Major: </p>
-          <p className="capitalize">Information technology</p>
+          <p className="capitalize">{member?.major}</p>
         </li>
       </ul>
     </div>

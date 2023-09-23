@@ -22,7 +22,7 @@ export const InforUserFormV2: FC<IInforUserFormV2Props> = ({
   switchingForm,
 }) => {
   const queryClient = useQueryClient();
-  const { currentUser, isLoading, userCookies } = useCurrentUser();
+  const { currentUser, isLoading } = useCurrentUser();
   const dispatch = useAppDispatch();
   const updateMutation = useMutation(
     (postData: IAuthObject) => {
@@ -39,7 +39,7 @@ export const InforUserFormV2: FC<IInforUserFormV2Props> = ({
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["auth", userCookies]);
+        queryClient.invalidateQueries(["auth", currentUser]);
       },
     }
   );

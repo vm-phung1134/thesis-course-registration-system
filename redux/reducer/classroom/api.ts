@@ -54,7 +54,7 @@ const createClassroom = createAsyncThunk(
     if (response.status === 200) {
       return response.data;
     }
-    throw new Error("Failed to create blog post");
+    throw new Error("Failed to create classroom");
   }
 );
 

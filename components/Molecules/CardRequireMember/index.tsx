@@ -1,17 +1,24 @@
 import { Avatar, Button } from "@/components/Atoms";
 import { IMemberObject } from "@/interface/member";
+import { convertToUnaccentedString } from "@/utils/convertString";
 import { FC } from "react";
 
 export interface ICardRequireMemberProps {
   require: IMemberObject;
   setOpenMemberModal: React.Dispatch<React.SetStateAction<boolean>>;
   openMemberModal: boolean;
+  handleGetTopicRequire: (require: IMemberObject) => void;
 }
 export const CardRequireMember: FC<ICardRequireMemberProps> = ({
   require,
   setOpenMemberModal,
   openMemberModal,
+  handleGetTopicRequire,
 }) => {
+  const handleShowModalRequire = (require: IMemberObject) => {
+    setOpenMemberModal(!openMemberModal);
+    handleGetTopicRequire(require);
+  };
   return (
     <div className="p-3 border shadow-lg">
       <div className="flex gap-4 items-center">
@@ -23,10 +30,10 @@ export const CardRequireMember: FC<ICardRequireMemberProps> = ({
         <div className="flex flex-col text-sm">
           <div className="flex gap-3">
             <p
-              onClick={() => setOpenMemberModal(!openMemberModal)}
+              onClick={() => handleShowModalRequire(require)}
               className="uppercase font-medium cursor-pointer"
             >
-              {require?.member?.name}
+              {convertToUnaccentedString(require?.member?.name)}
             </p>
             <span>-</span>
             <p className="font-normal">{require?.member?.class}</p>

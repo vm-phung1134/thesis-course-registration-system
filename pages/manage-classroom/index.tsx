@@ -98,12 +98,12 @@ function ManageClassroomTab() {
             </div>
           </div>
         </div>
-        <PostModal
+        {/* <PostModal
           modalClass={modalClass}
           post={DATA_POST_MODAL}
           setOpenModalEx={setOpenModalEx}
           openModalEx={openModalEx}
-        />
+        /> */}
       </ClassroomTemplate>
     </>
   );

@@ -1,17 +1,47 @@
 import { Button, FormField, TitleFormField } from "@/components/Atoms";
 import { INITIATE_TOPIC } from "@/data";
-import { useUserCookies } from "@/hooks/useCookies";
+import { useCurrentUser } from "@/hooks/useGetCurrentUser";
+import { ITopicObject } from "@/interface/topic";
+import { createTopic } from "@/redux/reducer/topic/api";
+import { useAppDispatch } from "@/redux/store";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Form, Formik } from "formik";
 import { FC } from "react";
 
-export interface IRegistrationTopicFormProps {}
+export interface IRegistrationTopicFormProps {
+  topic: ITopicObject;
+}
 
-export const RegistrationTopicForm: FC<IRegistrationTopicFormProps> = () => {
-  const [userCookies] = useUserCookies();
+export const RegistrationTopicForm: FC<IRegistrationTopicFormProps> = ({
+  topic,
+}) => {
+  const { currentUser } = useCurrentUser();
+  const dispatch = useAppDispatch();
+  const queryClient = useQueryClient();
+  const createMutation = useMutation(
+    (postData: ITopicObject) => {
+      return new Promise((resolve, reject) => {
+        dispatch(createTopic(postData))
+          .unwrap()
+          .then((data) => {
+            resolve(data);
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      });
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["topic"]);
+      },
+    }
+  );
 
   return (
     <Formik
-      initialValues={INITIATE_TOPIC}
+      initialValues={topic ?? INITIATE_TOPIC}
+      enableReinitialize
       validate={(values) => {
         let errors: any = {};
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
@@ -42,72 +72,77 @@ export const RegistrationTopicForm: FC<IRegistrationTopicFormProps> = () => {
         // Discription
         if (!values.description) {
           errors.description = "! Discription is required";
-        } else if (values.description.length > 20) {
+        } else if (values.description.length > 500) {
           errors.description = "! Discription less than 500 characters";
         }
         return errors;
       }}
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
-          alert(JSON.stringify(values, null, 2));
+          createMutation.mutate({ ...values, student: currentUser });
           setSubmitting(false);
         }, 400);
       }}
     >
-      <Form>
-        <TitleFormField
-          className="text-base uppercase text-green-600 font-medium mb-5"
-          title="Registration of research topics"
-        />
-        <FormField
-          placeholder="Ex: Build a website..."
-          type="text"
-          label="Name of research topic"
-          nameField="title"
-          value=""
-        />
-        <div className="flex justify-between w-full gap-3">
-          <FormField
-            placeholder="Ex: Website, Mobile, AI..."
-            type="text"
-            label="Type of topic"
-            nameField="typeTopic"
-            value=""
-          />
-          <FormField
-            placeholder="Ex: 2"
-            type="number"
-            label="Number of team member"
-            nameField="memberQuantiy"
-            value=""
-          />
-        </div>
-        <FormField
-          placeholder="Ex: nameb1910xxx@student.ctu.edu.vn"
-          type="text"
-          label="Email member"
-          nameField="memberEmail"
-          value=""
-        />
-        <FormField
-          type="text"
-          label="Description"
-          nameField="description"
-          value=""
-        />
-        <div className="flex justify-end items-center">
-          <Button
-            type="button"
-            title="Cancel"
-            className="bg-transparent border-none hover:border-none hover:bg-transparent"
-          />
-          <Button
-            type="submit"
-            title="Confirm"
-            className="hover:bg-[#165b31] bg-[#018937] text-white px-5"
-          />
-        </div>
-      </Form>
+      {(formik) => {
+        const { values } = formik;
+        return (
+          <Form>
+            <TitleFormField
+              className="text-base uppercase text-green-600 font-medium mb-5"
+              title="Registration of research topics"
+            />
+            <FormField
+              placeholder="Ex: Build a website..."
+              type="text"
+              label="Name of research topic"
+              nameField="title"
+              value={values?.title}
+            />
+            <div className="flex justify-between w-full gap-3">
+              <FormField
+                placeholder="Ex: Website, Mobile, AI..."
+                type="text"
+                label="Type of topic"
+                nameField="typeTopic"
+                value={values?.typeTopic}
+              />
+              <FormField
+                placeholder="Ex: 2"
+                type="number"
+                label="Number of team member"
+                nameField="memberQuantiy"
+                value={values?.memberQuantiy}
+              />
+            </div>
+            <FormField
+              placeholder="Ex: nameb1910xxx@student.ctu.edu.vn"
+              type="text"
+              label="Email member"
+              nameField="memberEmail"
+              value={values?.memberEmail}
+            />
+            <FormField
+              type="text"
+              label="Description"
+              nameField="description"
+              value={values?.description}
+            />
+            <div className="flex justify-end items-center">
+              <Button
+                type="button"
+                title="Cancel"
+                className="bg-transparent border-none hover:border-none hover:bg-transparent"
+              />
+              <Button
+                type="submit"
+                title="Confirm"
+                className="hover:bg-[#165b31] bg-[#018937] text-white px-5"
+              />
+            </div>
+          </Form>
+        );
+      }}
     </Formik>
   );
 };

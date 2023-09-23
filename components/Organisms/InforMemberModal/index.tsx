@@ -1,10 +1,10 @@
 import { Button } from "@/components/Atoms";
 import { PersonalInfor, TopicDescription } from "@/components/Molecules";
-import { IAuthObject } from "@/interface/auth";
+import { ITopicObject } from "@/interface/topic";
 import { FC } from "react";
 
 export interface IInforMemberModalProps {
-  member: IAuthObject;
+  topic: ITopicObject;
   modalClass: string;
   setOpenMemberModal: React.Dispatch<React.SetStateAction<boolean>>;
   openMemberModal: boolean;
@@ -14,7 +14,7 @@ export const InforMemberModal: FC<IInforMemberModalProps> = ({
   setOpenMemberModal,
   openMemberModal,
   modalClass,
-  member,
+  topic,
 }) => {
   return (
     <dialog id="my_modal_5" className={modalClass}>
@@ -25,8 +25,8 @@ export const InforMemberModal: FC<IInforMemberModalProps> = ({
             <div className="flex-grow h-[1px] bg-white"></div>
           </div>
           <div className="grid grid-cols-2 my-5">
-            <PersonalInfor member={member} />
-            <TopicDescription />
+            <PersonalInfor member={topic?.student} />
+            <TopicDescription topic={topic} />
           </div>
           <div className="flex justify-end items-center">
             <Button
