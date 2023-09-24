@@ -1,4 +1,5 @@
 import { IAuthObject } from "@/interface/auth";
+import { ICategoryObject } from "@/interface/category";
 import { IClassroomObject } from "@/interface/classroom";
 import { ICommentObject } from "@/interface/comment";
 import { IExerciseObject } from "@/interface/exercise";
@@ -15,6 +16,13 @@ export const INITIATE_AUTH: IAuthObject = {
   major: "",
   role: "",
   id: "",
+};
+
+export const INITIATE_CATEGORY: ICategoryObject = {
+  id: "",
+  label: "",
+  description: "",
+  value: "",
 };
 
 export const INITIATE_POST: IPostObject = {

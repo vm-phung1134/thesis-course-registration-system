@@ -1,8 +1,21 @@
 import { DATA_STATE_REPORT } from "./mock-data";
 import { StateReportThesis } from "@/components/Molecules";
 import { ClassroomTemplate } from "@/components/Templates";
+import { ICategoryObject } from "@/interface/category";
+import { getAllReportStage } from "@/redux/reducer/report-stage/api";
+import { useAppDispatch } from "@/redux/store";
+import { useQuery } from "@tanstack/react-query";
 
 function ReportProgressTab() {
+  const dispatch = useAppDispatch();
+  const { data: reportStages } = useQuery<ICategoryObject[]>({
+    queryKey: ["reportStages"],
+    queryFn: async () => {
+      const action = await dispatch(getAllReportStage());
+      return action.payload;
+    },
+    initialData: [],
+  });
   return (
     <ClassroomTemplate title="Report Grogress | Thesis course registration system">
       <div className="p-5 sm:max-w-xl md:max-w-full lg:max-w-screen-xl">
@@ -17,7 +30,7 @@ function ReportProgressTab() {
           </h2>
         </div>
         <div className="grid gap-8 row-gap-0 lg:grid-cols-5">
-          {DATA_STATE_REPORT.map((stage) => {
+          {reportStages?.map((stage) => {
             return <StateReportThesis key={stage.value} stage={stage} />;
           })}
         </div>

@@ -25,11 +25,13 @@ export const StateReportThesis: FC<IStateReportThesisProps> = ({ stage }) => {
           />
         </svg>
       </div>
-      <h6 className="mb-2 text-base font-medium capitalize">{stage.label}</h6>
+      <h6 className="mb-2 text-base font-medium capitalize">{stage?.label}</h6>
       <p className="max-w-md mb-3 text-sm text-gray-900 sm:mx-auto">
-        {stage.description}
+        {stage?.description}
       </p>
-      <Link href="/manage-classroom/report-progress/report-detail/123">
+      <Link
+        href={`/manage-classroom/report-progress/report-detail/${stage?.id}`}
+      >
         <Button
           title="View report"
           className="inline-flex bg-transparent border-none text-sm items-center"
