@@ -8,6 +8,8 @@ import classroomSlice from "./reducer/classroom";
 import memberSlice from "./reducer/member";
 import requirementSlice from "./reducer/requirement";
 import topicSlice from "./reducer/topic";
+import reportStageSlice from "./reducer/report-stage";
+import postSlice from "./reducer/post";
 
 const rootReducer = combineReducers({
   authReducer: authSlice,
@@ -15,6 +17,8 @@ const rootReducer = combineReducers({
   memberReducer: memberSlice,
   requirementReducer: requirementSlice,
   topicReducer: topicSlice,
+  reportStageReducer: reportStageSlice,
+  postReducer: postSlice,
 });
 
 const store = configureStore({

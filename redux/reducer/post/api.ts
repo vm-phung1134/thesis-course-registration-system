@@ -1,11 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { token } from "./type";
-import { IExerciseObject } from "@/interface/exercise";
+import { IPostObject } from "@/interface/post";
 
 // GET ALL POSTS
 const getAllPosts = createAsyncThunk("post/getAllPost", async () => {
-  const response = await axios.get(``, {
+  const response = await axios.get(`http://localhost:5000/api/post`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -19,12 +19,15 @@ const getAllPosts = createAsyncThunk("post/getAllPost", async () => {
 // GET ONE POST
 const getPost = createAsyncThunk(
   "post/getPost",
-  async (postData: IExerciseObject) => {
-    const response = await axios.get(``, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+  async (postData: IPostObject) => {
+    const response = await axios.get(
+      `http://localhost:5000/api/post/${postData.id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     if (response.status === 200) {
       return response.data;
     }
@@ -35,12 +38,16 @@ const getPost = createAsyncThunk(
 // CREATE EXERCISE
 const createPost = createAsyncThunk(
   "post/createPost",
-  async (postData: IExerciseObject) => {
-    const response = await axios.post(``, postData, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+  async (postData: IPostObject) => {
+    const response = await axios.post(
+      `http://localhost:5000/api/post`,
+      postData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     if (response.status === 200) {
       return response.data;
     }
@@ -51,12 +58,16 @@ const createPost = createAsyncThunk(
 // UPDATE EXERCISE
 const updatePost = createAsyncThunk(
   "post/updatePost",
-  async (postData: IExerciseObject) => {
-    const response = await axios.put(``, postData, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+  async (postData: IPostObject) => {
+    const response = await axios.put(
+      `http://localhost:5000/api/post/${postData.id}`,
+      postData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     if (response.status === 200) {
       return response.data;
     }
@@ -67,12 +78,15 @@ const updatePost = createAsyncThunk(
 // DELETE POST
 const deletePost = createAsyncThunk(
   "post/deletePost",
-  async (postData: IExerciseObject) => {
-    const response = await axios.delete(``, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+  async (postData: IPostObject) => {
+    const response = await axios.delete(
+      `http://localhost:5000/api/post/${postData.id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     if (response.status === 200) {
       return response.data;
     }
