@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { token } from "../auth/type";
 import { IMemberObject } from "@/interface/member";
+import { IClassroomObject } from "@/interface/classroom";
 
 // GET ALL REQUIREMENTS
 const getAllRequirements = createAsyncThunk(
@@ -16,6 +17,25 @@ const getAllRequirements = createAsyncThunk(
       return response.data;
     }
     throw new Error("Failed to get all requirements");
+  }
+);
+
+// GET ALL MEMBER BY CLASSROOM ID
+const getAllRequirementClassroom = createAsyncThunk(
+  "member/getAllMemberClassroom",
+  async (postData: IClassroomObject) => {
+    const response = await axios.get(
+      `http://localhost:5000/api/requirement/class/${postData.id || ""}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    if (response.status === 200) {
+      return response.data;
+    }
+    throw new Error("Failed to get all members in classroom");
   }
 );
 
@@ -58,4 +78,9 @@ const deleteRequirement = createAsyncThunk(
   }
 );
 
-export { getAllRequirements, createRequirement, deleteRequirement };
+export {
+  getAllRequirements,
+  createRequirement,
+  getAllRequirementClassroom,
+  deleteRequirement,
+};

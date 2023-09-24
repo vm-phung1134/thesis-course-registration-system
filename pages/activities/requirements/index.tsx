@@ -6,10 +6,11 @@ import { BREADCRUMB_REQUIREMENT } from "./mock-data";
 import { CardRequireMember } from "@/components/Molecules";
 import { InforMemberModal } from "@/components/Organisms";
 import { IMemberObject } from "@/interface/member";
-import { getAllRequirements } from "@/redux/reducer/requirement/api";
+import { getAllRequirementClassroom } from "@/redux/reducer/requirement/api";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { getTopic } from "@/redux/reducer/topic/api";
 import classNames from "classnames";
+import { useSubscribeStateContext } from "@/contexts/subscribeState";
 
 function RequirementPage() {
   const [openModalMemberDetail, setOpenModalMemberDetail] =
@@ -21,10 +22,13 @@ function RequirementPage() {
     "modal-open": openModalMemberDetail,
   });
   const dispatch = useAppDispatch();
+  const { subscribeState } = useSubscribeStateContext();
   const { data: requirements } = useQuery<IMemberObject[]>({
     queryKey: ["requirements"],
     queryFn: async () => {
-      const action = await dispatch(getAllRequirements());
+      const action = await dispatch(
+        getAllRequirementClassroom(subscribeState.classroom)
+      );
       return action.payload;
     },
     initialData: [],

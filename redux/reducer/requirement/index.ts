@@ -3,6 +3,7 @@ import { RequirementState } from "./type";
 import {
   createRequirement,
   deleteRequirement,
+  getAllRequirementClassroom,
   getAllRequirements,
 } from "./api";
 import { INITIATE_MEMBER } from "@/data";
@@ -29,6 +30,19 @@ const requirementSlice = createSlice({
       state.requirements = action.payload;
     });
     builder.addCase(getAllRequirements.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.error.message ?? "Something went wrong.";
+    });
+    // GET ALL REQUIREMENT IN CLASS
+    builder.addCase(getAllRequirementClassroom.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(getAllRequirementClassroom.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.requirements = action.payload;
+    });
+    builder.addCase(getAllRequirementClassroom.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.error.message ?? "Something went wrong.";
     });
