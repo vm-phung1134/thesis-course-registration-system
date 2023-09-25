@@ -13,12 +13,12 @@ import { ICategoryObject } from "@/interface/category";
 import { IOptionItem } from "@/interface/filter";
 import { IPostObject } from "@/interface/post";
 import { createPost } from "@/redux/reducer/post/api";
-import { getAllReportStage } from "@/redux/reducer/report-stage/api";
 import { useAppDispatch } from "@/redux/store";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Form, Formik } from "formik";
 import { FC, useRef, useState } from "react";
-
+import { v4 as uuidv4 } from "uuid";
+const objectId = uuidv4();
 export interface ICreatePostFormProps {
   setToggleForm: React.Dispatch<React.SetStateAction<boolean>>;
   toggleForm: boolean;
@@ -90,6 +90,7 @@ export const CreatePostForm: FC<ICreatePostFormProps> = ({
         setTimeout(() => {
           addMutation.mutate({
             ...values,
+            uid: objectId,
             classroom: subscribeState.classroom,
             category: selectedStage,
             attachment: selectedFiles,
@@ -175,6 +176,7 @@ export const CreatePostForm: FC<ICreatePostFormProps> = ({
                 <div className="w-full absolute bottom-0 cursor-pointer">
                   {selectedFiles.length > 0 && (
                     <button
+                      type="button"
                       className="text-sm font-thin border border-gray-400 w-full py-1 px-5"
                       onClick={handleUploadClick}
                     >

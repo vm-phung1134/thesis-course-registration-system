@@ -33,13 +33,15 @@
     "redux-logger": "^3.0.6",
     "tailwindcss": "3.3.3",
     "typescript": "5.1.6",
-    "unidecode": "^0.1.8"
+    "unidecode": "^0.1.8",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@types/js-cookie": "^3.0.3",
     "@types/node": "^20.6.3",
     "@types/redux-logger": "^3.0.9",
     "@types/unidecode": "^0.1.1",
+    "@types/uuid": "^9.0.4",
     "daisyui": "^3.6.1"
   }
 }

@@ -25,7 +25,16 @@ export const INITIATE_CATEGORY: ICategoryObject = {
   value: "",
 };
 
+export const INITIATE_COURSE: IClassroomObject = {
+  id: "",
+  title: "",
+  lecturer: INITIATE_AUTH,
+  codeCourse: "",
+  quantity: 0,
+};
+
 export const INITIATE_POST: IPostObject = {
+  uid: "",
   title: "",
   category: {
     label: "",
@@ -34,6 +43,7 @@ export const INITIATE_POST: IPostObject = {
   },
   lecturer: INITIATE_AUTH,
   description: "",
+  classroom: INITIATE_COURSE,
 };
 
 export const INITIATE_EXERCISE: IExerciseObject = {
@@ -47,14 +57,6 @@ export const INITIATE_EXERCISE: IExerciseObject = {
   description: "",
   deadline: new Date(""),
   score: 0,
-};
-
-export const INITIATE_COURSE: IClassroomObject = {
-  id: "",
-  title: "",
-  lecturer: INITIATE_AUTH,
-  codeCourse: "",
-  quantity: 0,
 };
 
 export const INITIATE_TOPIC: ITopicObject = {
