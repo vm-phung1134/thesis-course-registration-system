@@ -9,4 +9,5 @@ export interface IExerciseObject {
   description: string;
   deadline: Date;
   score: number;
+  type: string;
 }

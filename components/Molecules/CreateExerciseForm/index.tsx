@@ -7,6 +7,7 @@ import {
 } from "@/components/Atoms";
 import { useAuthContext } from "@/contexts/authContext";
 import { INITIATE_AUTH } from "@/data";
+import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { ICategoryObject } from "@/interface/category";
 import { IExerciseObject } from "@/interface/exercise";
 import { IOptionItem } from "@/interface/filter";
@@ -36,7 +37,7 @@ export const CreateExerciseForm: FC<ICreateExerciseFormProps> = ({
     value: "",
     description: "",
   });
-  const { user } = useAuthContext();
+  const { currentUser } = useCurrentUser();
   const initialValues: IExerciseObject = {
     title: "",
     category: {
@@ -45,7 +46,8 @@ export const CreateExerciseForm: FC<ICreateExerciseFormProps> = ({
       description: "",
       value: "",
     },
-    lecturer: user || INITIATE_AUTH,
+    type: "",
+    lecturer: currentUser || INITIATE_AUTH,
     description: "",
     deadline: new Date(""),
     score: 0,
@@ -87,6 +89,7 @@ export const CreateExerciseForm: FC<ICreateExerciseFormProps> = ({
           type="text"
           label="Post title"
           nameField="title"
+          value={""}
         />
         <div className="flex gap-5">
           <div className="w-full">
@@ -97,9 +100,19 @@ export const CreateExerciseForm: FC<ICreateExerciseFormProps> = ({
               setSelectedStage={setSelectedStage}
             />
           </div>
-          <FormField type="date" label="Set Deadline" nameField="deadline" />
+          <FormField
+            type="date"
+            label="Set Deadline"
+            nameField="deadline"
+            value={""}
+          />
         </div>
-        <FormField type="text" label="Description" nameField="description" />
+        <FormField
+          value={""}
+          type="text"
+          label="Description"
+          nameField="description"
+        />
         <div className="border h-20 w-full cursor-pointer border-dashed border-gray-400">
           <div className="flex justify-center items-center h-full">
             <p className="text-gray-600 text-sm">Upload additional file</p>

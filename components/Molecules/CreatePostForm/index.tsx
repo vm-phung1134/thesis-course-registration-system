@@ -90,6 +90,7 @@ export const CreatePostForm: FC<ICreatePostFormProps> = ({
         setTimeout(() => {
           addMutation.mutate({
             ...values,
+            type: "post",
             uid: objectId,
             classroom: subscribeState.classroom,
             category: selectedStage,

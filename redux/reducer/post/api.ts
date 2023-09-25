@@ -40,6 +40,7 @@ const createPost = createAsyncThunk(
   "post/createPost",
   async (postData: IPostObject) => {
     const formData = new FormData();
+    formData.append("type", postData.type)
     formData.append("uid", postData.uid);
     formData.append("title", postData.title);
     formData.append("category", JSON.stringify(postData.category));

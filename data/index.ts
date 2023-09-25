@@ -35,6 +35,7 @@ export const INITIATE_COURSE: IClassroomObject = {
 
 export const INITIATE_POST: IPostObject = {
   uid: "",
+  type: "",
   title: "",
   category: {
     label: "",
@@ -57,6 +58,7 @@ export const INITIATE_EXERCISE: IExerciseObject = {
   description: "",
   deadline: new Date(""),
   score: 0,
+  type: "",
 };
 
 export const INITIATE_TOPIC: ITopicObject = {

@@ -29,7 +29,7 @@ function RequirementPage() {
       const action = await dispatch(
         getAllRequirementClassroom(subscribeState.classroom)
       );
-      return action.payload;
+      return action.payload || [];
     },
     initialData: [],
   });
