@@ -10,6 +10,7 @@ import requirementSlice from "./reducer/requirement";
 import topicSlice from "./reducer/topic";
 import reportStageSlice from "./reducer/report-stage";
 import postSlice from "./reducer/post";
+import exerciseSlice from "./reducer/exercise";
 
 const rootReducer = combineReducers({
   authReducer: authSlice,
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   topicReducer: topicSlice,
   reportStageReducer: reportStageSlice,
   postReducer: postSlice,
+  exerciseReducer: exerciseSlice,
 });
 
 const store = configureStore({

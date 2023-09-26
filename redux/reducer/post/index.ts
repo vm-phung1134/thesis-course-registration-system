@@ -4,6 +4,8 @@ import { PostState } from "./type";
 import {
   createPost,
   deletePost,
+  getAllPostInClass,
+  getAllPostInReportStage,
   getAllPosts,
   getPost,
   updatePost,
@@ -45,6 +47,34 @@ const postSlice = createSlice({
       state.posts = action.payload;
     });
     builder.addCase(getAllPosts.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.error.message ?? "Something went wrong.";
+    });
+
+    // GET ALL POST IN CLASS
+    builder.addCase(getAllPostInClass.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(getAllPostInClass.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.posts = action.payload;
+    });
+    builder.addCase(getAllPostInClass.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.error.message ?? "Something went wrong.";
+    });
+
+    // GET ALL POST IN REPORT STAGE
+    builder.addCase(getAllPostInReportStage.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(getAllPostInReportStage.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.posts = action.payload;
+    });
+    builder.addCase(getAllPostInReportStage.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.error.message ?? "Something went wrong.";
     });

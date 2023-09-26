@@ -34,7 +34,7 @@ export const ExerciseModal: FC<IExerciseModalProps> = ({
             <div className="border-b pb-5">
               <div className="flex gap-5 items-center mb-2">
                 <p className="text-xs px-3 py-1 bg-green-700 cursor-pointer text-white w-fit">
-                  {exercise?.type === "exercise" ? "Message" : "Exercise"}
+                  {exercise?.type === "exercise" ? "Exercise" : "Message"}
                 </p>
                 <p>|</p>
                 <p className="text-sm">{exercise?.category?.label} Stage</p>

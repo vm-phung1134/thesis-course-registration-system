@@ -4,6 +4,8 @@ import { ExerciseState } from "./type";
 import {
   createExercise,
   deleteExercise,
+  getAllExerciseInClass,
+  getAllExerciseInReportStage,
   getAllExercises,
   getExercise,
   updateExercise,
@@ -45,6 +47,34 @@ const exerciseSlice = createSlice({
       state.exercises = action.payload;
     });
     builder.addCase(getAllExercises.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.error.message ?? "Something went wrong.";
+    });
+
+    // GET ALL EXERCISE IN CLASS
+    builder.addCase(getAllExerciseInClass.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(getAllExerciseInClass.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.exercises = action.payload;
+    });
+    builder.addCase(getAllExerciseInClass.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.error.message ?? "Something went wrong.";
+    });
+
+    // GET ALL EXERCISE IN REPORT STAGE
+    builder.addCase(getAllExerciseInReportStage.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(getAllExerciseInReportStage.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.exercises = action.payload;
+    });
+    builder.addCase(getAllExerciseInReportStage.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.error.message ?? "Something went wrong.";
     });
