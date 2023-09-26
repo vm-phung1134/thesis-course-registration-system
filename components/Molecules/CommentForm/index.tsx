@@ -1,24 +1,43 @@
 import { FC } from "react";
 import { Field, Form, Formik } from "formik";
 import { ICommentObject } from "@/interface/comment";
-import { INITIATE_AUTH } from "@/data";
+import { INITIATE_AUTH, INITIATE_COMMENT } from "@/data";
 import { useUserCookies } from "@/hooks/useCookies";
+import { IPostObject } from "@/interface/post";
+import { IExerciseObject } from "@/interface/exercise";
+import { useCurrentUser } from "@/hooks/useGetCurrentUser";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { createComment } from "@/redux/reducer/comment/api";
+import { useAppDispatch } from "@/redux/store";
 
 export interface ICommentFormProps {
-  arrComment: ICommentObject[];
-  setArrComment: React.Dispatch<React.SetStateAction<ICommentObject[]>>;
+  task: IPostObject | IExerciseObject;
 }
 
-export const CommentForm: FC<ICommentFormProps> = ({
-  arrComment,
-  setArrComment,
-}) => {
-  const [userCookies] = useUserCookies();
-  const initialValues = {
-    user: userCookies || INITIATE_AUTH,
-    content: "",
-    postId: "",
-  };
+export const CommentForm: FC<ICommentFormProps> = ({ task }) => {
+  const initialValues = INITIATE_COMMENT;
+  const dispatch = useAppDispatch();
+  const queryClient = useQueryClient();
+  const { currentUser } = useCurrentUser();
+  const addMutation = useMutation(
+    (postData: ICommentObject) => {
+      return new Promise((resolve, reject) => {
+        dispatch(createComment(postData))
+          .unwrap()
+          .then((data) => {
+            resolve(data);
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      });
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["comments", task]);
+      },
+    }
+  );
   return (
     <Formik
       initialValues={initialValues}
@@ -26,10 +45,19 @@ export const CommentForm: FC<ICommentFormProps> = ({
         const errors = {};
         return errors;
       }}
-      onSubmit={(values, { setSubmitting }) => {
+      onSubmit={(values, { setSubmitting, resetForm }) => {
         setTimeout(() => {
-          console.log(values);
-          setArrComment((prev) => [values, ...prev]);
+          addMutation.mutate({
+            ...values,
+            postId: task.id || "",
+            user: currentUser,
+          });
+          // console.log({
+          //   ...values,
+          //   postId: task.id || "",
+          //   user: currentUser,
+          // })
+          resetForm();
         }, 400);
       }}
     >

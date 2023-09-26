@@ -10,7 +10,10 @@ import { IPostObject } from "@/interface/post";
 import { getAllPostInClass, getPost } from "@/redux/reducer/post/api";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { convertToUnaccentedString } from "@/utils/convertString";
-import { getAllExerciseInClass, getExercise } from "@/redux/reducer/exercise/api";
+import {
+  getAllExerciseInClass,
+  getExercise,
+} from "@/redux/reducer/exercise/api";
 import { useSubscribeStateContext } from "@/contexts/subscribeState";
 import { IExerciseObject } from "@/interface/exercise";
 
@@ -147,12 +150,8 @@ function ManageClassroomTab() {
                             task={exercise}
                           />
                           <div className="p-5 flex flex-col gap-1 border">
-                            <p className="text-sm">0 Comment for class</p>
-                            <ContentComment arrComment={arrComment} />
-                            <CommentForm
-                              arrComment={arrComment}
-                              setArrComment={setArrComment}
-                            />
+                            <ContentComment quantity={1} task={exercise} />
+                            <CommentForm task={exercise} />
                           </div>
                         </div>
                       );
@@ -167,12 +166,8 @@ function ManageClassroomTab() {
                             task={post}
                           />
                           <div className="p-5 flex flex-col gap-1 border">
-                            <p className="text-sm">0 Comment for class</p>
-                            <ContentComment arrComment={arrComment} />
-                            <CommentForm
-                              arrComment={arrComment}
-                              setArrComment={setArrComment}
-                            />
+                            <ContentComment quantity={1} task={post} />
+                            <CommentForm task={post} />
                           </div>
                         </div>
                       );

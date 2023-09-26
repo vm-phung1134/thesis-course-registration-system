@@ -11,6 +11,7 @@ import topicSlice from "./reducer/topic";
 import reportStageSlice from "./reducer/report-stage";
 import postSlice from "./reducer/post";
 import exerciseSlice from "./reducer/exercise";
+import commentSlice from "./reducer/comment";
 
 const rootReducer = combineReducers({
   authReducer: authSlice,
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   reportStageReducer: reportStageSlice,
   postReducer: postSlice,
   exerciseReducer: exerciseSlice,
+  commentReducer: commentSlice,
 });
 
 const store = configureStore({

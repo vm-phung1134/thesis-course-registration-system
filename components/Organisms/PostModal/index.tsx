@@ -1,8 +1,5 @@
 import { Button } from "@/components/Atoms";
-import {
-  CommentForm,
-  ContentComment,
-} from "@/components/Molecules";
+import { CommentForm, ContentComment } from "@/components/Molecules";
 import { IPostObject } from "@/interface/post";
 import { convertToUnaccentedString } from "@/utils/convertString";
 import { FC } from "react";
@@ -65,8 +62,8 @@ export const PostModal: FC<IPostModalProps> = ({
           </div>
           <div className="py-5 flex flex-col gap-3">
             <p className="text-[15px]">0 Comment for this report</p>
-            <CommentForm arrComment={[]} setArrComment={() => {}} />
-            <ContentComment arrComment={[]} />
+            <CommentForm task={post} />
+            <ContentComment quantity={1000} task={post} />
             <Button
               className="rounded-none w-full"
               title="View more comments"
