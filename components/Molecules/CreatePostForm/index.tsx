@@ -39,7 +39,7 @@ export const CreatePostForm: FC<ICreatePostFormProps> = ({
   const queryClient = useQueryClient();
   const initialValues: IPostObject = INITIATE_POST;
   const { currentUser } = useCurrentUser();
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null!);
   const { subscribeState } = useSubscribeStateContext();
   // HANDLE SELECT STAGE REPORT
   const { selectedStage, setSelectedStage, reportStages } = useSelectStage();
@@ -55,6 +55,10 @@ export const CreatePostForm: FC<ICreatePostFormProps> = ({
       const newFiles = Array.from(files);
       setSelectedFiles((prevFiles) => [...prevFiles, ...newFiles]);
     }
+  };
+  const resetSelectedFiles = () => {
+    setSelectedFiles([]);
+    fileInputRef.current.value = "";
   };
   const addMutation = useMutation(
     (postData: IPostObject) => {
@@ -98,7 +102,7 @@ export const CreatePostForm: FC<ICreatePostFormProps> = ({
             lecturer: currentUser,
           });
           resetForm();
-          setSelectedFiles([]);
+          resetSelectedFiles();
           setSelectedStage(INITIATE_CATEGORY);
           setSubmitting(false);
         }, 400);

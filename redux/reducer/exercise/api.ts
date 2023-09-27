@@ -43,18 +43,36 @@ const getExercise = createAsyncThunk(
 const createExercise = createAsyncThunk(
   "exercise/createExercise",
   async (postData: IExerciseObject) => {
+    const formData = new FormData();
+    formData.append("uid", postData.uid);
+    formData.append("title", postData.title);
+    formData.append("category", JSON.stringify(postData.category));
+    formData.append("classroom", JSON.stringify(postData.classroom));
+    formData.append("lecturer", JSON.stringify(postData.lecturer));
+    formData.append("description", postData.description);
+    formData.append("type", postData.type);
+    formData.append("deadline", postData.deadline);
+    if (postData.attachments) {
+      for (let i = 0; i < postData.attachments.length; i++) {
+        formData.append("attachment", postData.attachments[i]);
+      }
+    }
+
     const response = await axios.post(
-      `http://localhost:5000/api/exercise`,
-      postData,
+      "http://localhost:5000/api/exercise/",
+      formData,
       {
         headers: {
           Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
         },
       }
     );
+
     if (response.status === 200) {
       return response.data;
     }
+
     throw new Error("Failed to create exercise");
   }
 );

@@ -44,7 +44,7 @@ export const CreateExerciseForm: FC<ICreateExerciseFormProps> = ({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { subscribeState } = useSubscribeStateContext();
   // HANDLE SELECT STAGE REPORT
-  const { selectedStage, setSelectedStage, reportStages } = useSelectStage();
+  const { selectedStage, setSelectedStage } = useSelectStage();
   // HANDLE FILE
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const handleUploadClick = () => {
@@ -96,18 +96,9 @@ export const CreateExerciseForm: FC<ICreateExerciseFormProps> = ({
             uid: objectId,
             classroom: subscribeState.classroom,
             category: selectedStage,
-            attachment: selectedFiles,
+            attachments: selectedFiles,
             lecturer: currentUser,
           });
-          // console.log({
-          //   ...values,
-          //   type: "exercise",
-          //   uid: objectId,
-          //   classroom: subscribeState.classroom,
-          //   category: selectedStage,
-          //   attachment: selectedFiles,
-          //   lecturer: currentUser,
-          // });
           resetForm();
           setSelectedFiles([]);
           setSelectedStage(INITIATE_CATEGORY);

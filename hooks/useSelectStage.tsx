@@ -13,7 +13,7 @@ export const useSelectStage = () => {
     queryKey: ["reportStages"],
     queryFn: async () => {
       const action = await dispatch(getAllReportStage());
-      return action.payload;
+      return action.payload || [];
     },
     initialData: [],
   });

@@ -11,7 +11,6 @@ export interface IExerciseObject {
   lecturer: IAuthObject;
   description: string;
   deadline: string;
-  score: number;
   type: string;
-  attachment?: File[];
+  attachments?: File[] | any[];
 }

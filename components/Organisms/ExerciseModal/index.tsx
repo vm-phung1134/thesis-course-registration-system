@@ -51,22 +51,35 @@ export const ExerciseModal: FC<IExerciseModalProps> = ({
                   <span className="text-sm">{`12:36 AM (Edited)`}</span>
                 </p>
                 <p className="text-red-500 text-sm">
-                  Deadline: 21, August 2023
+                  Deadline: {exercise?.deadline}
                 </p>
               </div>
             </div>
-            <div className="py-5 font-thin border-b">
-              <ul className="">
-                <li>- {exercise?.description}</li>
-                <li>- At the report you will review what you are doing.</li>
+            <div className="py-5 font-thin border-b text-sm">
+              <p className="py-2">General information</p>
+              <ul className="font-normal indent-3">
+                <li>{exercise?.description}</li>
+                <li>At the report you will review what you are doing.</li>
               </ul>
               <div>
-                <p>@Attachments: </p>
+                <p className="py-2">Document references</p>
+                {exercise?.attachments?.map((arr, index) => {
+                  return (
+                    <a
+                      target="_blank"
+                      className="text-sm underline text-blue-700"
+                      key={index}
+                      href={arr}
+                    >
+                      {arr}
+                    </a>
+                  );
+                })}
               </div>
             </div>
             <div className="py-5 flex flex-col gap-3">
               <CommentForm task={exercise} />
-              <ContentComment quantity={1} task={exercise} />
+              <ContentComment quantity={1000} task={exercise} />
               <Button
                 className="rounded-none w-full"
                 title="View more comments"

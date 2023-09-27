@@ -59,7 +59,6 @@ export const INITIATE_EXERCISE: IExerciseObject = {
   lecturer: INITIATE_AUTH,
   description: "",
   deadline: "",
-  score: 0,
   type: "",
 };
 

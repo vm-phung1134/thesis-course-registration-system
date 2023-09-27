@@ -1,14 +1,13 @@
 import { FC } from "react";
 import { Field, Form, Formik } from "formik";
 import { ICommentObject } from "@/interface/comment";
-import { INITIATE_AUTH, INITIATE_COMMENT } from "@/data";
-import { useUserCookies } from "@/hooks/useCookies";
 import { IPostObject } from "@/interface/post";
 import { IExerciseObject } from "@/interface/exercise";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createComment } from "@/redux/reducer/comment/api";
 import { useAppDispatch } from "@/redux/store";
+import { INITIATE_COMMENT } from "@/data";
 
 export interface ICommentFormProps {
   task: IPostObject | IExerciseObject;
@@ -52,11 +51,6 @@ export const CommentForm: FC<ICommentFormProps> = ({ task }) => {
             postId: task.id || "",
             user: currentUser,
           });
-          // console.log({
-          //   ...values,
-          //   postId: task.id || "",
-          //   user: currentUser,
-          // })
           resetForm();
         }, 400);
       }}

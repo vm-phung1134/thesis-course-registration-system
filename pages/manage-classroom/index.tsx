@@ -4,7 +4,6 @@ import { ClassroomTemplate } from "@/components/Templates";
 import classNames from "classnames";
 import { FC, useState, useEffect } from "react";
 import { ExerciseModal, PostModal } from "@/components/Organisms";
-import { ICommentObject } from "@/interface/comment";
 import { useQuery } from "@tanstack/react-query";
 import { IPostObject } from "@/interface/post";
 import { getAllPostInClass, getPost } from "@/redux/reducer/post/api";
@@ -83,7 +82,6 @@ function ManageClassroomTab() {
     "modal-open": openModalEx,
   });
   const { subscribeState } = useSubscribeStateContext();
-  const [arrComment, setArrComment] = useState<ICommentObject[]>([]);
   const dispatch = useAppDispatch();
 
   const handleOpenPostModal = (task: IPostObject) => {
