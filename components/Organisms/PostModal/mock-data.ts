@@ -21,5 +21,6 @@ export const DATA_POST_MODAL: IPostObject = {
   },
   description: "",
   uid: "",
-  classroom: INITIATE_COURSE
+  classroom: INITIATE_COURSE,
+  type: ""
 };

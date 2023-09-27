@@ -3,6 +3,7 @@ import { CommentForm, ContentComment } from "@/components/Molecules";
 import { IPostObject } from "@/interface/post";
 import { convertToUnaccentedString } from "@/utils/convertString";
 import { FC } from "react";
+import Link from "next/link";
 
 export interface IPostModalProps {
   modalClass: string;
@@ -51,17 +52,29 @@ export const PostModal: FC<IPostModalProps> = ({
               </p>
             </div>
           </div>
-          <div className="py-5 font-thin border-b">
-            <ul className="">
-              <li>- {post?.description}</li>
-              <li>- At the report you will review what you are doing.</li>
+          <div className="py-5 font-thin border-b text-sm">
+            <p className="py-2">General information</p>
+            <ul className="font-normal indent-3">
+              <li>{post?.description}</li>
+              <li>At the report you will review what you are doing.</li>
             </ul>
             <div>
-              <p>@Attachments: </p>
+              <p className="py-2">Document references</p>
+              {post?.attachments?.map((arr, index) => {
+                return (
+                  <a
+                    target="_blank"
+                    className="text-sm underline text-blue-700"
+                    key={index}
+                    href={arr}
+                  >
+                    {arr}
+                  </a>
+                );
+              })}
             </div>
           </div>
           <div className="py-5 flex flex-col gap-3">
-            <p className="text-[15px]">0 Comment for this report</p>
             <CommentForm task={post} />
             <ContentComment quantity={1000} task={post} />
             <Button

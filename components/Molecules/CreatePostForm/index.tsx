@@ -94,7 +94,7 @@ export const CreatePostForm: FC<ICreatePostFormProps> = ({
             uid: objectId,
             classroom: subscribeState.classroom,
             category: selectedStage,
-            attachment: selectedFiles,
+            attachments: selectedFiles,
             lecturer: currentUser,
           });
           resetForm();

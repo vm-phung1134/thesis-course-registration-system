@@ -65,7 +65,6 @@ export const ExerciseModal: FC<IExerciseModalProps> = ({
               </div>
             </div>
             <div className="py-5 flex flex-col gap-3">
-              <p className="text-[15px]">0 Comment for this report</p>
               <CommentForm task={exercise} />
               <ContentComment quantity={1} task={exercise} />
               <Button

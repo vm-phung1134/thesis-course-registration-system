@@ -11,5 +11,5 @@ export interface IPostObject {
   classroom: IClassroomObject;
   lecturer: IAuthObject;
   description: string;
-  attachment?: File[];
+  attachments?: File[] | any[];
 }
