@@ -1,6 +1,7 @@
 import { IAuthObject } from "./auth";
 import { ICategoryObject } from "./category";
 import { IClassroomObject } from "./classroom";
+import { IGeneralLinkAttachment } from "./submit";
 
 export interface IPostObject {
   id?: string;
@@ -11,5 +12,5 @@ export interface IPostObject {
   classroom: IClassroomObject;
   lecturer: IAuthObject;
   description: string;
-  attachments?: File[] | any[];
+  attachments?: (any | IGeneralLinkAttachment | File)[];
 }

@@ -6,11 +6,16 @@ import {
   UploadFileForm,
 } from "@/components/Molecules";
 import { ROLE_ASSIGNMENT } from "@/contexts/authContext";
-import { useUserCookies } from "@/hooks/useCookies";
+import { INITIATE_SUBMIT } from "@/data";
+import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { IExerciseObject } from "@/interface/exercise";
+import { ISubmitObject } from "@/interface/submit";
 import { DATA_CARD_STUDENT } from "@/pages/manage-classroom/members/mock-data";
+import { getSubmit } from "@/redux/reducer/submit/api";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { convertToUnaccentedString } from "@/utils/convertString";
-import { FC } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { FC, useEffect } from "react";
 
 export interface IExerciseModalProps {
   modalClass: string;
@@ -25,7 +30,18 @@ export const ExerciseModal: FC<IExerciseModalProps> = ({
   openModalEx,
   exercise,
 }) => {
-  const [userCookies] = useUserCookies();
+  const { currentUser } = useCurrentUser();
+  const dispatch = useAppDispatch();
+  const { data: submit } = useQuery<ISubmitObject>({
+    queryKey: ["submit"],
+    queryFn: async () => {
+      const action = await dispatch(
+        getSubmit({ exerciseId: exercise.uid, studentId: currentUser.id })
+      );
+      return action.payload || {};
+    },
+    initialData: INITIATE_SUBMIT,
+  });
   return (
     <dialog id="my_modal_2" className={modalClass}>
       <div className="w-8/12 bg-white p-5 h-fit shadow-2xl overflow-y-scroll">
@@ -63,18 +79,26 @@ export const ExerciseModal: FC<IExerciseModalProps> = ({
               </ul>
               <div>
                 <p className="py-2">Document references</p>
-                {exercise?.attachments?.map((arr, index) => {
-                  return (
-                    <a
-                      target="_blank"
-                      className="text-sm underline text-blue-700"
-                      key={index}
-                      href={arr}
-                    >
-                      {arr}
-                    </a>
-                  );
-                })}
+                <div className="flex gap-3">
+                  {exercise?.attachments?.map((arr, index) => {
+                    return (
+                      <div
+                        key={arr.id}
+                        className="flex gap-4 border-blue-500 text-blue-700 items-center border px-3 py-1"
+                      >
+                        <i className="fa-regular fa-file-word"></i>
+                        <a
+                          className="text-[13px]"
+                          target="_blank"
+                          key={index}
+                          href={arr.src}
+                        >
+                          {arr.name}
+                        </a>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </div>
             <div className="py-5 flex flex-col gap-3">
@@ -98,8 +122,8 @@ export const ExerciseModal: FC<IExerciseModalProps> = ({
                 ✕
               </button>
             </div>
-            {userCookies?.role === ROLE_ASSIGNMENT.STUDENT ? (
-              <ReportStatusStudentView />
+            {currentUser?.role === ROLE_ASSIGNMENT.STUDENT ? (
+              <ReportStatusStudentView submit={submit} exercise={exercise} />
             ) : (
               <ReportStatusLecturerView />
             )}
@@ -138,7 +162,15 @@ const ReportStatusLecturerView = () => {
   );
 };
 
-export const ReportStatusStudentView = () => {
+interface IReportStatusStudentViewProps {
+  exercise: IExerciseObject;
+  submit: ISubmitObject;
+}
+
+export const ReportStatusStudentView: FC<IReportStatusStudentViewProps> = ({
+  exercise,
+  submit,
+}) => {
   return (
     <>
       <div className="my-5 p-4 border shadow-md">
@@ -146,9 +178,11 @@ export const ReportStatusStudentView = () => {
           <h4 className="text-[13px] uppercase font-medium">
             Report on Design stage
           </h4>
-          <p className="text-sm text-red-600">Lack</p>
+          <p className="text-sm text-red-600 capitalize">
+            {submit.status || "Lack"}
+          </p>
         </div>
-        <UploadFileForm />
+        <UploadFileForm submit={submit} exercise={exercise} />
       </div>
     </>
   );

@@ -66,9 +66,9 @@ export const PostModal: FC<IPostModalProps> = ({
                     target="_blank"
                     className="text-sm underline text-blue-700"
                     key={index}
-                    href={arr}
+                    href={arr.src}
                   >
-                    {arr}
+                    {arr.name}
                   </a>
                 );
               })}
