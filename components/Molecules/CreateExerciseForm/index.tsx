@@ -44,7 +44,7 @@ export const CreateExerciseForm: FC<ICreateExerciseFormProps> = ({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { subscribeState } = useSubscribeStateContext();
   // HANDLE SELECT STAGE REPORT
-  const { selectedStage, setSelectedStage } = useSelectStage();
+  const { selectedStage, setSelectedStage, reportStages } = useSelectStage();
   // HANDLE FILE
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const handleUploadClick = () => {
@@ -134,7 +134,7 @@ export const CreateExerciseForm: FC<ICreateExerciseFormProps> = ({
               <div className="w-full">
                 <SelectInForm
                   title="Choose stage"
-                  options={DATA_STATE_REPORT}
+                  options={reportStages}
                   selectedStage={selectedStage}
                   setSelectedStage={setSelectedStage}
                 />

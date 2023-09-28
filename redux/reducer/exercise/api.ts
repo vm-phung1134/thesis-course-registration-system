@@ -138,9 +138,9 @@ const getAllExerciseInClass = createAsyncThunk(
 // GET ALL EXERCISE FOLLOW REPORT STAGE
 const getAllExerciseInReportStage = createAsyncThunk(
   "exercise/getAllExerciseInReportStage",
-  async (postData: IExerciseObject) => {
+  async (postData: any) => {
     const response = await axios.get(
-      `http://localhost:5000/api/exercise/${postData.classroom.id}&${postData.category.id}`,
+      `http://localhost:5000/api/exercise/stage/${postData.classroomId}&${postData.categoryId}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

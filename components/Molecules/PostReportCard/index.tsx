@@ -1,9 +1,12 @@
 import { IConTitle } from "@/components/Atoms";
+import { IPostObject } from "@/interface/post";
 import { FC } from "react";
 
-export interface IPostReportCardProps {}
+export interface IPostReportCardProps {
+  post: IPostObject
+}
 
-export const PostReportCard: FC<IPostReportCardProps> = () => {
+export const PostReportCard: FC<IPostReportCardProps> = ({post}) => {
   return (
     <div className="border shadow-md flex mt-5 p-5 justify-between gap-10 text-sm">
       <div className="flex gap-3 items-center">
@@ -26,10 +29,10 @@ export const PostReportCard: FC<IPostReportCardProps> = () => {
         </svg>
         <div className="flex flex-col gap-1">
           <p className="capitalize font-medium text-xs">
-            Le huynh quoc bao
+            {post?.lecturer?.name}
             <span className="normal-case font-normal"> has added new post</span>
           </p>
-          <p className="font-medium">Day off</p>
+          <p className="font-medium">{post?.title}</p>
         </div>
       </div>
       <IConTitle className="font-normal" title="Design phase">

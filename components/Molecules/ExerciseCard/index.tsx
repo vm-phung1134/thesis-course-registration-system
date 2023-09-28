@@ -1,12 +1,15 @@
 import { IConTitle } from "@/components/Atoms";
+import { IExerciseObject } from "@/interface/exercise";
 import { FC } from "react";
 
-export interface IExerciseProps {}
+export interface IExerciseProps {
+  exercise: IExerciseObject;
+}
 
-export const ExerciseCard: FC<IExerciseProps> = () => {
+export const ExerciseCard: FC<IExerciseProps> = ({ exercise }) => {
   return (
     <div className="border shadow-md flex mt-5 p-5 justify-between gap-10 text-sm cursor-pointer">
-      <IConTitle title="Report progress thesis in this phase">
+      <IConTitle title={exercise.title}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-5 w-5"
@@ -25,7 +28,10 @@ export const ExerciseCard: FC<IExerciseProps> = () => {
           />
         </svg>
       </IConTitle>
-      <IConTitle className="font-normal" title="Design phase">
+      <IConTitle
+        className="font-normal capitalize"
+        title={exercise?.category?.label}
+      >
         <svg
           className="w-4 h-4 fill-current inline-block"
           fill="currentColor"
@@ -35,7 +41,7 @@ export const ExerciseCard: FC<IExerciseProps> = () => {
           <path d="M11 17a1 1 0 001.447.894l4-2A1 1 0 0017 15V9.236a1 1 0 00-1.447-.894l-4 2a1 1 0 00-.553.894V17zM15.211 6.276a1 1 0 000-1.788l-4.764-2.382a1 1 0 00-.894 0L4.789 4.488a1 1 0 000 1.788l4.764 2.382a1 1 0 00.894 0l4.764-2.382zM4.447 8.342A1 1 0 003 9.236V15a1 1 0 00.553.894l4 2A1 1 0 009 17v-5.764a1 1 0 00-.553-.894l-4-2z"></path>
         </svg>
       </IConTitle>
-      <IConTitle className="textRed-600 font-normal" title="August, 09 2023">
+      <IConTitle className="textRed-600 font-normal" title={exercise?.deadline}>
         <svg
           className="w-4 h-4 fill-current inline-block"
           fill="currentColor"
