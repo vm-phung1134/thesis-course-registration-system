@@ -7,6 +7,7 @@ export interface IModalConfirmProp {
   openModal?: boolean;
   title: string;
   message: string;
+  action?: () => void;
 }
 
 export const ModalConfirm: FC<IModalConfirmProp> = ({
@@ -15,10 +16,11 @@ export const ModalConfirm: FC<IModalConfirmProp> = ({
   openModal,
   title,
   message,
+  action,
 }) => {
   return (
     <dialog id="my_modal_1" className={modalClass}>
-      <form method="dialog" className="bg-white p-7 shadow-lg">
+      <form method="dialog" className="bg-white p-7 shadow-lg w-4/12">
         <h3 className="font-bold text-lg">{title}</h3>
         <p className="py-4 text-[15px]">{message}</p>
         <div className="modal-action">
@@ -30,7 +32,9 @@ export const ModalConfirm: FC<IModalConfirmProp> = ({
           />
           <Button
             title="accept"
-            className="hover:text-black bg-green-700 text-white"
+            otherType="subscribe"
+            handleSubcribeClass={action}
+            className="hover:text-black bg-green-700 hover:bg-green-600 px-10 text-white"
           />
         </div>
       </form>

@@ -1,5 +1,6 @@
 import { Button } from "@/components/Atoms";
 import Image from "next/image";
+import Link from "next/link";
 import { FC } from "react";
 
 export interface IClassroomNotFoundProps {}
@@ -17,10 +18,12 @@ export const ClassroomNotFound: FC<IClassroomNotFoundProps> = () => {
       <p className="py-5 text-gray-500 uppercase">
         Ops! We have not found your classroom yet
       </p>
-      <Button
-        className="px-10 bg-green-700 text-white hover:bg-green-600"
-        title="Back to mainboard"
-      />
+      <Link href="/mainboard">
+        <Button
+          className="px-10 bg-green-700 text-white hover:bg-green-600"
+          title="Back to mainboard"
+        />
+      </Link>
     </div>
   );
 };

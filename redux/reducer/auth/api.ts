@@ -94,4 +94,30 @@ const checkStateSubscribe = createAsyncThunk(
   }
 );
 
-export { getAllAuths, getOneAuth, loginAuth, updateAuth, checkStateSubscribe };
+// UNSUBSCRIBE STATE
+const unsubscribeState = createAsyncThunk(
+  "auth/unsubscribeState",
+  async (postData: IAuthObject) => {
+    const response = await axios.get(
+      `http://localhost:5000/api/auth/un-subscribe/${postData.id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    if (response.status === 200) {
+      return response.data;
+    }
+    throw new Error("Failed to check state subcribe");
+  }
+);
+
+export {
+  getAllAuths,
+  unsubscribeState,
+  getOneAuth,
+  loginAuth,
+  updateAuth,
+  checkStateSubscribe,
+};

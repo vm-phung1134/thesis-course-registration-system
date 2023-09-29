@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Breadcrumb, SnipperRound } from "@/components/Atoms";
+import { Breadcrumb, Button, SnipperRound } from "@/components/Atoms";
 import { MainboardTemplate } from "@/components/Templates";
 import { BREADCRUMB_REQUIREMENT } from "./mock-data";
 import { CardRequireMember } from "@/components/Molecules";
@@ -11,6 +11,8 @@ import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { getTopic } from "@/redux/reducer/topic/api";
 import classNames from "classnames";
 import { useSubscribeStateContext } from "@/contexts/subscribeState";
+import Image from "next/image";
+import Link from "next/link";
 
 function RequirementPage() {
   const [openModalMemberDetail, setOpenModalMemberDetail] =
@@ -55,19 +57,40 @@ function RequirementPage() {
             <h4 className="uppercase text-green-700 font-medium mt-5 py-2">
               List requirements
             </h4>
-            <div className="grid grid-cols-3 gap-3 mt-3">
-              {requirements?.map((listRequirement) => {
-                return (
-                  <CardRequireMember
-                    handleGetTopicRequire={handleGetTopicRequire}
-                    setOpenMemberModal={setOpenModalMemberDetail}
-                    openMemberModal={openModalMemberDetail}
-                    key={listRequirement.id}
-                    require={listRequirement}
+            {requirements.length > 0 ? (
+              <div className="grid grid-cols-3 gap-3 mt-3">
+                {requirements?.map((listRequirement) => {
+                  return (
+                    <CardRequireMember
+                      handleGetTopicRequire={handleGetTopicRequire}
+                      setOpenMemberModal={setOpenModalMemberDetail}
+                      openMemberModal={openModalMemberDetail}
+                      key={listRequirement.id}
+                      require={listRequirement}
+                    />
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="h-[80%] w-full flex flex-col justify-center items-center">
+                <Image
+                  src="https://yi-files.s3.eu-west-1.amazonaws.com/products/912000/912743/1548296-full.jpg"
+                  width="400"
+                  height="400"
+                  className="-hue-rotate-[38deg] saturate-[.85]"
+                  alt=""
+                />
+                <p className="py-5 text-gray-500 uppercase">
+                  Ops! There are currently no requirements
+                </p>
+                <Link href="/manage-classroom">
+                  <Button
+                    className="px-10 bg-green-700 text-white hover:bg-green-600"
+                    title="Back to classroom"
                   />
-                );
-              })}
-            </div>
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       )}

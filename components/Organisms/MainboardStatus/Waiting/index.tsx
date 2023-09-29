@@ -3,13 +3,57 @@ import Image from "next/image";
 import { FC, useEffect, useState } from "react";
 import { BREADCRUMB_MAINBOARD } from "../mock-data";
 import { IClassroomObject } from "@/interface/classroom";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { IAuthObject } from "@/interface/auth";
+import { unsubscribeState } from "@/redux/reducer/auth/api";
+import { useAppDispatch } from "@/redux/store";
+import { useCurrentUser } from "@/hooks/useGetCurrentUser";
+import classNames from "classnames";
+import { ModalConfirm } from "@/components/Molecules";
 
 export interface IWaitingViewProps {
-  classroom?: IClassroomObject
+  classroom?: IClassroomObject;
 }
 
-export const WaitingView: FC<IWaitingViewProps> = ({classroom}) => {
+export const WaitingView: FC<IWaitingViewProps> = ({ classroom }) => {
   const [loading, setLoading] = useState<boolean>(true);
+  const dispatch = useAppDispatch();
+  const queryClient = useQueryClient();
+  const { currentUser } = useCurrentUser();
+  const deleteMutation = useMutation(
+    (postData: IAuthObject) => {
+      return new Promise((resolve, reject) => {
+        dispatch(unsubscribeState(postData))
+          .unwrap()
+          .then((data) => {
+            resolve(data);
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      });
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["subscribe-state", currentUser]);
+      },
+    }
+  );
+
+  const [openModalConfirm, setOpenModalConfirm] = useState<boolean>(false);
+  const modalClassConfirm = classNames({
+    "modal modal-bottom sm:modal-middle": true,
+    "modal-open": openModalConfirm,
+  });
+
+  const handleOpenModalConfirm = () => {
+    setOpenModalConfirm?.(!openModalConfirm);
+  };
+
+  const handleUnsubscribeState = () => {
+    deleteMutation.mutate(currentUser);
+  };
+
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
@@ -35,7 +79,9 @@ export const WaitingView: FC<IWaitingViewProps> = ({classroom}) => {
             <div className="flex gap-3 flex-col items-center">
               <h4 className="">
                 You subscribed classroom of{" "}
-                <span className="uppercase font-medium">{classroom?.title}</span>
+                <span className="uppercase font-medium">
+                  {classroom?.title}
+                </span>
               </h4>
               <p className="font-thin text-sm">
                 Please waiting until the lecturer add you into class
@@ -44,11 +90,21 @@ export const WaitingView: FC<IWaitingViewProps> = ({classroom}) => {
               <div>
                 <Button
                   title="Unsubcribe"
+                  otherType="subscribe"
+                  handleSubcribeClass={handleOpenModalConfirm}
                   className="px-5 bg-green-700 text-white hover:bg-green-600"
                 />
               </div>
             </div>
           </div>
+          <ModalConfirm
+            modalClass={modalClassConfirm}
+            setOpenModal={setOpenModalConfirm}
+            openModal={openModalConfirm}
+            action={handleUnsubscribeState}
+            title="Message!!!"
+            message="Do you want to unsubscribe this classroom"
+          />
         </>
       )}
     </>
