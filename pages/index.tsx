@@ -21,7 +21,7 @@ const IntroPage = () => {
         <h2 className="max-w-lg font-sans text-3xl uppercase tracking-wide font-bold text-white sm:text-4xl">
           Thesis course registration system for{" "}
           <br className="hidden md:block" />
-          <span className="text-green-500">CIT students</span>
+          <span className="text-green-700">CIT students</span>
         </h2>{" "}
       </div>
       <div className="flex flex-col gap-10 max-w-2xl">

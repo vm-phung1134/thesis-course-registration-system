@@ -16,7 +16,7 @@ import { deleteRequirement } from "@/redux/reducer/requirement/api";
 import { useSubscribeStateContext } from "@/contexts/subscribeState";
 
 function MainboardPage() {
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const dispatch = useAppDispatch();
   const { subscribeState } = useSubscribeStateContext();
 
@@ -25,7 +25,6 @@ function MainboardPage() {
   };
 
   useEffect(() => {
-    setLoading(true);
     setTimeout(() => {
       setLoading(false);
     }, 1000);

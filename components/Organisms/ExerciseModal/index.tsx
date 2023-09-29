@@ -1,4 +1,4 @@
-import { Button } from "@/components/Atoms";
+import { Button, SelectBox } from "@/components/Atoms";
 import {
   CardStudentShort,
   CommentForm,
@@ -8,14 +8,18 @@ import {
 import { ROLE_ASSIGNMENT } from "@/contexts/authContext";
 import { INITIATE_SUBMIT } from "@/data";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
+import { ICategoryObject } from "@/interface/category";
 import { IExerciseObject } from "@/interface/exercise";
+import { IOptionItem } from "@/interface/filter";
 import { ISubmitObject } from "@/interface/submit";
 import { DATA_CARD_STUDENT } from "@/pages/manage-classroom/members/mock-data";
 import { getSubmit } from "@/redux/reducer/submit/api";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { convertToUnaccentedString } from "@/utils/convertString";
 import { useQuery } from "@tanstack/react-query";
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
+import { DATA_LIST_OPTIONS } from "../ClassroomStatus/mock-data";
+import { DATA_FILTER_COURSE } from "../MainboardStatus/mock-data";
 
 export interface IExerciseModalProps {
   modalClass: string;
@@ -135,6 +139,9 @@ export const ExerciseModal: FC<IExerciseModalProps> = ({
 };
 
 const ReportStatusLecturerView = () => {
+  const [selected, setSelected] = useState<IOptionItem | ICategoryObject>(
+    DATA_FILTER_COURSE[0]
+  );
   return (
     <>
       <div className="flex gap-5 my-3 pb-2 border-b">
@@ -145,13 +152,12 @@ const ReportStatusLecturerView = () => {
           <span className="text-lg font-bold">15</span> Assignment
         </p>
       </div>
-      <div className="flex justify-start">
-        <select className="select font-thin select-sm my-2 select-bordered rounded-none focus:outline-none max-w-xs">
-          <option>Sort by name</option>
-          <option>Large Apple</option>
-          <option>Large Orange</option>
-          <option>Large Tomato</option>
-        </select>
+      <div className="flex justify-start mb-3">
+        <SelectBox
+          setSelected={setSelected}
+          selected={selected}
+          options={DATA_FILTER_COURSE}
+        />
       </div>
       <div className="flex flex-wrap gap-2">
         {DATA_CARD_STUDENT.map((student) => {

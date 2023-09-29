@@ -6,7 +6,7 @@ export const Spinner = () => {
         <div className="three-body__dot"></div>
         <div className="three-body__dot"></div>
       </div>
-      <p className="text-lg font-bold text-green-600 uppercase">TCR System</p>
+      <p className="text-lg font-bold text-green-700 uppercase">TCR System</p>
     </div>
   );
 };

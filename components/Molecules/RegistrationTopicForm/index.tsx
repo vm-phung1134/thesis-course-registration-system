@@ -89,7 +89,7 @@ export const RegistrationTopicForm: FC<IRegistrationTopicFormProps> = ({
         return (
           <Form>
             <TitleFormField
-              className="text-base uppercase text-green-600 font-medium mb-5"
+              className="text-base uppercase text-green-700 font-medium mb-5"
               title="Registration of research topics"
             />
             <FormField
@@ -137,7 +137,7 @@ export const RegistrationTopicForm: FC<IRegistrationTopicFormProps> = ({
               <Button
                 type="submit"
                 title="Confirm"
-                className="hover:bg-[#165b31] bg-[#018937] text-white px-5"
+                className="hover:bg-[#165b31] bg-green-700 text-white px-5"
               />
             </div>
           </Form>

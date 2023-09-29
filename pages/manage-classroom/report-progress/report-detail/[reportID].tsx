@@ -9,19 +9,24 @@ import {
 } from "@/components/Molecules";
 import { useQuery } from "@tanstack/react-query";
 import { IPostObject } from "@/interface/post";
-import { useAppDispatch } from "@/redux/store";
-import { getAllPostInReportStage } from "@/redux/reducer/post/api";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { getAllPostInReportStage, getPost } from "@/redux/reducer/post/api";
 import { useSubscribeStateContext } from "@/contexts/subscribeState";
 import { useSearchParams } from "next/navigation";
-import { getAllExerciseInReportStage } from "@/redux/reducer/exercise/api";
+import {
+  getAllExerciseInReportStage,
+  getExercise,
+} from "@/redux/reducer/exercise/api";
 import { IExerciseObject } from "@/interface/exercise";
+import { ExerciseModal, PostModal } from "@/components/Organisms";
+import classNames from "classnames";
 
 function ReportStageDetailPage() {
   const dispatch = useAppDispatch();
   const params = useSearchParams();
   const id = params.get("reportID");
   const { subscribeState } = useSubscribeStateContext();
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const { data: posts } = useQuery<IPostObject[]>({
     queryKey: ["posts", subscribeState.classroom.id, id],
     queryFn: async () => {
@@ -49,8 +54,29 @@ function ReportStageDetailPage() {
     },
     initialData: [],
   });
+  // HANLE OPEN POST/EXERCISE MODAL
+  const { post } = useAppSelector((state) => state.postReducer);
+  const { exercise } = useAppSelector((state) => state.exerciseReducer);
+  const [openModalPost, setOpenModalPost] = useState<boolean>(false);
+  const [openModalEx, setOpenModalEx] = useState<boolean>(false);
+  const modalClassPost = classNames({
+    "modal modal-bottom sm:modal-middle": true,
+    "modal-open": openModalPost,
+  });
+  const modalClassEx = classNames({
+    "modal modal-bottom sm:modal-middle": true,
+    "modal-open": openModalEx,
+  });
+  const handleOpenPostModal = (task: IPostObject) => {
+    setOpenModalPost?.(!openModalPost);
+    dispatch(getPost(task));
+  };
+
+  const handleOpenExModal = (task: IExerciseObject) => {
+    setOpenModalEx?.(!openModalEx);
+    dispatch(getExercise(task));
+  };
   useEffect(() => {
-    setLoading(true);
     setTimeout(() => {
       setLoading(false);
     }, 1000);
@@ -69,10 +95,18 @@ function ReportStageDetailPage() {
                   post and expercise for this phase
                 </h4>
                 {posts?.map((post, index) => (
-                  <PostReportCard key={post.id} post={post} />
+                  <PostReportCard
+                    handleOpenTaskModal={handleOpenPostModal}
+                    key={post.id}
+                    post={post}
+                  />
                 ))}
                 {exercises?.map((ex, index) => (
-                  <ExerciseCard key={ex.id} exercise={ex} />
+                  <ExerciseCard
+                    handleOpenTaskModal={handleOpenExModal}
+                    key={ex.id}
+                    exercise={ex}
+                  />
                 ))}
               </div>
               <div className="col-span-4">
@@ -95,6 +129,18 @@ function ReportStageDetailPage() {
             </div>
           </>
         )}
+        <PostModal
+          modalClass={modalClassPost}
+          post={post}
+          setOpenModalPost={setOpenModalPost}
+          openModalPost={openModalPost}
+        />
+        <ExerciseModal
+          modalClass={modalClassEx}
+          exercise={exercise}
+          setOpenModalEx={setOpenModalEx}
+          openModalEx={openModalEx}
+        />
       </MainboardTemplate>
     </>
   );

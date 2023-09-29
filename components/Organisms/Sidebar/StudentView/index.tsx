@@ -12,13 +12,13 @@ export const SidebarStudentView: FC<ISidebarStudentViewProps> = ({}) => {
       <LogoApp
         width={30}
         height={30}
-        className="text-[#018937] font-bold text-xl"
+        className="text-green-700 font-bold text-xl"
       />
       <ul className="menu gap-3">
         <li>
           <Link
             href="/mainboard"
-            className="rounded-none hover:bg-[#018937] hover:text-white"
+            className="rounded-none hover:bg-green-700 hover:text-white"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -41,7 +41,7 @@ export const SidebarStudentView: FC<ISidebarStudentViewProps> = ({}) => {
         </li>
         <li>
           <details open>
-            <summary className="rounded-none hover:bg-[#018937] hover:text-white">
+            <summary className="rounded-none hover:bg-green-700 hover:text-white">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -64,7 +64,7 @@ export const SidebarStudentView: FC<ISidebarStudentViewProps> = ({}) => {
               <li>
                 <Link
                   href="/account/account-student"
-                  className="rounded-none hover:bg-[#018937] hover:text-white"
+                  className="rounded-none hover:bg-green-700 hover:text-white"
                 >
                   {t.sideBarStudentItem3}
                 </Link>
@@ -72,7 +72,7 @@ export const SidebarStudentView: FC<ISidebarStudentViewProps> = ({}) => {
               <li>
                 <Link
                   href="/account/account-student"
-                  className="rounded-none hover:bg-[#018937] hover:text-white"
+                  className="rounded-none hover:bg-green-700 hover:text-white"
                 >
                   {t.sideBarStudentItem4}
                 </Link>
@@ -81,10 +81,10 @@ export const SidebarStudentView: FC<ISidebarStudentViewProps> = ({}) => {
           </details>
         </li>
 
-        <div className="w-full h-[1px] bg-[#018937]"></div>
+        <div className="w-full h-[1px] bg-green-700"></div>
         <li>
           <Link
-            className="rounded-none hover:bg-[#018937] hover:text-white"
+            className="rounded-none hover:bg-green-700 hover:text-white"
             href="/manage-classroom"
           >
             <svg
@@ -108,7 +108,7 @@ export const SidebarStudentView: FC<ISidebarStudentViewProps> = ({}) => {
         </li>
         <li>
           <details open>
-            <summary className="rounded-none hover:bg-[#018937] hover:text-white">
+            <summary className="rounded-none hover:bg-green-700 hover:text-white">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -131,7 +131,7 @@ export const SidebarStudentView: FC<ISidebarStudentViewProps> = ({}) => {
               <li>
                 <Link
                   href="/tasks/critical-tasks"
-                  className="rounded-none hover:bg-[#018937] hover:text-white"
+                  className="rounded-none hover:bg-green-700 hover:text-white"
                 >
                   {t.sideBarStudentItem7}
                 </Link>
@@ -139,7 +139,7 @@ export const SidebarStudentView: FC<ISidebarStudentViewProps> = ({}) => {
               <li>
                 <Link
                   href="/tasks/completed-tasks"
-                  className="rounded-none hover:bg-[#018937] hover:text-white"
+                  className="rounded-none hover:bg-green-700 hover:text-white"
                 >
                   {t.sideBarStudentItem8}
                 </Link>
@@ -149,7 +149,7 @@ export const SidebarStudentView: FC<ISidebarStudentViewProps> = ({}) => {
         </li>
         <li>
           <Link
-            className="rounded-none hover:bg-[#018937] hover:text-white"
+            className="rounded-none hover:bg-green-700 hover:text-white"
             href="/"
           >
             <svg
@@ -171,10 +171,10 @@ export const SidebarStudentView: FC<ISidebarStudentViewProps> = ({}) => {
             </span>
           </Link>
         </li>
-        <div className="w-full h-[1px] bg-[#018937]"></div>
+        <div className="w-full h-[1px] bg-green-700"></div>
         <li>
           <Link
-            className="rounded-none hover:bg-[#018937] hover:text-white"
+            className="rounded-none hover:bg-green-700 hover:text-white"
             href="#"
           >
             <svg

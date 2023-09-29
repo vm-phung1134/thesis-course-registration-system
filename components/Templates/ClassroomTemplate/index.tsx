@@ -1,8 +1,4 @@
-import {
-  CreateExerciseForm,
-  CreatePostForm,
-  ModalConfirm,
-} from "@/components/Molecules";
+import { CreateExerciseForm, CreatePostForm } from "@/components/Molecules";
 import {
   ClassroomFound,
   ClassroomNotFound,
@@ -12,7 +8,7 @@ import {
 } from "@/components/Organisms";
 import classNames from "classnames";
 import Head from "next/head";
-import { useState, FC, useEffect } from "react";
+import { useState, FC, useEffect, lazy, Suspense } from "react";
 import { DATA_LIST_OPTIONS } from "./mock-data";
 import { ROLE_ASSIGNMENT } from "@/contexts/authContext";
 import { ICategoryObject } from "@/interface/category";
@@ -55,9 +51,8 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
 
   // HANDLE API
   const { subscribeState } = useSubscribeStateContext();
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   useEffect(() => {
-    setLoading(true);
     const timeOutLoading = setTimeout(() => {
       setLoading(false);
     }, 1300);
@@ -81,16 +76,20 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
             <Header />
             {loading ? (
               <SnipperRound />
-            ) : subscribeState?.classroom ? (
-              <ClassroomFound
-                classroom={subscribeState.classroom}
-                setCreatePostModal={setCreatePostModal}
-                openCreatePostModal={openCreatePostModal}
-              >
-                {children}
-              </ClassroomFound>
             ) : (
-              <ClassroomNotFound />
+              <>
+                {subscribeState?.classroom ? (
+                  <ClassroomFound
+                    classroom={subscribeState.classroom}
+                    setCreatePostModal={setCreatePostModal}
+                    openCreatePostModal={openCreatePostModal}
+                  >
+                    {children}
+                  </ClassroomFound>
+                ) : (
+                  <ClassroomNotFound />
+                )}
+              </>
             )}
           </div>
           {/* POST / EXERCISE */}

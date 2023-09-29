@@ -9,9 +9,8 @@ export interface IWaitingViewProps {
 }
 
 export const WaitingView: FC<IWaitingViewProps> = ({classroom}) => {
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   useEffect(() => {
-    setLoading(true);
     setTimeout(() => {
       setLoading(false);
     }, 2000);

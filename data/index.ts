@@ -3,6 +3,7 @@ import { ICategoryObject } from "@/interface/category";
 import { IClassroomObject } from "@/interface/classroom";
 import { ICommentObject } from "@/interface/comment";
 import { IExerciseObject } from "@/interface/exercise";
+import { IOptionItem } from "@/interface/filter";
 import { IMemberObject } from "@/interface/member";
 import { IPostObject } from "@/interface/post";
 import { ISubmitObject } from "@/interface/submit";
@@ -88,4 +89,5 @@ export const INITIATE_SUBMIT: ISubmitObject = {
   student: INITIATE_AUTH,
   attachments: [],
   status: "",
+  uid: "",
 };

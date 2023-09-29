@@ -4,11 +4,18 @@ import { FC } from "react";
 
 export interface IExerciseProps {
   exercise: IExerciseObject;
+  handleOpenTaskModal: (exercise: IExerciseObject) => void;
 }
 
-export const ExerciseCard: FC<IExerciseProps> = ({ exercise }) => {
+export const ExerciseCard: FC<IExerciseProps> = ({
+  exercise,
+  handleOpenTaskModal,
+}) => {
   return (
-    <div className="border shadow-md flex mt-5 p-5 justify-between gap-10 text-sm cursor-pointer">
+    <div
+      onClick={() => handleOpenTaskModal(exercise)}
+      className="border shadow-md flex mt-5 p-5 justify-between gap-10 text-sm cursor-pointer"
+    >
       <IConTitle title={exercise.title}>
         <svg
           xmlns="http://www.w3.org/2000/svg"

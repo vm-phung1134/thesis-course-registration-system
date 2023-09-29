@@ -52,14 +52,14 @@ export const Header: FC<IHeaderProps> = () => {
                 alt="icon-language"
               />
               <button
-                className={`${localeValue === "en" && "text-green-600 "} px-3`}
+                className={`${localeValue === "en" && "text-green-700 "} px-3`}
                 onClick={() => handleChangeLanguage("en")}
               >
                 English
               </button>
               <span className="border-r border-gray-300"></span>
               <button
-                className={`${localeValue === "vi" && "text-green-600 "} px-3`}
+                className={`${localeValue === "vi" && "text-green-700 "} px-3`}
                 onClick={() => handleChangeLanguage("vi")}
               >
                 Vietnam

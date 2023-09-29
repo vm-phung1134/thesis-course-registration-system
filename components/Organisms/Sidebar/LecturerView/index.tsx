@@ -14,12 +14,12 @@ export const SidebarLecturerView: FC<ISidebarLecturerViewProps> = ({}) => {
       <LogoApp
         width={30}
         height={30}
-        className="text-[#018937] font-bold text-xl"
+        className="text-green-700 font-bold text-xl"
       />
       <ul className="menu gap-3">
         <li>
           <Link
-            className="rounded-none hover:bg-[#018937] hover:text-white"
+            className="rounded-none hover:bg-green-700 hover:text-white"
             href="/mainboard"
           >
             <svg
@@ -41,7 +41,7 @@ export const SidebarLecturerView: FC<ISidebarLecturerViewProps> = ({}) => {
         </li>
         <li>
           <Link
-            className="rounded-none hover:bg-[#018937] hover:text-white"
+            className="rounded-none hover:bg-green-700 hover:text-white"
             href="/account/account-lecturer"
           >
             <svg
@@ -61,10 +61,10 @@ export const SidebarLecturerView: FC<ISidebarLecturerViewProps> = ({}) => {
             <span className="mx-2 text-[15px] font-medium">Account</span>
           </Link>
         </li>
-        <div className="w-full h-[1px] bg-[#018937]"></div>
+        <div className="w-full h-[1px] bg-green-700"></div>
         <li>
           <Link
-            className="rounded-none hover:bg-[#018937] hover:text-white"
+            className="rounded-none hover:bg-green-700 hover:text-white"
             href={
               subscribeState?.classroom
                 ? "/manage-classroom"
@@ -90,7 +90,7 @@ export const SidebarLecturerView: FC<ISidebarLecturerViewProps> = ({}) => {
         </li>
         <li>
           <Link
-            className="rounded-none hover:bg-[#018937] hover:text-white"
+            className="rounded-none hover:bg-green-700 hover:text-white"
             href="/manage-classroom/create-classroom"
           >
             <svg
@@ -114,7 +114,7 @@ export const SidebarLecturerView: FC<ISidebarLecturerViewProps> = ({}) => {
         </li>
         <li>
           <details open>
-            <summary className="rounded-none hover:bg-[#018937] hover:text-white">
+            <summary className="rounded-none hover:bg-green-700 hover:text-white">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -135,7 +135,7 @@ export const SidebarLecturerView: FC<ISidebarLecturerViewProps> = ({}) => {
               <li>
                 <Link
                   href="/activities/assignment-tasks"
-                  className="rounded-none hover:bg-[#018937] hover:text-white"
+                  className="rounded-none hover:bg-green-700 hover:text-white"
                 >
                   Assignment
                 </Link>
@@ -143,7 +143,7 @@ export const SidebarLecturerView: FC<ISidebarLecturerViewProps> = ({}) => {
               <li>
                 <Link
                   href="/activities/requirements"
-                  className="rounded-none hover:bg-[#018937] hover:text-white"
+                  className="rounded-none hover:bg-green-700 hover:text-white"
                 >
                   Requirement
                 </Link>
@@ -151,10 +151,10 @@ export const SidebarLecturerView: FC<ISidebarLecturerViewProps> = ({}) => {
             </ul>
           </details>
         </li>
-        <div className="w-full h-[1px] bg-[#018937]"></div>
+        <div className="w-full h-[1px] bg-green-700"></div>
         <li>
           <a
-            className="rounded-none hover:bg-[#018937] hover:text-white"
+            className="rounded-none hover:bg-green-700 hover:text-white"
             href="#"
           >
             <svg

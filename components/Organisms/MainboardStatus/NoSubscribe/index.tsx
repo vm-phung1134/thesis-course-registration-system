@@ -30,7 +30,7 @@ export const NoSubscribeView: FC<INoSubscribeViewProps> = () => {
     }
   );
   const dispatch = useAppDispatch();
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const { data, isLoading } = useQuery<IClassroomObject[]>({
     queryKey: ["classrooms"],
     queryFn: async () => {
@@ -49,7 +49,6 @@ export const NoSubscribeView: FC<INoSubscribeViewProps> = () => {
     setCurrentPage((prevPage) => prevPage + 1);
   };
   useEffect(() => {
-    setLoading(true);
     setTimeout(() => {
       setLoading(false);
     }, 1300);

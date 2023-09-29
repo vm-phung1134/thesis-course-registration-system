@@ -9,9 +9,8 @@ export interface IUnSubscribeViewProps {
 }
 
 export const UnSubscribeView: FC<IUnSubscribeViewProps> = ({ classroom }) => {
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   useEffect(() => {
-    setLoading(true);
     setTimeout(() => {
       setLoading(false);
     }, 2000);

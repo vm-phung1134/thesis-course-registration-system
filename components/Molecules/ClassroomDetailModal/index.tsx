@@ -82,13 +82,13 @@ export const ClassroomDetailModal: FC<IClassroomDetailModalProps> = ({
             setToggle={setOpenModalClassroomDetail}
             toggle={openModalClassroomDetail}
             otherType="detail"
-            className="bg-transparent dark:text-green-500 border-none hover:border-none hover:bg-transparent"
+            className="bg-transparent dark:text-green-700 border-none hover:border-none hover:bg-transparent"
           />
           <Button
             id={item.id}
             otherType="subscribe"
             title="Subscribe"
-            className="hover:bg-[#165b31] border-none btn-sm bg-[#018937] text-white"
+            className="hover:bg-[#165b31] border-none btn-sm bg-green-700 text-white"
           />
         </div>
       </div>

@@ -3,12 +3,19 @@ import { IPostObject } from "@/interface/post";
 import { FC } from "react";
 
 export interface IPostReportCardProps {
-  post: IPostObject
+  post: IPostObject;
+  handleOpenTaskModal: (post: IPostObject) => void;
 }
 
-export const PostReportCard: FC<IPostReportCardProps> = ({post}) => {
+export const PostReportCard: FC<IPostReportCardProps> = ({
+  post,
+  handleOpenTaskModal,
+}) => {
   return (
-    <div className="border shadow-md flex mt-5 p-5 justify-between gap-10 text-sm">
+    <div
+      onClick={() => handleOpenTaskModal(post)}
+      className="border shadow-md flex mt-5 p-5 justify-between gap-10 text-sm"
+    >
       <div className="flex gap-3 items-center">
         <svg
           xmlns="http://www.w3.org/2000/svg"

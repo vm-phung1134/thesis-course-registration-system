@@ -140,7 +140,7 @@ export const InforUserFormV2: FC<IInforUserFormV2Props> = ({
                     <Button
                       type="submit"
                       title="Next step"
-                      className="hover:bg-[#165b31] btn rounded-none font-normal normal-case w-28 bg-[#018937] text-white px-5"
+                      className="hover:bg-[#165b31] btn rounded-none font-normal normal-case w-28 bg-green-700 text-white px-5"
                     />
                   </div>
                 </Form>

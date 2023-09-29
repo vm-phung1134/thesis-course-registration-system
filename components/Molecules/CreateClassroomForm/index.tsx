@@ -151,7 +151,7 @@ export const CreateClassroomForm: FC<ICreateClassroomFormProps> = ({
                     <Button
                       type="submit"
                       title="Next step"
-                      className="hover:bg-[#165b31] normal-case w-28 bg-[#018937] text-white px-5"
+                      className="hover:bg-[#165b31] normal-case w-28 bg-green-700 text-white px-5"
                     />
                   </div>
                 </Form>

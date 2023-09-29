@@ -46,7 +46,7 @@ export const CardMember: FC<ICardMemberClassProps> = ({
             otherType="subscribe"
             handleSubcribeClass={handleShowModalMember}
             title="View detail"
-            className="text-green-600 text-sm bg-transparent border-none hover:bg-transparent hover:border-none"
+            className="text-green-700 text-sm bg-transparent border-none hover:bg-transparent hover:border-none"
           />
         </div>
       </div>

@@ -39,7 +39,7 @@ export const InforMemberModal: FC<IInforMemberModalProps> = ({
             <Button
               type="button"
               title="Done"
-              className="hover:bg-[#165b31] bg-[#018937] text-white"
+              className="hover:bg-[#165b31] bg-green-700 text-white"
             />
           </div>
         </div>

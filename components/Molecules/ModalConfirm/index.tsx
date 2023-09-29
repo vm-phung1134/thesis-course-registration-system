@@ -30,7 +30,7 @@ export const ModalConfirm: FC<IModalConfirmProp> = ({
           />
           <Button
             title="accept"
-            className="hover:text-black bg-[#018937] text-white"
+            className="hover:text-black bg-green-700 text-white"
           />
         </div>
       </form>
