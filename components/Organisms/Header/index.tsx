@@ -1,5 +1,6 @@
 import { Avatar } from "@/components/Atoms";
 import DarkModeToggle from "@/components/Atoms/ToggleDarkMode";
+import { SearchForm } from "@/components/Molecules";
 import { useAuthContext } from "@/contexts/authContext";
 import { useLanguageContext } from "@/contexts/languageContext";
 import { useUserCookies } from "@/hooks/useCookies";
@@ -18,29 +19,7 @@ export const Header: FC<IHeaderProps> = () => {
   return (
     <div className="navbar border-b dark:border-gray-500 p-5 top-0 sticky bg-white z-10">
       <div className="justify-between w-full">
-        <form action="">
-          <div className="flex border w-96 px-3 items-center">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-full w-5 flex-none"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              />
-            </svg>
-            <input
-              placeholder="Search for anything..."
-              type="text"
-              className="input dark:bg-black h-10 text-[15px] focus:outline-none rounded-none flex-1"
-            />
-          </div>
-        </form>
+        <SearchForm />
         <div className="flex gap-10">
           <div className="flex items-center">
             {/* CHANGE LANGUAGE */}

@@ -26,3 +26,4 @@ export * from "./UploadFileForm";
 export * from "./CardLecturerInClass";
 export * from "./ClassroomContentCard";
 export * from "./ClassroomDetailModal";
+export * from "./SearchForm";
