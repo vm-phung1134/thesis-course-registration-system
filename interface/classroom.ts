@@ -13,4 +13,5 @@ export interface IClassroomObject {
   codeCourse: string;
   quantity: number;
   topicTags?: ITopicKeyObject[];
+  status?: string;
 }

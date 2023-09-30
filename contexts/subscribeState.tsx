@@ -1,4 +1,4 @@
-import { INITIATE_AUTH, INITIATE_COURSE, INITIATE_MEMBER } from "@/data";
+import { INITIATE_AUTH, INITIATE_COURSE } from "@/data";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { IMemberObject } from "@/interface/member";
 import { checkStateSubscribe } from "@/redux/reducer/auth/api";

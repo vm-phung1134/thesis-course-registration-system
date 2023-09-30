@@ -6,11 +6,14 @@ import {
   UnSubscribeView,
   WaitingView,
 } from "@/components/Organisms";
-import { useSubscribeStateContext } from "@/contexts/subscribeState";
+import { useClassroomStateContext } from "@/contexts/authClassroomState";
+import { ROLE_ASSIGNMENT } from "@/contexts/authContext";
+import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 
 function MainboardPage() {
   const [loading, setLoading] = useState<boolean>(true);
-  const { subscribeState } = useSubscribeStateContext();
+  const {currentUser} = useCurrentUser();
+  const { authClassroomState } = useClassroomStateContext();
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
@@ -22,12 +25,22 @@ function MainboardPage() {
         <Spinner />
       ) : (
         <MainboardTemplate title="Mainboard Thesis | Thesis course registration system">
-          {subscribeState?.status === "NO_SUBSCRIBE" && <NoSubscribeView />}
-          {subscribeState?.status === "WAITING" && (
-            <WaitingView classroom={subscribeState?.classroom} />
-          )}
-          {subscribeState?.status === "UN_SUBSCRIBE" && (
-            <UnSubscribeView classroom={subscribeState?.classroom} />
+          {currentUser.role === ROLE_ASSIGNMENT.LECTURER ? (
+            <>
+              {authClassroomState?.status === "UNLOCK" && <NoSubscribeView />}
+            </>
+          ) : (
+            <>
+              {authClassroomState?.status === "NO_SUBSCRIBE" && (
+                <NoSubscribeView />
+              )}
+              {authClassroomState?.status === "WAITING" && (
+                <WaitingView classroom={authClassroomState?.classroom} />
+              )}
+              {authClassroomState?.status === "UN_SUBSCRIBE" && (
+                <UnSubscribeView classroom={authClassroomState?.classroom} />
+              )}
+            </>
           )}
         </MainboardTemplate>
       )}

@@ -10,9 +10,9 @@ import { getAllRequirementClassroom } from "@/redux/reducer/requirement/api";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { getTopic } from "@/redux/reducer/topic/api";
 import classNames from "classnames";
-import { useSubscribeStateContext } from "@/contexts/subscribeState";
 import Image from "next/image";
 import Link from "next/link";
+import { useClassroomStateContext } from "@/contexts/authClassroomState";
 
 function RequirementPage() {
   const [openModalMemberDetail, setOpenModalMemberDetail] =
@@ -24,12 +24,12 @@ function RequirementPage() {
     "modal-open": openModalMemberDetail,
   });
   const dispatch = useAppDispatch();
-  const { subscribeState } = useSubscribeStateContext();
+  const { authClassroomState } = useClassroomStateContext();
   const { data: requirements } = useQuery<IMemberObject[]>({
     queryKey: ["requirements"],
     queryFn: async () => {
       const action = await dispatch(
-        getAllRequirementClassroom(subscribeState.classroom)
+        getAllRequirementClassroom(authClassroomState.classroom || authClassroomState)
       );
       return action.payload || [];
     },

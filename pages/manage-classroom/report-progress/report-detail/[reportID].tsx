@@ -11,7 +11,6 @@ import { useQuery } from "@tanstack/react-query";
 import { IPostObject } from "@/interface/post";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { getAllPostInReportStage, getPost } from "@/redux/reducer/post/api";
-import { useSubscribeStateContext } from "@/contexts/subscribeState";
 import { useSearchParams } from "next/navigation";
 import {
   getAllExerciseInReportStage,
@@ -20,19 +19,25 @@ import {
 import { IExerciseObject } from "@/interface/exercise";
 import { ExerciseModal, PostModal } from "@/components/Organisms";
 import classNames from "classnames";
+import { useClassroomStateContext } from "@/contexts/authClassroomState";
 
 function ReportStageDetailPage() {
   const dispatch = useAppDispatch();
   const params = useSearchParams();
   const id = params.get("reportID");
-  const { subscribeState } = useSubscribeStateContext();
+  const { authClassroomState } = useClassroomStateContext();
   const [loading, setLoading] = useState<boolean>(true);
   const { data: posts } = useQuery<IPostObject[]>({
-    queryKey: ["posts", subscribeState.classroom.id, id],
+    queryKey: [
+      "posts",
+      authClassroomState?.classroom?.id || authClassroomState?.id,
+      id,
+    ],
     queryFn: async () => {
       const action = await dispatch(
         getAllPostInReportStage({
-          classroomId: subscribeState.classroom.id,
+          classroomId:
+            authClassroomState?.classroom?.id || authClassroomState?.id,
           categoryId: id,
         })
       );
@@ -42,11 +47,16 @@ function ReportStageDetailPage() {
   });
 
   const { data: exercises } = useQuery<IExerciseObject[]>({
-    queryKey: ["exercises", subscribeState.classroom.id, id],
+    queryKey: [
+      "exercises",
+      authClassroomState?.classroom?.id || authClassroomState?.id,
+      id,
+    ],
     queryFn: async () => {
       const action = await dispatch(
         getAllExerciseInReportStage({
-          classroomId: subscribeState.classroom.id,
+          classroomId:
+            authClassroomState?.classroom?.id || authClassroomState?.id,
           categoryId: id,
         })
       );

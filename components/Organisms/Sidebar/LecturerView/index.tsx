@@ -1,14 +1,12 @@
 import { LogoApp } from "@/components/Molecules";
-import { useSubscribeStateContext } from "@/contexts/subscribeState";
-import { useCurrentUser } from "@/hooks/useGetCurrentUser";
-import { useAppDispatch } from "@/redux/store";
+import { useClassroomStateContext } from "@/contexts/authClassroomState";
 import Link from "next/link";
 import { FC } from "react";
 
 export interface ISidebarLecturerViewProps {}
 
 export const SidebarLecturerView: FC<ISidebarLecturerViewProps> = ({}) => {
-  const { subscribeState } = useSubscribeStateContext();
+  const { authClassroomState } = useClassroomStateContext();
   return (
     <div className="col-span-2 border-r h-screen">
       <LogoApp
@@ -66,7 +64,7 @@ export const SidebarLecturerView: FC<ISidebarLecturerViewProps> = ({}) => {
           <Link
             className="rounded-none hover:bg-green-700 hover:text-white"
             href={
-              subscribeState?.classroom
+              authClassroomState?.classroom || authClassroomState
                 ? "/manage-classroom"
                 : "/manage-classroom/create-classroom"
             }

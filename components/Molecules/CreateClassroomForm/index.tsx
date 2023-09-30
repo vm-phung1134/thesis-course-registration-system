@@ -82,7 +82,6 @@ export const CreateClassroomForm: FC<ICreateClassroomFormProps> = ({
         setTimeout(async () => {
           await addMutation.mutate({ topicTags: selected, ...values });
           setSubmitting(false);
-          console.log({ topicTags: selected, ...values });
           router.push("/manage-classroom");
         }, 400);
       }}

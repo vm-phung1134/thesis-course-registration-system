@@ -94,6 +94,26 @@ const checkStateSubscribe = createAsyncThunk(
   }
 );
 
+// CHECK STATE CLASSROOM PAGE
+const checkAuthRoleForClassroomState = createAsyncThunk(
+  "auth/checkAuthRoleForClassroomState",
+  async (postData: IAuthObject) => {
+    const response = await axios.post(
+      `http://localhost:5000/api/auth/check-authorClassroomState`,
+      postData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    if (response.status === 200) {
+      return response.data;
+    }
+    throw new Error("Failed to check state classroom");
+  }
+);
+
 // UNSUBSCRIBE STATE
 const unsubscribeState = createAsyncThunk(
   "auth/unsubscribeState",
@@ -120,4 +140,5 @@ export {
   loginAuth,
   updateAuth,
   checkStateSubscribe,
+  checkAuthRoleForClassroomState,
 };

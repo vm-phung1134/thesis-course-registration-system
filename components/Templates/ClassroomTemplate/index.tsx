@@ -15,7 +15,7 @@ import { ICategoryObject } from "@/interface/category";
 import { IOptionItem } from "@/interface/filter";
 import { useUserCookies } from "@/hooks/useCookies";
 import { SnipperRound } from "@/components/Atoms";
-import { useSubscribeStateContext } from "@/contexts/subscribeState";
+import { useClassroomStateContext } from "@/contexts/authClassroomState";
 
 export interface IClassroomProps {
   children: React.ReactNode;
@@ -50,7 +50,7 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
   // }, []);
 
   // HANDLE API
-  const { subscribeState } = useSubscribeStateContext();
+  const { authClassroomState } = useClassroomStateContext();
   const [loading, setLoading] = useState<boolean>(true);
   useEffect(() => {
     const timeOutLoading = setTimeout(() => {
@@ -78,9 +78,11 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
               <SnipperRound />
             ) : (
               <>
-                {subscribeState?.classroom ? (
+                {authClassroomState?.classroom || authClassroomState ? (
                   <ClassroomFound
-                    classroom={subscribeState.classroom}
+                    classroom={
+                      authClassroomState?.classroom || authClassroomState
+                    }
                     setCreatePostModal={setCreatePostModal}
                     openCreatePostModal={openCreatePostModal}
                   >

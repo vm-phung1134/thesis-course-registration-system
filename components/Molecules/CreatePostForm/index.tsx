@@ -5,7 +5,7 @@ import {
   SelectInForm,
   TitleFormField,
 } from "@/components/Atoms";
-import { useSubscribeStateContext } from "@/contexts/subscribeState";
+import { useClassroomStateContext } from "@/contexts/authClassroomState";
 import { INITIATE_CATEGORY, INITIATE_POST } from "@/data";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { useSelectStage } from "@/hooks/useSelectStage";
@@ -14,7 +14,7 @@ import { IOptionItem } from "@/interface/filter";
 import { IPostObject } from "@/interface/post";
 import { createPost } from "@/redux/reducer/post/api";
 import { useAppDispatch } from "@/redux/store";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Form, Formik } from "formik";
 import { FC, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
@@ -40,7 +40,7 @@ export const CreatePostForm: FC<ICreatePostFormProps> = ({
   const initialValues: IPostObject = INITIATE_POST;
   const { currentUser } = useCurrentUser();
   const fileInputRef = useRef<HTMLInputElement>(null!);
-  const { subscribeState } = useSubscribeStateContext();
+  const { authClassroomState } = useClassroomStateContext();
   // HANDLE SELECT STAGE REPORT
   const { selectedStage, setSelectedStage, reportStages } = useSelectStage();
   // HANDLE FILE
@@ -96,7 +96,7 @@ export const CreatePostForm: FC<ICreatePostFormProps> = ({
             ...values,
             type: "post",
             uid: objectId,
-            classroom: subscribeState.classroom,
+            classroom: authClassroomState?.classroom || authClassroomState,
             category: selectedStage,
             attachments: selectedFiles,
             lecturer: currentUser,

@@ -5,14 +5,13 @@ import {
   SelectInForm,
   TitleFormField,
 } from "@/components/Atoms";
-import { useSubscribeStateContext } from "@/contexts/subscribeState";
+import { useClassroomStateContext } from "@/contexts/authClassroomState";
 import { INITIATE_CATEGORY, INITIATE_EXERCISE } from "@/data";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { useSelectStage } from "@/hooks/useSelectStage";
 import { ICategoryObject } from "@/interface/category";
 import { IExerciseObject } from "@/interface/exercise";
 import { IOptionItem } from "@/interface/filter";
-import { DATA_STATE_REPORT } from "@/pages/manage-classroom/report-progress/mock-data";
 import { createExercise } from "@/redux/reducer/exercise/api";
 import { useAppDispatch } from "@/redux/store";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -42,7 +41,7 @@ export const CreateExerciseForm: FC<ICreateExerciseFormProps> = ({
   const initialValues: IExerciseObject = INITIATE_EXERCISE;
   const { currentUser } = useCurrentUser();
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { subscribeState } = useSubscribeStateContext();
+  const { authClassroomState } = useClassroomStateContext();
   // HANDLE SELECT STAGE REPORT
   const { selectedStage, setSelectedStage, reportStages } = useSelectStage();
   // HANDLE FILE
@@ -94,7 +93,7 @@ export const CreateExerciseForm: FC<ICreateExerciseFormProps> = ({
             ...values,
             type: "exercise",
             uid: objectId,
-            classroom: subscribeState.classroom,
+            classroom: authClassroomState?.classroom || authClassroomState,
             category: selectedStage,
             attachments: selectedFiles,
             lecturer: currentUser,

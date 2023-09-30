@@ -13,7 +13,7 @@ export const useCurrentUser = () => {
     queryKey: ["auth", user],
     queryFn: async () => {
       const action = await dispatch(getOneAuth(user));
-      return action.payload;
+      return action.payload || INITIATE_AUTH;
     },
     initialData: INITIATE_AUTH,
   });

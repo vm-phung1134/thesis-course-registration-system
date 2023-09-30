@@ -13,8 +13,8 @@ import {
   getAllExerciseInClass,
   getExercise,
 } from "@/redux/reducer/exercise/api";
-import { useSubscribeStateContext } from "@/contexts/subscribeState";
 import { IExerciseObject } from "@/interface/exercise";
+import { useClassroomStateContext } from "@/contexts/authClassroomState";
 
 const CriticalTask = () => {
   return (
@@ -81,9 +81,8 @@ function ManageClassroomTab() {
     "modal modal-bottom sm:modal-middle": true,
     "modal-open": openModalEx,
   });
-  const { subscribeState } = useSubscribeStateContext();
   const dispatch = useAppDispatch();
-
+  const { authClassroomState } = useClassroomStateContext();
   const handleOpenPostModal = (task: IPostObject) => {
     setOpenModalPost?.(!openModalPost);
     dispatch(getPost(task));
@@ -97,10 +96,10 @@ function ManageClassroomTab() {
   // HANDLE POST
   const { post } = useAppSelector((state) => state.postReducer);
   const { data: posts } = useQuery<IPostObject[]>({
-    queryKey: ["posts", subscribeState.classroom],
+    queryKey: ["posts", authClassroomState?.classroom || authClassroomState],
     queryFn: async () => {
       const action = await dispatch(
-        getAllPostInClass(subscribeState.classroom)
+        getAllPostInClass(authClassroomState?.classroom || authClassroomState)
       );
       return action.payload || [];
     },
@@ -110,10 +109,12 @@ function ManageClassroomTab() {
   // HANDLE EXERCISE
   const { exercise } = useAppSelector((state) => state.exerciseReducer);
   const { data: exercises } = useQuery<IExerciseObject[]>({
-    queryKey: ["exercises", subscribeState.classroom],
+    queryKey: ["exercises", authClassroomState?.classroom || authClassroomState],
     queryFn: async () => {
       const action = await dispatch(
-        getAllExerciseInClass(subscribeState.classroom)
+        getAllExerciseInClass(
+          authClassroomState?.classroom || authClassroomState
+        )
       );
       return action.payload || [];
     },

@@ -11,12 +11,10 @@ import { useQuery } from "@tanstack/react-query";
 import { IMemberObject } from "@/interface/member";
 import {
   getAllMemberClassroom,
-  getAllMembers,
 } from "@/redux/reducer/member/api";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { getTopic } from "@/redux/reducer/topic/api";
-import { useSubscribeStateContext } from "@/contexts/subscribeState";
-import { INITIATE_COURSE } from "@/data";
+import { useClassroomStateContext } from "@/contexts/authClassroomState";
 
 function MemberTab() {
   const [selectedFilter, setSelectedFilter] = useState<
@@ -34,13 +32,13 @@ function MemberTab() {
 
   // HANDLE API MEMBER ARRAY
   const dispatch = useAppDispatch();
-  const { subscribeState } = useSubscribeStateContext();
+  const { authClassroomState } = useClassroomStateContext();
   const { topic } = useAppSelector((state) => state.topicReducer);
   const { data: members } = useQuery<IMemberObject[]>({
     queryKey: ["members"],
     queryFn: async () => {
       const action = await dispatch(
-        getAllMemberClassroom(subscribeState.classroom)
+        getAllMemberClassroom(authClassroomState.classroom || authClassroomState)
       );
       return action.payload || [];
     },
