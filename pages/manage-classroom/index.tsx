@@ -1,74 +1,23 @@
-import { Avatar } from "@/components/Atoms";
-import { CommentForm, ContentComment } from "@/components/Molecules";
+import {
+  CommentForm,
+  ContentComment,
+  CriticalTask,
+  NewFeedCard,
+} from "@/components/Molecules";
 import { ClassroomTemplate } from "@/components/Templates";
 import classNames from "classnames";
-import { FC, useState, useEffect } from "react";
+import { useState } from "react";
 import { ExerciseModal, PostModal } from "@/components/Organisms";
 import { useQuery } from "@tanstack/react-query";
 import { IPostObject } from "@/interface/post";
 import { getAllPostInClass, getPost } from "@/redux/reducer/post/api";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
-import { convertToUnaccentedString } from "@/utils/convertString";
 import {
   getAllExerciseInClass,
   getExercise,
 } from "@/redux/reducer/exercise/api";
 import { IExerciseObject } from "@/interface/exercise";
 import { useClassroomStateContext } from "@/contexts/authClassroomState";
-
-const CriticalTask = () => {
-  return (
-    <div className="h-fit p-5 border shadow-xl">
-      <h2 className="uppercase text-md font-normal mb-2">Critical tasks</h2>
-      <p className="text-red-600 text-sm mb-2">Deadline 28, August 2023</p>
-      <p className="font-medium text-md uppercase">report progress thesis</p>
-      <div className="flex justify-start">
-        <button className="btn rounded-none bg-transparent p-0 hover:bg-transparent border-none capitalize font-normal">
-          View detail
-        </button>
-      </div>
-    </div>
-  );
-};
-
-interface ITaskHeaderProps {
-  task: IPostObject | IExerciseObject;
-  handleOpenTaskModal: (task: any) => void;
-}
-
-const TaskHeader: FC<ITaskHeaderProps> = ({ task, handleOpenTaskModal }) => {
-  return (
-    <div className="border px-5 py-3 text-sm bg-green-700 text-white">
-      <div className="flex justify-between items-center">
-        <div className="flex gap-3">
-          <Avatar
-            widthStr="w-10 h-10"
-            srcImg="https://images.pexels.com/photos/39866/entrepreneur-startup-start-up-man-39866.jpeg?auto=compress&cs=tinysrgb&w=600"
-          />
-          <div className="flex flex-col">
-            <div
-              onClick={() => handleOpenTaskModal(task)}
-              className="cursor-pointer ease-in-out duration-300"
-            >
-              <div className="flex gap-3 items-center">
-                <p className="text-xs px-3 py-1 bg-green-900 w-fit">
-                  {task?.type === "post" ? "Message" : "Exercise"}
-                </p>
-                <small>20, August 2023 - 20:30 PM</small>
-              </div>
-              <span className="font-medium">
-                {convertToUnaccentedString(task?.lecturer?.name)}
-              </span>{" "}
-              has been added a new{" "}
-              {task.type === "post" ? "Message" : "Exercise"}
-            </div>
-          </div>
-        </div>
-        <button>...</button>
-      </div>
-    </div>
-  );
-};
 
 function ManageClassroomTab() {
   const [openModalPost, setOpenModalPost] = useState<boolean>(false);
@@ -109,7 +58,10 @@ function ManageClassroomTab() {
   // HANDLE EXERCISE
   const { exercise } = useAppSelector((state) => state.exerciseReducer);
   const { data: exercises } = useQuery<IExerciseObject[]>({
-    queryKey: ["exercises", authClassroomState?.classroom || authClassroomState],
+    queryKey: [
+      "exercises",
+      authClassroomState?.classroom || authClassroomState,
+    ],
     queryFn: async () => {
       const action = await dispatch(
         getAllExerciseInClass(
@@ -144,7 +96,7 @@ function ManageClassroomTab() {
                     {exercises?.map((exercise) => {
                       return (
                         <div key={exercise.id}>
-                          <TaskHeader
+                          <NewFeedCard
                             handleOpenTaskModal={handleOpenExModal}
                             task={exercise}
                           />
@@ -160,7 +112,7 @@ function ManageClassroomTab() {
                     {posts?.map((post) => {
                       return (
                         <div key={post.id}>
-                          <TaskHeader
+                          <NewFeedCard
                             handleOpenTaskModal={handleOpenPostModal}
                             task={post}
                           />

@@ -1,12 +1,7 @@
 import { LearnMoreBtn } from "@/components/Atoms";
 import { AuthForm } from "@/components/Organisms";
 import { AuthTemplate } from "@/components/Templates";
-import { IAuthObject } from "@/interface/auth";
-import { getAllAuths } from "@/redux/reducer/auth/api";
-import { useAppDispatch, useAppSelector } from "@/redux/store";
-import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
-import { useEffect, useState } from "react";
 
 const IntroPage = () => {
   return (
@@ -37,15 +32,6 @@ const IntroPage = () => {
 };
 
 function SignInPage() {
-  // const dispatch = useAppDispatch();
-  // const { data, isLoading } = useQuery<IAuthObject[]>({
-  //   queryKey: ["blogs"],
-  //   queryFn: async () => {
-  //     const action = await dispatch(getAllAuths());
-  //     return action.payload || [];
-  //   },
-  //   initialData: [],
-  // });
   return (
     <AuthTemplate title="Account | Thesis course registration system">
       <div className="grid grid-cols-3 w-full h-screen px-32">

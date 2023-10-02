@@ -17,19 +17,22 @@ import { useClassroomStateContext } from "@/contexts/authClassroomState";
 function RequirementPage() {
   const [openModalMemberDetail, setOpenModalMemberDetail] =
     useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const { topic } = useAppSelector((state) => state.topicReducer);
   const modalClass = classNames({
     "modal modal-bottom sm:modal-middle": true,
     "modal-open": openModalMemberDetail,
   });
+  // HANDLE CALL API
   const dispatch = useAppDispatch();
   const { authClassroomState } = useClassroomStateContext();
   const { data: requirements } = useQuery<IMemberObject[]>({
     queryKey: ["requirements"],
     queryFn: async () => {
       const action = await dispatch(
-        getAllRequirementClassroom(authClassroomState.classroom || authClassroomState)
+        getAllRequirementClassroom(
+          authClassroomState.classroom || authClassroomState
+        )
       );
       return action.payload || [];
     },
@@ -41,7 +44,6 @@ function RequirementPage() {
   };
 
   useEffect(() => {
-    setLoading(true);
     setTimeout(() => {
       setLoading(false);
     }, 1300);

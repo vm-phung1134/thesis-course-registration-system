@@ -1,14 +1,12 @@
-import { ModalConfirm } from "@/components/Molecules";
 import {
-  Header,
+  Navbar,
   SidebarLecturerView,
   SidebarStudentView,
 } from "@/components/Organisms";
 import { ROLE_ASSIGNMENT } from "@/contexts/authContext";
 import { useUserCookies } from "@/hooks/useCookies";
-import classNames from "classnames";
 import Head from "next/head";
-import { useState, FC } from "react";
+import { FC } from "react";
 
 export interface IMainboardProps {
   children: React.ReactNode;
@@ -17,11 +15,6 @@ export interface IMainboardProps {
 
 export const MainboardTemplate: FC<IMainboardProps> = ({ children, title }) => {
   const [userCookies] = useUserCookies();
-  const [openModal, setOpenModal] = useState<boolean>(false);
-  const modalClass = classNames({
-    "modal modal-bottom sm:modal-middle": true,
-    "modal-open": openModal,
-  });
   return (
     <>
       <Head>
@@ -38,16 +31,9 @@ export const MainboardTemplate: FC<IMainboardProps> = ({ children, title }) => {
           </div>
 
           <div className="col-span-10">
-            <Header />
+            <Navbar />
             <div className="px-5 h-full">{children}</div>
           </div>
-          <ModalConfirm
-            openModal={openModal}
-            setOpenModal={setOpenModal}
-            modalClass={modalClass}
-            title="TCR Message!!!"
-            message="Press ESC key or click the button below to close"
-          />
         </div>
       </main>
     </>

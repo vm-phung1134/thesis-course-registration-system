@@ -7,9 +7,9 @@ import { useUserCookies } from "@/hooks/useCookies";
 import Image from "next/image";
 import { FC, useEffect } from "react";
 
-export interface IHeaderProps {}
+export interface INavbarProps {}
 
-export const Header: FC<IHeaderProps> = () => {
+export const Navbar: FC<INavbarProps> = () => {
   const { logout, checkUserLoginState } = useAuthContext();
   const [userCookies] = useUserCookies();
   const { handleChangeLanguage, localeValue } = useLanguageContext();

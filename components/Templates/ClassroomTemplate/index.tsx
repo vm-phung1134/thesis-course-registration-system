@@ -2,13 +2,13 @@ import { CreateExerciseForm, CreatePostForm } from "@/components/Molecules";
 import {
   ClassroomFound,
   ClassroomNotFound,
-  Header,
+  Navbar,
   SidebarLecturerView,
   SidebarStudentView,
 } from "@/components/Organisms";
 import classNames from "classnames";
 import Head from "next/head";
-import { useState, FC, useEffect, lazy, Suspense } from "react";
+import { useState, FC, useEffect } from "react";
 import { DATA_LIST_OPTIONS } from "./mock-data";
 import { ROLE_ASSIGNMENT } from "@/contexts/authContext";
 import { ICategoryObject } from "@/interface/category";
@@ -24,15 +24,10 @@ export interface IClassroomProps {
 
 export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
   const [userCookies] = useUserCookies();
-  const [openModal, setOpenModal] = useState<boolean>(false);
   const [selected, setSelected] = useState<IOptionItem | ICategoryObject>(
     DATA_LIST_OPTIONS[0]
   );
   const [openCreatePostModal, setCreatePostModal] = useState<boolean>(false);
-  const modalClass = classNames({
-    "modal modal-bottom sm:modal-middle": true,
-    "modal-open": openModal,
-  });
   const modalClassPost = classNames({
     "modal modal-bottom sm:modal-middle": true,
     "modal-open": openCreatePostModal,
@@ -73,7 +68,7 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
             )}
           </div>
           <div className="col-span-10">
-            <Header />
+            <Navbar />
             {loading ? (
               <SnipperRound />
             ) : (
@@ -121,12 +116,3 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
     </>
   );
 };
-{
-  /* <ModalConfirm
-            openModal={openModal}
-            setOpenModal={setOpenModal}
-            modalClass={modalClass}
-            title="TCR Message!!!"
-            message="Press ESC key or click the button below to close"
-          /> */
-}

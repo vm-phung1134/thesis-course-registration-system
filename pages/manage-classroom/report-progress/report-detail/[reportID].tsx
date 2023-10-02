@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { MainboardTemplate } from "@/components/Templates";
-import { Breadcrumb, SnipperRound, Spinner } from "@/components/Atoms";
+import { Breadcrumb, SnipperRound } from "@/components/Atoms";
 import { BREADCRUMB_REPORT_DETAIL_PAGE } from "./mock-data";
 import {
   ExerciseCard,
