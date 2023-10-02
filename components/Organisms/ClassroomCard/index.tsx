@@ -8,17 +8,17 @@ import {
 } from "@/components/Molecules";
 import { createRequirement } from "@/redux/reducer/requirement/api";
 import { IMemberObject } from "@/interface/member";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAppDispatch } from "@/redux/store";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
+import { useClassroomStateContext } from "@/contexts/authClassroomState";
+import { getAllMemberClassroom } from "@/redux/reducer/member/api";
 
 interface IClassroomCardProps {
   item: IClassroomObject;
 }
 
-export const ClassroomCard: FC<IClassroomCardProps> = ({
-  item,
-}) => {
+export const ClassroomCard: FC<IClassroomCardProps> = ({ item }) => {
   const [openModalClassroomDetail, setOpenModalClassroomDetail] =
     useState<boolean>(false);
   const modalClass = classNames({
@@ -53,6 +53,15 @@ export const ClassroomCard: FC<IClassroomCardProps> = ({
     addRequirementMutation.mutate({ classroom: item, member: currentUser });
   };
 
+  const { data: members } = useQuery<IMemberObject[]>({
+    queryKey: ["members"],
+    queryFn: async () => {
+      const action = await dispatch(getAllMemberClassroom(item));
+      return action.payload || [];
+    },
+    initialData: [],
+  });
+
   return (
     <>
       <div className="w-80 shadow-xl">
@@ -70,7 +79,8 @@ export const ClassroomCard: FC<IClassroomCardProps> = ({
               <p className="text-sm flex gap-2">
                 <span>Students:</span>
                 <span className="font-normal">
-                  {item.quantity}/15 <small>{`(10 available)`}</small>
+                  {members.length} / 15{" "}
+                  <small>{`( ${15 - members.length} available )`}</small>
                 </span>
               </p>
             </div>

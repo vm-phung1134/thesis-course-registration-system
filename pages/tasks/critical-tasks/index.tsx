@@ -11,6 +11,16 @@ import { ICategoryObject } from "@/interface/category";
 import { DATA_STATE_REPORT } from "@/pages/manage-classroom/report-progress/mock-data";
 import { IOptionItem } from "@/interface/filter";
 import { ExerciseCard } from "@/components/Molecules";
+import classNames from "classnames";
+import { IExerciseObject } from "@/interface/exercise";
+import {
+  getAllExerciseInClass,
+  getExercise,
+} from "@/redux/reducer/exercise/api";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { useClassroomStateContext } from "@/contexts/authClassroomState";
+import { useQuery } from "@tanstack/react-query";
+import { ExerciseModal } from "@/components/Organisms";
 
 function CriticalTasks() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -32,6 +42,28 @@ function CriticalTasks() {
       setLoading(false);
     }, 0);
   }, []);
+  const [openModalEx, setOpenModalEx] = useState<boolean>(false);
+  const modalClassEx = classNames({
+    "modal modal-bottom sm:modal-middle": true,
+    "modal-open": openModalEx,
+  });
+  const handleOpenExModal = (task: IExerciseObject) => {
+    setOpenModalEx?.(!openModalEx);
+    dispatch(getExercise(task));
+  };
+  const dispatch = useAppDispatch();
+  const { exercise } = useAppSelector((state) => state.exerciseReducer);
+  const { authClassroomState } = useClassroomStateContext();
+  const { data: exercises } = useQuery<IExerciseObject[]>({
+    queryKey: ["exercises", authClassroomState?.classroom],
+    queryFn: async () => {
+      const action = await dispatch(
+        getAllExerciseInClass(authClassroomState?.classroom)
+      );
+      return action.payload || [];
+    },
+    initialData: [],
+  });
   return (
     <>
       {loading ? (
@@ -60,15 +92,24 @@ function CriticalTasks() {
                 />
               </div>
             </div>
-            <ExerciseCard />
-            <ExerciseCard />
-            <ExerciseCard />
+            {exercises?.map((ex, index) => (
+              <ExerciseCard
+                handleOpenTaskModal={handleOpenExModal}
+                key={ex.id}
+                exercise={ex}
+              />
+            ))}
           </div>
+          <ExerciseModal
+            modalClass={modalClassEx}
+            exercise={exercise}
+            setOpenModalEx={setOpenModalEx}
+            openModalEx={openModalEx}
+          />
         </MainboardTemplate>
       )}
     </>
   );
 }
-
 
 export default CriticalTasks;

@@ -5,9 +5,8 @@ import { PersonalInformation } from "@/components/Organisms";
 import { BREADCRUMB_ACCOUNT_LECTURER } from "./mock-data";
 
 function AccountLecturerPage() {
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   useEffect(() => {
-    setLoading(true);
     setTimeout(() => {
       setLoading(false);
     }, 1300);

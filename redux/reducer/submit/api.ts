@@ -3,20 +3,25 @@ import axios from "axios";
 import { token } from "./type";
 import { ISubmitObject } from "@/interface/submit";
 import { IExerciseObject } from "@/interface/exercise";
-import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 
 // GET ALL SUBMITS
-const getAllSubmits = createAsyncThunk("submit/getAllSubmit", async () => {
-  const response = await axios.get(`http://localhost:5000/api/submit`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  if (response.status === 200) {
-    return response.data;
+const getAllSubmits = createAsyncThunk(
+  "submit/getAllSubmit",
+  async (postData: IExerciseObject) => {
+    const response = await axios.get(
+      `http://localhost:5000/api/submit/ex/${postData.uid}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    if (response.status === 200) {
+      return response.data;
+    }
+    throw new Error("Failed to get all submit");
   }
-  throw new Error("Failed to get all submit");
-});
+);
 
 // GET ONE SUBMIT
 const getSubmit = createAsyncThunk(

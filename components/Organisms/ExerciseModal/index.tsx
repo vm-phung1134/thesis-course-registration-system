@@ -13,7 +13,7 @@ import { IExerciseObject } from "@/interface/exercise";
 import { IOptionItem } from "@/interface/filter";
 import { ISubmitObject } from "@/interface/submit";
 import { DATA_CARD_STUDENT } from "@/pages/manage-classroom/members/mock-data";
-import { getSubmit } from "@/redux/reducer/submit/api";
+import { getAllSubmits, getSubmit } from "@/redux/reducer/submit/api";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { convertToUnaccentedString } from "@/utils/convertString";
 import { useQuery } from "@tanstack/react-query";
@@ -129,7 +129,7 @@ export const ExerciseModal: FC<IExerciseModalProps> = ({
             {currentUser?.role === ROLE_ASSIGNMENT.STUDENT ? (
               <ReportStatusStudentView submit={submit} exercise={exercise} />
             ) : (
-              <ReportStatusLecturerView />
+              <ReportStatusLecturerView exercise={exercise} />
             )}
           </div>
         </div>
@@ -138,15 +138,31 @@ export const ExerciseModal: FC<IExerciseModalProps> = ({
   );
 };
 
-const ReportStatusLecturerView = () => {
+interface IReportStatusLecturerViewProps {
+  exercise: IExerciseObject;
+}
+
+const ReportStatusLecturerView: FC<IReportStatusLecturerViewProps> = ({
+  exercise,
+}) => {
   const [selected, setSelected] = useState<IOptionItem | ICategoryObject>(
     DATA_FILTER_COURSE[0]
   );
+  const dispatch = useAppDispatch();
+  const { data: submited, isLoading } = useQuery<ISubmitObject[]>({
+    queryKey: ["submits"],
+    queryFn: async () => {
+      const action = await dispatch(getAllSubmits(exercise));
+      return action.payload || [];
+    },
+    initialData: [],
+  });
   return (
     <>
       <div className="flex gap-5 my-3 pb-2 border-b">
         <p>
-          <span className="text-lg font-bold">1</span> submited
+          <span className="text-lg font-bold">{submited.length || 0}</span>{" "}
+          submited
         </p>
         <p>
           <span className="text-lg font-bold">15</span> Assignment
@@ -160,10 +176,11 @@ const ReportStatusLecturerView = () => {
         />
       </div>
       <div className="flex flex-wrap gap-2">
-        {DATA_CARD_STUDENT.map((student) => {
-          return <CardStudentShort key={student.id} student={student} />;
+        {submited?.map((submit) => {
+          return <CardStudentShort key={submit.id} submit={submit} />;
         })}
       </div>
+      <div className="bg-green-300 my-2 h-[1px]"></div>
     </>
   );
 };

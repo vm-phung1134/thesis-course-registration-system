@@ -52,7 +52,7 @@ function MemberTab() {
       <div className="py-5">
         <div className="flex justify-between items-center">
           <h4 className="uppercase text-md py-5 text-green-700 font-medium">
-            List students <span className="text-xs">{`( 13/15 members )`}</span>
+            List students <span className="text-xs">{`( ${members.length | 0}/15 members )`}</span>
           </h4>
           <SelectBox
             options={DATA_FILTER_MEMBER}
