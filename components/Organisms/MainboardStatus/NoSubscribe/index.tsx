@@ -1,4 +1,9 @@
-import { Breadcrumb, SelectBox, SnipperRound } from "@/components/Atoms";
+import {
+  Breadcrumb,
+  Button,
+  SelectBox,
+  SnipperRound,
+} from "@/components/Atoms";
 import { Pagination } from "@/components/Molecules";
 import { ICategoryObject } from "@/interface/category";
 import { IOptionItem } from "@/interface/filter";
@@ -13,6 +18,8 @@ import { useAppDispatch } from "@/redux/store";
 import { useQuery } from "@tanstack/react-query";
 import { IClassroomObject } from "@/interface/classroom";
 import { getAllClassrooms } from "@/redux/reducer/classroom/api";
+import Image from "next/image";
+import Link from "next/link";
 
 export interface INoSubscribeViewProps {}
 
@@ -80,19 +87,42 @@ export const NoSubscribeView: FC<INoSubscribeViewProps> = () => {
               </div>
             </div>
           </div>
-          <div className="flex flex-wrap gap-5 mt-5">
-            {data?.map((item, index) => {
-              return <ClassroomCard key={item.id} item={item} />;
-            })}
-          </div>
-          <div className="flex justify-center mt-10">
-            <Pagination
-              handleNextPage={handleNextPage}
-              handlePrevPage={handlePrevPage}
-              totalPages={totalPages}
-              currentPage={currentPage}
-            />
-          </div>
+          {data.length > 0 ? (
+            <>
+              <div className="flex flex-wrap gap-5 mt-5">
+                {data?.map((item, index) => {
+                  return <ClassroomCard key={item.id} item={item} />;
+                })}
+              </div>
+              <div className="flex justify-center mt-10">
+                <Pagination
+                  handleNextPage={handleNextPage}
+                  handlePrevPage={handlePrevPage}
+                  totalPages={totalPages}
+                  currentPage={currentPage}
+                />
+              </div>
+            </>
+          ) : (
+            <div className="h-[80%] w-full flex flex-col justify-center items-center">
+              <Image
+                src="https://yi-files.s3.eu-west-1.amazonaws.com/products/794000/794104/1354385-full.jpg"
+                width="400"
+                height="400"
+                className="-hue-rotate-[38deg] saturate-[.85]"
+                alt=""
+              />
+              <p className="py-5 text-gray-500 uppercase">
+                Ops! There are currently no classrooms
+              </p>
+              <Link href="/manage-classroom">
+                <Button
+                  className="px-10 bg-green-700 text-white hover:bg-green-600"
+                  title="Comming soon"
+                />
+              </Link>
+            </div>
+          )}
         </div>
       )}
     </>

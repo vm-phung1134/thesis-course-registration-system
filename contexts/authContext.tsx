@@ -70,16 +70,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       .then(async (result) => {
         const token = await result.user.getIdToken();
         Cookies.set("token", token);
-        //return checkStatusAuth(result.user.uid);
+        const role = roleAssignment(result.user.email || "");
+        role === "admin" ? router.push("/admin") : router.push("/mainboard");
       })
-      .then(() => router.push("/mainboard"))
-      // .then((response) => {
-      //   if (response === "api_success") {
-      //     router.push("/mainboard");
-      //   } else {
-      //     router.push("/error");
-      //   }
-      // })
       .catch((error) => {
         console.error(error);
       });
@@ -117,6 +110,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const roleAssignment = (email: string) => {
     if (email.includes(ROLE_ASSIGNMENT.STUDENT)) {
       return ROLE_ASSIGNMENT.STUDENT;
+    } else if (email.includes("system")) {
+      return ROLE_ASSIGNMENT.ADMIN;
     } else {
       return ROLE_ASSIGNMENT.LECTURER;
     }

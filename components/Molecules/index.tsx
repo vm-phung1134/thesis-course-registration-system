@@ -27,5 +27,7 @@ export * from "./CardLecturerInClass";
 export * from "./ClassroomContentCard";
 export * from "./ClassroomDetailModal";
 export * from "./SearchForm";
-export * from "./NewFeedCard"
-export * from "./CriticalTask"
+export * from "./NewFeedCard";
+export * from "./CriticalTask";
+export * from "./FormSchedule";
+export * from "./SearchScheduled";
