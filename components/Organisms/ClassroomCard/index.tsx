@@ -44,7 +44,7 @@ export const ClassroomCard: FC<IClassroomCardProps> = ({ item }) => {
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["subscribe-state"]);
+        queryClient.invalidateQueries(["checkAuthRoleForClassroomState"]);
       },
     }
   );

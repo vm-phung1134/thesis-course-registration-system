@@ -1,5 +1,6 @@
 import { LogoApp } from "@/components/Molecules";
 import { useClassroomStateContext } from "@/contexts/authClassroomState";
+import { checkClassroomState } from "@/utils/classroomService";
 import Link from "next/link";
 import { FC } from "react";
 
@@ -8,7 +9,7 @@ export interface ISidebarLecturerViewProps {}
 export const SidebarLecturerView: FC<ISidebarLecturerViewProps> = ({}) => {
   const { authClassroomState } = useClassroomStateContext();
   return (
-    <div className="col-span-2 border-r h-screen">
+    <div className="sticky top-0 left-0 bottom-0">
       <LogoApp
         width={30}
         height={30}
@@ -64,7 +65,7 @@ export const SidebarLecturerView: FC<ISidebarLecturerViewProps> = ({}) => {
           <Link
             className="rounded-none hover:bg-green-700 hover:text-white"
             href={
-              authClassroomState?.classroom || authClassroomState
+              checkClassroomState(authClassroomState)
                 ? "/manage-classroom"
                 : "/manage-classroom/create-classroom"
             }
@@ -89,7 +90,7 @@ export const SidebarLecturerView: FC<ISidebarLecturerViewProps> = ({}) => {
         <li>
           <Link
             className="rounded-none hover:bg-green-700 hover:text-white"
-            href="/manage-classroom/create-classroom"
+            href=""
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

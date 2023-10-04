@@ -17,7 +17,7 @@ export const InforUserForm: FC<IInforUserFormProps> = ({
   return (
     <Form>
       <TitleFormField
-        className="text-lg uppercase text-green-700 font-medium mb-5"
+        className="text-lg uppercase text-green-800 font-medium mb-5"
         title="Update personal information"
       />
       <FormField
@@ -67,7 +67,7 @@ export const InforUserForm: FC<IInforUserFormProps> = ({
         <Button
           type="submit"
           title="Save"
-          className="hover:bg-[#165b31] bg-green-700 text-white px-5"
+          className="bg-[#165b31] hover:bg-green-700 text-white px-5"
         />
       </div>
     </Form>

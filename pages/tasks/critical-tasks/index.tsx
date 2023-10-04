@@ -4,7 +4,7 @@ import {
   Breadcrumb,
   SelectBox,
   SelectInForm,
-  Spinner,
+  SnipperRound,
 } from "@/components/Atoms";
 import { BREADCRUMB_CRITICAL_TASKS, DATA_FILTER_TASKS } from "./mock-data";
 import { ICategoryObject } from "@/interface/category";
@@ -66,48 +66,50 @@ function CriticalTasks() {
   });
   return (
     <>
-      {loading ? (
-        <Spinner />
-      ) : (
-        <MainboardTemplate title="Critical tasks | Thesis course registration system">
-          <Breadcrumb dataBreadcrumb={BREADCRUMB_CRITICAL_TASKS} />
-          <div className="py-3 w-[70%]">
-            <p className="font-bold uppercase text-xl py-2 text-green-700">
-              Critical Tasks
-            </p>
-            <div className="flex items-center gap-5">
-              <div className="flex-grow">
-                <SelectInForm
-                  options={DATA_STATE_REPORT}
-                  selectedStage={selectedStage}
-                  setSelectedStage={setSelectedStage}
-                />
+      <MainboardTemplate title="Critical tasks | Thesis course registration system">
+        {loading ? (
+          <SnipperRound />
+        ) : (
+          <>
+            <Breadcrumb dataBreadcrumb={BREADCRUMB_CRITICAL_TASKS} />
+            <div className="py-3 w-[70%]">
+              <p className="font-bold uppercase text-xl py-2 text-green-700">
+                Critical Tasks
+              </p>
+              <div className="flex items-center gap-5">
+                <div className="flex-grow">
+                  <SelectInForm
+                    options={DATA_STATE_REPORT}
+                    selectedStage={selectedStage}
+                    setSelectedStage={setSelectedStage}
+                  />
+                </div>
+                <div className="flex-grow mt-2">
+                  <SelectBox
+                    setPadding="lg"
+                    setSelected={setSelectedFilter}
+                    selected={selectedFilter}
+                    options={DATA_FILTER_TASKS}
+                  />
+                </div>
               </div>
-              <div className="flex-grow mt-2">
-                <SelectBox
-                  setPadding="lg"
-                  setSelected={setSelectedFilter}
-                  selected={selectedFilter}
-                  options={DATA_FILTER_TASKS}
+              {exercises?.map((ex, index) => (
+                <ExerciseCard
+                  handleOpenTaskModal={handleOpenExModal}
+                  key={ex.id}
+                  exercise={ex}
                 />
-              </div>
+              ))}
             </div>
-            {exercises?.map((ex, index) => (
-              <ExerciseCard
-                handleOpenTaskModal={handleOpenExModal}
-                key={ex.id}
-                exercise={ex}
-              />
-            ))}
-          </div>
-          <ExerciseModal
-            modalClass={modalClassEx}
-            exercise={exercise}
-            setOpenModalEx={setOpenModalEx}
-            openModalEx={openModalEx}
-          />
-        </MainboardTemplate>
-      )}
+          </>
+        )}
+        <ExerciseModal
+          modalClass={modalClassEx}
+          exercise={exercise}
+          setOpenModalEx={setOpenModalEx}
+          openModalEx={openModalEx}
+        />
+      </MainboardTemplate>
     </>
   );
 }

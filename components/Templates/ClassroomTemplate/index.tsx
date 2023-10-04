@@ -5,6 +5,7 @@ import {
   Navbar,
   SidebarLecturerView,
   SidebarStudentView,
+  WaitingClassroom,
 } from "@/components/Organisms";
 import classNames from "classnames";
 import Head from "next/head";
@@ -16,6 +17,12 @@ import { IOptionItem } from "@/interface/filter";
 import { useUserCookies } from "@/hooks/useCookies";
 import { SnipperRound } from "@/components/Atoms";
 import { useClassroomStateContext } from "@/contexts/authClassroomState";
+import {
+  getStatusCurrentUser,
+  checkClassroomState,
+  handleChooseClassroom,
+} from "@/utils/classroomService";
+import { STATE_AUTH_CLASSROOM } from "@/data";
 
 export interface IClassroomProps {
   children: React.ReactNode;
@@ -69,22 +76,29 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
           </div>
           <div className="col-span-10">
             <Navbar />
-            {loading ? (
-              <SnipperRound />
+            {getStatusCurrentUser(authClassroomState) ===
+              STATE_AUTH_CLASSROOM.WAITING ||
+            getStatusCurrentUser(authClassroomState) ===
+              STATE_AUTH_CLASSROOM.NO_SUB ? (
+              <WaitingClassroom />
             ) : (
               <>
-                {authClassroomState?.classroom || authClassroomState ? (
-                  <ClassroomFound
-                    classroom={
-                      authClassroomState?.classroom || authClassroomState
-                    }
-                    setCreatePostModal={setCreatePostModal}
-                    openCreatePostModal={openCreatePostModal}
-                  >
-                    {children}
-                  </ClassroomFound>
+                {loading ? (
+                  <SnipperRound />
                 ) : (
-                  <ClassroomNotFound />
+                  <>
+                    {checkClassroomState(authClassroomState) ? (
+                      <ClassroomFound
+                        classroom={handleChooseClassroom(authClassroomState)}
+                        setCreatePostModal={setCreatePostModal}
+                        openCreatePostModal={openCreatePostModal}
+                      >
+                        {children}
+                      </ClassroomFound>
+                    ) : (
+                      <ClassroomNotFound />
+                    )}
+                  </>
                 )}
               </>
             )}

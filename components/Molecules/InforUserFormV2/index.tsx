@@ -124,7 +124,7 @@ export const InforUserFormV2: FC<IInforUserFormV2Props> = ({
                     <FormField
                       placeholder="Ex: IT colleage"
                       type="text"
-                      label="class"
+                      label="School"
                       nameField="class"
                       value={values?.class || ""}
                     />

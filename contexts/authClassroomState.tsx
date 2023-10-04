@@ -1,7 +1,5 @@
-import { INITIATE_AUTH, INITIATE_COURSE, INITIATE_MEMBER } from "@/data";
+import { INITIATE_COURSE, INITIATE_MEMBER } from "@/data";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
-import { IClassroomObject } from "@/interface/classroom";
-import { IMemberObject } from "@/interface/member";
 import { checkAuthRoleForClassroomState } from "@/redux/reducer/auth/api";
 import { useAppDispatch } from "@/redux/store";
 import { useQuery } from "@tanstack/react-query";
@@ -18,7 +16,7 @@ interface ClassroomStateProps {
 const ClassroomStateContext = createContext<IClassroomStateContext>({
   authClassroomState: {
     classroom: INITIATE_COURSE,
-    member: INITIATE_AUTH,
+    member: INITIATE_MEMBER,
   },
 });
 
@@ -29,7 +27,7 @@ export const ClassroomStateContextProvider: React.FC<ClassroomStateProps> = ({
 }) => {
   const { currentUser } = useCurrentUser();
   const dispatch = useAppDispatch();
-  const { data: authClassroomState } = useQuery<IMemberObject>({
+  const { data: authClassroomState } = useQuery<unknown>({
     queryKey: ["checkAuthRoleForClassroomState", currentUser],
     queryFn: async () => {
       const action = await dispatch(
@@ -39,7 +37,7 @@ export const ClassroomStateContextProvider: React.FC<ClassroomStateProps> = ({
     },
     initialData: {
       classroom: INITIATE_COURSE,
-      member: INITIATE_AUTH,
+      member: INITIATE_MEMBER,
     },
   });
 

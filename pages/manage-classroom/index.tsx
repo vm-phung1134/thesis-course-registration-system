@@ -18,6 +18,8 @@ import {
 } from "@/redux/reducer/exercise/api";
 import { IExerciseObject } from "@/interface/exercise";
 import { useClassroomStateContext } from "@/contexts/authClassroomState";
+import Image from "next/image";
+import { handleChooseClassroom } from "@/utils/classroomService";
 
 function ManageClassroomTab() {
   const [openModalPost, setOpenModalPost] = useState<boolean>(false);
@@ -45,10 +47,10 @@ function ManageClassroomTab() {
   // HANDLE POST
   const { post } = useAppSelector((state) => state.postReducer);
   const { data: posts } = useQuery<IPostObject[]>({
-    queryKey: ["posts", authClassroomState?.classroom || authClassroomState],
+    queryKey: ["posts", handleChooseClassroom(authClassroomState)],
     queryFn: async () => {
       const action = await dispatch(
-        getAllPostInClass(authClassroomState?.classroom || authClassroomState)
+        getAllPostInClass(handleChooseClassroom(authClassroomState))
       );
       return action.payload || [];
     },
@@ -58,15 +60,10 @@ function ManageClassroomTab() {
   // HANDLE EXERCISE
   const { exercise } = useAppSelector((state) => state.exerciseReducer);
   const { data: exercises } = useQuery<IExerciseObject[]>({
-    queryKey: [
-      "exercises",
-      authClassroomState?.classroom || authClassroomState,
-    ],
+    queryKey: ["exercises", handleChooseClassroom(authClassroomState)],
     queryFn: async () => {
       const action = await dispatch(
-        getAllExerciseInClass(
-          authClassroomState?.classroom || authClassroomState
-        )
+        getAllExerciseInClass(handleChooseClassroom(authClassroomState))
       );
       return action.payload || [];
     },
@@ -90,7 +87,7 @@ function ManageClassroomTab() {
           </div>
           <div className="col-span-8">
             <div className="h-fit w-full">
-              {exercises && posts ? (
+              {exercises.length > 0 || posts.length > 0 ? (
                 <>
                   <div className="border p-5 shadow-xl">
                     {exercises?.map((exercise) => {
@@ -126,9 +123,16 @@ function ManageClassroomTab() {
                   </div>
                 </>
               ) : (
-                <div className="h-20 flex justify-center items-center border p-5 shadow-xl">
-                  <p className="uppercase text-green-700">
-                    Ops! We do not have post for you
+                <div className="h-60 flex flex-col justify-center items-center border p-5 shadow-xl">
+                  <Image
+                    src="https://yi-files.s3.eu-west-1.amazonaws.com/products/794000/794104/1354385-full.jpg"
+                    width="200"
+                    height="200"
+                    className="-hue-rotate-[38deg] saturate-[.85]"
+                    alt=""
+                  />
+                  <p className="uppercase text-sm text-green-700">
+                    Ops! We do not have exercise or post for you today
                   </p>
                 </div>
               )}

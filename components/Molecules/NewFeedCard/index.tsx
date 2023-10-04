@@ -9,14 +9,20 @@ export interface INewFeedCardProps {
   handleOpenTaskModal: (task: any) => void;
 }
 
-export const NewFeedCard: FC<INewFeedCardProps> = ({ task, handleOpenTaskModal }) => {
+export const NewFeedCard: FC<INewFeedCardProps> = ({
+  task,
+  handleOpenTaskModal,
+}) => {
   return (
     <div className="border px-5 py-3 text-sm bg-green-700 text-white">
       <div className="flex justify-between items-center">
         <div className="flex gap-3">
           <Avatar
             widthStr="w-10 h-10"
-            srcImg="https://images.pexels.com/photos/39866/entrepreneur-startup-start-up-man-39866.jpeg?auto=compress&cs=tinysrgb&w=600"
+            srcImg={
+              task?.lecturer?.photoSrc ||
+              "https://images.pexels.com/photos/39866/entrepreneur-startup-start-up-man-39866.jpeg?auto=compress&cs=tinysrgb&w=600"
+            }
           />
           <div className="flex flex-col">
             <div

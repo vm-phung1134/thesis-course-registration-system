@@ -35,7 +35,7 @@ export const WaitingView: FC<IWaitingViewProps> = ({ classroom }) => {
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["subscribe-state", currentUser]);
+        queryClient.invalidateQueries(["checkAuthRoleForClassroomState", currentUser]);
       },
     }
   );

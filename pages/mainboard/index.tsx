@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { MainboardTemplate } from "@/components/Templates";
-import { Spinner } from "@/components/Atoms";
+import { Button, Spinner } from "@/components/Atoms";
 import {
   NoSubscribeView,
   UnSubscribeView,
@@ -9,10 +9,13 @@ import {
 import { useClassroomStateContext } from "@/contexts/authClassroomState";
 import { ROLE_ASSIGNMENT } from "@/contexts/authContext";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
+import Image from "next/image";
+import Link from "next/link";
+import { STATE_AUTH_CLASSROOM, STATE_LECTURER_CLASSROOM } from "@/data";
 
 function MainboardPage() {
   const [loading, setLoading] = useState<boolean>(true);
-  const {currentUser} = useCurrentUser();
+  const { currentUser } = useCurrentUser();
   const { authClassroomState } = useClassroomStateContext();
   useEffect(() => {
     setTimeout(() => {
@@ -25,22 +28,49 @@ function MainboardPage() {
         <Spinner />
       ) : (
         <MainboardTemplate title="Mainboard Thesis | Thesis course registration system">
-          {currentUser.role === ROLE_ASSIGNMENT.LECTURER ? (
+          {authClassroomState?.status ? (
             <>
-              {authClassroomState?.status === "UNLOCK" && <NoSubscribeView />}
+              {/* GET UI FOR LECTURER ROLE */}
+              {currentUser.role === ROLE_ASSIGNMENT.LECTURER &&
+                authClassroomState?.status ===
+                  STATE_LECTURER_CLASSROOM.UN_LOCK && <NoSubscribeView />}
+              {/* GET UI FOR STUDENT ROLE */}
+              {currentUser.role === ROLE_ASSIGNMENT.STUDENT && (
+                <>
+                  {authClassroomState?.status ===
+                    STATE_AUTH_CLASSROOM.NO_SUB && <NoSubscribeView />}
+                  {authClassroomState?.status ===
+                    STATE_AUTH_CLASSROOM.WAITING && (
+                    <WaitingView classroom={authClassroomState?.classroom} />
+                  )}
+                  {authClassroomState?.status ===
+                    STATE_AUTH_CLASSROOM.UN_SUB && (
+                    <UnSubscribeView
+                      classroom={authClassroomState?.classroom}
+                    />
+                  )}
+                </>
+              )}
             </>
           ) : (
-            <>
-              {authClassroomState?.status === "NO_SUBSCRIBE" && (
-                <NoSubscribeView />
-              )}
-              {authClassroomState?.status === "WAITING" && (
-                <WaitingView classroom={authClassroomState?.classroom} />
-              )}
-              {authClassroomState?.status === "UN_SUBSCRIBE" && (
-                <UnSubscribeView classroom={authClassroomState?.classroom} />
-              )}
-            </>
+            <div className="h-[80%] w-full flex flex-col justify-center items-center">
+              <Image
+                src="https://yi-files.s3.eu-west-1.amazonaws.com/products/794000/794104/1354385-full.jpg"
+                width="400"
+                height="400"
+                className="-hue-rotate-[38deg] saturate-[.85]"
+                alt=""
+              />
+              <p className="py-5 text-gray-500 uppercase">
+                Ops! There are currently no classrooms
+              </p>
+              <Link href="/manage-classroom">
+                <Button
+                  className="px-10 bg-green-700 text-white hover:bg-green-600"
+                  title="Comming soon"
+                />
+              </Link>
+            </div>
           )}
         </MainboardTemplate>
       )}

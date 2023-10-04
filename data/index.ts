@@ -33,6 +33,7 @@ export const INITIATE_COURSE: IClassroomObject = {
   lecturer: INITIATE_AUTH,
   codeCourse: "",
   quantity: 0,
+  status: "",
 };
 
 export const INITIATE_POST: IPostObject = {
@@ -65,6 +66,7 @@ export const INITIATE_EXERCISE: IExerciseObject = {
 };
 
 export const INITIATE_TOPIC: ITopicObject = {
+  id: "",
   title: "",
   typeTopic: "",
   memberQuantiy: 0,
@@ -91,3 +93,13 @@ export const INITIATE_SUBMIT: ISubmitObject = {
   status: "",
   uid: "",
 };
+
+export enum STATE_AUTH_CLASSROOM {
+  NO_SUB = "NO_SUBSCRIBE",
+  WAITING = "WAITING",
+  UN_SUB = "UN_SUBSCRIBE",
+}
+
+export enum STATE_LECTURER_CLASSROOM {
+  UN_LOCK = "UNLOCK",
+}

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { MainboardTemplate } from "@/components/Templates";
-import { Breadcrumb, Spinner } from "@/components/Atoms";
+import { Breadcrumb, SnipperRound } from "@/components/Atoms";
 import { BREADCRUMB_COMPLETED_TASKS } from "./mock-data";
 
 function CriticalTasks() {
@@ -14,13 +14,13 @@ function CriticalTasks() {
   }, []);
   return (
     <>
-      {loading ? (
-        <Spinner />
-      ) : (
-        <MainboardTemplate title="Mainboard Thesis | Thesis course registration system">
+      <MainboardTemplate title="Task completed | Thesis course registration system">
+        {loading ? (
+          <SnipperRound />
+        ) : (
           <Breadcrumb dataBreadcrumb={BREADCRUMB_COMPLETED_TASKS} />
-        </MainboardTemplate>
-      )}
+        )}
+      </MainboardTemplate>
     </>
   );
 }

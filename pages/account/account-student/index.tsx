@@ -12,7 +12,7 @@ import { getTopic } from "@/redux/reducer/topic/api";
 import { ITopicObject } from "@/interface/topic";
 
 function AccountStudentPage() {
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const { currentUser } = useCurrentUser();
   const dispatch = useAppDispatch();
   const { data } = useQuery<ITopicObject>({
@@ -24,7 +24,6 @@ function AccountStudentPage() {
     initialData: INITIATE_TOPIC,
   });
   useEffect(() => {
-    setLoading(true);
     setTimeout(() => {
       setLoading(false);
     }, 1300);

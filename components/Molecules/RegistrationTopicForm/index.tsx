@@ -2,7 +2,7 @@ import { Button, FormField, TitleFormField } from "@/components/Atoms";
 import { INITIATE_TOPIC } from "@/data";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { ITopicObject } from "@/interface/topic";
-import { createTopic } from "@/redux/reducer/topic/api";
+import { createTopic, updateTopic } from "@/redux/reducer/topic/api";
 import { useAppDispatch } from "@/redux/store";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Form, Formik } from "formik";
@@ -18,7 +18,26 @@ export const RegistrationTopicForm: FC<IRegistrationTopicFormProps> = ({
   const { currentUser } = useCurrentUser();
   const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
-  const createMutation = useMutation(
+  const updateMutation = useMutation(
+    (postData: ITopicObject) => {
+      return new Promise((resolve, reject) => {
+        dispatch(updateTopic(postData))
+          .unwrap()
+          .then((data) => {
+            resolve(data);
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      });
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["topic"]);
+      },
+    }
+  );
+  const addMutation = useMutation(
     (postData: ITopicObject) => {
       return new Promise((resolve, reject) => {
         dispatch(createTopic(postData))
@@ -40,7 +59,7 @@ export const RegistrationTopicForm: FC<IRegistrationTopicFormProps> = ({
 
   return (
     <Formik
-      initialValues={topic ?? INITIATE_TOPIC}
+      initialValues={topic || INITIATE_TOPIC}
       enableReinitialize
       validate={(values) => {
         let errors: any = {};
@@ -79,7 +98,13 @@ export const RegistrationTopicForm: FC<IRegistrationTopicFormProps> = ({
       }}
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
-          createMutation.mutate({ ...values, student: currentUser });
+          !topic.id
+            ? addMutation.mutate({ ...values, student: currentUser })
+            : updateMutation.mutate({
+                id: topic.id,
+                ...values,
+                student: currentUser,
+              });
           setSubmitting(false);
         }, 400);
       }}
