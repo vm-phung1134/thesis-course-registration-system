@@ -23,13 +23,17 @@ export const Button: FC<IButtonProps> = ({
   setToggle,
   handleSubcribeClass,
 }) => {
+  const handleButtonActions = () => {
+    handleSubcribeClass?.()
+    setToggle?.(!toggle);
+  };
   return (
     <div>
       {otherType === "subscribe" && (
         <button
-          onClick={handleSubcribeClass}
+          onClick={handleButtonActions}
           type={type}
-          className={`${className} btn rounded-none capitalize font-normal`}
+          className={`${className} btn tracking-wide rounded-none capitalize font-normal`}
         >
           {title}
         </button>
@@ -39,7 +43,7 @@ export const Button: FC<IButtonProps> = ({
         <button
           onClick={() => setToggle?.(!toggle)}
           type={type}
-          className={`${className} btn rounded-none capitalize font-normal`}
+          className={`${className} btn tracking-wide rounded-none capitalize font-normal`}
         >
           {title}
         </button>
@@ -50,7 +54,7 @@ export const Button: FC<IButtonProps> = ({
         <button
           onClick={() => setToggle?.(!toggle)}
           type={type}
-          className={`${className} btn rounded-none capitalize font-normal`}
+          className={`${className} btn tracking-wide rounded-none capitalize font-normal`}
         >
           {title}
         </button>

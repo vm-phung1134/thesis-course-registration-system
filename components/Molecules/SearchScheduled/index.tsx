@@ -1,9 +1,13 @@
 import { Field, Form, Formik } from "formik";
 import { FC } from "react";
 
-export interface ISearchScheduledFormProps {}
+export interface IFilterScheduledFormProps {
+  holderText: string;
+}
 
-export const SearchScheduledForm: FC<ISearchScheduledFormProps> = ({}) => {
+export const FilterScheduledForm: FC<IFilterScheduledFormProps> = ({
+  holderText,
+}) => {
   return (
     <Formik
       initialValues={{ search: "" }}
@@ -36,10 +40,10 @@ export const SearchScheduledForm: FC<ISearchScheduledFormProps> = ({}) => {
               </svg>
               <Field
                 value={values.search}
-                placeholder="Filter scheduled..."
+                placeholder={holderText}
                 type="text"
                 id="search"
-                className="input dark:bg-black h-10 text-[15px] focus:outline-none placeholder:font-thin rounded-none flex-1"
+                className="input placeholder:tracking-wide tracking-wide dark:bg-black h-8 text-sm focus:outline-none placeholder:font-thin rounded-none flex-1"
               />
             </div>
           </Form>

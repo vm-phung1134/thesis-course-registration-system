@@ -34,6 +34,8 @@ export const ModalConfirm: FC<IModalConfirmProp> = ({
             title="accept"
             otherType="subscribe"
             handleSubcribeClass={action}
+            setToggle={setOpenModal}
+            toggle={openModal}
             className="hover:text-black bg-green-700 hover:bg-green-600 px-10 text-white"
           />
         </div>

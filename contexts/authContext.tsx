@@ -1,8 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 import {
-  onAuthStateChanged,
   signInWithPopup,
   signOut,
   signInWithEmailAndPassword,
@@ -12,7 +11,7 @@ import { auth, provider } from "../config/firebase-config";
 import Cookies from "js-cookie";
 import { IAuthObject } from "@/interface/auth";
 import { useRouter } from "next/router";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { loginAuth } from "@/redux/reducer/auth/api";
 import { useAppDispatch } from "@/redux/store";
 import { useUserCookies } from "@/hooks/useCookies";
@@ -54,6 +53,7 @@ export const useAuthContext = () => {
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const queryClient = useQueryClient();
   const [, setUserCookies] = useUserCookies();
   const [message, setMessage] = useState<string>("");
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -73,17 +73,35 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     },
     {
       onSuccess: () => {
-        console.log("Save the user's information");
+        queryClient.invalidateQueries(["accounts"]);
       },
     }
   );
   const signInWithGoogle = () => {
     signInWithPopup(auth, provider)
       .then(async (result) => {
-        const token = await result.user.getIdToken();
-        Cookies.set("token", token);
-        const role = roleAssignment(result.user.email || "");
-        role === "admin" ? router.push("/admin") : router.push("/mainboard");
+        if (
+          result?.user.email?.endsWith("cit.ctu.edu.vn") || // GIANG VIEN
+          result?.user.email?.endsWith("student.ctu.edu.vn") // SINH VIEN
+        ) {
+          const authObject: IAuthObject = {
+            id: result.user.uid,
+            name: result.user.displayName || "",
+            photoSrc: result.user.photoURL || "",
+            email: result.user.email,
+            role: roleAssignment(result.user.email || ""),
+          };
+          await addMutation.mutate(authObject);
+          const token = await result.user.getIdToken();
+          const role = roleAssignment(result.user.email || "");
+          role === "admin" ? router.push("/admin") : router.push("/mainboard");
+          Cookies.set("token", token);
+          setUserCookies(authObject);
+          setIsAuthenticated(true);
+        } else {
+          logout();
+          setMessage("Your email must be from CTU organization");
+        }
       })
       .catch((error) => {
         console.error(error);
@@ -97,9 +115,20 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         user.getIdToken().then((token) => {
           Cookies.set("token", token);
         });
-        router.push("/mainboard");
+        const authObject: IAuthObject = {
+          id: user.uid,
+          name: user.displayName || "",
+          photoSrc: user.photoURL || "",
+          email: email,
+          role: roleAssignment(email || ""),
+        };
+        setUserCookies(authObject);
+        setIsAuthenticated(true);
+        const role = roleAssignment(user.email || "");
+        role === "admin" ? router.push("/admin") : router.push("/mainboard");
       })
       .catch((error) => {
+        setMessage(() => "Account invalid")
         console.error("Error signing in:", error);
       });
   };
@@ -110,14 +139,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     lecturer: IAuthObject
   ) => {
     createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
+      .then(async (userCredential) => {
         const user = userCredential.user;
-        addMutation.mutate({
-          id: user.uid,
-          email: user.email || "",
+        await addMutation.mutate({
+          id: user.uid || "",
+          email: email || "",
           name: lecturer.name || "",
           photoSrc: lecturer.photoSrc || "",
-          role: roleAssignment(user.email || ""),
+          role: roleAssignment(email || ""),
+          password: password,
         });
       })
       .catch((error) => {
@@ -165,33 +195,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       return ROLE_ASSIGNMENT.LECTURER;
     }
   };
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (
-        currentUser?.email?.endsWith("cit.ctu.edu.vn") || // GIANG VIEN
-        currentUser?.email?.endsWith("student.ctu.edu.vn") || // SINH VIEN
-        currentUser?.email?.endsWith("gmail.com") // THU KY KHOA
-      ) {
-        const authObject: IAuthObject = {
-          id: currentUser.uid,
-          name: currentUser.displayName || "",
-          photoSrc: currentUser.photoURL || "",
-          email: currentUser.email,
-          role: roleAssignment(currentUser.email || ""),
-        };
-        setUserCookies(authObject);
-        setIsAuthenticated(true);
-      } else {
-        currentUser
-          ?.delete()
-          .then(() => setMessage("Your email must be from CTU organization"));
-        logout();
-      }
-    });
-    return () => unsubscribe();
-  }, []);
-
   return (
     <AuthContext.Provider value={authContextValue}>
       {children}

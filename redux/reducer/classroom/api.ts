@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { token } from "./type";
-import { IClassroomObject } from "@/interface/classroom";
+import { IClassroomObject, IClassroomObjectNew } from "@/interface/classroom";
 
 // GET ALL CLASSROOM
 const getAllClassrooms = createAsyncThunk(
@@ -41,7 +41,7 @@ const getClassroom = createAsyncThunk(
 // CREATE CLASSROOM
 const createClassroom = createAsyncThunk(
   "classroom/createClassroom",
-  async (postData: IClassroomObject) => {
+  async (postData: Omit<IClassroomObjectNew, "id">) => {
     const response = await axios.post(
       "http://localhost:5000/api/classroom",
       postData,

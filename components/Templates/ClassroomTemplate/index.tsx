@@ -66,7 +66,7 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
         <title>{title}</title>
       </Head>
       <main>
-        <div className="grid grid-cols-12 bg-base-100">
+        <div className="grid grid-cols-12 bg-base-100 tracking-wide">
           <div className="col-span-2 border-r h-screen dark:border-gray-500">
             {userCookies?.role === ROLE_ASSIGNMENT.STUDENT ? (
               <SidebarStudentView />
@@ -74,7 +74,7 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
               <SidebarLecturerView />
             )}
           </div>
-          <div className="col-span-10">
+          <div className="col-span-10 tracking-wide">
             <Navbar />
             {getStatusCurrentUser(authClassroomState) ===
               STATE_AUTH_CLASSROOM.WAITING ||

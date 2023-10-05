@@ -15,3 +15,10 @@ export interface IClassroomObject {
   topicTags?: ITopicKeyObject[];
   status?: string;
 }
+
+export interface IClassroomObjectNew {
+  id: string;
+  lecturer: IAuthObject;
+  classCourse: string;
+  quantityStudent: number;
+}

@@ -14,7 +14,7 @@ export const AdminTemplate: FC<IAdminProps> = ({ children, title }) => {
         <title>{title}</title>
       </Head>
       <main>
-        <div className="grid grid-cols-12 bg-base-100 dark:bg-[#0d0d0e] dark:text-[#dedede]">
+        <div className="grid grid-cols-12 tracking-wide bg-base-100 dark:bg-[#0d0d0e] dark:text-[#dedede]">
           <div className="col-span-2 border-r h-screen dark:border-gray-500">
             <SidebarAdminView />
           </div>

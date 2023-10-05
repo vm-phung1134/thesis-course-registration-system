@@ -1,9 +1,10 @@
+/* eslint-disable @next/next/no-img-element */
 import { Avatar } from "@/components/Atoms";
 import DarkModeToggle from "@/components/Atoms/ToggleDarkMode";
 import { SearchForm } from "@/components/Molecules";
 import { useAuthContext } from "@/contexts/authContext";
 import { useLanguageContext } from "@/contexts/languageContext";
-import { useUserCookies } from "@/hooks/useCookies";
+import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import Image from "next/image";
 import { FC, useEffect } from "react";
 
@@ -11,7 +12,7 @@ export interface INavbarProps {}
 
 export const Navbar: FC<INavbarProps> = () => {
   const { logout, checkUserLoginState } = useAuthContext();
-  const [userCookies] = useUserCookies();
+  const { currentUser } = useCurrentUser();
   const { handleChangeLanguage, localeValue } = useLanguageContext();
   useEffect(() => {
     checkUserLoginState();
@@ -69,19 +70,23 @@ export const Navbar: FC<INavbarProps> = () => {
               className="flex gap-3 items-center cursor-pointer"
             >
               <div className="flex flex-col text-[15px] font-normal items-end">
-                <p>{userCookies?.email || "example@ctu.edu.vn"}</p>
+                <p>{currentUser?.email || "example@ctu.edu.vn"}</p>
                 <p className="text-green-800 text-sm capitalize">
-                  Pov: {userCookies?.role || "Student"}
+                  Pov: {currentUser?.role || "Student"}
                 </p>
               </div>
-              <Avatar
-                online={true}
-                widthStr="w-10"
-                srcImg={
-                  userCookies?.photoSrc
-                  
-                }
-              />
+              <div className="w-11 h-10 flex-shrink-0 mr-2 sm:mr-3">
+                <div className="avatar object-center">
+                  <div className="rounded-full">
+                    <img
+                      width={100}
+                      height={100}
+                      alt=""
+                      src={currentUser.photoSrc}
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
             <ul
               tabIndex={0}

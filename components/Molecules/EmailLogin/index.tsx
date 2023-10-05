@@ -12,6 +12,10 @@ import Link from "next/link";
 export interface IEmailLoginProps {
   setToggleForm: React.Dispatch<React.SetStateAction<boolean>>;
   toggleForm: boolean;
+  values: {
+    email: string;
+    password: string;
+  };
 }
 
 const ActionFormField = () => {
@@ -27,6 +31,7 @@ const ActionFormField = () => {
 export const EmailLogin: FC<IEmailLoginProps> = ({
   setToggleForm,
   toggleForm,
+  values,
 }) => {
   return (
     <Form>
@@ -34,8 +39,18 @@ export const EmailLogin: FC<IEmailLoginProps> = ({
         className="font-semibold sm:text-center my-4 sm:my-6 sm:text-2xl text-xl "
         title="Sign in with email account"
       />
-      <FormField type="email" label="Email" nameField="email" />
-      <FormField type="password" label="Password" nameField="password" />
+      <FormField
+        type="email"
+        label="Email"
+        nameField="email"
+        value={values.email}
+      />
+      <FormField
+        type="password"
+        label="Password"
+        nameField="password"
+        value={values.password}
+      />
       <ActionFormField />
       <Button className="bg-green-600 w-full text-white" title="Sign In" />
       <LineUnder />

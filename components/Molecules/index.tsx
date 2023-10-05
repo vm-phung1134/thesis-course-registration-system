@@ -31,3 +31,4 @@ export * from "./NewFeedCard";
 export * from "./CriticalTask";
 export * from "./FormSchedule";
 export * from "./SearchScheduled";
+export * from "./Admin";

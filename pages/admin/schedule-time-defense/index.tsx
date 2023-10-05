@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Avatar, Button, SnipperRound } from "@/components/Atoms";
 import { AdminTemplate } from "@/components/Templates";
-import { ScheduleForm, SearchScheduledForm } from "@/components/Molecules";
+import { FilterScheduledForm, ScheduleForm } from "@/components/Molecules";
 import { Field } from "formik";
 import Image from "next/image";
 
@@ -58,11 +58,13 @@ function DashboardPage() {
                     </ul>
                   </div>
                   <div className="h-full w-60 shadow-xl py-3 px-5 cursor-pointer">
-                    <h4 className="uppercase text-xs py-2 text-green-700">Related Shortcut</h4>
+                    <h4 className="uppercase text-xs py-2 text-green-700">
+                      Related Shortcut
+                    </h4>
                     <ul className="text-sm flex flex-col gap-2">
-                        <li>Faculty List Management</li>
-                        <li>Manage student lists</li>
-                        <li>Manage room lists</li>
+                      <li>Faculty List Management</li>
+                      <li>Manage student lists</li>
+                      <li>Manage room lists</li>
                     </ul>
                   </div>
                 </div>
@@ -80,7 +82,7 @@ function DashboardPage() {
                     <Button title="All" className="px-5" />
                   </div>
                   <div>
-                    <SearchScheduledForm />
+                    <FilterScheduledForm holderText="Filter schedule time ..." />
                   </div>
                 </div>
                 <div className="mt-8">

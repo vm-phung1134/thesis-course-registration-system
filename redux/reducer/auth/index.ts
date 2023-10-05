@@ -5,6 +5,7 @@ import {
   checkAuthRoleForClassroomState,
   checkStateSubscribe,
   getAllAuths,
+  getAllLecturers,
   getOneAuth,
   loginAuth,
   unsubscribeState,
@@ -52,6 +53,20 @@ const authSlice = createSlice({
       state.auths = action.payload;
     });
     builder.addCase(getAllAuths.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.error.message ?? "Something went wrong.";
+    });
+
+    // GET ALL LECTURERS
+    builder.addCase(getAllLecturers.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(getAllLecturers.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.auths = action.payload;
+    });
+    builder.addCase(getAllLecturers.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.error.message ?? "Something went wrong.";
     });

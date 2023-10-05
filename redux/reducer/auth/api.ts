@@ -35,6 +35,25 @@ const getAllAuths = createAsyncThunk("authors/getAllAuths", async () => {
   throw new Error("Failed to get all auths");
 });
 
+// GET ALL LECTURERS
+const getAllLecturers = createAsyncThunk(
+  "authors/getAllLecturers",
+  async () => {
+    const response = await axios.get(
+      `http://localhost:5000/api/auth/lecturer`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    if (response.status === 200) {
+      return response.data;
+    }
+    throw new Error("Failed to get all lecturers");
+  }
+);
+
 // LOGIN AUTH INTO APP
 const loginAuth = createAsyncThunk(
   "auth/loginAuth",
@@ -139,6 +158,7 @@ export {
   getOneAuth,
   loginAuth,
   updateAuth,
+  getAllLecturers,
   checkStateSubscribe,
   checkAuthRoleForClassroomState,
 };
