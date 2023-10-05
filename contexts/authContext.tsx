@@ -1,7 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { onAuthStateChanged, signInWithPopup, signOut } from "firebase/auth";
+import {
+  onAuthStateChanged,
+  signInWithPopup,
+  signOut,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+} from "firebase/auth";
 import { auth, provider } from "../config/firebase-config";
 import Cookies from "js-cookie";
 import { IAuthObject } from "@/interface/auth";
@@ -17,6 +23,12 @@ interface AuthContextType {
   signInWithGoogle: () => void;
   logout: () => void;
   checkUserLoginState: () => void;
+  signInWithEmailPassword: (email: string, password: string) => void;
+  signUpWithEmailPassword: (
+    email: string,
+    password: string,
+    lecturer: IAuthObject
+  ) => void;
 }
 
 interface AuthProviderProps {
@@ -78,6 +90,41 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       });
   };
 
+  const signInWithEmailPassword = (email: string, password: string) => {
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        user.getIdToken().then((token) => {
+          Cookies.set("token", token);
+        });
+        router.push("/mainboard");
+      })
+      .catch((error) => {
+        console.error("Error signing in:", error);
+      });
+  };
+
+  const signUpWithEmailPassword = (
+    email: string,
+    password: string,
+    lecturer: IAuthObject
+  ) => {
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        addMutation.mutate({
+          id: user.uid,
+          email: user.email || "",
+          name: lecturer.name || "",
+          photoSrc: lecturer.photoSrc || "",
+          role: roleAssignment(user.email || ""),
+        });
+      })
+      .catch((error) => {
+        console.error("Errors:", error);
+      });
+  };
+
   const logout = () => {
     signOut(auth)
       .then(() => {
@@ -105,6 +152,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     isAuthenticated,
     signInWithGoogle,
     logout,
+    signInWithEmailPassword,
+    signUpWithEmailPassword,
   };
 
   const roleAssignment = (email: string) => {
@@ -120,8 +169,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (
-        currentUser?.email?.endsWith("gmail.com") ||
-        currentUser?.email?.endsWith("student.ctu.edu.vn")
+        currentUser?.email?.endsWith("cit.ctu.edu.vn") || // GIANG VIEN
+        currentUser?.email?.endsWith("student.ctu.edu.vn") || // SINH VIEN
+        currentUser?.email?.endsWith("gmail.com") // THU KY KHOA
       ) {
         const authObject: IAuthObject = {
           id: currentUser.uid,
@@ -130,7 +180,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           email: currentUser.email,
           role: roleAssignment(currentUser.email || ""),
         };
-        addMutation.mutate(authObject);
         setUserCookies(authObject);
         setIsAuthenticated(true);
       } else {

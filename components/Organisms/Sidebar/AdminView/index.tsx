@@ -6,7 +6,7 @@ export interface ISidebarAdminViewProps {}
 
 export const SidebarAdminView: FC<ISidebarAdminViewProps> = ({}) => {
   return (
-    <div className="sticky top-0 left-0 bottom-0">
+    <div className="fixed top-0 left-0 bottom-0">
       <LogoApp
         width={30}
         height={30}
@@ -61,7 +61,7 @@ export const SidebarAdminView: FC<ISidebarAdminViewProps> = ({}) => {
         <li>
           <Link
             className="rounded-none hover:bg-green-700 hover:text-white"
-            href=""
+            href="/admin/classroom-management"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

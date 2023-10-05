@@ -20,7 +20,7 @@ export const AdminTemplate: FC<IAdminProps> = ({ children, title }) => {
           </div>
           <div className="col-span-10">
             <Navbar />
-            <div className="px-5 h-full">{children}</div>
+            <div className="px-5 h-full border-l">{children}</div>
           </div>
         </div>
       </main>
