@@ -5,7 +5,7 @@ export interface RequirementState {
   requirements: IMemberObject[];
   isLoading: boolean;
   requirement: IMemberObject;
-  error: string | null;
+  error: {message: string} | null;
 }
 
 export const token = Cookies.get("token");

@@ -32,7 +32,7 @@ export const INITIATE_CLASSROOM: IClassroomObject = {
   classCourse: "",
   lecturer: INITIATE_AUTH,
   quantityStudent: 15,
-  status: "UN_LOCK"
+  status: "UN_LOCK",
 };
 
 export const INITIATE_POST: IPostObject = {

@@ -12,6 +12,9 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAppDispatch } from "@/redux/store";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { getAllMemberClassroom } from "@/redux/reducer/member/api";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 interface IClassroomCardProps {
   item: IClassroomObject;
@@ -29,16 +32,20 @@ export const ClassroomCard: FC<IClassroomCardProps> = ({ item }) => {
   const dispatch = useAppDispatch();
   const addRequirementMutation = useMutation(
     (postData: IMemberObject) => {
-      return new Promise((resolve, reject) => {
-        dispatch(createRequirement(postData))
-          .unwrap()
-          .then((data) => {
-            resolve(data);
-          })
-          .catch((error) => {
-            reject(error);
+      return dispatch(createRequirement(postData))
+        .unwrap()
+        .then((data) => {
+          toast.success(data.message, {
+            position: toast.POSITION.BOTTOM_LEFT,
+            autoClose: 3000,
           });
-      });
+        })
+        .catch((error) => {
+          toast.error(error?.message, {
+            position: toast.POSITION.BOTTOM_LEFT,
+            autoClose: 3000,
+          });
+        });
     },
     {
       onSuccess: () => {
@@ -48,7 +55,9 @@ export const ClassroomCard: FC<IClassroomCardProps> = ({ item }) => {
   );
   const { currentUser } = useCurrentUser();
   const handleSubcribeClass = () => {
-    addRequirementMutation.mutate({ classroom: item, member: currentUser });
+    if (!addRequirementMutation.isLoading) {
+      addRequirementMutation.mutate({ classroom: item, member: currentUser });
+    }
   };
 
   const { data: members } = useQuery<IMemberObject[]>({
@@ -99,6 +108,13 @@ export const ClassroomCard: FC<IClassroomCardProps> = ({ item }) => {
         openModalClassroomDetail={openModalClassroomDetail}
         handleSubcribeClass={handleSubcribeClass}
         modalClass={modalClass}
+      />
+      <ToastContainer
+        toastStyle={{
+          color: "black",
+          fontSize: "14px",
+          fontFamily: "Red Hat Text",
+        }}
       />
     </>
   );

@@ -42,20 +42,25 @@ const getAllRequirementClassroom = createAsyncThunk(
 // CREATE NEW REQUIREMENT
 const createRequirement = createAsyncThunk(
   "requirement/createRequirement",
-  async (postData: IMemberObject) => {
-    const response = await axios.post(
-      "http://localhost:5000/api/requirement",
-      postData,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+  async (postData: IMemberObject, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/requirement",
+        postData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        return response.data;
       }
-    );
-    if (response.status === 200) {
-      return response.data;
+      throw new Error("Failed to create new requirement");
+    } catch (error: any) {
+      return rejectWithValue(error.response.data);
     }
-    throw new Error("Failed to create new requirement");
   }
 );
 

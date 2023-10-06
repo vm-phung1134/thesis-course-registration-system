@@ -1,11 +1,7 @@
 import { useState, useEffect } from "react";
 import { MainboardTemplate } from "@/components/Templates";
 import { Breadcrumb, Button, Spinner } from "@/components/Atoms";
-import {
-  NoSubscribeView,
-  UnSubscribeView,
-  WaitingView,
-} from "@/components/Organisms";
+import { NoSubscribeView, WaitingView } from "@/components/Organisms";
 import { ROLE_ASSIGNMENT } from "@/contexts/authContext";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import Image from "next/image";

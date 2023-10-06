@@ -57,7 +57,7 @@ const requirementSlice = createSlice({
     });
     builder.addCase(createRequirement.rejected, (state, action) => {
       state.isLoading = false;
-      state.error = action.error.message ?? "Something went wrong.";
+      state.error = action.payload ?? "Something went wrong.";
     });
     // DELETE REQUIREMENT
     builder.addCase(deleteRequirement.pending, (state) => {
