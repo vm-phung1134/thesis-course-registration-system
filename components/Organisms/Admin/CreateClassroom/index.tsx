@@ -1,12 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
-import { Button } from "@/components/Atoms";
+import { Button, NormalAvatar } from "@/components/Atoms";
 import {
   ACreateClassroomForm,
   FilterScheduledForm,
 } from "@/components/Molecules";
 import useCheckedBox from "@/hooks/useCheckedBox";
 import { IAuthObject } from "@/interface/auth";
-import { IClassroomObjectNew } from "@/interface/classroom";
+import { IClassroomObject } from "@/interface/classroom";
 import { getAllAuths, getAllLecturers } from "@/redux/reducer/auth/api";
 import { getAllClassrooms } from "@/redux/reducer/classroom/api";
 import { useAppDispatch } from "@/redux/store";
@@ -44,7 +44,7 @@ export const CreateClassroomTab: FC<ICreateClassroomTab> = ({}) => {
     "modal-open": openCreateClass,
   });
   // Render list
-  const { data: classrooms } = useQuery<IClassroomObjectNew[]>({
+  const { data: classrooms } = useQuery<IClassroomObject[]>({
     queryKey: ["classrooms-admin"],
     queryFn: async () => {
       const action = await dispatch(getAllClassrooms());
@@ -57,7 +57,7 @@ export const CreateClassroomTab: FC<ICreateClassroomTab> = ({}) => {
     checkedItems: checkedClassrooms,
     handleCheckAll: handleCheckAllClassroom,
     handleCheckItem: handleCheckClassroom,
-  } = useCheckedBox<IClassroomObjectNew>(classrooms);
+  } = useCheckedBox<IClassroomObject>(classrooms);
   return (
     <div className="flex gap-5 mt-5">
       <div className="flex-grow">
@@ -160,18 +160,10 @@ export const CreateClassroomTab: FC<ICreateClassroomTab> = ({}) => {
                             {lecturer?.name}
                           </td>
                           <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
-                            <div className="w-10 h-10 flex-shrink-0 mr-2 sm:mr-3">
-                              <div className="avatar object-center">
-                                <div className="rounded-full">
-                                  <img
-                                    width={100}
-                                    height={100}
-                                    alt=""
-                                    src={lecturer?.photoSrc}
-                                  />
-                                </div>
-                              </div>
-                            </div>
+                            <NormalAvatar
+                              photoSrc={lecturer?.photoSrc}
+                              setSize="10"
+                            />
                           </td>
                           <td className="py-4 px-6 text-sm text-right whitespace-nowrap">
                             <a

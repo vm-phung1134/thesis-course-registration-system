@@ -7,18 +7,10 @@ export interface ITopicKeyObject {
 }
 
 export interface IClassroomObject {
-  id?: string;
-  title: string;
-  lecturer: IAuthObject;
-  codeCourse: string;
-  quantity: number;
-  topicTags?: ITopicKeyObject[];
-  status?: string;
-}
-
-export interface IClassroomObjectNew {
   id: string;
   lecturer: IAuthObject;
   classCourse: string;
   quantityStudent: number;
+  status: string;
+  topic?: ITopicKeyObject[];
 }

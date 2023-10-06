@@ -11,7 +11,6 @@ import { IMemberObject } from "@/interface/member";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAppDispatch } from "@/redux/store";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
-import { useClassroomStateContext } from "@/contexts/authClassroomState";
 import { getAllMemberClassroom } from "@/redux/reducer/member/api";
 
 interface IClassroomCardProps {
@@ -64,23 +63,25 @@ export const ClassroomCard: FC<IClassroomCardProps> = ({ item }) => {
 
   return (
     <>
-      <div className="w-80 shadow-xl">
+      <div className="w-[340px] shadow-xl">
         <div className="bg-cover bg-[url('https://images.pexels.com/photos/301943/pexels-photo-301943.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load')]">
           <div className="bg-black/60 p-5 text-gray-100">
-            <div className="flex justify-between mb-3">
-              <h3 className="text-lg font-bold uppercase">{item.title}</h3>
+            <div className="flex justify-between gap-5 mb-2">
+              <h3 className="text-lg font-bold uppercase">
+                {item?.lecturer?.name}
+              </h3>
               <button>...</button>
             </div>
             <div className="flex gap-2 flex-col">
               <p className="text-sm flex gap-2">
                 <span>Courses:</span>
-                <span className="font-normal">{item.codeCourse}</span>
+                <span className="font-normal">{item.classCourse}</span>
               </p>
               <p className="text-sm flex gap-2">
                 <span>Students:</span>
                 <span className="font-normal">
-                  {members.length} / 15{" "}
-                  <small>{`( ${15 - members.length} available )`}</small>
+                  {0} / {item?.quantityStudent}
+                  <small>{` ( ${15 - 0} available )`}</small>
                 </span>
               </p>
             </div>
@@ -89,7 +90,7 @@ export const ClassroomCard: FC<IClassroomCardProps> = ({ item }) => {
         <ClassroomContentCard
           setOpenModalClassroomDetail={setOpenModalClassroomDetail}
           openModalClassroomDetail={openModalClassroomDetail}
-          handleSubcribeClass={handleSubcribeClass}
+          handleSubcribeClass={() => {}}
           item={item}
         />
       </div>

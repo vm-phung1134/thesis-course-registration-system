@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { Button } from "@/components/Atoms";
+import { Button, NormalAvatar } from "@/components/Atoms";
 import { FilterScheduledForm, ModalConfirm } from "@/components/Molecules";
 import { useAuthContext } from "@/contexts/authContext";
 import useCheckedBox from "@/hooks/useCheckedBox";
@@ -39,7 +39,7 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
     },
     initialData: [],
   });
-  
+
   //   Handle create account
   const { signUpWithEmailPassword } = useAuthContext();
   const handleCreateAccountLecturer = () => {
@@ -150,18 +150,10 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
                             {account.name}
                           </td>
                           <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
-                            <div className="w-10 h-10 flex-shrink-0 mr-2 sm:mr-3">
-                              <div className="avatar object-center">
-                                <div className="rounded-full">
-                                  <img
-                                    width={100}
-                                    height={100}
-                                    alt=""
-                                    src={account.photoSrc}
-                                  />
-                                </div>
-                              </div>
-                            </div>
+                            <NormalAvatar
+                              photoSrc={account.photoSrc}
+                              setSize="10"
+                            />
                           </td>
                           <td className="py-4 px-6 text-sm text-right whitespace-nowrap">
                             <a

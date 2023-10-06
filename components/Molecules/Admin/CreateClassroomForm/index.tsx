@@ -4,7 +4,7 @@ import { Button, FormField } from "@/components/Atoms";
 import { INITIATE_CLASSROOM } from "@/data";
 import { useAppDispatch } from "@/redux/store";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { IClassroomObjectNew } from "@/interface/classroom";
+import { IClassroomObject } from "@/interface/classroom";
 import { createClassroom } from "@/redux/reducer/classroom/api";
 import { IAuthObject } from "@/interface/auth";
 
@@ -26,7 +26,7 @@ export const ACreateClassroomForm: FC<IACreateClassroomFormProps> = ({
   const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
   const addMutation = useMutation(
-    (postData: Omit<IClassroomObjectNew, "id">) => {
+    (postData: Omit<IClassroomObject, "id">) => {
       return new Promise((resolve, reject) => {
         dispatch(createClassroom(postData))
           .unwrap()

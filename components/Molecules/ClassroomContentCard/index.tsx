@@ -1,5 +1,6 @@
+/* eslint-disable @next/next/no-img-element */
 import { FC } from "react";
-import { Avatar, Button, ItemUserInfor, TopicTag } from "@/components/Atoms";
+import { Button, ItemUserInfor, NormalAvatar } from "@/components/Atoms";
 import { IClassroomObject } from "@/interface/classroom";
 
 interface IClassroomContentCardProps {
@@ -13,16 +14,13 @@ export const ClassroomContentCard: FC<IClassroomContentCardProps> = ({
   item,
   setOpenModalClassroomDetail,
   openModalClassroomDetail,
-  handleSubcribeClass
+  handleSubcribeClass,
 }) => {
   return (
     <>
-      <div className="max-h-fit p-3 border dark:border-none dark:shadow-lg dark:shadow-gray-600 relative">
+      <div className="max-h-fit p-3 dark:border-none dark:shadow-lg dark:shadow-gray-600 relative">
         <div className="absolute -top-8 right-3">
-          <Avatar
-            widthStr="w-16"
-            srcImg="https://images.pexels.com/photos/1130624/pexels-photo-1130624.jpeg?auto=compress&cs=tinysrgb&w=600"
-          />
+          <NormalAvatar setSize="14" photoSrc={item?.lecturer?.photoSrc} />
         </div>
         <div className="flex flex-col">
           <p className="text-sm uppercase text-gray-500 py-2">Information</p>
@@ -36,9 +34,9 @@ export const ClassroomContentCard: FC<IClassroomContentCardProps> = ({
             <ItemUserInfor title="Phone" content={item?.lecturer?.phone} />
           </ul>
           <p className="text-sm uppercase text-gray-500 py-2">Topics</p>
-          <TopicTag arrTopics={item?.topicTags} />
+          {/* <TopicTag arrTopics={item?.topicTags} /> */}
         </div>
-        <div className="flex justify-end mt-6 items-center">
+        <div className="flex justify-end items-center mt-auto">
           <Button
             title="Detail"
             setToggle={setOpenModalClassroomDetail}

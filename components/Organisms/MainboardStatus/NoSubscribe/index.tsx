@@ -36,7 +36,7 @@ export const NoSubscribeView: FC<INoSubscribeViewProps> = () => {
   );
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState<boolean>(true);
-  const { data, isLoading } = useQuery<IClassroomObject[]>({
+  const { data: classrooms } = useQuery<IClassroomObject[]>({
     queryKey: ["classrooms"],
     queryFn: async () => {
       const action = await dispatch(getAllClassrooms());
@@ -60,10 +60,10 @@ export const NoSubscribeView: FC<INoSubscribeViewProps> = () => {
   }, []);
   return (
     <>
-      {loading && data ? (
+      {loading && !classrooms ? (
         <SnipperRound />
       ) : (
-        <div>
+        <>
           <div className="flex justify-between items-center">
             <Breadcrumb dataBreadcrumb={BREADCRUMB_MAINBOARD} />
             <div className="mt-3 flex gap-3 w-1/3">
@@ -86,7 +86,7 @@ export const NoSubscribeView: FC<INoSubscribeViewProps> = () => {
             </div>
           </div>
           <div className="flex flex-wrap gap-5 mt-5">
-            {data?.map((item, index) => {
+            {classrooms?.map((item, index) => {
               return <ClassroomCard key={item.id} item={item} />;
             })}
           </div>
@@ -98,7 +98,7 @@ export const NoSubscribeView: FC<INoSubscribeViewProps> = () => {
               currentPage={currentPage}
             />
           </div>
-        </div>
+        </>
       )}
     </>
   );

@@ -12,11 +12,13 @@ import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import Image from "next/image";
 import Link from "next/link";
 import { STATE_AUTH_CLASSROOM, STATE_LECTURER_CLASSROOM } from "@/data";
+import { useSubscribeStateContext } from "@/contexts/subscribeState";
 
 function MainboardPage() {
   const [loading, setLoading] = useState<boolean>(true);
   const { currentUser } = useCurrentUser();
   const { authClassroomState } = useClassroomStateContext();
+  const {subscribeState} = useSubscribeStateContext()
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
@@ -28,25 +30,23 @@ function MainboardPage() {
         <Spinner />
       ) : (
         <MainboardTemplate title="Mainboard Thesis | Thesis course registration system">
-          {authClassroomState?.status ? (
+          {subscribeState?.status ? (
             <>
               {/* GET UI FOR LECTURER ROLE */}
-              {currentUser.role === ROLE_ASSIGNMENT.LECTURER &&
-                authClassroomState?.status ===
-                  STATE_LECTURER_CLASSROOM.UN_LOCK && <NoSubscribeView />}
+              {currentUser.role === ROLE_ASSIGNMENT.LECTURER && <NoSubscribeView />}
               {/* GET UI FOR STUDENT ROLE */}
               {currentUser.role === ROLE_ASSIGNMENT.STUDENT && (
                 <>
-                  {authClassroomState?.status ===
+                  {subscribeState?.status ===
                     STATE_AUTH_CLASSROOM.NO_SUB && <NoSubscribeView />}
-                  {authClassroomState?.status ===
+                  {subscribeState?.status ===
                     STATE_AUTH_CLASSROOM.WAITING && (
-                    <WaitingView classroom={authClassroomState?.classroom} />
+                    <WaitingView classroom={subscribeState?.classroom} />
                   )}
-                  {authClassroomState?.status ===
+                  {subscribeState?.status ===
                     STATE_AUTH_CLASSROOM.UN_SUB && (
                     <UnSubscribeView
-                      classroom={authClassroomState?.classroom}
+                      classroom={subscribeState?.classroom}
                     />
                   )}
                 </>

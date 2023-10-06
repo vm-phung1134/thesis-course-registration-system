@@ -8,6 +8,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import React from "react";
 import { SearchProvider } from "@/contexts/useSearchContext";
 import { ClassroomStateContextProvider } from "@/contexts/authClassroomState";
+import { SubscribeStateContextProvider } from "@/contexts/subscribeState";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [queryClient] = React.useState(() => new QueryClient());
@@ -16,11 +17,11 @@ function MyApp({ Component, pageProps }: AppProps) {
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
           <LanguageProvider>
-            <ClassroomStateContextProvider>
+            <SubscribeStateContextProvider>
               <SearchProvider>
                 <Component {...pageProps} />
               </SearchProvider>
-            </ClassroomStateContextProvider>
+            </SubscribeStateContextProvider>
           </LanguageProvider>
         </AuthProvider>
       </QueryClientProvider>

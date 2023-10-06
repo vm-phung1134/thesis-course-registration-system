@@ -8,6 +8,7 @@ import {
   TitleFormField,
 } from "@/components/Atoms";
 import Link from "next/link";
+import { useAuthContext } from "@/contexts/authContext";
 
 export interface IEmailLoginProps {
   setToggleForm: React.Dispatch<React.SetStateAction<boolean>>;
@@ -33,12 +34,14 @@ export const EmailLogin: FC<IEmailLoginProps> = ({
   toggleForm,
   values,
 }) => {
+  const { message } = useAuthContext();
   return (
     <Form>
       <TitleFormField
         className="font-semibold sm:text-center my-4 sm:my-6 sm:text-2xl text-xl "
         title="Sign in with email account"
       />
+      <p className="text-red-600 text-xs text-center">{message}</p>
       <FormField
         type="email"
         label="Email"

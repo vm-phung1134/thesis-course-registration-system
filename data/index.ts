@@ -1,6 +1,6 @@
 import { IAuthObject } from "@/interface/auth";
 import { ICategoryObject } from "@/interface/category";
-import { IClassroomObject, IClassroomObjectNew } from "@/interface/classroom";
+import { IClassroomObject } from "@/interface/classroom";
 import { ICommentObject } from "@/interface/comment";
 import { IExerciseObject } from "@/interface/exercise";
 import { IOptionItem } from "@/interface/filter";
@@ -27,20 +27,12 @@ export const INITIATE_CATEGORY: ICategoryObject = {
   value: "",
 };
 
-export const INITIATE_COURSE: IClassroomObject = {
-  id: "",
-  title: "",
-  lecturer: INITIATE_AUTH,
-  codeCourse: "",
-  quantity: 0,
-  status: "",
-};
-
-export const INITIATE_CLASSROOM: IClassroomObjectNew = {
+export const INITIATE_CLASSROOM: IClassroomObject = {
   id: "",
   classCourse: "",
   lecturer: INITIATE_AUTH,
   quantityStudent: 15,
+  status: "UN_LOCK"
 };
 
 export const INITIATE_POST: IPostObject = {
@@ -54,13 +46,13 @@ export const INITIATE_POST: IPostObject = {
   },
   lecturer: INITIATE_AUTH,
   description: "",
-  classroom: INITIATE_COURSE,
+  classroom: INITIATE_CLASSROOM,
 };
 
 export const INITIATE_EXERCISE: IExerciseObject = {
   title: "",
   uid: "",
-  classroom: INITIATE_COURSE,
+  classroom: INITIATE_CLASSROOM,
   category: {
     label: "",
     description: "",
@@ -83,7 +75,7 @@ export const INITIATE_TOPIC: ITopicObject = {
 };
 
 export const INITIATE_MEMBER: IMemberObject = {
-  classroom: INITIATE_COURSE,
+  classroom: INITIATE_CLASSROOM,
   member: INITIATE_AUTH,
 };
 
@@ -108,5 +100,5 @@ export enum STATE_AUTH_CLASSROOM {
 }
 
 export enum STATE_LECTURER_CLASSROOM {
-  UN_LOCK = "UNLOCK",
+  UN_LOCK = "UN_LOCK",
 }

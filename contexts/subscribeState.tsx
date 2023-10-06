@@ -1,4 +1,3 @@
-import { INITIATE_AUTH, INITIATE_COURSE } from "@/data";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { IMemberObject } from "@/interface/member";
 import { checkStateSubscribe } from "@/redux/reducer/auth/api";
@@ -7,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import React, { createContext, useContext } from "react";
 
 interface ISubscribeStateContext {
-  subscribeState: IMemberObject;
+  subscribeState: any; // IMemberObject or {status: ""}
 }
 
 interface SubscribeStateProps {
@@ -15,10 +14,7 @@ interface SubscribeStateProps {
 }
 
 const SubscribeStateContext = createContext<ISubscribeStateContext>({
-  subscribeState: {
-    classroom: INITIATE_COURSE,
-    member: INITIATE_AUTH,
-  },
+  subscribeState: [],
 });
 
 export const useSubscribeStateContext = () => useContext(SubscribeStateContext);
@@ -28,20 +24,19 @@ export const SubscribeStateContextProvider: React.FC<SubscribeStateProps> = ({
 }) => {
   const { currentUser } = useCurrentUser();
   const dispatch = useAppDispatch();
-  const { data: subscribeState } = useQuery<IMemberObject>({
+  const { data: subscribeState } = useQuery<
+    IMemberObject[] | { status: string }
+  >({
     queryKey: ["subscribe-state", currentUser],
     queryFn: async () => {
       const action = await dispatch(checkStateSubscribe(currentUser));
-      return action.payload || {};
+      return action.payload || [];
     },
-    initialData: {
-      classroom: INITIATE_COURSE,
-      member: INITIATE_AUTH,
-    },
+    initialData: [],
   });
 
   return (
-    <SubscribeStateContext.Provider value={{ subscribeState }}>
+    <SubscribeStateContext.Provider value={{ subscribeState: subscribeState }}>
       {children}
     </SubscribeStateContext.Provider>
   );

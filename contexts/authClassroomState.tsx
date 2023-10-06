@@ -1,4 +1,4 @@
-import { INITIATE_COURSE, INITIATE_MEMBER } from "@/data";
+import { INITIATE_CLASSROOM, INITIATE_MEMBER } from "@/data";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { checkAuthRoleForClassroomState } from "@/redux/reducer/auth/api";
 import { useAppDispatch } from "@/redux/store";
@@ -15,7 +15,7 @@ interface ClassroomStateProps {
 
 const ClassroomStateContext = createContext<IClassroomStateContext>({
   authClassroomState: {
-    classroom: INITIATE_COURSE,
+    classroom: INITIATE_CLASSROOM,
     member: INITIATE_MEMBER,
   },
 });
@@ -36,7 +36,7 @@ export const ClassroomStateContextProvider: React.FC<ClassroomStateProps> = ({
       return action.payload || {};
     },
     initialData: {
-      classroom: INITIATE_COURSE,
+      classroom: INITIATE_CLASSROOM,
       member: INITIATE_MEMBER,
     },
   });
