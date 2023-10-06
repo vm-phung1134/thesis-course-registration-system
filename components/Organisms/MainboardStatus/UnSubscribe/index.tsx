@@ -1,11 +1,10 @@
-import { Breadcrumb, Button, SnipperRound } from "@/components/Atoms";
+import { Button, SnipperRound } from "@/components/Atoms";
 import Image from "next/image";
 import { FC, useEffect, useState } from "react";
-import { BREADCRUMB_MAINBOARD } from "../mock-data";
 import { IClassroomObject } from "@/interface/classroom";
 
 export interface IUnSubscribeViewProps {
-  classroom?: IClassroomObject;
+  classroom: IClassroomObject;
 }
 
 export const UnSubscribeView: FC<IUnSubscribeViewProps> = ({ classroom }) => {
@@ -21,7 +20,6 @@ export const UnSubscribeView: FC<IUnSubscribeViewProps> = ({ classroom }) => {
         <SnipperRound />
       ) : (
         <>
-          <Breadcrumb dataBreadcrumb={BREADCRUMB_MAINBOARD} />
           <div className="flex gap-2 justify-center items-center min-h-[70%] max-h-full">
             <Image
               src="https://tailwindcomponents.com/svg/queue-animate.svg"
@@ -35,9 +33,11 @@ export const UnSubscribeView: FC<IUnSubscribeViewProps> = ({ classroom }) => {
             <div className="flex gap-3 flex-col items-center">
               <h4 className="">
                 You subscribed classroom of{" "}
-                <span className="uppercase font-medium">Le huynh quoc bao</span>
+                <span className="uppercase font-medium">
+                  {classroom?.lecturer?.name}
+                </span>
               </h4>
-              <p className="font-thin text-sm">
+              <p className="font-thin">
                 <span className="font-medium">Congratulation </span>! You have
                 been added into class
               </p>

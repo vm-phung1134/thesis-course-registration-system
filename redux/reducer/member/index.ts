@@ -5,6 +5,7 @@ import {
   deleteMember,
   getAllMemberClassroom,
   getAllMembers,
+  getMember,
 } from "./api";
 import { INITIATE_MEMBER } from "@/data";
 
@@ -43,6 +44,19 @@ const memberSlice = createSlice({
       state.member = action.payload;
     });
     builder.addCase(createMember.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.error.message ?? "Something went wrong.";
+    });
+    // GET ONE MEMBER
+    builder.addCase(getMember.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(getMember.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.member = action.payload;
+    });
+    builder.addCase(getMember.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.error.message ?? "Something went wrong.";
     });

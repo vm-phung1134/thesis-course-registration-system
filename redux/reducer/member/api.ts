@@ -3,6 +3,7 @@ import axios from "axios";
 import { token } from "../auth/type";
 import { IMemberObject } from "@/interface/member";
 import { IClassroomObject } from "@/interface/classroom";
+import { IAuthObject } from "@/interface/auth";
 
 // GET ALL MEMBERS
 const getAllMembers = createAsyncThunk("member/getAllMembers", async () => {
@@ -33,6 +34,25 @@ const getAllMemberClassroom = createAsyncThunk(
       return response.data;
     }
     throw new Error("Failed to get all members in classroom");
+  }
+);
+
+// GET ONE MEMBER
+const getMember = createAsyncThunk(
+  "member/getMember",
+  async (postData: IAuthObject) => {
+    const response = await axios.get(
+      `http://localhost:5000/api/member/${postData.id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    if (response.status === 200) {
+      return response.data;
+    }
+    throw new Error("Failed to get one classroom");
   }
 );
 
@@ -75,4 +95,10 @@ const deleteMember = createAsyncThunk(
   }
 );
 
-export { getAllMembers, deleteMember, createMember, getAllMemberClassroom };
+export {
+  getAllMembers,
+  deleteMember,
+  createMember,
+  getMember,
+  getAllMemberClassroom,
+};

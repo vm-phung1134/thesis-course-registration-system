@@ -13,8 +13,10 @@ import classNames from "classnames";
 import Image from "next/image";
 import Link from "next/link";
 import { useClassroomStateContext } from "@/contexts/authClassroomState";
+import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 
 function RequirementPage() {
+  const { currentUser } = useCurrentUser();
   const [openModalMemberDetail, setOpenModalMemberDetail] =
     useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
@@ -25,15 +27,10 @@ function RequirementPage() {
   });
   // HANDLE CALL API
   const dispatch = useAppDispatch();
-  const { authClassroomState } = useClassroomStateContext();
   const { data: requirements } = useQuery<IMemberObject[]>({
     queryKey: ["requirements"],
     queryFn: async () => {
-      const action = await dispatch(
-        getAllRequirementClassroom(
-          authClassroomState.classroom || authClassroomState
-        )
-      );
+      const action = await dispatch(getAllRequirementClassroom(currentUser));
       return action.payload || [];
     },
     initialData: [],

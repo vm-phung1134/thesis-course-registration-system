@@ -8,10 +8,10 @@ export const CodeClass: FC<ICodeClassProps> = ({ code }) => {
   return (
     <div className="border w-fit p-2">
       <div className="flex justify-between items-center">
-        <small>Code</small>
+        <p className="text-sm">Classroom Course</p>
         <button>...</button>
       </div>
-      <p className="font-medium text-md px-5 py-2">{code}</p>
+      <p className="font-medium text-sm px-5 py-2">{code}</p>
     </div>
   );
 };

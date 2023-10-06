@@ -1,7 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { token } from "./type";
-import { IClassroomObject, IClassroomObject } from "@/interface/classroom";
+import { IClassroomObject } from "@/interface/classroom";
+import { IAuthObject } from "@/interface/auth";
 
 // GET ALL CLASSROOM
 const getAllClassrooms = createAsyncThunk(
@@ -22,7 +23,7 @@ const getAllClassrooms = createAsyncThunk(
 // GET ONE CLASSROOM
 const getClassroom = createAsyncThunk(
   "classroom/getClassroom",
-  async (postData: IClassroomObject) => {
+  async (postData: IAuthObject) => {
     const response = await axios.get(
       `http://localhost:5000/api/classroom/${postData.id}`,
       {

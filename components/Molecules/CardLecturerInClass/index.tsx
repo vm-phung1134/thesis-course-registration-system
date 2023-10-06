@@ -12,9 +12,9 @@ export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
 }) => {
   return (
     <>
-      <h3 className="text-md uppercase">Thesis graduation - CT550</h3>
-      <h4 className="text-[26px] font-semibold uppercase">
-        {convertToUnaccentedString(lecturer?.name)}
+      <h3 className="text-sm uppercase">Thesis graduation - CT550</h3>
+      <h4 className="text-[24px] font-semibold uppercase">
+        {lecturer?.name}
       </h4>
       <h5 className="font-medium text-green-700">
         Major: {lecturer?.major}

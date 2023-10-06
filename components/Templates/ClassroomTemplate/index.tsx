@@ -22,7 +22,19 @@ import {
   checkClassroomState,
   handleChooseClassroom,
 } from "@/utils/classroomService";
-import { STATE_AUTH_CLASSROOM } from "@/data";
+import {
+  INITIATE_CLASSROOM,
+  INITIATE_MEMBER,
+  STATE_AUTH_CLASSROOM,
+} from "@/data";
+import { useSubscribeStateContext } from "@/contexts/subscribeState";
+import { useCurrentUser } from "@/hooks/useGetCurrentUser";
+import { useQuery } from "@tanstack/react-query";
+import { getClassroom } from "@/redux/reducer/classroom/api";
+import { IClassroomObject } from "@/interface/classroom";
+import { useAppDispatch } from "@/redux/store";
+import { IMemberObject } from "@/interface/member";
+import { getMember } from "@/redux/reducer/member/api";
 
 export interface IClassroomProps {
   children: React.ReactNode;
@@ -30,7 +42,6 @@ export interface IClassroomProps {
 }
 
 export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
-  const [userCookies] = useUserCookies();
   const [selected, setSelected] = useState<IOptionItem | ICategoryObject>(
     DATA_LIST_OPTIONS[0]
   );
@@ -52,8 +63,28 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
   // }, []);
 
   // HANDLE API
-  const { authClassroomState } = useClassroomStateContext();
+  const dispatch = useAppDispatch();
+  const { currentUser } = useCurrentUser();
+  const { subscribeState } = useSubscribeStateContext();
   const [loading, setLoading] = useState<boolean>(true);
+  const { data: classroom } = useQuery<IClassroomObject>({
+    queryKey: ["classroom"],
+    queryFn: async () => {
+      const action = await dispatch(getClassroom(currentUser));
+      return action.payload || {};
+    },
+    initialData: INITIATE_CLASSROOM,
+  });
+
+  const { data: member } = useQuery<IMemberObject>({
+    queryKey: ["member"],
+    queryFn: async () => {
+      const action = await dispatch(getMember(currentUser));
+      return action.payload || {};
+    },
+    initialData: INITIATE_MEMBER,
+  });
+
   useEffect(() => {
     const timeOutLoading = setTimeout(() => {
       setLoading(false);
@@ -68,7 +99,7 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
       <main>
         <div className="grid grid-cols-12 bg-base-100 tracking-wide">
           <div className="col-span-2 border-r h-screen dark:border-gray-500">
-            {userCookies?.role === ROLE_ASSIGNMENT.STUDENT ? (
+            {currentUser?.role === ROLE_ASSIGNMENT.STUDENT ? (
               <SidebarStudentView />
             ) : (
               <SidebarLecturerView />
@@ -76,30 +107,29 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
           </div>
           <div className="col-span-10 tracking-wide">
             <Navbar />
-            {getStatusCurrentUser(authClassroomState) ===
-              STATE_AUTH_CLASSROOM.WAITING ||
-            getStatusCurrentUser(authClassroomState) ===
-              STATE_AUTH_CLASSROOM.NO_SUB ? (
-              <WaitingClassroom />
+            {loading ? (
+              <SnipperRound />
             ) : (
               <>
-                {loading ? (
-                  <SnipperRound />
-                ) : (
-                  <>
-                    {checkClassroomState(authClassroomState) ? (
-                      <ClassroomFound
-                        classroom={handleChooseClassroom(authClassroomState)}
-                        setCreatePostModal={setCreatePostModal}
-                        openCreatePostModal={openCreatePostModal}
-                      >
-                        {children}
-                      </ClassroomFound>
-                    ) : (
-                      <ClassroomNotFound />
-                    )}
-                  </>
+                {classroom && currentUser.role === ROLE_ASSIGNMENT.LECTURER && (
+                  <ClassroomFound
+                    classroom={classroom}
+                    setCreatePostModal={setCreatePostModal}
+                    openCreatePostModal={openCreatePostModal}
+                  >
+                    {children}
+                  </ClassroomFound>
                 )}
+                {member && currentUser.role === ROLE_ASSIGNMENT.STUDENT && (
+                  <ClassroomFound
+                    classroom={member?.classroom}
+                    setCreatePostModal={setCreatePostModal}
+                    openCreatePostModal={openCreatePostModal}
+                  >
+                    {children}
+                  </ClassroomFound>
+                )}
+                {!member && !classroom && <ClassroomNotFound />}
               </>
             )}
           </div>

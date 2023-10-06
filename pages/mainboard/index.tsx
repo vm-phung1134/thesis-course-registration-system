@@ -1,13 +1,22 @@
 import { useState, useEffect } from "react";
 import { MainboardTemplate } from "@/components/Templates";
 import { Breadcrumb, Button, Spinner } from "@/components/Atoms";
-import { NoSubscribeView, WaitingView } from "@/components/Organisms";
+import {
+  NoSubscribeView,
+  UnSubscribeView,
+  WaitingView,
+} from "@/components/Organisms";
 import { ROLE_ASSIGNMENT } from "@/contexts/authContext";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import Image from "next/image";
 import Link from "next/link";
 import { useSubscribeStateContext } from "@/contexts/subscribeState";
 import { BREADCRUMB_MAINBOARD } from "@/components/Organisms/MainboardStatus/mock-data";
+import { INITIATE_MEMBER, STATE_AUTH_CLASSROOM } from "@/data";
+import { useQuery } from "@tanstack/react-query";
+import { IMemberObject } from "@/interface/member";
+import { getMember } from "@/redux/reducer/member/api";
+import { useAppDispatch } from "@/redux/store";
 
 function MainboardPage() {
   type MenuItem = {
@@ -30,6 +39,16 @@ function MainboardPage() {
       setLoading(false);
     }, 1000);
   }, []);
+  const dispatch = useAppDispatch();
+  const { data: member } = useQuery<IMemberObject>({
+    queryKey: ["member"],
+    queryFn: async () => {
+      const action = await dispatch(getMember(currentUser));
+      return action.payload || {};
+    },
+    initialData: INITIATE_MEMBER,
+  });
+
   return (
     <>
       {loading ? (
@@ -37,21 +56,23 @@ function MainboardPage() {
       ) : (
         <MainboardTemplate title="Mainboard Thesis | Thesis course registration system">
           <Breadcrumb dataBreadcrumb={BREADCRUMB_MAINBOARD} />
-          <ul className="flex gap-3 mt-2 border-b text-[15px] cursor-pointer">
-            {menuItems.map((item) => (
-              <li
-                key={item.id}
-                className={`px-3 py-2 ${
-                  selectedItem.id === item.id
-                    ? "border-green-700 border-b-2 font-medium"
-                    : ""
-                }`}
-                onClick={() => handleClick(item)}
-              >
-                {item.label}
-              </li>
-            ))}
-          </ul>
+          {currentUser.role === ROLE_ASSIGNMENT.STUDENT && !member && (
+            <ul className="flex gap-3 mt-2 border-b text-[15px] cursor-pointer">
+              {menuItems.map((item) => (
+                <li
+                  key={item.id}
+                  className={`px-3 py-2 ${
+                    selectedItem.id === item.id
+                      ? "border-green-700 border-b-2 font-medium"
+                      : ""
+                  }`}
+                  onClick={() => handleClick(item)}
+                >
+                  {item.label}
+                </li>
+              ))}
+            </ul>
+          )}
           {subscribeState ? (
             <>
               {/* GET UI FOR LECTURER ROLE */}
@@ -61,16 +82,15 @@ function MainboardPage() {
               {/* GET UI FOR STUDENT ROLE */}
               {currentUser.role === ROLE_ASSIGNMENT.STUDENT && (
                 <>
-                  {selectedItem.id === 1 && <NoSubscribeView />}
+                  {member ? (
+                    <UnSubscribeView classroom={member?.classroom} />
+                  ) : (
+                    <>
+                      {selectedItem.id === 1 && <NoSubscribeView />}
 
-                  {selectedItem.id === 2 && <WaitingView />}
-
-                  {/* {subscribeState?.status ===
-                    STATE_AUTH_CLASSROOM.UN_SUB && (
-                    <UnSubscribeView
-                      classroom={subscribeState?.classroom}
-                    />
-                  )} */}
+                      {selectedItem.id === 2 && <WaitingView />}
+                    </>
+                  )}
                 </>
               )}
             </>

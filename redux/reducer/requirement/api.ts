@@ -3,6 +3,7 @@ import axios from "axios";
 import { token } from "../auth/type";
 import { IMemberObject } from "@/interface/member";
 import { IClassroomObject } from "@/interface/classroom";
+import { IAuthObject } from "@/interface/auth";
 
 // GET ALL REQUIREMENTS
 const getAllRequirements = createAsyncThunk(
@@ -23,9 +24,9 @@ const getAllRequirements = createAsyncThunk(
 // GET ALL MEMBER BY CLASSROOM ID
 const getAllRequirementClassroom = createAsyncThunk(
   "member/getAllMemberClassroom",
-  async (postData: IClassroomObject) => {
+  async (postData: IAuthObject) => {
     const response = await axios.get(
-      `http://localhost:5000/api/requirement/class/${postData.id || ""}`,
+      `http://localhost:5000/api/requirement/class/${postData.id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
