@@ -1,7 +1,6 @@
-import { Breadcrumb, Button, SnipperRound } from "@/components/Atoms";
+import { Button, SelectBox, SnipperRound } from "@/components/Atoms";
 import Image from "next/image";
 import { FC, useEffect, useState } from "react";
-import { BREADCRUMB_MAINBOARD } from "../mock-data";
 import { IClassroomObject } from "@/interface/classroom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { IAuthObject } from "@/interface/auth";
@@ -10,6 +9,12 @@ import { useAppDispatch } from "@/redux/store";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import classNames from "classnames";
 import { ModalConfirm } from "@/components/Molecules";
+import { ClassroomCard } from "../..";
+import { useSubscribeStateContext } from "@/contexts/subscribeState";
+import { IMemberObject } from "@/interface/member";
+import { ICategoryObject } from "@/interface/category";
+import { IOptionItem } from "@/interface/filter";
+import { DATA_FILTER_COURSE, DATA_FILTER_TOPICS } from "../mock-data";
 
 export interface IWaitingViewProps {
   classroom?: IClassroomObject;
@@ -20,6 +25,7 @@ export const WaitingView: FC<IWaitingViewProps> = ({ classroom }) => {
   const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
   const { currentUser } = useCurrentUser();
+  const { subscribeState } = useSubscribeStateContext();
   const deleteMutation = useMutation(
     (postData: IAuthObject) => {
       return new Promise((resolve, reject) => {
@@ -35,7 +41,10 @@ export const WaitingView: FC<IWaitingViewProps> = ({ classroom }) => {
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["checkAuthRoleForClassroomState", currentUser]);
+        queryClient.invalidateQueries([
+          "checkAuthRoleForClassroomState",
+          currentUser,
+        ]);
       },
     }
   );
@@ -53,7 +62,18 @@ export const WaitingView: FC<IWaitingViewProps> = ({ classroom }) => {
   const handleUnsubscribeState = () => {
     deleteMutation.mutate(currentUser);
   };
-
+  const [filterCourse, setFilterCourse] = useState<
+    IOptionItem | ICategoryObject
+  >({
+    label: "Filter course",
+    value: "",
+  });
+  const [filterTopic, setFilterTopic] = useState<IOptionItem | ICategoryObject>(
+    {
+      label: "Filter Topic",
+      value: "",
+    }
+  );
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
@@ -65,37 +85,30 @@ export const WaitingView: FC<IWaitingViewProps> = ({ classroom }) => {
         <SnipperRound />
       ) : (
         <>
-          <Breadcrumb dataBreadcrumb={BREADCRUMB_MAINBOARD} />
-          <div className="flex gap-2 justify-center items-center min-h-[70%] max-h-full">
-            <Image
-              src="https://tailwindcomponents.com/svg/queue-animate.svg"
-              alt="bg-create-class"
-              width="300"
-              height="300"
-              className="-hue-rotate-[38deg] saturate-[.85]"
-              objectFit="cover"
-              objectPosition="center"
-            />
-            <div className="flex gap-3 flex-col items-center">
-              <h4 className="">
-                You subscribed classroom of{" "}
-                <span className="uppercase font-medium">
-                  {classroom?.title}
-                </span>
-              </h4>
-              <p className="font-thin text-sm">
-                Please waiting until the lecturer add you into class
-              </p>
-              <span className="loading loading-dots loading-md text-green-700"></span>
-              <div>
-                <Button
-                  title="Unsubcribe"
-                  otherType="subscribe"
-                  handleSubcribeClass={handleOpenModalConfirm}
-                  className="px-5 bg-green-700 text-white hover:bg-green-600"
+          <div className="flex justify-between items-center">
+            <div className="mt-3 flex gap-3 w-1/3">
+              <div className="flex-grow">
+                <SelectBox
+                  setSelected={setFilterCourse}
+                  selected={filterCourse}
+                  options={DATA_FILTER_COURSE}
+                  setPadding="lg"
+                />
+              </div>
+              <div className="flex-grow">
+                <SelectBox
+                  setSelected={setFilterTopic}
+                  selected={filterTopic}
+                  options={DATA_FILTER_TOPICS}
+                  setPadding="lg"
                 />
               </div>
             </div>
+          </div>
+          <div className="flex flex-wrap gap-5 mt-5">
+            {subscribeState?.map((item: IMemberObject) => {
+              return <ClassroomCard key={item.id} item={item.classroom} />;
+            })}
           </div>
           <ModalConfirm
             modalClass={modalClassConfirm}

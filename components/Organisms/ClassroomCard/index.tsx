@@ -24,7 +24,6 @@ export const ClassroomCard: FC<IClassroomCardProps> = ({ item }) => {
     "modal modal-bottom sm:modal-middle": true,
     "modal-open": openModalClassroomDetail,
   });
-
   // HANDLE CALL API
   const queryClient = useQueryClient();
   const dispatch = useAppDispatch();
@@ -43,7 +42,7 @@ export const ClassroomCard: FC<IClassroomCardProps> = ({ item }) => {
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["checkAuthRoleForClassroomState"]);
+        queryClient.invalidateQueries(["subscribe-state"]);
       },
     }
   );
@@ -90,7 +89,7 @@ export const ClassroomCard: FC<IClassroomCardProps> = ({ item }) => {
         <ClassroomContentCard
           setOpenModalClassroomDetail={setOpenModalClassroomDetail}
           openModalClassroomDetail={openModalClassroomDetail}
-          handleSubcribeClass={() => {}}
+          handleSubcribeClass={handleSubcribeClass}
           item={item}
         />
       </div>

@@ -53,6 +53,7 @@ export const NoSubscribeView: FC<INoSubscribeViewProps> = () => {
   const handleNextPage = () => {
     setCurrentPage((prevPage) => prevPage + 1);
   };
+  
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
@@ -60,12 +61,11 @@ export const NoSubscribeView: FC<INoSubscribeViewProps> = () => {
   }, []);
   return (
     <>
-      {loading && !classrooms ? (
+      {loading ? (
         <SnipperRound />
       ) : (
         <>
           <div className="flex justify-between items-center">
-            <Breadcrumb dataBreadcrumb={BREADCRUMB_MAINBOARD} />
             <div className="mt-3 flex gap-3 w-1/3">
               <div className="flex-grow">
                 <SelectBox
