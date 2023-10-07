@@ -199,7 +199,7 @@ export const ReportStatusStudentView: FC<IReportStatusStudentViewProps> = ({
       <div className="my-5 p-4 border shadow-md">
         <div className="flex justify-between mb-5">
           <h4 className="text-[13px] uppercase font-medium">
-            Report on Design stage
+            Report on stage
           </h4>
           <p className="text-sm text-red-600 capitalize">
             {submit.status || "Lack"}

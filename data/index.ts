@@ -101,4 +101,5 @@ export enum STATE_AUTH_CLASSROOM {
 
 export enum STATE_LECTURER_CLASSROOM {
   UN_LOCK = "UN_LOCK",
+  LOCK = "LOCK"
 }

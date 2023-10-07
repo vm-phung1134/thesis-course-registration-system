@@ -3,12 +3,16 @@ import { Button, NormalAvatar } from "@/components/Atoms";
 import {
   ACreateClassroomForm,
   FilterScheduledForm,
+  ModalConfirm,
 } from "@/components/Molecules";
 import useCheckedBox from "@/hooks/useCheckedBox";
 import { IAuthObject } from "@/interface/auth";
 import { IClassroomObject } from "@/interface/classroom";
 import { getAllAuths, getAllLecturers } from "@/redux/reducer/auth/api";
-import { getAllClassrooms } from "@/redux/reducer/classroom/api";
+import {
+  getAllClassrooms,
+  updateClassroom,
+} from "@/redux/reducer/classroom/api";
 import { useAppDispatch } from "@/redux/store";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import classNames from "classnames";
@@ -17,8 +21,8 @@ interface ICreateClassroomTab {}
 
 export const CreateClassroomTab: FC<ICreateClassroomTab> = ({}) => {
   const dispatch = useAppDispatch();
+  const queryClient = useQueryClient();
   // HANLE ACCOUNT SERVICE
-
   // Render list
   const { data: lecturers } = useQuery<IAuthObject[]>({
     queryKey: ["lecturers"],
@@ -36,12 +40,17 @@ export const CreateClassroomTab: FC<ICreateClassroomTab> = ({}) => {
   } = useCheckedBox<IAuthObject>(lecturers);
 
   // HANLE CLASSROOM SERVICE
-
   // Open modal
   const [openCreateClass, setOpenCreateClass] = useState<boolean>(false);
   const modalClassCreateClassroom = classNames({
     "modal modal-bottom sm:modal-middle": true,
     "modal-open": openCreateClass,
+  });
+  // Open modal confirm lock classrooms
+  const [openModalLock, setOpenModalLock] = useState<boolean>(false);
+  const modalClassModalLock = classNames({
+    "modal modal-bottom sm:modal-middle": true,
+    "modal-open": openModalLock,
   });
   // Render list
   const { data: classrooms } = useQuery<IClassroomObject[]>({
@@ -58,8 +67,41 @@ export const CreateClassroomTab: FC<ICreateClassroomTab> = ({}) => {
     handleCheckAll: handleCheckAllClassroom,
     handleCheckItem: handleCheckClassroom,
   } = useCheckedBox<IClassroomObject>(classrooms);
+  // Handle lock all classrooms
+  const handleOpenModalLock = () => {
+    setOpenModalLock(!openModalLock);
+  };
+
+  const updateMutation = useMutation(
+    (postData: IClassroomObject) => {
+      return new Promise((resolve, reject) => {
+        dispatch(updateClassroom(postData))
+          .unwrap()
+          .then((data) => {
+            resolve(data);
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      });
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["classrooms-admin"]);
+      },
+    }
+  );
+  const handleLockClassrooms = () => {
+    checkedClassrooms.forEach(async (classroom: IClassroomObject) => {
+      await updateMutation.mutate({
+        ...classroom,
+        status: "LOCK",
+      });
+    });
+  };
+
   return (
-    <div className="flex gap-5 mt-5">
+    <div className="flex flex-col gap-5 mt-5">
       <div className="flex-grow">
         <div className="flex justify-between items-center my-2">
           <h4 className="pb-3 font-medium">All account lecturer</h4>
@@ -87,7 +129,7 @@ export const CreateClassroomTab: FC<ICreateClassroomTab> = ({}) => {
               <div className="inline-block min-w-full align-middle">
                 <div className="overflow-hidden">
                   <table className="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-700">
-                    <thead className="bg-gray-100 dark:bg-gray-700">
+                    <thead className="bg-green-700 dark:bg-gray-700">
                       <tr>
                         <th scope="col" className="p-4">
                           <div className="flex items-center">
@@ -107,21 +149,33 @@ export const CreateClassroomTab: FC<ICreateClassroomTab> = ({}) => {
                         </th>
                         <th
                           scope="col"
-                          className="py-3 px-6 text-xs font-medium tracking-wider text-left text-green-700 uppercase dark:text-green-400"
+                          className="py-3 px-6 text-sm font-normal tracking-wider text-left text-gray-200  dark:text-green-400"
                         >
                           Email
                         </th>
                         <th
                           scope="col"
-                          className="py-3 px-6 text-xs font-medium tracking-wider text-left text-green-700 uppercase dark:text-green-400"
+                          className="py-3 px-6 text-sm font-normal tracking-wider text-left text-gray-200  dark:text-green-400"
                         >
                           Full Name
                         </th>
                         <th
                           scope="col"
-                          className="py-3 px-6 text-xs font-medium tracking-wider text-left text-green-700 uppercase dark:text-green-400"
+                          className="py-3 px-6 text-sm font-normal tracking-wider text-left text-gray-200  dark:text-green-400"
                         >
-                          Avatar
+                          Department
+                        </th>
+                        <th
+                          scope="col"
+                          className="py-3 px-6 text-sm font-normal tracking-wider text-left text-gray-200  dark:text-green-400"
+                        >
+                          Field
+                        </th>
+                        <th
+                          scope="col"
+                          className="py-3 px-6 text-sm font-normal tracking-wider text-left text-gray-200  dark:text-green-400"
+                        >
+                          Manager
                         </th>
                         <th scope="col" className="p-4">
                           <span className="sr-only">Update</span>
@@ -156,8 +210,14 @@ export const CreateClassroomTab: FC<ICreateClassroomTab> = ({}) => {
                           <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
                             {lecturer?.email}
                           </td>
-                          <td className="py-4 px-6 capitalize text-sm text-gray-500 whitespace-nowrap dark:text-white">
+                          <td className="py-4 px-6 capitalize text-sm text-gray-900 whitespace-nowrap dark:text-white">
                             {lecturer?.name}
+                          </td>
+                          <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
+                            Information technology
+                          </td>
+                          <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
+                            Network computer
                           </td>
                           <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
                             <NormalAvatar
@@ -186,11 +246,29 @@ export const CreateClassroomTab: FC<ICreateClassroomTab> = ({}) => {
       <div className="flex-grow">
         <div className="flex justify-between items-center my-2">
           <h4 className="pb-3 font-medium">Classrooms</h4>
-          <Button
-            className="bg-gray-600 hover:bg-gray-800 btn-sm px-8 text-white"
-            title="Clear classroom"
-            otherType="subscribe"
-          />
+          {checkedClassrooms.length > 0 ? (
+            <>
+              <ul className="flex gap-2 text-sm cursor-pointer">
+                <li onClick={handleOpenModalLock} className="text-green-700">
+                  Lock classrooms
+                </li>
+                <span className="text-gray-400">|</span>
+                <li className="text-red-700">Delete</li>
+                <span className="text-gray-400">|</span>
+                <li className="text-red-700">Clear classrooms</li>
+              </ul>
+            </>
+          ) : (
+            <div>
+              <ul className="flex gap-2 text-sm cursor-pointer">
+                <li>Lock classrooms</li>
+                <span className="text-gray-400">|</span>
+                <li>Delete</li>
+                <span className="text-gray-400">|</span>
+                <li>Clear classrooms</li>
+              </ul>
+            </div>
+          )}
         </div>
         <div className="flex justify-end mb-2">
           <FilterScheduledForm holderText="Filter classroom ..." />
@@ -202,7 +280,7 @@ export const CreateClassroomTab: FC<ICreateClassroomTab> = ({}) => {
               <div className="inline-block min-w-full align-middle">
                 <div className="overflow-hidden">
                   <table className="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-700">
-                    <thead className="bg-gray-100 dark:bg-gray-700">
+                    <thead className="bg-green-700 dark:bg-gray-700">
                       <tr>
                         <th scope="col" className="p-4">
                           <div className="flex items-center">
@@ -222,21 +300,45 @@ export const CreateClassroomTab: FC<ICreateClassroomTab> = ({}) => {
                         </th>
                         <th
                           scope="col"
-                          className="py-3 px-6 text-xs font-medium tracking-wider text-left text-green-700 uppercase dark:text-green-400"
+                          className="py-3 px-6 text-sm font-normal tracking-wider text-left text-gray-200  dark:text-green-400"
+                        >
+                          status
+                        </th>
+                        <th
+                          scope="col"
+                          className="py-3 px-6 text-sm font-normal tracking-wider text-left text-gray-200  dark:text-green-400"
                         >
                           Name classroom
                         </th>
                         <th
                           scope="col"
-                          className="py-3 px-6 text-xs font-medium tracking-wider text-left text-green-700 uppercase dark:text-green-400"
+                          className="py-3 px-6 text-sm font-normal tracking-wider text-left text-gray-200  dark:text-green-400"
+                        >
+                          Lecturer
+                        </th>
+                        <th
+                          scope="col"
+                          className="py-3 px-6 text-sm font-normal tracking-wider text-left text-gray-200  dark:text-green-400"
                         >
                           Course
                         </th>
                         <th
                           scope="col"
-                          className="py-3 px-6 text-xs font-medium tracking-wider text-left text-green-700 uppercase dark:text-green-400"
+                          className="py-3 px-6 text-sm font-normal tracking-wider text-left text-gray-200  dark:text-green-400"
+                        >
+                          Quantity
+                        </th>
+                        <th
+                          scope="col"
+                          className="py-3 px-6 text-sm font-normal tracking-wider text-left text-gray-200  dark:text-green-400"
                         >
                           Manager
+                        </th>
+                        <th
+                          scope="col"
+                          className="py-3 px-6 text-sm font-normal tracking-wider text-left text-gray-200  dark:text-green-400"
+                        >
+                          Created at
                         </th>
                         <th scope="col" className="p-4">
                           <span className="sr-only">Update</span>
@@ -268,25 +370,29 @@ export const CreateClassroomTab: FC<ICreateClassroomTab> = ({}) => {
                               </label>
                             </div>
                           </td>
+                          <td className="py-4 px-6 lowercase text-sm text-gray-900 whitespace-nowrap dark:text-white">
+                            {classroom?.status}
+                          </td>
                           <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
                             {classroom?.lecturer?.email}
                           </td>
-                          <td className="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-white">
+                          <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap capitalize dark:text-white">
+                            {classroom?.lecturer?.name}
+                          </td>
+                          <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
                             {classroom?.classCourse}
                           </td>
                           <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
-                            <div className="w-10 h-10 flex-shrink-0 mr-2 sm:mr-3">
-                              <div className="avatar object-center">
-                                <div className="rounded-full">
-                                  <img
-                                    width={100}
-                                    height={100}
-                                    alt=""
-                                    src={classroom?.lecturer?.photoSrc}
-                                  />
-                                </div>
-                              </div>
-                            </div>
+                            {classroom?.quantityStudent}
+                          </td>
+                          <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
+                            <NormalAvatar
+                              setSize="10"
+                              photoSrc={classroom?.lecturer?.photoSrc}
+                            />
+                          </td>
+                          <td className="py-4 px-6 text-[13px] text-gray-900 whitespace-nowrap dark:text-white">
+                            10/7/2023 - 15:00hrs
                           </td>
                           <td className="py-4 px-6 text-sm text-right whitespace-nowrap">
                             <a
@@ -306,6 +412,7 @@ export const CreateClassroomTab: FC<ICreateClassroomTab> = ({}) => {
           </div>
         </div>
       </div>
+      {/* Open modal form to create all list account to classroom */}
       <dialog id="modal_admin_1" className={modalClassCreateClassroom}>
         <div className="w-5/12 bg-white h-fit shadow-2xl">
           <div className="bg-green-700 p-3 flex items-center gap-3">
@@ -323,6 +430,15 @@ export const CreateClassroomTab: FC<ICreateClassroomTab> = ({}) => {
           </div>
         </div>
       </dialog>
+      {/* Open confirm modal to confirm lock all classroom */}
+      <ModalConfirm
+        modalClass={modalClassModalLock}
+        setOpenModal={setOpenModalLock}
+        openModal={openModalLock}
+        action={handleLockClassrooms}
+        title="Message!!!"
+        message="Do you want to lock these classrooms"
+      />
     </div>
   );
 };

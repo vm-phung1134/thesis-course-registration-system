@@ -1,11 +1,14 @@
 import { Button } from "@/components/Atoms";
 import { ROLE_ASSIGNMENT } from "@/contexts/authContext";
+import { useClassroomStateContext } from "@/contexts/classroomState";
+import { INITIATE_CLASSROOM, STATE_LECTURER_CLASSROOM } from "@/data";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { IAuthObject } from "@/interface/auth";
+import { IClassroomObject } from "@/interface/classroom";
 import { unsubscribeState } from "@/redux/reducer/auth/api";
+import { getClassroom } from "@/redux/reducer/classroom/api";
 import { useAppDispatch } from "@/redux/store";
-import { convertToUnaccentedString } from "@/utils/convertString";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { FC } from "react";
 
 export interface ICardLecturerInClassProps {
@@ -16,6 +19,14 @@ export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
   lecturer,
 }) => {
   const dispatch = useAppDispatch();
+  const { data: classroom } = useQuery<IClassroomObject>({
+    queryKey: ["classroom", lecturer],
+    queryFn: async () => {
+      const action = await dispatch(getClassroom(lecturer));
+      return action.payload || {};
+    },
+    initialData: INITIATE_CLASSROOM,
+  });
   const queryClient = useQueryClient();
   const { currentUser } = useCurrentUser();
   const deleteMutation = useMutation(
@@ -55,10 +66,53 @@ export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
       </ul>
       <div className="flex justify-end items-end">
         <div className="flex gap-5">
-          {currentUser.role === ROLE_ASSIGNMENT.LECTURER && (
-            <label className="swap text-sm">
-              <input type="checkbox" />
-              <div className="swap-on flex gap-2">
+          {currentUser.role === ROLE_ASSIGNMENT.LECTURER &&
+          classroom.status === STATE_LECTURER_CLASSROOM.LOCK ? (
+            <button className="btn rounded-none bg-transparent border border-red-600 hover:bg-red-600 hover:text-white text-red-600 font-medium">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="w-5 h-5"
+              >
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+              </svg>
+              <p className="text-sm normal-case">Locked</p>
+            </button>
+          ) : (
+            <button className="btn rounded-none bg-transparent border border-red-600 hover:bg-red-600 hover:text-white text-red-600 font-medium">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="w-5 h-5"
+              >
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                <path d="M7 11V7a5 5 0 0 1 9.9-1" />
+              </svg>
+              <p className="text-sm normal-case">Opened</p>
+            </button>
+          )}
+          {currentUser.role === ROLE_ASSIGNMENT.STUDENT &&
+            classroom.status === STATE_LECTURER_CLASSROOM.UN_LOCK && (
+              <Button
+                handleSubcribeClass={handleUnsubscribeState}
+                className="bg-transparent hover:bg-red-600 hover:text-white border-red-600 text-red-600 font-normal capitalize"
+                title="Leave Group"
+              />
+            )}
+          {currentUser.role === ROLE_ASSIGNMENT.STUDENT &&
+            classroom.status === STATE_LECTURER_CLASSROOM.LOCK && (
+              <button className="btn rounded-none bg-transparent border border-red-600 hover:bg-red-600 hover:text-white text-red-600 font-medium">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -72,31 +126,9 @@ export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
                   <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                   <path d="M7 11V7a5 5 0 0 1 10 0v4" />
                 </svg>
-                <p>Lock</p>
-              </div>
-              <div className="swap-off flex gap-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="w-5 h-5"
-                >
-                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                  <path d="M7 11V7a5 5 0 0 1 9.9-1" />
-                </svg>
-                <p>Open</p>
-              </div>
-            </label>
-          )}
-          <Button
-            handleSubcribeClass={handleUnsubscribeState}
-            className="bg-transparent hover:bg-red-600 hover:text-white border-red-600 text-red-600 font-normal capitalize"
-            title="Leave Group"
-          />
+                <p className="text-sm normal-case">Locked</p>
+              </button>
+            )}
         </div>
       </div>
     </>

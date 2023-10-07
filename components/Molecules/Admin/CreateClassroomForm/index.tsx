@@ -59,6 +59,7 @@ export const ACreateClassroomForm: FC<IACreateClassroomFormProps> = ({
               lecturer: account,
               quantityStudent: values.quantityStudent,
               classCourse: values.classCourse,
+              status: "UN_LOCK"
             });
           });
           resetForm();

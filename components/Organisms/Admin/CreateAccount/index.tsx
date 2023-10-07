@@ -76,7 +76,7 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
               <div className="inline-block min-w-full align-middle">
                 <div className="overflow-hidden">
                   <table className="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-700">
-                    <thead className="bg-gray-100 dark:bg-gray-700">
+                    <thead className="bg-green-700 dark:bg-gray-700">
                       <tr>
                         <th scope="col" className="p-4">
                           <div className="flex items-center">
@@ -97,19 +97,19 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
                         </th>
                         <th
                           scope="col"
-                          className="py-3 px-6 text-xs font-medium tracking-wider text-left text-green-700 uppercase dark:text-green-400"
+                          className="py-3 px-6 text-sm font-normal tracking-wider text-left text-gray-200 dark:text-green-400"
                         >
                           Email
                         </th>
                         <th
                           scope="col"
-                          className="py-3 px-6 text-xs font-medium tracking-wider text-left text-green-700 uppercase dark:text-green-400"
+                          className="py-3 px-6 text-sm font-normal tracking-wider text-left text-gray-200 dark:text-green-400"
                         >
                           Full Name
                         </th>
                         <th
                           scope="col"
-                          className="py-3 px-6 text-xs font-medium tracking-wider text-left text-green-700 uppercase dark:text-green-400"
+                          className="py-3 px-6 text-sm font-normal tracking-wider text-left text-gray-200 dark:text-green-400"
                         >
                           Avatar
                         </th>
@@ -190,7 +190,7 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
               <div className="inline-block min-w-full align-middle">
                 <div className="overflow-hidden">
                   <table className="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-700">
-                    <thead className="bg-gray-100 dark:bg-gray-700">
+                    <thead className="bg-green-700 dark:bg-gray-700">
                       <tr>
                         <th scope="col" className="p-4">
                           <div className="flex items-center">
@@ -206,13 +206,13 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
                         </th>
                         <th
                           scope="col"
-                          className="py-3 px-6 text-xs font-medium tracking-wider text-left text-green-700 uppercase dark:text-green-400"
+                          className="py-3 px-6 text-sm font-normal tracking-wider text-left text-gray-200 dark:text-green-400"
                         >
                           Account
                         </th>
                         <th
                           scope="col"
-                          className="py-3 px-6 text-xs font-medium tracking-wider text-left text-green-700 uppercase dark:text-green-400"
+                          className="py-3 px-6 text-sm font-normal tracking-wider text-left text-gray-200 dark:text-green-400"
                         >
                           Password
                         </th>

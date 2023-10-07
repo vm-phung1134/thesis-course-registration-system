@@ -1,11 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { INITIATE_COURSE } from "@/data";
-import { createClassroom, getAllClassrooms, getClassroom } from "./api";
+import { INITIATE_CLASSROOM } from "@/data";
+import {
+  createClassroom,
+  getAllClassrooms,
+  getClassroom,
+  updateClassroom,
+} from "./api";
 import { ClassroomState } from "./type";
 
 const initialState: ClassroomState = {
   classrooms: [],
-  classroom: INITIATE_COURSE,
+  classroom: INITIATE_CLASSROOM,
   isLoading: false,
   error: null,
 };
@@ -53,6 +58,19 @@ const classroomSlice = createSlice({
       state.classroom = action.payload;
     });
     builder.addCase(createClassroom.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.error.message ?? "Something went wrong.";
+    });
+    // UPDATE CLASSROOM
+    builder.addCase(updateClassroom.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(updateClassroom.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.classroom = action.payload;
+    });
+    builder.addCase(updateClassroom.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.error.message ?? "Something went wrong.";
     });

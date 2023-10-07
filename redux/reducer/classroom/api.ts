@@ -59,4 +59,24 @@ const createClassroom = createAsyncThunk(
   }
 );
 
-export { getAllClassrooms, getClassroom, createClassroom };
+// UPDATE CLASSROOM
+const updateClassroom = createAsyncThunk(
+  "classroom/updateClassroom",
+  async (postData: IClassroomObject) => {
+    const response = await axios.put(
+      `http://localhost:5000/api/classroom/${postData.id}`,
+      postData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    if (response.status === 200) {
+      return response.data;
+    }
+    throw new Error("Failed to update auth");
+  }
+);
+
+export { getAllClassrooms, getClassroom, createClassroom, updateClassroom };

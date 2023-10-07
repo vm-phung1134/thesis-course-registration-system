@@ -82,7 +82,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       .then(async (result) => {
         if (
           result?.user.email?.endsWith("cit.ctu.edu.vn") || // GIANG VIEN
-          result?.user.email?.endsWith("student.ctu.edu.vn") // SINH VIEN
+          result?.user.email?.endsWith("student.ctu.edu.vn") || // SINH VIEN
+          result?.user.email?.startsWith("tcrsystem911") // ADMIN OR THE CLERK TO THE COUNCIL
         ) {
           const authObject: IAuthObject = {
             id: result.user.uid,
@@ -128,7 +129,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         role === "admin" ? router.push("/admin") : router.push("/mainboard");
       })
       .catch((error) => {
-        setMessage(() => "Account invalid")
+        setMessage(() => "Account invalid");
         console.error("Error signing in:", error);
       });
   };
