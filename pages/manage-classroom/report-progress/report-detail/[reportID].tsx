@@ -19,7 +19,7 @@ import {
 import { IExerciseObject } from "@/interface/exercise";
 import { ExerciseModal, PostModal } from "@/components/Organisms";
 import classNames from "classnames";
-import { useClassroomStateContext } from "@/contexts/authClassroomState";
+import { useClassroomStateContext } from "@/contexts/classroomState";
 
 function ReportStageDetailPage() {
   const dispatch = useAppDispatch();

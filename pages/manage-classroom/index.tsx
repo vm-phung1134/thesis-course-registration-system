@@ -17,9 +17,8 @@ import {
   getExercise,
 } from "@/redux/reducer/exercise/api";
 import { IExerciseObject } from "@/interface/exercise";
-import { useClassroomStateContext } from "@/contexts/authClassroomState";
+import { useClassroomStateContext } from "@/contexts/classroomState";
 import Image from "next/image";
-import { handleChooseClassroom } from "@/utils/classroomService";
 
 function ManageClassroomTab() {
   const [openModalPost, setOpenModalPost] = useState<boolean>(false);
@@ -35,23 +34,22 @@ function ManageClassroomTab() {
   const dispatch = useAppDispatch();
   const { authClassroomState } = useClassroomStateContext();
   const handleOpenPostModal = (task: IPostObject) => {
-    setOpenModalPost?.(!openModalPost);
+    setOpenModalPost(!openModalPost);
     dispatch(getPost(task));
   };
 
   const handleOpenExModal = (task: IExerciseObject) => {
-    setOpenModalEx?.(!openModalEx);
+    setOpenModalEx(!openModalEx);
     dispatch(getExercise(task));
+    console.log(task)
   };
 
   // HANDLE POST
   const { post } = useAppSelector((state) => state.postReducer);
   const { data: posts } = useQuery<IPostObject[]>({
-    queryKey: ["posts", handleChooseClassroom(authClassroomState)],
+    queryKey: ["posts", authClassroomState],
     queryFn: async () => {
-      const action = await dispatch(
-        getAllPostInClass(handleChooseClassroom(authClassroomState))
-      );
+      const action = await dispatch(getAllPostInClass(authClassroomState));
       return action.payload || [];
     },
     initialData: [],
@@ -60,11 +58,9 @@ function ManageClassroomTab() {
   // HANDLE EXERCISE
   const { exercise } = useAppSelector((state) => state.exerciseReducer);
   const { data: exercises } = useQuery<IExerciseObject[]>({
-    queryKey: ["exercises", handleChooseClassroom(authClassroomState)],
+    queryKey: ["exercises", authClassroomState],
     queryFn: async () => {
-      const action = await dispatch(
-        getAllExerciseInClass(handleChooseClassroom(authClassroomState))
-      );
+      const action = await dispatch(getAllExerciseInClass(authClassroomState));
       return action.payload || [];
     },
     initialData: [],
@@ -89,7 +85,7 @@ function ManageClassroomTab() {
             <div className="h-fit w-full">
               {exercises.length > 0 || posts.length > 0 ? (
                 <>
-                  <div className="border p-5 shadow-xl">
+                  <div className="py-3 shadow-xl mb-5 flex flex-col gap-2">
                     {exercises?.map((exercise) => {
                       return (
                         <div key={exercise.id}>
@@ -97,7 +93,7 @@ function ManageClassroomTab() {
                             handleOpenTaskModal={handleOpenExModal}
                             task={exercise}
                           />
-                          <div className="p-5 flex flex-col gap-1 border">
+                          <div className="px-5 py-2 flex flex-col gap-1">
                             <ContentComment quantity={1} task={exercise} />
                             <CommentForm task={exercise} />
                           </div>

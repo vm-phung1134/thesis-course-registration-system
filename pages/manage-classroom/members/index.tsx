@@ -14,7 +14,7 @@ import {
 } from "@/redux/reducer/member/api";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { getTopic } from "@/redux/reducer/topic/api";
-import { useClassroomStateContext } from "@/contexts/authClassroomState";
+import { useClassroomStateContext } from "@/contexts/classroomState";
 
 function MemberTab() {
   const [selectedFilter, setSelectedFilter] = useState<

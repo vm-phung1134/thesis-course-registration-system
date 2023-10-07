@@ -5,11 +5,12 @@ import {
   SelectInForm,
   TitleFormField,
 } from "@/components/Atoms";
-import { useClassroomStateContext } from "@/contexts/authClassroomState";
+import { useClassroomStateContext } from "@/contexts/classroomState";
 import { INITIATE_CATEGORY, INITIATE_POST } from "@/data";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { useSelectStage } from "@/hooks/useSelectStage";
 import { ICategoryObject } from "@/interface/category";
+import { IClassroomObject } from "@/interface/classroom";
 import { IOptionItem } from "@/interface/filter";
 import { IPostObject } from "@/interface/post";
 import { createPost } from "@/redux/reducer/post/api";
@@ -27,6 +28,7 @@ export interface ICreatePostFormProps {
   >;
   selected: IOptionItem | ICategoryObject;
   options: IOptionItem[] | ICategoryObject[];
+  classroom: IClassroomObject;
 }
 export const CreatePostForm: FC<ICreatePostFormProps> = ({
   setToggleForm,
@@ -34,6 +36,7 @@ export const CreatePostForm: FC<ICreatePostFormProps> = ({
   selected,
   setSelected,
   options,
+  classroom,
 }) => {
   const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
@@ -96,7 +99,7 @@ export const CreatePostForm: FC<ICreatePostFormProps> = ({
             ...values,
             type: "post",
             uid: objectId,
-            classroom: authClassroomState?.classroom || authClassroomState,
+            classroom: classroom,
             category: selectedStage,
             attachments: selectedFiles,
             lecturer: currentUser,

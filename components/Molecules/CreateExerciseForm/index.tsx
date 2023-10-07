@@ -5,11 +5,11 @@ import {
   SelectInForm,
   TitleFormField,
 } from "@/components/Atoms";
-import { useClassroomStateContext } from "@/contexts/authClassroomState";
 import { INITIATE_CATEGORY, INITIATE_EXERCISE } from "@/data";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { useSelectStage } from "@/hooks/useSelectStage";
 import { ICategoryObject } from "@/interface/category";
+import { IClassroomObject } from "@/interface/classroom";
 import { IExerciseObject } from "@/interface/exercise";
 import { IOptionItem } from "@/interface/filter";
 import { createExercise } from "@/redux/reducer/exercise/api";
@@ -28,6 +28,7 @@ export interface ICreateExerciseFormProps {
   >;
   selected: IOptionItem | ICategoryObject;
   options: IOptionItem[] | ICategoryObject[];
+  classroom: IClassroomObject;
 }
 export const CreateExerciseForm: FC<ICreateExerciseFormProps> = ({
   setToggleForm,
@@ -35,13 +36,14 @@ export const CreateExerciseForm: FC<ICreateExerciseFormProps> = ({
   selected,
   setSelected,
   options,
+  classroom,
 }) => {
   const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
   const initialValues: IExerciseObject = INITIATE_EXERCISE;
   const { currentUser } = useCurrentUser();
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { authClassroomState } = useClassroomStateContext();
+
   // HANDLE SELECT STAGE REPORT
   const { selectedStage, setSelectedStage, reportStages } = useSelectStage();
   // HANDLE FILE
@@ -93,7 +95,7 @@ export const CreateExerciseForm: FC<ICreateExerciseFormProps> = ({
             ...values,
             type: "exercise",
             uid: objectId,
-            classroom: authClassroomState?.classroom || authClassroomState,
+            classroom: classroom,
             category: selectedStage,
             attachments: selectedFiles,
             lecturer: currentUser,

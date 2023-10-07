@@ -14,7 +14,7 @@ import { BREADCRUMB_ASSIGNMENT_TASKS, DATA_FILTER_TASKS } from "./mock-data";
 import { IExerciseObject } from "@/interface/exercise";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { useQuery } from "@tanstack/react-query";
-import { useClassroomStateContext } from "@/contexts/authClassroomState";
+import { useClassroomStateContext } from "@/contexts/classroomState";
 import {
   getAllExerciseInClass,
   getExercise,

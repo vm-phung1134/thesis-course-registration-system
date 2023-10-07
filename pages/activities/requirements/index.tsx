@@ -12,7 +12,7 @@ import { getTopic } from "@/redux/reducer/topic/api";
 import classNames from "classnames";
 import Image from "next/image";
 import Link from "next/link";
-import { useClassroomStateContext } from "@/contexts/authClassroomState";
+import { useClassroomStateContext } from "@/contexts/classroomState";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 
 function RequirementPage() {

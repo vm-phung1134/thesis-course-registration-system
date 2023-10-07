@@ -150,7 +150,7 @@ const ReportStatusLecturerView: FC<IReportStatusLecturerViewProps> = ({
   );
   const dispatch = useAppDispatch();
   const { data: submited, isLoading } = useQuery<ISubmitObject[]>({
-    queryKey: ["submits"],
+    queryKey: ["submits", exercise],
     queryFn: async () => {
       const action = await dispatch(getAllSubmits(exercise));
       return action.payload || [];

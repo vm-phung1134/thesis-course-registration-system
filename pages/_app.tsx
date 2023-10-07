@@ -7,7 +7,7 @@ import { LanguageProvider } from "@/contexts/languageContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import React from "react";
 import { SearchProvider } from "@/contexts/useSearchContext";
-import { ClassroomStateContextProvider } from "@/contexts/authClassroomState";
+import { ClassroomStateContextProvider } from "@/contexts/classroomState";
 import { SubscribeStateContextProvider } from "@/contexts/subscribeState";
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -18,9 +18,11 @@ function MyApp({ Component, pageProps }: AppProps) {
         <AuthProvider>
           <LanguageProvider>
             <SubscribeStateContextProvider>
-              <SearchProvider>
-                <Component {...pageProps} />
-              </SearchProvider>
+              <ClassroomStateContextProvider>
+                <SearchProvider>
+                  <Component {...pageProps} />
+                </SearchProvider>
+              </ClassroomStateContextProvider>
             </SubscribeStateContextProvider>
           </LanguageProvider>
         </AuthProvider>

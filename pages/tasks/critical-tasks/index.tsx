@@ -18,7 +18,7 @@ import {
   getExercise,
 } from "@/redux/reducer/exercise/api";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
-import { useClassroomStateContext } from "@/contexts/authClassroomState";
+import { useClassroomStateContext } from "@/contexts/classroomState";
 import { useQuery } from "@tanstack/react-query";
 import { ExerciseModal } from "@/components/Organisms";
 
