@@ -22,7 +22,7 @@ export const ClassroomDetailModal: FC<IClassroomDetailModalProps> = ({
 }) => {
   const dispatch = useAppDispatch();
   const { data: members } = useQuery<IMemberObject[]>({
-    queryKey: ["members"],
+    queryKey: ["members-in-classroom", item],
     queryFn: async () => {
       const action = await dispatch(getAllMemberClassroom(item));
       return action.payload || [];
@@ -70,7 +70,10 @@ export const ClassroomDetailModal: FC<IClassroomDetailModalProps> = ({
                 Classroom Informations
               </p>
               <ItemUserInfor title="Course" content={"HK1_2023"} />
-              <ItemUserInfor title="Total members" content={`${item?.quantityStudent} members`} />
+              <ItemUserInfor
+                title="Total members"
+                content={`${item?.quantityStudent} members`}
+              />
               <ItemUserInfor
                 title="Available"
                 content={`${item?.quantityStudent - members.length} members`}

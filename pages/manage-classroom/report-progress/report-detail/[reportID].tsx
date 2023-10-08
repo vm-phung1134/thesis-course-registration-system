@@ -28,16 +28,11 @@ function ReportStageDetailPage() {
   const { authClassroomState } = useClassroomStateContext();
   const [loading, setLoading] = useState<boolean>(true);
   const { data: posts } = useQuery<IPostObject[]>({
-    queryKey: [
-      "posts",
-      authClassroomState?.classroom?.id || authClassroomState?.id,
-      id,
-    ],
+    queryKey: ["posts", authClassroomState, id],
     queryFn: async () => {
       const action = await dispatch(
         getAllPostInReportStage({
-          classroomId:
-            authClassroomState?.classroom?.id || authClassroomState?.id,
+          classroomId: authClassroomState,
           categoryId: id,
         })
       );
@@ -47,16 +42,11 @@ function ReportStageDetailPage() {
   });
 
   const { data: exercises } = useQuery<IExerciseObject[]>({
-    queryKey: [
-      "exercises",
-      authClassroomState?.classroom?.id || authClassroomState?.id,
-      id,
-    ],
+    queryKey: ["exercises", authClassroomState?.id, id],
     queryFn: async () => {
       const action = await dispatch(
         getAllExerciseInReportStage({
-          classroomId:
-            authClassroomState?.classroom?.id || authClassroomState?.id,
+          classroomId: authClassroomState?.id,
           categoryId: id,
         })
       );

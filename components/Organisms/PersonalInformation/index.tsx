@@ -1,4 +1,4 @@
-import { Avatar, Button } from "@/components/Atoms";
+import { Avatar, Button, NormalAvatar } from "@/components/Atoms";
 import { InforUserForm } from "@/components/Molecules";
 import { INITIATE_AUTH } from "@/data";
 import { useUserCookies } from "@/hooks/useCookies";
@@ -78,11 +78,11 @@ export const PersonalInformation: FC<IPersonalInformationProps> = () => {
         return (
           <>
             <div className="p-5 w-[90%] text-sm">
-              <h4 className="font-medium bg-green-600 text-white uppercase p-3">
+              <h4 className="text-sm bg-green-700 text-white uppercase p-3">
                 Information personal
               </h4>
               <div className="flex flex-col items-center gap-2 justify-center mt-3">
-                <Avatar widthStr="w-14" srcImg={initialValues.photoSrc} />
+                <NormalAvatar photoSrc={initialValues.photoSrc} setSize="14" />
                 <p className="text-xs italic text-gray-500">
                   Upload your photo
                 </p>
@@ -130,7 +130,7 @@ export const PersonalInformation: FC<IPersonalInformationProps> = () => {
                   <Button
                     toggle={toggle}
                     setToggle={setToggle}
-                    className="bg-green-600 text-white text-sm hover:bg-green-800"
+                    className="bg-green-700 text-white text-sm hover:bg-green-700"
                     title="Update personal information"
                   />
                 </div>

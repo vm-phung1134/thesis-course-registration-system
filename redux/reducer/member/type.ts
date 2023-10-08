@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 
 export interface MemberState {
   members: IMemberObject[];
+  memberClassrooms: IMemberObject[];
   member: IMemberObject;
   isLoading: boolean;
   error: string | null;

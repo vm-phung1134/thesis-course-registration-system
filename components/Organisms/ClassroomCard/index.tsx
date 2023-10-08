@@ -59,23 +59,21 @@ export const ClassroomCard: FC<IClassroomCardProps> = ({ item }) => {
       addRequirementMutation.mutate({ classroom: item, member: currentUser });
     }
   };
-
   const { data: members } = useQuery<IMemberObject[]>({
-    queryKey: ["members"],
+    queryKey: ["members-in-classroom", item],
     queryFn: async () => {
       const action = await dispatch(getAllMemberClassroom(item));
       return action.payload || [];
     },
     initialData: [],
   });
-
   return (
     <>
       <div className="w-[340px] shadow-xl">
         <div className="bg-cover bg-[url('https://images.pexels.com/photos/301943/pexels-photo-301943.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load')]">
           <div className="bg-black/60 p-5 text-gray-100">
             <div className="flex justify-between gap-5 mb-2">
-              <h3 className="text-lg font-bold uppercase">
+              <h3 className="text-md font-bold uppercase text-green-500">
                 {item?.lecturer?.name}
               </h3>
               <button>...</button>
@@ -88,8 +86,10 @@ export const ClassroomCard: FC<IClassroomCardProps> = ({ item }) => {
               <p className="text-sm flex gap-2">
                 <span>Students:</span>
                 <span className="font-normal">
-                  {0} / {item?.quantityStudent}
-                  <small>{` ( ${15 - 0} available )`}</small>
+                  {members.length} / {item?.quantityStudent}
+                  <small>{` ( ${
+                    item?.quantityStudent - members.length
+                  } available )`}</small>
                 </span>
               </p>
             </div>

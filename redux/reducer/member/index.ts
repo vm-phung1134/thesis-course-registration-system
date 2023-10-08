@@ -11,6 +11,7 @@ import { INITIATE_MEMBER } from "@/data";
 
 const initialState: MemberState = {
   members: [],
+  memberClassrooms: [],
   member: INITIATE_MEMBER,
   isLoading: false,
   error: null,
@@ -80,7 +81,7 @@ const memberSlice = createSlice({
     });
     builder.addCase(getAllMemberClassroom.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.members = action.payload;
+      state.memberClassrooms = action.payload;
     });
     builder.addCase(getAllMemberClassroom.rejected, (state, action) => {
       state.isLoading = false;

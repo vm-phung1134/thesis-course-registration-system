@@ -37,7 +37,7 @@ export const ExerciseModal: FC<IExerciseModalProps> = ({
   const { currentUser } = useCurrentUser();
   const dispatch = useAppDispatch();
   const { data: submit } = useQuery<ISubmitObject>({
-    queryKey: ["submit"],
+    queryKey: ["submit", { exerciseId: exercise.uid, studentId: currentUser.id }],
     queryFn: async () => {
       const action = await dispatch(
         getSubmit({ exerciseId: exercise.uid, studentId: currentUser.id })

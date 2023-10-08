@@ -49,7 +49,7 @@ export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["classroom"]);
+        queryClient.invalidateQueries(["member"]);
       },
     }
   );

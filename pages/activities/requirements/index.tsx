@@ -28,7 +28,7 @@ function RequirementPage() {
   // HANDLE CALL API
   const dispatch = useAppDispatch();
   const { data: requirements } = useQuery<IMemberObject[]>({
-    queryKey: ["requirements"],
+    queryKey: ["requirements", currentUser],
     queryFn: async () => {
       const action = await dispatch(getAllRequirementClassroom(currentUser));
       return action.payload || [];

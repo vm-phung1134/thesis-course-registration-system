@@ -35,10 +35,10 @@ function MemberTab() {
   const { authClassroomState } = useClassroomStateContext();
   const { topic } = useAppSelector((state) => state.topicReducer);
   const { data: members } = useQuery<IMemberObject[]>({
-    queryKey: ["members"],
+    queryKey: ["members", authClassroomState],
     queryFn: async () => {
       const action = await dispatch(
-        getAllMemberClassroom(authClassroomState.classroom || authClassroomState)
+        getAllMemberClassroom(authClassroomState)
       );
       return action.payload || [];
     },

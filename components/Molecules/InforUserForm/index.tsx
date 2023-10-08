@@ -16,10 +16,10 @@ export const InforUserForm: FC<IInforUserFormProps> = ({
 }) => {
   return (
     <Form>
-      <TitleFormField
-        className="text-lg uppercase text-green-800 font-medium mb-5"
-        title="Update personal information"
-      />
+      <div className="bg-green-700 px-5 py-3 mb-3 flex items-center gap-3">
+        <h4 className="uppercase text-white text-sm">Lecturer information</h4>
+        <div className="flex-grow h-[1px] bg-white"></div>
+      </div>
       <FormField
         type="text"
         label="Full name"

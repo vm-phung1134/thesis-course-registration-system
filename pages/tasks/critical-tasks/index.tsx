@@ -55,11 +55,9 @@ function CriticalTasks() {
   const { exercise } = useAppSelector((state) => state.exerciseReducer);
   const { authClassroomState } = useClassroomStateContext();
   const { data: exercises } = useQuery<IExerciseObject[]>({
-    queryKey: ["exercises", authClassroomState?.classroom],
+    queryKey: ["exercises", authClassroomState],
     queryFn: async () => {
-      const action = await dispatch(
-        getAllExerciseInClass(authClassroomState?.classroom)
-      );
+      const action = await dispatch(getAllExerciseInClass(authClassroomState));
       return action.payload || [];
     },
     initialData: [],

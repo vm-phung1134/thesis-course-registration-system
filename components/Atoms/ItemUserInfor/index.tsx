@@ -13,8 +13,8 @@ export const ItemUserInfor: FC<IItemUserInforProps> = ({
 }) => {
   return (
     <li className="text-sm flex gap-2">
-      <span>{`${title}: `}</span>
-      <span className={`font-medium normal-case ${className}`}>{content || ""}</span>
+      <span className="text-gray-500">{`${title}: `}</span>
+      <span className={`normal-case text-black ${className}`}>{content}</span>
     </li>
   );
 };
