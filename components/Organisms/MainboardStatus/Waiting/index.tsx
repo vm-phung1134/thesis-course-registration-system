@@ -77,7 +77,7 @@ export const WaitingView: FC<IWaitingViewProps> = ({ classroom }) => {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 2000);
+    }, 1300);
   }, []);
   return (
     <>
@@ -106,7 +106,7 @@ export const WaitingView: FC<IWaitingViewProps> = ({ classroom }) => {
             </div>
           </div>
           <div className="flex flex-wrap gap-5 mt-5">
-            {subscribeState?.map((item: IMemberObject) => {
+            {(subscribeState ?? []).map((item: IMemberObject) => {
               return <ClassroomCard key={item.id} item={item.classroom} />;
             })}
           </div>
@@ -115,6 +115,7 @@ export const WaitingView: FC<IWaitingViewProps> = ({ classroom }) => {
             setOpenModal={setOpenModalConfirm}
             openModal={openModalConfirm}
             action={handleUnsubscribeState}
+            typeButton="subscribe"
             title="Message!!!"
             message="Do you want to unsubscribe this classroom"
           />

@@ -83,7 +83,7 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
                       {children}
                     </ClassroomFound>
                   )}
-                {authClassroomState &&
+                {authClassroomState.status &&
                   currentUser.role === ROLE_ASSIGNMENT.STUDENT && (
                     <ClassroomFound
                       classroom={authClassroomState}

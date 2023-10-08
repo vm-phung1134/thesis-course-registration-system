@@ -4,6 +4,7 @@ import { Button, ItemUserInfor, NormalAvatar } from "@/components/Atoms";
 import { IClassroomObject } from "@/interface/classroom";
 import { useSubscribeStateContext } from "@/contexts/subscribeState";
 import { IMemberObject } from "@/interface/member";
+import { STATE_LECTURER_CLASSROOM } from "@/data";
 
 interface IClassroomContentCardProps {
   item: IClassroomObject;
@@ -70,13 +71,32 @@ export const ClassroomContentCard: FC<IClassroomContentCardProps> = ({
               otherType="detail"
               className="bg-transparent dark:text-green-700 border-none hover:border-none hover:bg-transparent"
             />
-            <Button
-              id={item.id}
-              otherType="subscribe"
-              title="Subscribe"
-              handleActions={handleSubcribeClass}
-              className="hover:bg-[#165b31] w-28 border-none btn-sm bg-green-700 text-white"
-            />
+            {item.status === STATE_LECTURER_CLASSROOM.LOCK ? (
+              <button className="btn btn-sm rounded-none bg-transparent border-none hover:bg-transparent hover:border-none font-normal">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="w-4 h-4"
+                >
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                </svg>
+                <p className="text-sm normal-case font-medium">Locked</p>
+              </button>
+            ) : (
+              <Button
+                id={item.id}
+                otherType="subscribe"
+                title="Subscribe"
+                handleActions={handleSubcribeClass}
+                className="hover:bg-[#165b31] w-28 border-none btn-sm bg-green-700 text-white"
+              />
+            )}
           </div>
         )}
       </div>

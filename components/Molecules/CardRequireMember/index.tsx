@@ -108,7 +108,7 @@ export const CardRequireMember: FC<ICardRequireMemberProps> = ({
               className="text-red-700 btn-sm border-none  bg-transparent"
             />
             <Button
-              handleSubcribeClass={handleAcceptClass}
+              handleActions={handleAcceptClass}
               title="Accept"
               otherType="subscribe"
               className="bg-green-700 text-white btn-sm px-5"

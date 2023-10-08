@@ -8,6 +8,7 @@ export interface IModalConfirmProp {
   title: string;
   message: string;
   status?: string;
+  typeButton?: string;
   underMessage?: string;
   action?: () => void;
   valueAction?: (e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -22,6 +23,7 @@ export const ModalConfirm: FC<IModalConfirmProp> = ({
   action,
   valueAction,
   underMessage,
+  typeButton,
   status,
 }) => {
   return (
@@ -39,9 +41,10 @@ export const ModalConfirm: FC<IModalConfirmProp> = ({
           />
           <Button
             title="accept"
-            otherType="value"
+            otherType={typeButton}
             status={status}
             handleValueActions={valueAction}
+            handleActions={action}
             setToggle={setOpenModal}
             toggle={openModal}
             className="hover:text-black bg-green-700 hover:bg-green-600 px-10 text-white"

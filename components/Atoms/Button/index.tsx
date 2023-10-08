@@ -6,7 +6,7 @@ import { FC } from "react";
 export interface IButtonProps {
   id?: string;
   type?: "button" | "submit" | "reset";
-  otherType?: "subscribe" | "detail" | "value";
+  otherType?: "subscribe" | "detail" | "value" | string;
   className: string;
   title: string;
   status?: string;
