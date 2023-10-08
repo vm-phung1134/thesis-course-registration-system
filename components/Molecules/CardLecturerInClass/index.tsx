@@ -6,10 +6,12 @@ import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { IAuthObject } from "@/interface/auth";
 import { IClassroomObject } from "@/interface/classroom";
 import { unsubscribeState } from "@/redux/reducer/auth/api";
-import { getClassroom } from "@/redux/reducer/classroom/api";
+import { getClassroom, updateClassroom } from "@/redux/reducer/classroom/api";
 import { useAppDispatch } from "@/redux/store";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { FC } from "react";
+import { FC, MouseEvent, useState } from "react";
+import { ModalConfirm } from "..";
+import classNames from "classnames";
 
 export interface ICardLecturerInClassProps {
   lecturer: IAuthObject;
@@ -19,6 +21,11 @@ export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
   lecturer,
 }) => {
   const dispatch = useAppDispatch();
+  const [openLockClass, setOpenLockClass] = useState<boolean>(false);
+  const modalClassLockClass = classNames({
+    "modal modal-bottom sm:modal-middle": true,
+    "modal-open": openLockClass,
+  });
   const { data: classroom } = useQuery<IClassroomObject>({
     queryKey: ["classroom", lecturer],
     queryFn: async () => {
@@ -51,6 +58,35 @@ export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
   const handleUnsubscribeState = () => {
     deleteMutation.mutate(currentUser);
   };
+
+  // HANDLE LOCK CLASSROOM FOR LECTURER
+  const updateMutation = useMutation(
+    (postData: IClassroomObject) => {
+      return new Promise((resolve, reject) => {
+        dispatch(updateClassroom(postData))
+          .unwrap()
+          .then((data) => {
+            resolve(data);
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      });
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["classroom"]);
+      },
+    }
+  );
+  const handleOpenModal = () => {
+    setOpenLockClass(!openLockClass);
+  };
+  const handleLockClassroom = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const status_class: string = e.currentTarget.value;
+    updateMutation.mutate({ ...classroom, status: status_class });
+  };
+
   return (
     <>
       <h3 className="text-sm uppercase">Thesis graduation - CT550</h3>
@@ -68,7 +104,11 @@ export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
         <div className="flex gap-5">
           {currentUser.role === ROLE_ASSIGNMENT.LECTURER &&
           classroom.status === STATE_LECTURER_CLASSROOM.LOCK ? (
-            <button className="btn rounded-none bg-transparent border border-red-600 hover:bg-red-600 hover:text-white text-red-600 font-medium">
+            <button
+              value="UN_LOCK"
+              onClick={handleOpenModal}
+              className="btn rounded-none bg-transparent border border-red-600 hover:bg-red-600 hover:text-white text-red-600 font-medium"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -85,7 +125,11 @@ export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
               <p className="text-sm normal-case">Locked</p>
             </button>
           ) : (
-            <button className="btn rounded-none bg-transparent border border-red-600 hover:bg-red-600 hover:text-white text-red-600 font-medium">
+            <button
+              value="LOCK"
+              onClick={handleOpenModal}
+              className="btn rounded-none outline-none hover:outline-none bg-transparent border border-red-600 hover:bg-red-600 hover:text-white text-red-600 font-medium"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -105,7 +149,8 @@ export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
           {currentUser.role === ROLE_ASSIGNMENT.STUDENT &&
             classroom.status === STATE_LECTURER_CLASSROOM.UN_LOCK && (
               <Button
-                handleSubcribeClass={handleUnsubscribeState}
+                handleActions={handleUnsubscribeState}
+                otherType="subscribe"
                 className="bg-transparent hover:bg-red-600 hover:text-white border-red-600 text-red-600 font-normal capitalize"
                 title="Leave Group"
               />
@@ -130,6 +175,20 @@ export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
               </button>
             )}
         </div>
+        <ModalConfirm
+          modalClass={modalClassLockClass}
+          setOpenModal={setOpenLockClass}
+          openModal={openLockClass}
+          valueAction={handleLockClassroom}
+          status={classroom.status}
+          title="Message!!!"
+          message={
+            classroom.status === STATE_LECTURER_CLASSROOM.LOCK
+              ? "Do you want to open the classroom"
+              : "Do you want to lock the classroom"
+          }
+          underMessage="If you lock the room while students can not send requirement or leave to classroom"
+        />
       </div>
     </>
   );

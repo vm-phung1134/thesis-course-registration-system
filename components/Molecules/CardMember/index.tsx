@@ -24,7 +24,7 @@ export const CardMember: FC<ICardMemberClassProps> = ({
   const { topic } = useAppSelector((state) => state.topicReducer);
   useEffect(() => {
     dispatch(getTopic(member?.member));
-  },[dispatch, member?.member])
+  }, [dispatch, member?.member]);
   return (
     <div className="p-3 border shadow-lg">
       <div className="flex gap-4 items-center">
@@ -53,7 +53,7 @@ export const CardMember: FC<ICardMemberClassProps> = ({
             setToggle={setOpenMemberModal}
             toggle={openMemberModal}
             otherType="subscribe"
-            handleSubcribeClass={handleShowModalMember}
+            handleActions={handleShowModalMember}
             title="View detail"
             className="text-green-700 text-sm bg-transparent border-none hover:bg-transparent hover:border-none"
           />

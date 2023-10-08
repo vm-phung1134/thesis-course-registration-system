@@ -74,7 +74,7 @@ export const ClassroomContentCard: FC<IClassroomContentCardProps> = ({
               id={item.id}
               otherType="subscribe"
               title="Subscribe"
-              handleSubcribeClass={handleSubcribeClass}
+              handleActions={handleSubcribeClass}
               className="hover:bg-[#165b31] w-28 border-none btn-sm bg-green-700 text-white"
             />
           </div>

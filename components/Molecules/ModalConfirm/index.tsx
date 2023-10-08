@@ -7,7 +7,10 @@ export interface IModalConfirmProp {
   openModal?: boolean;
   title: string;
   message: string;
+  status?: string;
+  underMessage?: string;
   action?: () => void;
+  valueAction?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 export const ModalConfirm: FC<IModalConfirmProp> = ({
@@ -17,12 +20,16 @@ export const ModalConfirm: FC<IModalConfirmProp> = ({
   title,
   message,
   action,
+  valueAction,
+  underMessage,
+  status,
 }) => {
   return (
     <dialog id="my_modal_1" className={modalClass}>
       <form method="dialog" className="bg-white p-7 shadow-lg w-4/12">
         <h3 className="font-bold text-lg">{title}</h3>
         <p className="py-4 text-[15px]">{message}</p>
+        <p className="text-sm font-thin italic">{`Noticed: ${underMessage}`}</p>
         <div className="modal-action">
           <Button
             setToggle={setOpenModal}
@@ -32,8 +39,9 @@ export const ModalConfirm: FC<IModalConfirmProp> = ({
           />
           <Button
             title="accept"
-            otherType="subscribe"
-            handleSubcribeClass={action}
+            otherType="value"
+            status={status}
+            handleValueActions={valueAction}
             setToggle={setOpenModal}
             toggle={openModal}
             className="hover:text-black bg-green-700 hover:bg-green-600 px-10 text-white"
