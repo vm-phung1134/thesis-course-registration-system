@@ -17,7 +17,7 @@ export const NewFeedCard: FC<INewFeedCardProps> = ({
     <div className="border px-5 py-3 text-sm bg-green-700 text-white">
       <div className="flex justify-between items-center">
         <div className="flex gap-1">
-          <NormalAvatar setSize="11" photoSrc={task?.lecturer?.photoSrc} />
+          <NormalAvatar setSize="w-11" photoSrc={task?.lecturer?.photoSrc} />
           <div className="flex flex-col">
             <div
               onClick={() => handleOpenTaskModal(task)}

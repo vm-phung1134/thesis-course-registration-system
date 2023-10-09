@@ -39,7 +39,7 @@ export const ClassroomDetailModal: FC<IClassroomDetailModalProps> = ({
         <div className="grid grid-cols-12 gap-2 mt-3 text-sm">
           <div className="col-span-5 p-3">
             <div className="flex items-center">
-              <NormalAvatar setSize="11" photoSrc={item?.lecturer?.photoSrc} />
+              <NormalAvatar setSize="w-11" photoSrc={item?.lecturer?.photoSrc} />
               <div>
                 <p className="text-xs uppercase font-medium">
                   {item?.classCourse}

@@ -36,7 +36,7 @@ export const ClassroomFound: FC<IClassroomFoundProps> = ({
             <div className="mt-5 flex flex-col items-center gap-3">
               <div className="flex justify-center gap-4 items-center cursor-pointer">
                 <NormalAvatar
-                  setSize="10"
+                  setSize="w-10"
                   photoSrc={classroom?.lecturer?.photoSrc}
                 />
                 {currentUser?.role === ROLE_ASSIGNMENT.STUDENT ? (

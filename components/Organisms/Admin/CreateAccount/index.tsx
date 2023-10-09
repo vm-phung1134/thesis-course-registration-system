@@ -152,7 +152,7 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
                           <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
                             <NormalAvatar
                               photoSrc={account.photoSrc}
-                              setSize="10"
+                              setSize="w-10"
                             />
                           </td>
                           <td className="py-4 px-6 text-sm text-right whitespace-nowrap">

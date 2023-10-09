@@ -32,7 +32,7 @@ export const ContentComment: FC<IContentCommentProps> = ({
         return (
           index < quantity && (
             <div key={index} className="flex gap-1 py-2 border-t">
-              <NormalAvatar setSize="10" photoSrc={comment?.user?.photoSrc} />
+              <NormalAvatar setSize="w-10" photoSrc={comment?.user?.photoSrc} />
               <div className="text-sm">
                 <div className="flex gap-2 items-end">
                   <p className="capitalize font-medium">{comment?.user?.name}</p>

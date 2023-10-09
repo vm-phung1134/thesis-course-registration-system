@@ -82,7 +82,7 @@ export const PersonalInformation: FC<IPersonalInformationProps> = () => {
                 Information personal
               </h4>
               <div className="flex flex-col items-center gap-2 justify-center mt-3">
-                <NormalAvatar photoSrc={initialValues.photoSrc} setSize="14" />
+                <NormalAvatar photoSrc={initialValues.photoSrc} setSize="w-14" />
                 <p className="text-xs italic text-gray-500">
                   Upload your photo
                 </p>

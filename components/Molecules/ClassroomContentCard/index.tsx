@@ -34,7 +34,7 @@ export const ClassroomContentCard: FC<IClassroomContentCardProps> = ({
     <>
       <div className="max-h-fit px-5 py-3 dark:border-none dark:shadow-lg dark:shadow-gray-600 relative">
         <div className="absolute -top-8 right-3">
-          <NormalAvatar setSize="14" photoSrc={item?.lecturer?.photoSrc} />
+          <NormalAvatar setSize="w-14" photoSrc={item?.lecturer?.photoSrc} />
         </div>
         <div className="flex flex-col">
           <p className="text-sm uppercase text-gray-600 py-2">Information</p>
