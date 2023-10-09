@@ -1,6 +1,4 @@
 import { LogoApp } from "@/components/Molecules";
-import { useClassroomStateContext } from "@/contexts/classroomState";
-import { checkClassroomState } from "@/utils/classroomService";
 import Link from "next/link";
 import { FC } from "react";
 
@@ -85,7 +83,7 @@ export const SidebarLecturerView: FC<ISidebarLecturerViewProps> = ({}) => {
         <li>
           <Link
             className="rounded-none hover:bg-green-700 hover:text-white"
-            href=""
+            href="/report-schedule"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -102,7 +100,7 @@ export const SidebarLecturerView: FC<ISidebarLecturerViewProps> = ({}) => {
               ></path>
             </svg>
             <span className="mx-2 text-[15px] font-medium">
-              Schedule report
+              Thesis def schedule
             </span>
           </Link>
         </li>
