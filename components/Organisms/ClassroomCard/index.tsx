@@ -56,7 +56,11 @@ export const ClassroomCard: FC<IClassroomCardProps> = ({ item }) => {
   const { currentUser } = useCurrentUser();
   const handleSubcribeClass = () => {
     if (!addRequirementMutation.isLoading) {
-      addRequirementMutation.mutate({ classroom: item, member: currentUser });
+      addRequirementMutation.mutate({
+        classroom: item,
+        member: currentUser,
+        registerDefense: false,
+      });
     }
   };
   const { data: members } = useQuery<IMemberObject[]>({

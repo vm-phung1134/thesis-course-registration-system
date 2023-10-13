@@ -13,7 +13,7 @@ export interface IMenuClassroomProps {
 
 export const MenuClassroom: FC<IMenuClassroomProps> = ({ listMenu }) => {
   return (
-    <ul className="flex gap-10 mb-10 text-base font-normal justify-center">
+    <ul className="flex gap-10 mb-10 text-[15px] font-normal justify-center">
       {listMenu?.map((item) => {
         return (
           <li key={item.id}>

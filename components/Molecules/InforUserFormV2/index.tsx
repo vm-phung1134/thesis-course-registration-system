@@ -53,16 +53,16 @@ export const InforUserFormV2: FC<IInforUserFormV2Props> = ({
         // name
         if (!values.name) {
           errors.name = "! Name is required";
-        } else if (values.name.length > 30) {
-          errors.name = "! Name less than 30 characters";
+        } else if (values.name.length > 100) {
+          errors.name = "! Name less than 100 characters";
         }
         // email
         if (!values.email) {
           errors.email = "! Email is required";
         } else if (!emailRegex.test(values.email)) {
           errors.email = "! Email invalid";
-        } else if (values.email.length > 30) {
-          errors.email = "! Email less than 30 characters";
+        } else if (values.email.length > 100) {
+          errors.email = "! Email less than 100 characters";
         }
         // phone
         if (!values.phone) {

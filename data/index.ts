@@ -77,6 +77,7 @@ export const INITIATE_TOPIC: ITopicObject = {
 export const INITIATE_MEMBER: IMemberObject = {
   classroom: INITIATE_CLASSROOM,
   member: INITIATE_AUTH,
+  registerDefense: false,
 };
 
 export const INITIATE_COMMENT: ICommentObject = {

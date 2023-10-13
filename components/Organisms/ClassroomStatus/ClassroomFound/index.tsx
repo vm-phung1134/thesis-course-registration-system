@@ -1,11 +1,10 @@
-import {
-  CodeClass,
-  MenuClassroom,
-  NormalAvatar,
-} from "@/components/Atoms";
+import { CodeClass, MenuClassroom, NormalAvatar } from "@/components/Atoms";
 import { ROLE_ASSIGNMENT } from "@/contexts/authContext";
 import { FC, useState } from "react";
-import { DATA_MENU_CLASSROOM } from "../mock-data";
+import {
+  DATA_MENU_CLASSROOM_LECTURER,
+  DATA_MENU_CLASSROOM_STUDENT,
+} from "../mock-data";
 import { CardLecturerInClass, CountDown } from "@/components/Molecules";
 import { IClassroomObject } from "@/interface/classroom";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
@@ -32,7 +31,13 @@ export const ClassroomFound: FC<IClassroomFoundProps> = ({
         </div>
         <div className="bg-gray-800 col-span-8 h-fit w-full text-white">
           <div className="p-5">
-            <MenuClassroom listMenu={DATA_MENU_CLASSROOM} />
+            <MenuClassroom
+              listMenu={
+                currentUser.role === ROLE_ASSIGNMENT.LECTURER
+                  ? DATA_MENU_CLASSROOM_LECTURER
+                  : DATA_MENU_CLASSROOM_STUDENT
+              }
+            />
             <div className="mt-5 flex flex-col items-center gap-3">
               <div className="flex justify-center gap-4 items-center cursor-pointer">
                 <NormalAvatar

@@ -107,6 +107,29 @@ export const SidebarStudentView: FC<ISidebarStudentViewProps> = ({}) => {
           </Link>
         </li>
         <li>
+          <Link
+            className="rounded-none hover:bg-green-700 hover:text-white"
+            href="/enroll-student"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              className="w-5 h-5"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="1.5"
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+
+            <span className="mx-2 text-[15px] font-medium">Enroll defense</span>
+          </Link>
+        </li>
+        <li>
           <details open>
             <summary className="rounded-none hover:bg-green-700 hover:text-white">
               <svg

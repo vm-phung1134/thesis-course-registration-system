@@ -68,6 +68,7 @@ export const CardRequireMember: FC<ICardRequireMemberProps> = ({
   );
   const handleAcceptClass = () => {
     addMutation.mutate({
+      registerDefense: false,
       member: require.member,
       classroom: require.classroom,
     });

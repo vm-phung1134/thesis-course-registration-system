@@ -100,7 +100,7 @@ export const SidebarLecturerView: FC<ISidebarLecturerViewProps> = ({}) => {
               ></path>
             </svg>
             <span className="mx-2 text-[15px] font-medium">
-              Thesis def schedule
+              Schedule review
             </span>
           </Link>
         </li>

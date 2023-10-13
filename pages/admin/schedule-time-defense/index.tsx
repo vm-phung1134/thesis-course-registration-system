@@ -76,10 +76,10 @@ function DashboardPage() {
                   <div className="flex">
                     <Button
                       title="Recently date"
-                      className="px-5 bg-gray-800 text-white"
+                      className="px-5 btn-sm bg-gray-800 text-white"
                     />
-                    <Button title="Ascending order" className="px-5" />
-                    <Button title="All" className="px-5" />
+                    <Button title="Ascending order" className="px-5 btn-sm" />
+                    <Button title="All" className="px-5 btn-sm" />
                   </div>
                   <div>
                     <FilterScheduledForm holderText="Filter schedule time ..." />
