@@ -95,10 +95,30 @@ const deleteMember = createAsyncThunk(
   }
 );
 
+const updateMember = createAsyncThunk(
+  "member/updateMember",
+  async (postData: IMemberObject) => {
+    const response = await axios.put(
+      `http://localhost:5000/api/member/${postData.id}`,
+      postData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    if (response.status === 200) {
+      return response.data;
+    }
+    throw new Error("Failed to update auth");
+  }
+);
+
 export {
   getAllMembers,
   deleteMember,
   createMember,
   getMember,
+  updateMember,
   getAllMemberClassroom,
 };

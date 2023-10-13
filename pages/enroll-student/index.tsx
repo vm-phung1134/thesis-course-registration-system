@@ -5,7 +5,7 @@ import { MainboardTemplate } from "@/components/Templates";
 import { INITIATE_MEMBER } from "@/data";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { IMemberObject } from "@/interface/member";
-import { getMember } from "@/redux/reducer/member/api";
+import { getMember, updateMember } from "@/redux/reducer/member/api";
 import { useAppDispatch } from "@/redux/store";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
@@ -25,28 +25,27 @@ function EnrollStudentPage() {
     },
     initialData: INITIATE_MEMBER,
   });
-  console.log(member);
-  // const updateMutation = useMutation(
-  //   (postData: IMemberObject) => {
-  //     return new Promise((resolve, reject) => {
-  //       dispatch(updateMember(postData))
-  //         .unwrap()
-  //         .then((data) => {
-  //           resolve(data);
-  //         })
-  //         .catch((error) => {
-  //           reject(error);
-  //         });
-  //     });
-  //   },
-  //   {
-  //     onSuccess: () => {
-  //       queryClient.invalidateQueries(["member"]);
-  //     },
-  //   }
-  // );
+  const updateMutation = useMutation(
+    (postData: IMemberObject) => {
+      return new Promise((resolve, reject) => {
+        dispatch(updateMember(postData))
+          .unwrap()
+          .then((data) => {
+            resolve(data);
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      });
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["member"]);
+      },
+    }
+  );
   const handleEnrollMember = () => {
-    console.log({ ...member, registerDefense: true });
+    updateMutation.mutate({ ...member, registerDefense: true });
   };
   useEffect(() => {
     setTimeout(() => {

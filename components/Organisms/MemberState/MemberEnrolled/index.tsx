@@ -1,6 +1,8 @@
 import { Button, NormalAvatar } from "@/components/Atoms";
 import { FilterScheduledForm } from "@/components/Molecules";
 import { useClassroomStateContext } from "@/contexts/classroomState";
+import useCheckedBox from "@/hooks/useCheckedBox";
+import { IClassroomObject } from "@/interface/classroom";
 import { IMemberObject } from "@/interface/member";
 import { getAllMemberClassroom } from "@/redux/reducer/member/api";
 import { useAppDispatch } from "@/redux/store";
@@ -20,8 +22,18 @@ export const MemberEnrolled: FC<IMemberEnrolledProps> = ({}) => {
     },
     initialData: [],
   });
+  const {
+    checkedItems: checkedMembers,
+    handleCheckAll: handleCheckAllMember,
+    handleCheckItem: handleCheckMember,
+  } = useCheckedBox<IMemberObject>(members);
   const filterMemberEnrolled = (arr: IMemberObject[]): IMemberObject[] => {
     return arr.filter((item) => item.registerDefense === true);
+  };
+
+  // Add student to student registered list and send to admin
+  const handleAddToStudentDef = () => {
+    console.log(checkedMembers);
   };
   return (
     <div className="px-3 my-5">
@@ -37,6 +49,8 @@ export const MemberEnrolled: FC<IMemberEnrolledProps> = ({}) => {
 
         <div className="flex justify-end py-2 gap-3">
           <Button
+            otherType="subscribe"
+            handleActions={handleAddToStudentDef}
             className=" btn-sm px-8 text-gray-800"
             title="Submit to council"
           />
@@ -56,7 +70,9 @@ export const MemberEnrolled: FC<IMemberEnrolledProps> = ({}) => {
                           <input
                             id="checkbox-all"
                             type="checkbox"
-                            className="w-4 h-4 "
+                            className="w-4 h-4"
+                            checked={checkedMembers.length === members.length}
+                            onChange={handleCheckAllMember}
                           />
                           <label htmlFor="checkbox-all" className="sr-only">
                             checkbox
@@ -111,6 +127,10 @@ export const MemberEnrolled: FC<IMemberEnrolledProps> = ({}) => {
                               id="checkbox-table-2"
                               type="checkbox"
                               className="w-4 h-4 "
+                              checked={checkedMembers.includes(member)}
+                              onChange={(event) =>
+                                handleCheckMember(event, member)
+                              }
                             />
                             <label
                               htmlFor="checkbox-table-2"

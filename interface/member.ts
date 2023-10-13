@@ -2,7 +2,7 @@ import { IAuthObject } from "./auth";
 import { IClassroomObject } from "./classroom";
 
 export interface IMemberObject {
-  id?: string;
+  id: string;
   classroom: IClassroomObject;
   member: IAuthObject;
   registerDefense: boolean;
