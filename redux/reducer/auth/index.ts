@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { AuthState } from "./type";
-import { INITIATE_AUTH, INITIATE_COURSE } from "@/data";
+import { INITIATE_AUTH, INITIATE_CLASSROOM } from "@/data";
 import {
   checkAuthRoleForClassroomState,
   checkStateSubscribe,
@@ -19,8 +19,9 @@ const initialState: AuthState = {
   isSuccess: false,
   error: null,
   stateAuth: {
-    classroom: INITIATE_COURSE,
+    classroom: INITIATE_CLASSROOM,
     member: INITIATE_AUTH,
+    registerDefense: false,
   },
 };
 

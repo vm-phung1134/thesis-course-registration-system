@@ -13,6 +13,7 @@ import postSlice from "./reducer/post";
 import exerciseSlice from "./reducer/exercise";
 import commentSlice from "./reducer/comment";
 import submitSlice from "./reducer/submit";
+import studentDefSlice from "./reducer/student-def";
 
 const rootReducer = combineReducers({
   authReducer: authSlice,
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   exerciseReducer: exerciseSlice,
   commentReducer: commentSlice,
   submitReducer: submitSlice,
+  studentDefReducer: studentDefSlice,
 });
 
 const store = configureStore({

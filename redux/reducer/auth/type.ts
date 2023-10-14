@@ -8,7 +8,7 @@ export interface AuthState {
   isLoading: boolean;
   isSuccess: boolean;
   error: string | null;
-  stateAuth: IMemberObject;
+  stateAuth: Omit<IMemberObject, "id">;
 }
 
 export const token = Cookies.get("token");

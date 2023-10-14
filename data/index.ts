@@ -6,6 +6,7 @@ import { IExerciseObject } from "@/interface/exercise";
 import { IOptionItem } from "@/interface/filter";
 import { IMemberObject } from "@/interface/member";
 import { IPostObject } from "@/interface/post";
+import { IStudentDefObject } from "@/interface/studef";
 import { ISubmitObject } from "@/interface/submit";
 import { ITopicObject } from "@/interface/topic";
 
@@ -78,6 +79,7 @@ export const INITIATE_MEMBER: IMemberObject = {
   classroom: INITIATE_CLASSROOM,
   member: INITIATE_AUTH,
   registerDefense: false,
+  id: ""
 };
 
 export const INITIATE_COMMENT: ICommentObject = {
@@ -93,6 +95,11 @@ export const INITIATE_SUBMIT: ISubmitObject = {
   status: "",
   uid: "",
 };
+
+export const INITIATE_STUDENT_DEF: IStudentDefObject = {
+  infor: INITIATE_AUTH,
+  instructor: INITIATE_AUTH
+}
 
 export enum STATE_AUTH_CLASSROOM {
   NO_SUB = "NO_SUBSCRIBE",

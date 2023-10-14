@@ -4,15 +4,18 @@ import { useClassroomStateContext } from "@/contexts/classroomState";
 import useCheckedBox from "@/hooks/useCheckedBox";
 import { IClassroomObject } from "@/interface/classroom";
 import { IMemberObject } from "@/interface/member";
+import { IStudentDefObject } from "@/interface/studef";
 import { getAllMemberClassroom } from "@/redux/reducer/member/api";
+import { createStudentDef } from "@/redux/reducer/student-def/api";
 import { useAppDispatch } from "@/redux/store";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { FC } from "react";
 
 interface IMemberEnrolledProps {}
 
 export const MemberEnrolled: FC<IMemberEnrolledProps> = ({}) => {
   const dispatch = useAppDispatch();
+  const queryClient = useQueryClient();
   const { authClassroomState } = useClassroomStateContext();
   const { data: members } = useQuery<IMemberObject[]>({
     queryKey: ["members", authClassroomState],
@@ -32,8 +35,33 @@ export const MemberEnrolled: FC<IMemberEnrolledProps> = ({}) => {
   };
 
   // Add student to student registered list and send to admin
+  const addMutation = useMutation(
+    (postData: IStudentDefObject) => {
+      return new Promise((resolve, reject) => {
+        dispatch(createStudentDef(postData))
+          .unwrap()
+          .then((data) => {
+            resolve(data);
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      });
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["members"]);
+      },
+    }
+  );
+
   const handleAddToStudentDef = () => {
-    console.log(checkedMembers);
+    checkedMembers.forEach(async (member: IMemberObject) => {
+      await addMutation.mutate({
+        infor: member.member,
+        instructor: authClassroomState.lecturer,
+      } as IStudentDefObject);
+    });
   };
   return (
     <div className="px-3 my-5">
