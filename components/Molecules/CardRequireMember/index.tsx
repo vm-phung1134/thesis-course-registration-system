@@ -29,7 +29,7 @@ export const CardRequireMember: FC<ICardRequireMemberProps> = ({
   };
   // HANDLE ADD TO CLASS
   const addMutation = useMutation(
-    (postData: IMemberObject) => {
+    (postData: Omit<IMemberObject, "id">) => {
       return new Promise((resolve, reject) => {
         dispatch(createMember(postData))
           .unwrap()

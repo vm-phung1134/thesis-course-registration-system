@@ -6,6 +6,7 @@ import { IExerciseObject } from "@/interface/exercise";
 import { IOptionItem } from "@/interface/filter";
 import { IMemberObject } from "@/interface/member";
 import { IPostObject } from "@/interface/post";
+import { IRoomDefObject } from "@/interface/room";
 import { IStudentDefObject } from "@/interface/studef";
 import { ISubmitObject } from "@/interface/submit";
 import { ITopicObject } from "@/interface/topic";
@@ -79,7 +80,7 @@ export const INITIATE_MEMBER: IMemberObject = {
   classroom: INITIATE_CLASSROOM,
   member: INITIATE_AUTH,
   registerDefense: false,
-  id: ""
+  id: "",
 };
 
 export const INITIATE_COMMENT: ICommentObject = {
@@ -97,9 +98,28 @@ export const INITIATE_SUBMIT: ISubmitObject = {
 };
 
 export const INITIATE_STUDENT_DEF: IStudentDefObject = {
+  id: "",
   infor: INITIATE_AUTH,
-  instructor: INITIATE_AUTH
-}
+  instructor: INITIATE_AUTH,
+};
+
+export const INITIATE_ROOM_DEF: IRoomDefObject = {
+  id: "",
+  name: "",
+  type: "",
+  school: "",
+};
+
+export const INITIATE_COUNCIL_DEF: IAuthObject = {
+  name: "",
+  photoSrc: "",
+  email: "",
+  phone: "",
+  class: "",
+  major: "",
+  role: "",
+  id: "",
+};
 
 export enum STATE_AUTH_CLASSROOM {
   NO_SUB = "NO_SUBSCRIBE",
@@ -109,5 +129,5 @@ export enum STATE_AUTH_CLASSROOM {
 
 export enum STATE_LECTURER_CLASSROOM {
   UN_LOCK = "UN_LOCK",
-  LOCK = "LOCK"
+  LOCK = "LOCK",
 }

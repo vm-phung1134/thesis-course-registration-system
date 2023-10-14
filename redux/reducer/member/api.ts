@@ -59,7 +59,7 @@ const getMember = createAsyncThunk(
 // ADD NEW MEMBER
 const createMember = createAsyncThunk(
   "member/createMember",
-  async (postData: IMemberObject) => {
+  async (postData: Omit<IMemberObject, "id">) => {
     const response = await axios.post(
       "http://localhost:5000/api/member",
       postData,

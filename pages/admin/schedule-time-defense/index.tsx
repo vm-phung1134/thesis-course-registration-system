@@ -21,7 +21,7 @@ function DashboardPage() {
           <>
             <div className="flex flex-col gap-3">
               <div className="flex justify-between mt-5">
-                <h4 className="uppercase text-green-700 font-medium text-lg">
+                <h4 className="uppercase text-green-700 font-medium text-base">
                   Schedule time thesis defense
                 </h4>
                 <button className="border px-10 py-2 text-sm">
