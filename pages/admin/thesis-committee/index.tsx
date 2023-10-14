@@ -4,6 +4,7 @@ import { AdminTemplate } from "@/components/Templates";
 import { useState, useEffect } from "react";
 import { BREADCRUMB_ADMIN_CLASSROOM_MANAGEMENT } from "../classroom-management/mock-data";
 import { CouncilManagementTab } from "@/components/Organisms/Admin/CouncilManagement";
+import { CreateRoomTab } from "@/components/Organisms/Admin/RoomManagement";
 
 function ThesisCommittee() {
   type MenuItem = {
@@ -57,6 +58,7 @@ function ThesisCommittee() {
             </ul>
           </div>
           {selectedItem.id === 1 && <CouncilManagementTab/>}
+          {selectedItem.id === 2 && <CreateRoomTab/>}
         </>
       )}
     </AdminTemplate>

@@ -435,6 +435,7 @@ export const CreateClassroomTab: FC<ICreateClassroomTab> = ({}) => {
         modalClass={modalClassModalLock}
         setOpenModal={setOpenModalLock}
         openModal={openModalLock}
+        typeButton="subscribe"
         action={handleLockClassrooms}
         title="Message!!!"
         message="Do you want to lock these classrooms"

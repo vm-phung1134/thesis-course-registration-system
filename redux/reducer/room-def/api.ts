@@ -38,7 +38,7 @@ const getAllRoomDefs = createAsyncThunk("room/getAllRoomDefs", async () => {
 // CREATE ROOM DEF
 const createRoomDef = createAsyncThunk(
   "room/createRoomDef",
-  async (postData: IRoomDefObject) => {
+  async (postData: Omit<IRoomDefObject, "id">) => {
     const response = await axios.post(
       "http://localhost:5000/api/room-def",
       postData,
