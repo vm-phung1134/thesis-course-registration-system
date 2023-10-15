@@ -16,8 +16,8 @@ const initialState: RoomDefState = {
   error: null,
 };
 
-const authSlice = createSlice({
-  name: "auth",
+const roomSlice = createSlice({
+  name: "room",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -91,4 +91,4 @@ const authSlice = createSlice({
   },
 });
 
-export default authSlice.reducer;
+export default roomSlice.reducer;

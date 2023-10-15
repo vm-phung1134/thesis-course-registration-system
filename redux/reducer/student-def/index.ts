@@ -17,8 +17,8 @@ const initialState: StudentDefState = {
   error: null,
 };
 
-const authSlice = createSlice({
-  name: "auth",
+const studentDefSlice = createSlice({
+  name: "studentDef",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -92,4 +92,4 @@ const authSlice = createSlice({
   },
 });
 
-export default authSlice.reducer;
+export default studentDefSlice.reducer;

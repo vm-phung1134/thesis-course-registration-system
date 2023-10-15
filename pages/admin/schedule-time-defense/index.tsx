@@ -1,12 +1,22 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Avatar, Button, SnipperRound } from "@/components/Atoms";
 import { AdminTemplate } from "@/components/Templates";
 import { FilterScheduledForm, ScheduleForm } from "@/components/Molecules";
-import { Field } from "formik";
-import Image from "next/image";
+import { useAppDispatch } from "@/redux/store";
+import { createScheduleDef } from "@/redux/reducer/schedule-def/api";
+import { IThesisDef } from "@/interface/schedule";
+import { useQuery } from "@tanstack/react-query";
 
 function DashboardPage() {
   const [loading, setLoading] = useState<boolean>(true);
+  const dispatch = useAppDispatch();
+  const { data: scheduled } = useQuery<IThesisDef>({
+    queryKey: ["scheduled"],
+    queryFn: async () => {
+      const action = await dispatch(createScheduleDef());
+      return action.payload || {};
+    },
+  });
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
@@ -85,7 +95,16 @@ function DashboardPage() {
                     <FilterScheduledForm holderText="Filter schedule time ..." />
                   </div>
                 </div>
-                <div className="mt-8">
+                <div className="flex justify-end mt-3">
+                  <ul className="flex gap-2 text-sm cursor-pointer">
+                    <li className="text-green-700">Save to database</li>
+                    <span className="text-gray-400">|</span>
+                    <li className="text-red-700">Delete</li>
+                    <span className="text-gray-400">|</span>
+                    <li className="text-red-700">Clear all</li>
+                  </ul>
+                </div>
+                <div className="mt-3">
                   <div className="overflow-x-auto">
                     <table className="table-auto w-full">
                       <thead className="text-sm font-normal capitalize text-gray-200 bg-green-700">
@@ -118,41 +137,66 @@ function DashboardPage() {
                         </tr>
                       </thead>
                       <tbody className="text-sm divide-y divide-gray-100">
-                        <tr className="border-b">
-                          <td className="px-5 py-2 whitespace-nowrap">
-                            <div className="flex items-center">
-                              <div className="w-10 h-10 flex-shrink-0 mr-2 sm:mr-3">
-                                <Avatar widthStr="50" srcImg="" />
-                              </div>
-                              <div className="font-medium text-gray-800">
-                                Alex Shatov
-                              </div>
-                            </div>
-                          </td>
-                          <td className="px-5 py-2 whitespace-nowrap">
-                            <div className="text-left">
-                              phungb1910282@student.ctu.edu.vn
-                            </div>
-                          </td>
-                          <td className="px-5 py-2 whitespace-nowrap">
-                            <div className="text-left">10-12-2023</div>
-                          </td>
-                          <td className="px-5 py-2 whitespace-nowrap">
-                            <div className="text-center">DI/101</div>
-                          </td>
-                          <td className="px-5 py-2 whitespace-nowrap">
-                            <div className="text-center">Morning</div>
-                          </td>
-                          <td className="px-5 py-2 whitespace-nowrap">
-                            <div className="text-center">7:00 - 7:30</div>
-                          </td>
-                          <td className="px-5 py-2 whitespace-nowrap">
-                            <div className="justify-end flex gap-3">
-                              <button>Update</button>
-                              <button>Detail</button>
-                            </div>
-                          </td>
-                        </tr>
+                        {scheduled?.thesis.map((scheduled, index) => (
+                          <React.Fragment key={index}>
+                            {scheduled?.schedule.timeSlots.map(
+                              (student, studentIndex) => (
+                                <React.Fragment key={studentIndex}>
+                                  {student.student.id && (
+                                    <tr>
+                                      <td className="px-5 py-2 whitespace-nowrap">
+                                        <div className="flex items-center">
+                                          <div className="w-10 h-10 flex-shrink-0 mr-2 sm:mr-3">
+                                            <Avatar
+                                              widthStr="50"
+                                              srcImg={
+                                                student.student.infor.photoSrc
+                                              }
+                                            />
+                                          </div>
+                                          <div className="font-medium text-gray-800">
+                                            {student.student.infor.name}
+                                          </div>
+                                        </div>
+                                      </td>
+                                      <td className="px-5 py-2 whitespace-nowrap">
+                                        <div className="text-left">
+                                          {student.student.infor.email}
+                                        </div>
+                                      </td>
+                                      <td className="px-5 py-2 whitespace-nowrap">
+                                        <div className="text-left">
+                                          {student.timeSlot.date}
+                                        </div>
+                                      </td>
+                                      <td className="px-5 py-2 whitespace-nowrap">
+                                        <div className="text-center">
+                                          {scheduled.schedule.room.name}
+                                        </div>
+                                      </td>
+                                      <td className="px-5 py-2 whitespace-nowrap">
+                                        <div className="text-center">
+                                          {student.timeSlot.shift}
+                                        </div>
+                                      </td>
+                                      <td className="px-5 py-2 whitespace-nowrap">
+                                        <div className="text-center">
+                                          {student.timeSlot.time}
+                                        </div>
+                                      </td>
+                                      <td className="px-5 py-2 whitespace-nowrap">
+                                        <div className="justify-end flex gap-3">
+                                          <button>Update</button>
+                                          <button>Detail</button>
+                                        </div>
+                                      </td>
+                                    </tr>
+                                  )}
+                                </React.Fragment>
+                              )
+                            )}
+                          </React.Fragment>
+                        ))}
                       </tbody>
                     </table>
                   </div>
