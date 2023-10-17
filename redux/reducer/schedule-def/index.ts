@@ -1,9 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { ScheduledDefState } from "./type";
-import { createScheduleDef, saveScheduleDef } from "./api";
+import { createScheduleDef, getScheduleDef} from "./api";
 
 const initialState: ScheduledDefState = {
-  thesis: [],
+  thesis: {
+    thesis: []
+  },
   isLoading: false,
   error: null,
 };
@@ -28,15 +30,15 @@ const authSlice = createSlice({
     });
 
     // GET ALL STUDENT DEF
-    builder.addCase(saveScheduleDef.pending, (state) => {
+    builder.addCase(getScheduleDef.pending, (state) => {
       state.isLoading = true;
       state.error = null;
     });
-    builder.addCase(saveScheduleDef.fulfilled, (state, action) => {
+    builder.addCase(getScheduleDef.fulfilled, (state, action) => {
       state.isLoading = false;
       state.thesis = action.payload;
     });
-    builder.addCase(saveScheduleDef.rejected, (state, action) => {
+    builder.addCase(getScheduleDef.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.error.message ?? "Something went wrong.";
     });

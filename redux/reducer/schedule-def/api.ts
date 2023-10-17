@@ -5,9 +5,10 @@ import { token } from "./type";
 
 const createScheduleDef = createAsyncThunk(
   "schedule/createScheduleDef",
-  async () => {
-    const response = await axios.get(
+  async (postData: { startTime: Date; endTime: Date }) => {
+    const response = await axios.post(
       `http://localhost:5000/api/schedule-report/`,
+      postData,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -21,23 +22,20 @@ const createScheduleDef = createAsyncThunk(
   }
 );
 
-const saveScheduleDef = createAsyncThunk(
-  "schedule/saveScheduleDef",
-  async (postData: IThesisDef) => {
-    const response = await axios.post(
-      "http://localhost:5000/api/schedule-report",
-      postData,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    if (response.status === 200) {
-      return response.data;
+const getScheduleDef = createAsyncThunk("schedule/getScheduleDef", async () => {
+  const response = await axios.get(
+    `http://localhost:5000/api/schedule-report/`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     }
-    throw new Error("Failed to save schedule to database");
+  );
+  if (response.status === 200) {
+    return response.data;
   }
-);
+  throw new Error("Failed to create schedule defense");
+});
 
-export { createScheduleDef, saveScheduleDef };
+
+export { createScheduleDef, getScheduleDef };

@@ -3,20 +3,23 @@ import { Avatar, Button, SnipperRound } from "@/components/Atoms";
 import { AdminTemplate } from "@/components/Templates";
 import { FilterScheduledForm, ScheduleForm } from "@/components/Molecules";
 import { useAppDispatch } from "@/redux/store";
-import { createScheduleDef } from "@/redux/reducer/schedule-def/api";
+import { getScheduleDef } from "@/redux/reducer/schedule-def/api";
 import { IThesisDef } from "@/interface/schedule";
 import { useQuery } from "@tanstack/react-query";
+import Link from "next/link";
 
 function DashboardPage() {
   const [loading, setLoading] = useState<boolean>(true);
+  const [createScheduled, setCreateScheduled] = useState<any>({});
   const dispatch = useAppDispatch();
   const { data: scheduled } = useQuery<IThesisDef>({
     queryKey: ["scheduled"],
     queryFn: async () => {
-      const action = await dispatch(createScheduleDef());
+      const action = await dispatch(getScheduleDef());
       return action.payload || {};
     },
   });
+
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
@@ -46,7 +49,10 @@ function DashboardPage() {
                 <li className="px-3 py-2">Calender</li>
               </ul>
               <div className="w-full mt-5 px-3">
-                <ScheduleForm />
+                <ScheduleForm
+                  setCreateScheduled={setCreateScheduled}
+                  createScheduled={createScheduled}
+                />
                 <div className="flex gap-5 justify-between">
                   <div className="">
                     <p className="py-1 text-sm">Noted</p>
@@ -60,10 +66,7 @@ function DashboardPage() {
                         {`Thesis defense days of the week from Monday to Saturday.`}
                       </li>
                       <li>
-                        {`Each student has 30 minutes to defend their thesis and answer questions.`}
-                      </li>
-                      <li>
-                        {`The time interval between students is 10 minutes.`}
+                        {`Each student has 40 minutes to defend their thesis and answer questions.`}
                       </li>
                     </ul>
                   </div>
@@ -81,7 +84,7 @@ function DashboardPage() {
               </div>
               {/* LIST AFTER SCHEDULED */}
               <div className="px-3">
-                <h4 className="text-lg font-medium py-5">List of scheduled</h4>
+                <h4 className="text-lg font-medium py-5">Progress scheduled</h4>
                 <div className="flex justify-between">
                   <div className="flex">
                     <Button
@@ -109,34 +112,112 @@ function DashboardPage() {
                     <table className="table-auto w-full">
                       <thead className="text-sm font-normal capitalize text-gray-200 bg-green-700">
                         <tr>
-                          <th className="px-5 py-2 whitespace-nowrap">
+                          <th className="px-5 py-3 whitespace-nowrap">
                             <div className="font-normal text-left">
-                              Full name
+                              Name council
                             </div>
                           </th>
-                          <th className="px-5 py-2 whitespace-nowrap">
-                            <div className="font-normal text-left">Email</div>
+                          <th className="px-5 py-3 whitespace-nowrap">
+                            <div className="font-normal text-left">Room</div>
                           </th>
-                          <th className="px-5 py-2 whitespace-nowrap">
+                          <th className="px-5 py-3 whitespace-nowrap">
                             <div className="font-normal text-left">Date</div>
                           </th>
-                          <th className="px-5 py-2 whitespace-nowrap">
-                            <div className="font-normal text-center">Room</div>
-                          </th>
-                          <th className="px-5 py-2 whitespace-nowrap">
-                            <div className="font-normal text-center">Shift</div>
-                          </th>
-                          <th className="px-5 py-2 whitespace-nowrap">
+                          <th className="px-5 py-3 whitespace-nowrap">
                             <div className="font-normal text-center">
-                              {`Time ( 24 hours )`}
+                              Quantity member council
                             </div>
                           </th>
-                          <th className="px-5 py-2 whitespace-nowrap">
+                          <th className="px-5 py-3 whitespace-nowrap">
+                            <div className="font-normal text-center">
+                              Quantity student defense
+                            </div>
+                          </th>
+                          <th className="px-5 py-3 whitespace-nowrap">
+                            <div className="font-normal text-center">
+                              Create at
+                            </div>
+                          </th>
+                          <th className="px-5 py-3 whitespace-nowrap">
                             <div className="font-normal text-end">Actions</div>
                           </th>
                         </tr>
                       </thead>
                       <tbody className="text-sm divide-y divide-gray-100">
+                        {(scheduled?.thesis || []).map(
+                          (scheduled: any, index: number) => (
+                            <React.Fragment key={index}>
+                              <tr className="">
+                                <td className="px-5 py-3 whitespace-nowrap">
+                                  <div className="text-left">
+                                    Council {`${(index += 1)}`}
+                                  </div>
+                                </td>
+                                <td className="px-5 py-3 whitespace-nowrap">
+                                  <div className="text-left">
+                                    {scheduled.schedule.room.name}
+                                  </div>
+                                </td>
+                                <td className="px-5 py-3 whitespace-nowrap">
+                                  <div className="text-left">
+                                    {
+                                      scheduled.schedule.timeSlots[0].timeSlot
+                                        .date
+                                    }
+                                  </div>
+                                </td>
+                                <td className="px-5 py-3 whitespace-nowrap">
+                                  <div className="text-center">
+                                    {scheduled.council.length}
+                                  </div>
+                                </td>
+                                <td className="px-5 py-3 whitespace-nowrap">
+                                  <div className="text-center">
+                                    {
+                                      scheduled.schedule.timeSlots.filter(
+                                        (item: any) =>
+                                          item.student.infor.id !== ""
+                                      ).length
+                                    }
+                                  </div>
+                                </td>
+                                <td className="px-5 py-3 whitespace-nowrap">
+                                  <div className="text-center">
+                                    Thurday, 27-12-2023
+                                  </div>
+                                </td>
+                                <td className="px-5 py-3 whitespace-nowrap">
+                                  <div className="justify-end flex gap-3">
+                                    <Link
+                                      href={`/admin/schedule-time-defense/${scheduled.id}`}
+                                    >
+                                      <button className="text-blue-500">
+                                        View
+                                      </button>
+                                    </Link>
+                                  </div>
+                                </td>
+                              </tr>
+                            </React.Fragment>
+                          )
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
+      </AdminTemplate>
+    </>
+  );
+}
+
+export default DashboardPage;
+
+{
+  /* <tbody className="text-sm divide-y divide-gray-100">
                         {scheduled?.thesis.map((scheduled, index) => (
                           <React.Fragment key={index}>
                             {scheduled?.schedule.timeSlots.map(
@@ -197,17 +278,5 @@ function DashboardPage() {
                             )}
                           </React.Fragment>
                         ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </>
-        )}
-      </AdminTemplate>
-    </>
-  );
+                      </tbody> */
 }
-
-export default DashboardPage;

@@ -63,6 +63,36 @@ export const MemberEnrolled: FC<IMemberEnrolledProps> = ({}) => {
       } as IStudentDefObject);
     });
   };
+
+  // const handleFakeDataStudentDef = async () => {
+  //   for (let i = 80; i < 90; i++) {
+  //     await addMutation.mutate({
+  //       infor: {
+  //         name: `Student ${i}`,
+  //         photoSrc:
+  //           "https://images.pexels.com/photos/445109/pexels-photo-445109.jpeg?auto=compress&cs=tinysrgb&w=600",
+  //         email: `user${i}b191000${i}.student.ctu.edu.vn`,
+  //         phone: "0999999999",
+  //         class: `DI19V7A${i}`,
+  //         major: "IT1",
+  //         role: "student",
+  //         id: `SV${i}`,
+  //       },
+  //       instructor: {
+  //         name: "truc anh dai",
+  //         photoSrc:
+  //           "https://images.pexels.com/photos/445109/pexels-photo-445109.jpeg?auto=compress&cs=tinysrgb&w=600",
+  //         email: "tadai@cit.ctu.edu.vn",
+  //         phone: "0123456789",
+  //         class: "IT1",
+  //         major: "CNTT",
+  //         role: "lecturer",
+  //         id: "GV9",
+  //       },
+  //     } as IStudentDefObject);
+  //   }
+  // };
+
   return (
     <div className="px-3 my-5">
       <div className="flex justify-between">
@@ -74,7 +104,6 @@ export const MemberEnrolled: FC<IMemberEnrolledProps> = ({}) => {
           <Button title="Ascending order" className="px-5 btn-sm" />
           <Button title="All" className="px-5 btn-sm" />
         </div>
-
         <div className="flex justify-end py-2 gap-3">
           <Button
             otherType="subscribe"

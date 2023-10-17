@@ -25,6 +25,7 @@ export interface IScheduleDef {
 }
 
 export interface ICouncilDef {
+  id?: string;
   council: IAuthObject[];
   schedule: IScheduleDef;
 }

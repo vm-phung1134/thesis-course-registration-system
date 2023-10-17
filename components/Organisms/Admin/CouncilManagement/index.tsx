@@ -59,6 +59,20 @@ export const CouncilManagementTab: FC<ICouncilManagementTab> = ({}) => {
     });
   };
 
+  // const handleFakeDataCouncil = async () => {
+  //   await addMutation.mutate({
+  //     name: "truc anh dai",
+  //     photoSrc:
+  //       "https://images.pexels.com/photos/445109/pexels-photo-445109.jpeg?auto=compress&cs=tinysrgb&w=600",
+  //     email: "tadai@cit.ctu.edu.vn",
+  //     phone: "0123456789",
+  //     class: "IT1",
+  //     major: "CNTT",
+  //     role: "lecturer",
+  //     id: "GV9",
+  //   });
+  // };
+
   // HANLE COUNCIL SERVICE
   // Open modal confirm lock councils
   const [openModalCreate, setOpenModalCreate] = useState<boolean>(false);

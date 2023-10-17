@@ -2,7 +2,7 @@ import { IThesisDef } from "@/interface/schedule";
 import Cookies from "js-cookie";
 
 export interface ScheduledDefState {
-  thesis: IThesisDef[];
+  thesis: IThesisDef;
   isLoading: boolean;
   error: string | null;
 }
