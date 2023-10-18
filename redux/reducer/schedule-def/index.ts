@@ -1,11 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { ScheduledDefState } from "./type";
-import { createScheduleDef, getScheduleDef} from "./api";
+import { createScheduleDef, getOneCouncilInSchedule, getScheduleDef } from "./api";
 
 const initialState: ScheduledDefState = {
   thesis: {
-    thesis: []
+    thesis: [],
   },
+  council: {},
   isLoading: false,
   error: null,
 };
@@ -15,7 +16,7 @@ const authSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    // GET ONE STUDENT DEF
+    // CREATE ONE SCHEDULE
     builder.addCase(createScheduleDef.pending, (state) => {
       state.isLoading = true;
       state.error = null;
@@ -29,7 +30,7 @@ const authSlice = createSlice({
       state.error = action.error.message ?? "Something went wrong.";
     });
 
-    // GET ALL STUDENT DEF
+    // GET SCHEDULE
     builder.addCase(getScheduleDef.pending, (state) => {
       state.isLoading = true;
       state.error = null;
@@ -39,6 +40,20 @@ const authSlice = createSlice({
       state.thesis = action.payload;
     });
     builder.addCase(getScheduleDef.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.error.message ?? "Something went wrong.";
+    });
+
+    // GET COUNCIL IN SCHEDULE
+    builder.addCase(getOneCouncilInSchedule.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(getOneCouncilInSchedule.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.council = action.payload;
+    });
+    builder.addCase(getOneCouncilInSchedule.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.error.message ?? "Something went wrong.";
     });

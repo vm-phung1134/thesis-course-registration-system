@@ -1,4 +1,4 @@
-import { IThesisDef } from "@/interface/schedule";
+import { ICouncilDef, IThesisDef } from "@/interface/schedule";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { token } from "./type";
@@ -37,5 +37,22 @@ const getScheduleDef = createAsyncThunk("schedule/getScheduleDef", async () => {
   throw new Error("Failed to create schedule defense");
 });
 
+const getOneCouncilInSchedule = createAsyncThunk(
+  "schedule/getOneCouncilInSchedule",
+  async (id: string) => {
+    const response = await axios.get(
+      `http://localhost:5000/api/schedule-report/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    if (response.status === 200) {
+      return response.data;
+    }
+    throw new Error("Failed to get one council");
+  }
+);
 
-export { createScheduleDef, getScheduleDef };
+export { createScheduleDef, getScheduleDef, getOneCouncilInSchedule };

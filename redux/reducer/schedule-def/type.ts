@@ -1,8 +1,9 @@
-import { IThesisDef } from "@/interface/schedule";
+import { ICouncilDef, IThesisDef } from "@/interface/schedule";
 import Cookies from "js-cookie";
 
 export interface ScheduledDefState {
   thesis: IThesisDef;
+  council: any;
   isLoading: boolean;
   error: string | null;
 }
