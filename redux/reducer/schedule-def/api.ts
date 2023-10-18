@@ -55,4 +55,27 @@ const getOneCouncilInSchedule = createAsyncThunk(
   }
 );
 
-export { createScheduleDef, getScheduleDef, getOneCouncilInSchedule };
+const getScheduleForStudent = createAsyncThunk(
+  "schedule/getScheduleForStudent",
+  async (id: string) => {
+    const response = await axios.get(
+      `http://localhost:5000/api/schedule-report/student-schedule/SV5`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    if (response.status === 200) {
+      return response.data;
+    }
+    throw new Error("Failed to get one council");
+  }
+);
+
+export {
+  createScheduleDef,
+  getScheduleDef,
+  getOneCouncilInSchedule,
+  getScheduleForStudent,
+};

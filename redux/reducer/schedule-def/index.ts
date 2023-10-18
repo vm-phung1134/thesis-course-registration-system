@@ -1,6 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { ScheduledDefState } from "./type";
-import { createScheduleDef, getOneCouncilInSchedule, getScheduleDef } from "./api";
+import {
+  createScheduleDef,
+  getOneCouncilInSchedule,
+  getScheduleDef,
+  getScheduleForStudent,
+} from "./api";
 
 const initialState: ScheduledDefState = {
   thesis: {
@@ -54,6 +59,20 @@ const authSlice = createSlice({
       state.council = action.payload;
     });
     builder.addCase(getOneCouncilInSchedule.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.error.message ?? "Something went wrong.";
+    });
+
+    // GET SCHEDULE FOR STUDENT
+    builder.addCase(getScheduleForStudent.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(getScheduleForStudent.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.council = action.payload;
+    });
+    builder.addCase(getScheduleForStudent.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.error.message ?? "Something went wrong.";
     });
