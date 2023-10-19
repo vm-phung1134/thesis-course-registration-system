@@ -7,11 +7,25 @@ import {
 import { AssessForm } from "@/components/Molecules";
 import { BREADCRUMB_MAINBOARD } from "@/components/Organisms/MainboardStatus/mock-data";
 import { MainboardTemplate } from "@/components/Templates";
+import { ICouncilDef } from "@/interface/schedule";
+import { getScheduleForStudent } from "@/redux/reducer/schedule-def/api";
+import { useAppDispatch } from "@/redux/store";
+import { useQuery } from "@tanstack/react-query";
+import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 
 function ThesisDefenseStudentDetail() {
   const [loading, setLoading] = useState<boolean>(true);
-
+  const dispatch = useAppDispatch();
+  const params = useSearchParams();
+  const id = params.get("thesisID") || "";
+  const { data: studentScheduled } = useQuery<ICouncilDef>({
+    queryKey: ["studentScheduled"],
+    queryFn: async () => {
+      const action = await dispatch(getScheduleForStudent(id));
+      return action.payload || {};
+    },
+  });
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
@@ -43,7 +57,7 @@ function ThesisDefenseStudentDetail() {
                     </svg>{" "}
                     <p> Back to schedule</p>
                   </div>
-                  <h4 className="uppercase text-white py-2 px-3 bg-gradient-to-r from-green-800 to-green-500 text-sm my-2">
+                  <h4 className="uppercase text-white py-2 px-3 bg-green-700 text-sm my-2">
                     Thesis defense of student
                   </h4>
                   <div className="px-3">
@@ -54,7 +68,10 @@ function ThesisDefenseStudentDetail() {
                       <li className="flex gap-2">
                         <p className="text-gray-600">Full name:</p>
                         <p className="text-gray-700 font-medium">
-                          Vo Minh phung
+                          {
+                            studentScheduled?.schedule.timeSlots[0].student
+                              .infor.name
+                          }
                         </p>
                       </li>
                       <li className="flex gap-2">
@@ -64,7 +81,10 @@ function ThesisDefenseStudentDetail() {
                       <li className="flex gap-2">
                         <p className="text-gray-600">Email:</p>
                         <p className="text-gray-700 font-medium">
-                          phungb1910282@student.ctu.edu.vn
+                          {
+                            studentScheduled?.schedule.timeSlots[0].student
+                              .infor.email
+                          }
                         </p>
                       </li>
                     </ul>
@@ -74,23 +94,33 @@ function ThesisDefenseStudentDetail() {
                     <ul className="flex gap-5">
                       <li className="flex gap-2">
                         <p className="text-gray-600">Date report:</p>
-                        <p className="text-gray-700 font-medium">11/11/2023</p>
+                        <p className="text-gray-700 font-medium">
+                          {
+                            studentScheduled?.schedule.timeSlots[0].timeSlot
+                              .date
+                          }
+                        </p>
                       </li>
                       <li className="flex gap-2">
                         <p className="text-gray-600">Room:</p>
-                        <p className="text-gray-700 font-medium">DI/101</p>
+                        <p className="text-gray-700 font-medium">
+                          {studentScheduled?.schedule.room.name}
+                        </p>
                       </li>
                       <li className="flex gap-2">
                         <p className="text-gray-600">Time:</p>
                         <p className="text-gray-700 font-medium">
-                          7:00 - 7:40 AM
+                          {
+                            studentScheduled?.schedule.timeSlots[0].timeSlot
+                              .time
+                          }
                         </p>
                       </li>
                     </ul>
                   </div>
                 </div>
                 <div className="p-5 border">
-                  <h4 className="uppercase text-white py-2 px-3 bg-gradient-to-r from-green-800 to-green-500 text-sm my-2">
+                  <h4 className="uppercase text-white py-2 px-3 bg-green-700 text-sm my-2">
                     Topic searching
                   </h4>
                   <div className="px-3">
@@ -132,39 +162,16 @@ function ThesisDefenseStudentDetail() {
                 <h4 className="uppercase mt-5 text-green-700 font-medium tracking-wider">
                   Review from the Dissertation Council
                 </h4>
-                <div className="mt-5 p-5 border">
-                  <div className="flex gap-3 items-center">
-                    <p>Examiner 1: </p>
+                <div className="mt-5 p-3 flex gap-5 border shadow-lg rounded-2xl">
+                  <div className="flex flex-col items-center justify-center ">
+                    <NormalAvatar
+                      photoSrc="https://cit.ctu.edu.vn/images/cit2023/anh_dai_dien/CNTT/LHQBao.jpg"
+                      setSize="w-10"
+                    />
                     <p className="capitalize font-medium">Bui vo quoc bao</p>
-                    <NormalAvatar
-                      photoSrc="https://cit.ctu.edu.vn/images/cit2023/anh_dai_dien/CNTT/LHQBao.jpg"
-                      setSize="w-10"
-                    />
+                    <p>vbqbao@cit.ctu.edu.vn</p>
                   </div>
-                  <span className="italic text-xs font-thin">
-                    Noticed: This is part to enter point and assess for examiner
-                    to student and grade point follow to 10/10!
-                  </span>
-                  <div className="mt-2">
-                    <AssessForm />
-                  </div>
-                </div>
-                <div className="mt-5 p-5 border">
-                  <div className="flex gap-3 mb-2 items-center">
-                    <p>Examiner 2: </p>
-                    <p className="capitalize font-medium">
-                      Le Huynh Bao Quoc
-                    </p>{" "}
-                    <NormalAvatar
-                      photoSrc="https://cit.ctu.edu.vn/images/cit2023/anh_dai_dien/CNTT/LHQBao.jpg"
-                      setSize="w-10"
-                    />
-                  </div>
-                  <span className="italic text-xs font-thin">
-                    Noticed: This is part to enter point and assess for examiner
-                    to student and grade point follow to 10/10!
-                  </span>
-                  <div className="mt-2">
+                  <div className="mt-2 flex-grow">
                     <AssessForm />
                   </div>
                 </div>

@@ -1,4 +1,5 @@
 import { INITIATE_CLASSROOM, INITIATE_MEMBER } from "@/data";
+import { useUserCookies } from "@/hooks/useCookies";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { IClassroomObject } from "@/interface/classroom";
 import { IMemberObject } from "@/interface/member";
@@ -48,7 +49,10 @@ export const ClassroomStateContextProvider: React.FC<ClassroomStateProps> = ({
 
   return (
     <ClassroomStateContext.Provider
-      value={{ authClassroomState: member?.classroom || classroom }}
+      value={{
+        authClassroomState:
+          member?.classroom?.id !== "" ? member?.classroom : classroom,
+      }}
     >
       {children}
     </ClassroomStateContext.Provider>

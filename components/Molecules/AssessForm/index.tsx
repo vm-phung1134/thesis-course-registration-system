@@ -19,24 +19,24 @@ export const AssessForm: FC<IAssessFormProps> = () => {
       }}
     >
       <Form>
-        <div className="relative flex flex-col gap-2">
+        <div className="relative flex flex-col gap-1">
+          <div className="flex gap-3 items-center">
+            <Field
+              className="input text-sm input-sm rounded-full w-fit border-gray-300  focus:outline-none"
+              type="number"
+              id="content"
+              placeholder="8.5"
+              name="content"
+            />
+            <button className="py-2 rounded-full px-5 bg-green-700 text-white">Done</button>
+          </div>
           <Field
-            className="input text-sm rounded-none w-fit border-gray-300  focus:outline-none"
-            type="number"
-            id="content"
-            placeholder="Ex: 10"
-            name="content"
-          />
-          <Field
-            className="input text-sm rounded-none w-full border-gray-300  focus:outline-none"
+            className="input text-sm rounded-full w-full border-gray-300  focus:outline-none"
             type="text"
             id="content"
-            placeholder="Enter your assessments ..."
+            placeholder="Enter your comment ..."
             name="content"
           />
-          <div className="flex justify-end">
-            <Button className="px-10 bg-green-700 btn-sm text-white" title="Confirm" />
-          </div>
         </div>
       </Form>
     </Formik>

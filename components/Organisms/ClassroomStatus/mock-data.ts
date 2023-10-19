@@ -46,7 +46,7 @@ export const DATA_MENU_CLASSROOM_LECTURER: ImenuClassroomItem[] = [
     title: "Enrol defense",
   },
   {
-    id: "4",
+    id: "5",
     href: "/manage-classroom/",
     title: "point",
   },

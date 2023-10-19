@@ -1,15 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Avatar, Breadcrumb, Button, SnipperRound } from "@/components/Atoms";
+import { Avatar, Breadcrumb, SnipperRound } from "@/components/Atoms";
 import { AdminTemplate } from "@/components/Templates";
-import { FilterScheduledForm, ScheduleForm } from "@/components/Molecules";
 import { useAppDispatch } from "@/redux/store";
-import {
-  getOneCouncilInSchedule,
-  getScheduleDef,
-} from "@/redux/reducer/schedule-def/api";
-import { ICouncilDef, IThesisDef } from "@/interface/schedule";
+import { getOneCouncilInScheduleStudent } from "@/redux/reducer/schedule-def/api";
+import { ICouncilDef } from "@/interface/schedule";
 import { useQuery } from "@tanstack/react-query";
-import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { BREADCRUMB_SCHEDULE_DEDTAIL } from "./mock-data";
 
@@ -19,9 +14,9 @@ function DashboardPage() {
   const id = params.get("councilID") || "";
   const [loading, setLoading] = useState<boolean>(true);
   const { data: councilInSchedule } = useQuery<ICouncilDef>({
-    queryKey: ["council-in-schedule"],
+    queryKey: ["council-in-schedule-student", id],
     queryFn: async () => {
-      const action = await dispatch(getOneCouncilInSchedule(id));
+      const action = await dispatch(getOneCouncilInScheduleStudent(id));
       return action.payload || {};
     },
   });
@@ -59,7 +54,10 @@ function DashboardPage() {
               <div className="flex justify-between">
                 <div className="flex gap-3 tracking-wider">
                   {councilInSchedule?.council.map((council) => (
-                    <div key={council.id} className="shadow-md w-fit px-5 py-3 flex flex-col justify-center">
+                    <div
+                      key={council.id}
+                      className="shadow-md w-fit px-5 py-3 flex flex-col justify-center"
+                    >
                       <p>
                         Examinator:
                         <span className="capitalize text-sm font-medium">
@@ -177,7 +175,9 @@ function DashboardPage() {
                       </div>
                     </div>
                   </div>
-                  <p className="text-sm text-end font-medium tracking-wider">November 2023</p>
+                  <p className="text-sm text-end font-medium tracking-wider">
+                    November 2023
+                  </p>
                 </div>
               </div>
             </div>

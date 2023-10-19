@@ -37,11 +37,29 @@ const getScheduleDef = createAsyncThunk("schedule/getScheduleDef", async () => {
   throw new Error("Failed to create schedule defense");
 });
 
-const getOneCouncilInSchedule = createAsyncThunk(
-  "schedule/getOneCouncilInSchedule",
+const getOneCouncilInScheduleStudent = createAsyncThunk(
+  "schedule/getOneCouncilInScheduleStudent",
   async (id: string) => {
     const response = await axios.get(
-      `http://localhost:5000/api/schedule-report/${id}`,
+      `http://localhost:5000/api/schedule-report/student/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    if (response.status === 200) {
+      return response.data;
+    }
+    throw new Error("Failed to get one council");
+  }
+);
+
+const getOneCouncilInScheduleLecturer = createAsyncThunk(
+  "schedule/getOneCouncilInScheduleLecturer",
+  async (id: string) => {
+    const response = await axios.get(
+      `http://localhost:5000/api/schedule-report/lecturer/${id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -73,9 +91,29 @@ const getScheduleForStudent = createAsyncThunk(
   }
 );
 
+const getScheduleForLecturer = createAsyncThunk(
+  "schedule/getScheduleForLecturer",
+  async (id: string) => {
+    const response = await axios.get(
+      `http://localhost:5000/api/schedule-report/lecturer-schedule/GV5`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    if (response.status === 200) {
+      return response.data;
+    }
+    throw new Error("Failed to get one schedule for lecturer");
+  }
+);
+
 export {
   createScheduleDef,
   getScheduleDef,
-  getOneCouncilInSchedule,
+  getOneCouncilInScheduleStudent,
+  getOneCouncilInScheduleLecturer,
   getScheduleForStudent,
+  getScheduleForLecturer,
 };

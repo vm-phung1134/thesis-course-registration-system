@@ -3,10 +3,24 @@ import { BREADCRUMB_MAINBOARD } from "@/components/Organisms/MainboardStatus/moc
 import { MainboardTemplate } from "@/components/Templates";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useAppDispatch } from "@/redux/store";
+import { useSearchParams } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
+import { ICouncilDef } from "@/interface/schedule";
+import { getOneCouncilInScheduleLecturer } from "@/redux/reducer/schedule-def/api";
 
 function ScheduleDetail() {
   const [loading, setLoading] = useState<boolean>(true);
-
+  const dispatch = useAppDispatch();
+  const params = useSearchParams();
+  const id = params.get("scheduleID") || "";
+  const { data: councilInSchedule } = useQuery<ICouncilDef>({
+    queryKey: ["council-in-schedule-lecturer", id],
+    queryFn: async () => {
+      const action = await dispatch(getOneCouncilInScheduleLecturer(id));
+      return action.payload || {};
+    },
+  });
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
@@ -56,23 +70,17 @@ function ScheduleDetail() {
                         Tran Thi thuy trang
                       </p>
                     </li>
-                    <li className="flex gap-2">
-                      <p>Instructor Led Training: </p>
-                      <p className="capitalize font-medium">
-                        Le huynh bao quoc
-                      </p>
-                    </li>
                   </ul>
                   <div className="bg-green-700 h-[0.5px] w-full my-3"></div>
                   <ul className="text-sm flex flex-col gap-2">
-                    <li className="flex gap-2">
-                      <p>Examner 1: </p>
-                      <p className="capitalize font-medium">Bui vo bao quoc</p>
-                    </li>
-                    <li className="flex gap-2">
-                      <p>Examner 2: </p>
-                      <p className="capitalize font-medium">Thai minh tuan</p>
-                    </li>
+                    {councilInSchedule?.council.map((lecturer, index) => (
+                      <li key={lecturer.id} className="flex gap-2">
+                        <p>Examner {`${(index += 1)}`}: </p>
+                        <p className="capitalize font-medium">
+                          {lecturer.name}
+                        </p>
+                      </li>
+                    ))}
                   </ul>
                 </div>
               </div>
@@ -82,56 +90,130 @@ function ScheduleDetail() {
                 </h5>
                 <div>
                   <div className="overflow-x-auto">
-                    <table className="table-auto w-full">
+                    <table className="table-auto w-full border">
                       <thead className="text-sm font-normal capitalize text-gray-200 bg-green-700">
                         <tr>
-                          <th className="px-5 py-2 whitespace-nowrap">
+                          <th className="px-5 py-3 whitespace-nowrap">
                             <div className="font-normal text-left">Email</div>
                           </th>
-                          <th className="px-5 py-2 whitespace-nowrap">
+                          <th className="px-5 py-3 whitespace-nowrap">
                             <div className="font-normal text-left">Name</div>
                           </th>
-                          <th className="px-5 py-2 whitespace-nowrap">
+                          <th className="px-5 py-3 whitespace-nowrap">
                             <div className="font-normal text-left">
                               ID Student
                             </div>
                           </th>
-                          <th className="px-5 py-2 whitespace-nowrap">
+                          <th className="px-5 py-3 whitespace-nowrap">
                             <div className="font-normal text-center">
                               {`Time ( 24 hours )`}
                             </div>
                           </th>
-                          <th className="px-5 py-2 whitespace-nowrap">
+                          <th className="px-5 py-3 whitespace-nowrap">
                             <div className="font-normal text-end">Actions</div>
                           </th>
                         </tr>
                       </thead>
                       <tbody className="text-sm divide-y divide-gray-100">
-                        <tr className="border-b">
-                          <td className="px-5 py-2 whitespace-nowrap">
-                            <div className="text-left">
-                              phungb1910282@student.ctu.edu.vn
+                        {councilInSchedule?.schedule.timeSlots
+                          .filter((item) => item.timeSlot.shift === "Morning")
+                          .map((student, index) => (
+                            <tr key={student.student.id} className="border-b">
+                              <td className="px-5 py-3 whitespace-nowrap">
+                                <div className="text-left">
+                                  {student.student.infor.email}
+                                </div>
+                              </td>
+                              <td className="px-5 py-3 whitespace-nowrap">
+                                <div className="text-left">
+                                  {student.student.infor.name}
+                                </div>
+                              </td>
+                              <td className="px-5 py-3 whitespace-nowrap">
+                                <div className="text-left">B1910282</div>
+                              </td>
+                              <td className="px-5 py-3 whitespace-nowrap">
+                                <div className="text-center">
+                                  {student.timeSlot.time}
+                                </div>
+                              </td>
+                              <td className="px-5 py-3 whitespace-nowrap">
+                                <div className="justify-end flex gap-3">
+                                  <Link
+                                    href={`/report-schedule/schedule-detail/thesis-student/${student.student.infor.id}`}
+                                  >
+                                    <button className="text-sky-700">
+                                      View
+                                    </button>
+                                  </Link>
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  <div className="overflow-x-auto my-5">
+                    <table className="table-auto w-full border">
+                      <thead className="text-sm font-normal capitalize text-gray-200 bg-green-700">
+                        <tr>
+                          <th className="px-5 py-3 whitespace-nowrap">
+                            <div className="font-normal text-left">Email</div>
+                          </th>
+                          <th className="px-5 py-3 whitespace-nowrap">
+                            <div className="font-normal text-left">Name</div>
+                          </th>
+                          <th className="px-5 py-3 whitespace-nowrap">
+                            <div className="font-normal text-left">
+                              ID Student
                             </div>
-                          </td>
-                          <td className="px-5 py-2 whitespace-nowrap">
-                            <div className="text-left">Vo Minh Phung</div>
-                          </td>
-                          <td className="px-5 py-2 whitespace-nowrap">
-                            <div className="text-left">B1910282</div>
-                          </td>
-                          <td className="px-5 py-2 whitespace-nowrap">
-                            <div className="text-center">7:00 - 7:30</div>
-                          </td>
-                          <td className="px-5 py-2 whitespace-nowrap">
-                            <div className="justify-end flex gap-3">
-                              <Link
-                                href={"/report-schedule/schedule-detail/thesis-student/123"}
-                              >
-                                <button className="text-sky-700">View</button>
-                              </Link>
+                          </th>
+                          <th className="px-5 py-3 whitespace-nowrap">
+                            <div className="font-normal text-center">
+                              {`Time ( 24 hours )`}
                             </div>
-                          </td>
+                          </th>
+                          <th className="px-5 py-3 whitespace-nowrap">
+                            <div className="font-normal text-end">Actions</div>
+                          </th>
                         </tr>
+                      </thead>
+                      <tbody className="text-sm divide-y divide-gray-100">
+                        {councilInSchedule?.schedule.timeSlots
+                          .filter((item) => item.timeSlot.shift === "Afternoon")
+                          .map((student, index) => (
+                            <tr key={student.student.id} className="border-b">
+                              <td className="px-5 py-3 whitespace-nowrap">
+                                <div className="text-left">
+                                  {student.student.infor.email}
+                                </div>
+                              </td>
+                              <td className="px-5 py-3 whitespace-nowrap">
+                                <div className="text-left">
+                                  {student.student.infor.name}
+                                </div>
+                              </td>
+                              <td className="px-5 py-3 whitespace-nowrap">
+                                <div className="text-left">B1910282</div>
+                              </td>
+                              <td className="px-5 py-3 whitespace-nowrap">
+                                <div className="text-center">
+                                  {student.timeSlot.time}
+                                </div>
+                              </td>
+                              <td className="px-5 py-3 whitespace-nowrap">
+                                <div className="justify-end flex gap-3">
+                                  <Link
+                                    href={`/report-schedule/schedule-detail/thesis-student/${student.student.infor.id}`}
+                                  >
+                                    <button className="text-sky-700">
+                                      View
+                                    </button>
+                                  </Link>
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
                       </tbody>
                     </table>
                   </div>

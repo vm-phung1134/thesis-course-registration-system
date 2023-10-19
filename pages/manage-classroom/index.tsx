@@ -41,7 +41,6 @@ function ManageClassroomTab() {
   const handleOpenExModal = (task: IExerciseObject) => {
     setOpenModalEx(!openModalEx);
     dispatch(getExercise(task));
-    console.log(task)
   };
 
   // HANDLE POST
