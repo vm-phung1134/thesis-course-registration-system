@@ -22,7 +22,7 @@ export const IconButton: FC<IIconButtonProps> = ({
     <button
       onClick={() => setToggleForm?.(!toggleForm)}
       type="button"
-      className={`btn rounded-none font-medium capitalize ${className}`}
+      className={`btn rounded-full font-normal capitalize ${className}`}
     >
       <Image
         className={classNameIcon}

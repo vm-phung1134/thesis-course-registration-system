@@ -19,13 +19,7 @@ export const SocialLogin: FC<ISocialLoginProps> = ({
   const { signInWithGoogle, message } = useAuthContext();
   return (
     <div className="flex flex-col mt-4 gap-3 text-sm">
-      <TitleFormField
-        className="font-semibold sm:text-center my-4 sm:my-6 sm:text-2xl text-xl "
-        title="Sign in with social"
-      />
-      <p className="text-red-600 text-xs text-center">
-        {message}
-      </p>
+      <p className="text-red-600 text-xs text-center">{message}</p>
       <IconButtonLogin
         title="Continue with Google"
         methodLogin={signInWithGoogle}
@@ -47,7 +41,7 @@ export const SocialLogin: FC<ISocialLoginProps> = ({
         toggleForm={toggleForm}
         classNameIcon=""
         title="Continue with Email"
-        className="bg-green-500 text-white hover:bg-green-700"
+        className="bg-green-700 text-white tracking-wide hover:bg-green-600"
         srcIcon="https://cdn-icons-png.flaticon.com/128/546/546394.png"
       />
     </div>

@@ -8,7 +8,7 @@ export interface IAuthFormProps {}
 const CopyrightForm = () => {
   return (
     <div className="flex items-center flex-col text-black text-[10px] my-5">
-      <p className="">©2023 Minh_Phung, Inc. All Rights Reserved.</p>
+      <p className="">{`©2023 Minh_Phung (Zion), Inc. All Rights Reserved.`}</p>
       <p>Privacy policy</p>
     </div>
   );

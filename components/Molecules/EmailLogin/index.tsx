@@ -22,8 +22,8 @@ export interface IEmailLoginProps {
 const ActionFormField = () => {
   return (
     <div className="flex justify-end mb-6">
-      <Link href="/" className="text-[13px] hover:underline">
-        Forget password?
+      <Link href="/" className="text-[13px] text-red-600 hover:underline tracking-wide">
+        Forgot password?
       </Link>
     </div>
   );
@@ -37,15 +37,12 @@ export const EmailLogin: FC<IEmailLoginProps> = ({
   const { message } = useAuthContext();
   return (
     <Form>
-      <TitleFormField
-        className="font-semibold sm:text-center my-4 sm:my-6 sm:text-2xl text-xl "
-        title="Sign in with email account"
-      />
       <p className="text-red-600 text-xs text-center">{message}</p>
       <FormField
         type="email"
-        label="Email"
+        label="Email address"
         nameField="email"
+        placeholder="example@cit.ctu.edu.vn"
         value={values.email}
       />
       <FormField
@@ -55,12 +52,12 @@ export const EmailLogin: FC<IEmailLoginProps> = ({
         value={values.password}
       />
       <ActionFormField />
-      <Button className="bg-green-600 w-full text-white" title="Sign In" />
+      <Button className="bg-green-700 w-full text-white" title="Sign In" />
       <LineUnder />
       <IconButton
         setToggleForm={setToggleForm}
         toggleForm={toggleForm}
-        className="w-full"
+        className="w-full "
         classNameIcon="w-3"
         srcIcon="https://cdn-icons-png.flaticon.com/128/271/271220.png"
         title="Continue with social media"

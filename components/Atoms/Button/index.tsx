@@ -41,7 +41,7 @@ export const Button: FC<IButtonProps> = ({
         <button
           onClick={handleButtonActions}
           type={type}
-          className={`${className} btn tracking-wide rounded-none capitalize font-normal`}
+          className={`${className} btn tracking-wide rounded-full capitalize font-normal`}
         >
           {title}
         </button>
@@ -56,7 +56,7 @@ export const Button: FC<IButtonProps> = ({
           }
           onClick={handleValueButtonActions}
           type={type}
-          className={`${className} btn tracking-wide rounded-none capitalize font-normal`}
+          className={`${className} btn tracking-wide rounded-full capitalize font-normal`}
         >
           {title}
         </button>
@@ -66,7 +66,7 @@ export const Button: FC<IButtonProps> = ({
         <button
           onClick={() => setToggle?.(!toggle)}
           type={type}
-          className={`${className} btn tracking-wide rounded-none capitalize font-normal`}
+          className={`${className} btn tracking-wide rounded-full capitalize font-normal`}
         >
           {title}
         </button>
@@ -77,7 +77,7 @@ export const Button: FC<IButtonProps> = ({
         <button
           onClick={() => setToggle?.(!toggle)}
           type={type}
-          className={`${className} btn tracking-wide rounded-none capitalize font-normal`}
+          className={`${className} btn tracking-wide rounded-full capitalize font-normal`}
         >
           {title}
         </button>
