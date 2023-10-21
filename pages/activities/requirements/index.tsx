@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Breadcrumb, Button, SnipperRound } from "@/components/Atoms";
+import {
+  Breadcrumb,
+  Button,
+  SelectBox,
+  SnipperRound,
+} from "@/components/Atoms";
 import { MainboardTemplate } from "@/components/Templates";
 import { BREADCRUMB_REQUIREMENT } from "./mock-data";
 import { CardRequireMember } from "@/components/Molecules";
@@ -14,9 +19,27 @@ import Image from "next/image";
 import Link from "next/link";
 import { useClassroomStateContext } from "@/contexts/classroomState";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
+import { ICategoryObject } from "@/interface/category";
+import { IOptionItem } from "@/interface/filter";
+import {
+  DATA_FILTER_COURSE,
+  DATA_FILTER_TOPICS,
+} from "@/components/Organisms/MainboardStatus/mock-data";
 
 function RequirementPage() {
   const { currentUser } = useCurrentUser();
+  const [filterCourse, setFilterCourse] = useState<
+    IOptionItem | ICategoryObject
+  >({
+    label: "Filter course",
+    value: "",
+  });
+  const [filterTopic, setFilterTopic] = useState<IOptionItem | ICategoryObject>(
+    {
+      label: "Filter Topic",
+      value: "",
+    }
+  );
   const [openModalMemberDetail, setOpenModalMemberDetail] =
     useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
@@ -53,9 +76,32 @@ function RequirementPage() {
         <div>
           <Breadcrumb dataBreadcrumb={BREADCRUMB_REQUIREMENT} />
           <div>
-            <h4 className="uppercase text-green-700 font-medium mt-5 py-2">
-              List requirements
-            </h4>
+            <div className="my-3 py-2 flex gap-2 items-center">
+              <h4 className="text-xl capitalize text-green-700 font-medium ">
+                Queue for <span className="text-orange-600"> requests</span>
+              </h4>
+              <div className="flex-grow h-[0.5px] bg-green-700"></div>
+            </div>
+            <div className="flex justify-between items-center">
+              <div className="mt-3 flex gap-3 w-1/3">
+                <div className="flex-grow">
+                  <SelectBox
+                    setSelected={setFilterCourse}
+                    selected={filterCourse}
+                    options={DATA_FILTER_COURSE}
+                    setPadding="lg"
+                  />
+                </div>
+                <div className="flex-grow">
+                  <SelectBox
+                    setSelected={setFilterTopic}
+                    selected={filterTopic}
+                    options={DATA_FILTER_TOPICS}
+                    setPadding="lg"
+                  />
+                </div>
+              </div>
+            </div>
             {requirements.length > 0 ? (
               <div className="grid grid-cols-3 gap-3 mt-3">
                 {requirements?.map((listRequirement) => {

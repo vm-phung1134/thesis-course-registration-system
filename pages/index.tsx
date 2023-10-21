@@ -28,7 +28,7 @@ const IntroPage = () => {
           theses easily...
         </p>
         <div className="flex justify-end">
-          <LearnMoreBtn title="Read More" className="text-blue-400" href="/" />
+          <LearnMoreBtn title="Read More" className="text-orange-700" href="/" />
         </div>
       </div>
     </div>

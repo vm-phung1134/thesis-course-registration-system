@@ -1,3 +1,4 @@
+import { useUserCookies } from "@/hooks/useCookies";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { IMemberObject } from "@/interface/member";
 import { checkStateSubscribe } from "@/redux/reducer/auth/api";
@@ -22,14 +23,14 @@ export const useSubscribeStateContext = () => useContext(SubscribeStateContext);
 export const SubscribeStateContextProvider: React.FC<SubscribeStateProps> = ({
   children,
 }) => {
-  const { currentUser } = useCurrentUser();
+  const [user] = useUserCookies();
   const dispatch = useAppDispatch();
   const { data: subscribeState } = useQuery<
     IMemberObject[] | { status: string }
   >({
-    queryKey: ["subscribe-state", currentUser],
+    queryKey: ["subscribe-state", user],
     queryFn: async () => {
-      const action = await dispatch(checkStateSubscribe(currentUser));
+      const action = await dispatch(checkStateSubscribe(user));
       return action.payload || [];
     },
     initialData: [],

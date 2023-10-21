@@ -106,9 +106,11 @@ export const WaitingView: FC<IWaitingViewProps> = ({ classroom }) => {
             </div>
           </div>
           <div className="flex flex-wrap gap-5 mt-5">
-            {(subscribeState ?? []).map((item: IMemberObject) => {
-              return <ClassroomCard key={item.id} item={item.classroom} />;
-            })}
+            {(subscribeState.length > 0 ? subscribeState : []).map(
+              (item: IMemberObject) => {
+                return <ClassroomCard key={item.id} item={item.classroom} />;
+              }
+            )}
           </div>
           <ModalConfirm
             modalClass={modalClassConfirm}

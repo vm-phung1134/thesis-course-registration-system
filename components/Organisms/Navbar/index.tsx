@@ -18,7 +18,7 @@ export const Navbar: FC<INavbarProps> = () => {
     checkUserLoginState();
   }, [checkUserLoginState]);
   return (
-    <div className="navbar border-b dark:border-gray-500 p-5 top-0 sticky bg-white z-10">
+    <div className="navbar shadow-sm border-b rounded-br-[3rem] dark:border-gray-500 p-5 top-0 sticky dark:bg-black bg-white z-10">
       <div className="justify-between w-full">
         <SearchForm />
         <div className="flex gap-10">
@@ -70,7 +70,7 @@ export const Navbar: FC<INavbarProps> = () => {
               className="flex gap-3 items-center cursor-pointer"
             >
               <div className="flex flex-col text-[15px] font-normal items-end">
-                <p>{currentUser?.email || "example@ctu.edu.vn"}</p>
+                <p className="font-medium text-sm capitalize">{currentUser?.name || "Username B190000"}</p>
                 <p className="text-green-800 text-sm capitalize">
                   Pov: {currentUser?.role || "Student"}
                 </p>

@@ -22,7 +22,7 @@ function MainboardPage() {
     label: string;
   };
   const menuItems: MenuItem[] = [
-    { id: 1, label: "List of classrooms" },
+    { id: 1, label: "Class Registration" },
     { id: 2, label: "Waiting" },
   ];
   const [selectedItem, setSelectedItem] = useState<MenuItem>(menuItems[0]);
@@ -63,13 +63,13 @@ function MainboardPage() {
               STATE_AUTH_CLASSROOM.WAITING,
               STATE_AUTH_CLASSROOM.NO_SUB
             ) && (
-              <ul className="flex gap-3 mt-2 border-b text-[15px] cursor-pointer">
+              <ul className="flex gap-3 my-2 border-b text-[15px] cursor-pointer">
                 {menuItems.map((item) => (
                   <li
                     key={item.id}
-                    className={`px-3 py-2 ${
+                    className={`px-3 py-2 tracking-wider ${
                       selectedItem.id === item.id
-                        ? "border-green-700 border-b-2 font-medium"
+                        ? "border-green-700 border-b-2"
                         : ""
                     }`}
                     onClick={() => handleClick(item)}
@@ -84,7 +84,7 @@ function MainboardPage() {
           {/* GET UI FOR STUDENT ROLE */}
           {currentUser.role === ROLE_ASSIGNMENT.STUDENT && (
             <>
-              {authClassroomState.status ? (
+              {authClassroomState.classCourse !== "" ? (
                 <UnSubscribeView classroom={authClassroomState} />
               ) : (
                 <>
@@ -95,26 +95,6 @@ function MainboardPage() {
               )}
             </>
           )}
-          {/* {!authClassroomState.status && (
-            <div className="h-[80%] w-full flex flex-col justify-center items-center">
-              <Image
-                src="https://yi-files.s3.eu-west-1.amazonaws.com/products/794000/794104/1354385-full.jpg"
-                width="400"
-                height="400"
-                className="-hue-rotate-[38deg] saturate-[.85]"
-                alt=""
-              />
-              <p className="py-5 text-gray-500 uppercase">
-                Ops! There are currently no classrooms
-              </p>
-              <Link href="/manage-classroom">
-                <Button
-                  className="px-10 bg-green-700 text-white hover:bg-green-600"
-                  title="Comming soon"
-                />
-              </Link>
-            </div>
-          )} */}
         </MainboardTemplate>
       )}
     </>

@@ -31,7 +31,7 @@ export const ClassroomCard: FC<IClassroomCardProps> = ({ item }) => {
   const queryClient = useQueryClient();
   const dispatch = useAppDispatch();
   const addRequirementMutation = useMutation(
-    (postData: IMemberObject) => {
+    (postData: Omit<IMemberObject, "id">) => {
       return dispatch(createRequirement(postData))
         .unwrap()
         .then((data) => {
@@ -73,18 +73,33 @@ export const ClassroomCard: FC<IClassroomCardProps> = ({ item }) => {
   });
   return (
     <>
-      <div className="w-[340px] shadow-xl">
+      <div className="w-[340px] shadow-lg">
         <div className="bg-cover bg-[url('https://images.pexels.com/photos/301943/pexels-photo-301943.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load')]">
           <div className="bg-black/60 p-5 text-gray-100">
             <div className="flex justify-between gap-5 mb-2">
               <h3 className="text-md font-bold uppercase text-green-500">
                 {item?.lecturer?.name}
               </h3>
-              <button>...</button>
+              <div>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4 rotate-90 text-gray-300"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+                  ></path>
+                </svg>
+              </div>
             </div>
             <div className="flex gap-2 flex-col">
               <p className="text-sm flex gap-2">
-                <span>Courses:</span>
+                <span>Course:</span>
                 <span className="font-normal">{item.classCourse}</span>
               </p>
               <p className="text-sm flex gap-2">

@@ -80,7 +80,7 @@ export const CardRequireMember: FC<ICardRequireMemberProps> = ({
     dispatch(getTopic(require?.member));
   }, [dispatch, require?.member]);
   return (
-    <div className="p-3 border shadow-lg">
+    <div className="p-3 border shadow-lg rounded-xl">
       <div className="flex gap-4 items-center">
         <Avatar
           online={true}
@@ -99,7 +99,7 @@ export const CardRequireMember: FC<ICardRequireMemberProps> = ({
             <p className="font-normal">{require?.member?.class}</p>
           </div>
 
-          <p className="capitalize">{require?.member?.major}</p>
+          <p className="capitalize">Major: {require?.member?.major}</p>
         </div>
       </div>
       <div className="py-1">

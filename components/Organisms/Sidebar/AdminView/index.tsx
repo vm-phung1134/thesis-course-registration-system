@@ -7,11 +7,13 @@ export interface ISidebarAdminViewProps {}
 export const SidebarAdminView: FC<ISidebarAdminViewProps> = ({}) => {
   return (
     <div className="fixed top-0 left-0 bottom-0">
-      <LogoApp
-        width={30}
-        height={30}
-        className="text-green-700 font-bold text-xl"
-      />
+      <div className="flex justify-center">
+        <LogoApp
+          width={30}
+          height={30}
+          className="text-green-700 font-bold text-xl justify-center"
+        />
+      </div>
       <ul className="menu gap-3">
         <li>
           <Link

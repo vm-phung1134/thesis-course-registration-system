@@ -53,7 +53,7 @@ export const NoSubscribeView: FC<INoSubscribeViewProps> = () => {
   const handleNextPage = () => {
     setCurrentPage((prevPage) => prevPage + 1);
   };
-  
+
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);

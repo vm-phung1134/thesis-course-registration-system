@@ -9,7 +9,7 @@ export interface ILogoAppProps {
 
 export const LogoApp: FC<ILogoAppProps> = ({ width, height, className }) => {
   return (
-    <div className="w-full flex py-8">
+    <div className="py-8">
       <div className="flex gap-3">
         <Image
           src="https://img.icons8.com/?size=512&id=Fpssohz57mWe&format=png"

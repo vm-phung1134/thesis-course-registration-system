@@ -13,7 +13,7 @@ export interface IBreadcrumbProps {
 
 export const Breadcrumb: FC<IBreadcrumbProps> = ({ dataBreadcrumb }) => {
   return (
-    <div className="text-sm breadcrumbs mt-2">
+    <div className="text-[13px] breadcrumbs mt-2 tracking-wider">
       <ul>
         {dataBreadcrumb.map((item, index) => {
           return (

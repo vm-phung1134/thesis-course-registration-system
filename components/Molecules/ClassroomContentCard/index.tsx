@@ -37,7 +37,7 @@ export const ClassroomContentCard: FC<IClassroomContentCardProps> = ({
           <NormalAvatar setSize="w-14" photoSrc={item?.lecturer?.photoSrc} />
         </div>
         <div className="flex flex-col">
-          <p className="text-sm uppercase text-gray-600 py-2">Information</p>
+          <p className="text-xs uppercase text-green-700 py-2">Information</p>
           <ul>
             <ItemUserInfor
               title="Major"
@@ -47,7 +47,7 @@ export const ClassroomContentCard: FC<IClassroomContentCardProps> = ({
             <ItemUserInfor title="Email" content={item?.lecturer?.email} />
             <ItemUserInfor title="Phone" content={item?.lecturer?.phone} />
           </ul>
-          <p className="text-sm uppercase text-gray-600 py-2">Topics</p>
+          <p className="text-xs uppercase text-green-700 py-2">Topics</p>
           {/* <TopicTag arrTopics={item?.topicTags} /> */}
         </div>
         {checkStatusWaiting(item) ? (
@@ -62,7 +62,7 @@ export const ClassroomContentCard: FC<IClassroomContentCardProps> = ({
             <Button
               otherType="subscribe"
               title="Waiting..."
-              className="hover:bg-[#165b31] w-28 border-none btn-sm bg-green-700 text-white"
+              className="hover:bg-[#165b31] w-28 border-none rounded-none btn-sm bg-green-700 text-white"
             />
           </div>
         ) : (
@@ -117,7 +117,7 @@ export const ClassroomContentCard: FC<IClassroomContentCardProps> = ({
                     otherType="subscribe"
                     title="Subscribe"
                     handleActions={handleSubcribeClass}
-                    className="hover:bg-[#165b31] w-28 border-none btn-sm bg-green-700 text-white"
+                    className="hover:bg-[#165b31] w-28 border-none rounded-none btn-sm bg-green-700 text-white"
                   />
                 )}
               </>

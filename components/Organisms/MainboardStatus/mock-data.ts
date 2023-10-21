@@ -12,6 +12,11 @@ export const BREADCRUMB_MAINBOARD: IBreadcrumbItem[] = [
     href: "/mainboard",
     title: "Mainboard",
   },
+  {
+    id: "3",
+    href: "/",
+    title: "Class Registration",
+  },
 ];
 
 export const DATA_FILTER_COURSE: IOptionItem[] = [

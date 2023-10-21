@@ -26,7 +26,7 @@ export const SearchForm: FC<ISearchFormProps> = ({}) => {
         const { values } = formik;
         return (
           <Form>
-            <div className="flex border w-96 px-3 items-center">
+            <div className="flex border w-96 px-3 items-center rounded-full">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-full w-5 flex-none"
@@ -46,7 +46,7 @@ export const SearchForm: FC<ISearchFormProps> = ({}) => {
                 placeholder="Search for anything..."
                 type="text"
                 id="search"
-                className="input dark:bg-black h-10 text-[15px] focus:outline-none rounded-none flex-1"
+                className="input placeholder:text-gray-300 placeholder:text-sm placeholder:font-thin placeholder:tracking-wide rounded-full dark:bg-black h-10 text-[15px] focus:outline-none flex-1"
               />
             </div>
           </Form>
