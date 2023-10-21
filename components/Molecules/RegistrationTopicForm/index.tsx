@@ -113,13 +113,13 @@ export const RegistrationTopicForm: FC<IRegistrationTopicFormProps> = ({
         const { values } = formik;
         return (
           <Form>
-            <TitleFormField
-              className="text-base uppercase text-green-700 font-medium mb-5"
-              title="Registration of research topics"
-            />
+            <h4 className="text-xl font-bold mb-5">
+              Registration of research topics
+            </h4>
             <FormField
               placeholder="Ex: Build a website..."
               type="text"
+              className="rounded-xl bg-slate-100 border-none"
               label="Name of research topic"
               nameField="title"
               value={values?.title}
@@ -129,12 +129,14 @@ export const RegistrationTopicForm: FC<IRegistrationTopicFormProps> = ({
                 placeholder="Ex: Website, Mobile, AI..."
                 type="text"
                 label="Type of topic"
+                className="rounded-xl bg-slate-100 border-none"
                 nameField="typeTopic"
                 value={values?.typeTopic}
               />
               <FormField
                 placeholder="Ex: 2"
                 type="number"
+                className="rounded-xl bg-slate-100 border-none"
                 label="Number of team member"
                 nameField="memberQuantiy"
                 value={values?.memberQuantiy}
@@ -144,12 +146,14 @@ export const RegistrationTopicForm: FC<IRegistrationTopicFormProps> = ({
               placeholder="Ex: nameb1910xxx@student.ctu.edu.vn"
               type="text"
               label="Email member"
+              className="rounded-xl bg-slate-100 border-none"
               nameField="memberEmail"
               value={values?.memberEmail}
             />
             <FormField
               type="text"
               label="Description"
+              className="rounded-xl bg-slate-100 border-none"
               nameField="description"
               value={values?.description}
             />
@@ -161,8 +165,8 @@ export const RegistrationTopicForm: FC<IRegistrationTopicFormProps> = ({
               />
               <Button
                 type="submit"
-                title="Confirm"
-                className="hover:bg-[#165b31] bg-green-700 text-white px-5"
+                title="Save changes"
+                className="hover:bg-[#165b31] rounded-xl bg-green-700 text-white px-8"
               />
             </div>
           </Form>

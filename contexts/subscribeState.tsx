@@ -23,14 +23,15 @@ export const useSubscribeStateContext = () => useContext(SubscribeStateContext);
 export const SubscribeStateContextProvider: React.FC<SubscribeStateProps> = ({
   children,
 }) => {
-  const [user] = useUserCookies();
+  const { currentUser } = useCurrentUser();
+  console.log(currentUser)
   const dispatch = useAppDispatch();
   const { data: subscribeState } = useQuery<
     IMemberObject[] | { status: string }
   >({
-    queryKey: ["subscribe-state", user],
+    queryKey: ["subscribe-state", currentUser],
     queryFn: async () => {
-      const action = await dispatch(checkStateSubscribe(user));
+      const action = await dispatch(checkStateSubscribe(currentUser));
       return action.payload || [];
     },
     initialData: [],

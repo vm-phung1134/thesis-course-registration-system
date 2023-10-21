@@ -215,8 +215,8 @@ export const SidebarStudentView: FC<ISidebarStudentViewProps> = ({}) => {
               className="h-5 w-5"
               stroke="currentColor"
               fill="none"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             >
               <path stroke="none" d="M0 0h24v24H0z"></path>
               <polyline points="7 8 3 12 7 16"></polyline>

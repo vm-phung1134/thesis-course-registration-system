@@ -6,6 +6,7 @@ import {
   TitleFormField,
 } from "@/components/Atoms";
 import { SELECT_MULTI_TOPIC_KEY } from "@/components/Atoms/SelectMulti/mock-data";
+import { ROLE_ASSIGNMENT } from "@/contexts/authContext";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { IAuthObject } from "@/interface/auth";
 import { ITopicKeyObject } from "@/interface/classroom";
@@ -69,9 +70,7 @@ export const InforUserForm: FC<IInforUserFormProps> = ({
               <SnipperRound />
             ) : (
               <Form>
-                <h4 className="uppercase text-xl font-bold mb-5">
-                  Update profile
-                </h4>
+                <h4 className="text-xl font-bold mb-5">Update profile</h4>
                 <FormField
                   type="text"
                   label="Full name"
@@ -117,18 +116,18 @@ export const InforUserForm: FC<IInforUserFormProps> = ({
                     value={values.email}
                   />
                 </div>
-
-                <div className="mb-4 flex flex-col gap-2">
-                  <label className="text-sm tracking-wide font-medium">
-                    Topics research
-                  </label>
-                  <SelectMulti
-                    setSelected={setSelected}
-                    selected={selected}
-                    options={SELECT_MULTI_TOPIC_KEY}
-                  />
-                </div>
-
+                {values.role === ROLE_ASSIGNMENT.LECTURER && (
+                  <div className="mb-4 flex flex-col gap-2">
+                    <label className="text-sm tracking-wide font-medium">
+                      Topics research
+                    </label>
+                    <SelectMulti
+                      setSelected={setSelected}
+                      selected={selected}
+                      options={SELECT_MULTI_TOPIC_KEY}
+                    />
+                  </div>
+                )}
                 <div className="flex justify-end items-center">
                   <Button
                     setToggle={setToggle}

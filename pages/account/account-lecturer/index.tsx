@@ -39,7 +39,7 @@ function AccountLecturerPage() {
                   <div className="flex gap-3 items-center p-5">
                     <NormalAvatar
                       setSize="w-16"
-                      photoSrc="https://cit.ctu.edu.vn/images/cit2023/anh_dai_dien/CNTT/LHQBao.jpg"
+                      photoSrc={currentUser.photoSrc}
                     />
                     <div>
                       <h3 className="text-lg font-medium capitalize">
@@ -140,7 +140,7 @@ function AccountLecturerPage() {
                 </div>
               </section>
             </div>
-            <dialog id="my_modal_4" className={modalClass}>
+            <dialog id="my_modal_lecturer" className={modalClass}>
               <div className="w-5/12 bg-white p-5 h-fit shadow-2xl rounded-xl">
                 <InforUserForm
                   values={currentUser}
