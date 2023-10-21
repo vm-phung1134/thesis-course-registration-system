@@ -11,4 +11,9 @@ export const BREADCRUMB_ACCOUNT_LECTURER: IBreadcrumbItem[] = [
     href: "/account-lecturer",
     title: "Account personal",
   },
+  {
+    id: "3",
+    href: "/",
+    title: "Account settings",
+  },
 ];

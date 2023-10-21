@@ -7,6 +7,7 @@ export interface IFormFieldProps {
   nameField: string;
   placeholder?: string;
   value: string | number | Date;
+  className?: string;
 }
 
 export const FormField: FC<IFormFieldProps> = ({
@@ -14,15 +15,16 @@ export const FormField: FC<IFormFieldProps> = ({
   type,
   nameField,
   placeholder,
+  className,
   value,
 }) => {
   return (
     <div className="flex flex-col gap-2 mb-4 w-full">
-      <label className="text-sm tracking-wide" htmlFor={nameField}>
+      <label className="text-sm tracking-wide font-medium" htmlFor={nameField}>
         {label}
       </label>
       <Field
-        className="input placeholder:text-sm border-gray-400 rounded-full text-sm focus:outline-none w-full"
+        className={`${className} input placeholder:text-sm  border-gray-400 rounded-full text-sm focus:outline-none w-full`}
         type={type}
         id={nameField}
         placeholder={placeholder}
