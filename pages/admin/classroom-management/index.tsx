@@ -40,16 +40,19 @@ function ClassroomManagement() {
             <Breadcrumb
               dataBreadcrumb={BREADCRUMB_ADMIN_CLASSROOM_MANAGEMENT}
             />
-            <h4 className="text-base uppercase text-green-700 font-medium mt-3">
-              Classroom management
-            </h4>
+            <div className="my-3 py-2 flex gap-2 items-center">
+              <h4 className="text-xl capitalize text-green-700 font-medium ">
+                Classroom <span className="text-green-700"> management</span>
+              </h4>
+              <div className="flex-grow h-[0.5px] bg-green-700"></div>
+            </div>
             <ul className="flex gap-3 mt-2 border-b text-[15px] cursor-pointer">
               {menuItems.map((item) => (
                 <li
                   key={item.id}
                   className={`px-3 py-2 ${
                     selectedItem.id === item.id
-                      ? "border-green-700 border-b-2"
+                      ? "border-orange-600 border-b-2 text-orange-600"
                       : ""
                   }`}
                   onClick={() => handleClick(item)}

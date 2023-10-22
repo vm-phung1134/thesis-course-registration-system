@@ -65,17 +65,22 @@ export const CreateRoomForm: FC<ICreateRoomFormProps> = ({}) => {
           <>
             {" "}
             <Form>
+              <h4 className="text-xl font-bold mb-5">
+                Create new Room council
+              </h4>
               <div className="flex gap-5">
                 <FormField
                   label="Name room"
                   type="text"
                   nameField="name"
+                  className="rounded-xl bg-slate-100 border-none"
                   placeholder="Ex: CT550/HK1-2023"
                   value={values.name}
                 />
                 <FormField
                   label="Type"
                   type="text"
+                  className="rounded-xl bg-slate-100 border-none"
                   nameField="type"
                   value={values.type}
                 />
@@ -84,11 +89,13 @@ export const CreateRoomForm: FC<ICreateRoomFormProps> = ({}) => {
                 label="Department"
                 type="text"
                 nameField="school"
+                className="rounded-xl bg-slate-100 border-none"
                 value={values.school}
               />
               <FormField
                 label="Description"
                 type="text"
+                className="rounded-xl bg-slate-100 border-none"
                 nameField="description"
                 value={values.description || ""}
               />
@@ -100,7 +107,7 @@ export const CreateRoomForm: FC<ICreateRoomFormProps> = ({}) => {
                 <Button
                   type="submit"
                   title="Create room"
-                  className="hover:bg-[#165b31] normal-case bg-green-700 text-white px-10"
+                  className="hover:bg-[#165b31] rounded-xl normal-case bg-green-700 text-white px-10"
                 />
               </div>
             </Form>

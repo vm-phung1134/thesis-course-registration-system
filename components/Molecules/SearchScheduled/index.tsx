@@ -23,7 +23,7 @@ export const FilterScheduledForm: FC<IFilterScheduledFormProps> = ({
         const { values } = formik;
         return (
           <Form>
-            <div className="flex border w-80 px-3 items-center">
+            <div className="flex rounded-full w-80 px-3 items-center bg-gray-100">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-full w-5 flex-none"
@@ -43,7 +43,7 @@ export const FilterScheduledForm: FC<IFilterScheduledFormProps> = ({
                 placeholder={holderText}
                 type="text"
                 id="search"
-                className="input placeholder:tracking-wide tracking-wide dark:bg-black h-8 text-sm focus:outline-none placeholder:font-thin rounded-none flex-1"
+                className="input placeholder:tracking-wide bg-gray-100 tracking-wide dark:bg-black h-8 text-sm focus:outline-none placeholder:font-thin flex-1"
               />
             </div>
           </Form>

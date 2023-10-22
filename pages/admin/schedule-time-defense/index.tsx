@@ -70,8 +70,8 @@ function DashboardPage() {
                       </li>
                     </ul>
                   </div>
-                  <div className="h-full w-60 shadow-xl py-3 px-5 cursor-pointer">
-                    <h4 className="uppercase text-xs py-2 text-green-700">
+                  <div className="h-full w-60 shadow-xl bg-slate-100 rounded-xl py-3 px-5 cursor-pointer">
+                    <h4 className="text-sm font-bold py-2 text-green-700">
                       Related Shortcut
                     </h4>
                     <ul className="text-sm flex flex-col gap-2">
@@ -84,21 +84,12 @@ function DashboardPage() {
               </div>
               {/* LIST AFTER SCHEDULED */}
               <div className="px-3">
-                <h4 className="text-lg font-medium py-5">Progress scheduled</h4>
-                <div className="flex justify-between">
-                  <div className="flex">
-                    <Button
-                      title="Recently date"
-                      className="px-5 btn-sm bg-gray-800 text-white"
-                    />
-                    <Button title="Ascending order" className="px-5 btn-sm" />
-                    <Button title="All" className="px-5 btn-sm" />
-                  </div>
-                  <div>
-                    <FilterScheduledForm holderText="Filter schedule time ..." />
-                  </div>
+                <div className="flex justify-between items-center">
+                  <div className="mb-3">
+                  <h4 className="font-medium">Progress scheduled</h4>
+                  <p className="text-sm text-slate-500">Total 8 schedules</p>
                 </div>
-                <div className="flex justify-end mt-3">
+                <div className="flex justify-end my-3">
                   <ul className="flex gap-2 text-sm cursor-pointer">
                     <li className="text-green-700">Save to database</li>
                     <span className="text-gray-400">|</span>
@@ -107,39 +98,57 @@ function DashboardPage() {
                     <li className="text-red-700">Clear all</li>
                   </ul>
                 </div>
-                <div className="mt-3">
-                  <div className="overflow-x-auto">
+                </div>
+                
+                <div className="flex justify-between">
+                  <div className="flex">
+                    <Button
+                      title="Recently date"
+                      className="px-5 btn-sm bg-gray-800 text-white rounded-none"
+                    />
+                    <Button
+                      title="Ascending order"
+                      className="px-5 btn-sm rounded-none"
+                    />
+                    <Button title="All" className="px-5 btn-sm rounded-none" />
+                  </div>
+                  <div>
+                    <FilterScheduledForm holderText="Filter schedule time ..." />
+                  </div>
+                </div>
+                <div className="mt-3 shadow-xl">
+                  <div className="overflow-x-auto rounded-2xl">
                     <table className="table-auto w-full">
-                      <thead className="text-sm font-normal capitalize text-gray-200 bg-green-700">
+                      <thead className="text-sm font-medium capitalize text-gray-200 bg-green-700">
                         <tr>
                           <th className="px-5 py-3 whitespace-nowrap">
-                            <div className="font-normal text-left">
+                            <div className="font-medium text-left">
                               Name council
                             </div>
                           </th>
                           <th className="px-5 py-3 whitespace-nowrap">
-                            <div className="font-normal text-left">Room</div>
+                            <div className="font-medium text-left">Room</div>
                           </th>
                           <th className="px-5 py-3 whitespace-nowrap">
-                            <div className="font-normal text-left">Date</div>
+                            <div className="font-medium text-left">Date</div>
                           </th>
                           <th className="px-5 py-3 whitespace-nowrap">
-                            <div className="font-normal text-center">
+                            <div className="font-medium text-center">
                               Quantity member council
                             </div>
                           </th>
                           <th className="px-5 py-3 whitespace-nowrap">
-                            <div className="font-normal text-center">
+                            <div className="font-medium text-center">
                               Quantity student defense
                             </div>
                           </th>
                           <th className="px-5 py-3 whitespace-nowrap">
-                            <div className="font-normal text-center">
+                            <div className="font-medium text-center">
                               Create at
                             </div>
                           </th>
                           <th className="px-5 py-3 whitespace-nowrap">
-                            <div className="font-normal text-end">Actions</div>
+                            <div className="font-medium text-end">Actions</div>
                           </th>
                         </tr>
                       </thead>

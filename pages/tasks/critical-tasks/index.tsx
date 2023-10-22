@@ -71,9 +71,12 @@ function CriticalTasks() {
           <>
             <Breadcrumb dataBreadcrumb={BREADCRUMB_CRITICAL_TASKS} />
             <div className="py-3 w-[70%]">
-              <p className="font-bold uppercase text-xl py-2 text-green-700">
-                Critical Tasks
-              </p>
+            <div className="my-3 py-2 flex gap-2 items-center">
+              <h4 className="text-xl capitalize text-green-700 font-medium ">
+                Critical <span className="text-orange-500"> Tasks</span>
+              </h4>
+              <div className="flex-grow h-[0.5px] bg-green-700"></div>
+            </div>
               <div className="flex items-center gap-5">
                 <div className="flex-grow">
                   <SelectInForm

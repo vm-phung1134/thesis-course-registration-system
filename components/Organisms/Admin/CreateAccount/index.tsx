@@ -52,29 +52,43 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
     <div className="grid grid-cols-12 gap-5">
       <div className="col-span-7 mt-3">
         <div className="flex justify-between items-center py-2">
-          <h4 className="pb-3 font-medium">CIT HR systems</h4>
+          <div className="mb-3">
+            <h4 className="font-medium">CIT HR systems</h4>
+            <p className="text-sm text-slate-500">Total 15 lecturers</p>
+          </div>
           {checkedLecturers.length > 0 ? (
             <Button
-              className="bg-green-700 btn-sm px-8 text-white"
+              className="bg-green-700 btn-sm px-8 rounded-none text-white"
               title="Create account"
               setToggle={setOpenCreateAccount}
               toggle={openCreateAccount}
             />
           ) : (
             <Button
-              className=" btn-sm px-8 text-gray-800"
+              className=" btn-sm px-8 text-gray-800 rounded-none"
               title="Create account"
             />
           )}
         </div>
-        <div className="flex justify-end mb-2">
+        <div className="flex justify-between mb-2">
+          <div className="flex">
+            <Button
+              title="Recently date"
+              className="px-5 btn-sm bg-gray-800 text-white rounded-none hover:bg-gray-700"
+            />
+            <Button
+              title="Ascending order"
+              className="px-5 btn-sm rounded-none"
+            />
+            <Button title="All" className="px-5 btn-sm rounded-none" />
+          </div>
           <FilterScheduledForm holderText="Filter lecturer ..." />
         </div>
-        <div className="w-full mx-auto">
+        <div className="w-full mx-auto shadow-xl rounded-2xl">
           <div className="flex flex-col">
             <div className="overflow-x-auto">
               <div className="inline-block min-w-full align-middle">
-                <div className="overflow-hidden">
+                <div className="overflow-hidden rounded-2xl">
                   <table className="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-700">
                     <thead className="bg-green-700 dark:bg-gray-700">
                       <tr>
@@ -175,20 +189,34 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
       </div>
       <div className="col-span-5 m-3">
         <div className="flex justify-between items-center py-2">
-          <h4 className="pb-3 font-medium">Account system</h4>
+          <div className="mb-3">
+            <h4 className="font-medium">Account system</h4>
+            <p className="text-sm text-slate-500">Total 15 accounts</p>
+          </div>
           <Button
-            className="bg-gray-700 btn-sm px-8 text-white"
+            className="bg-gray-700 rounded-none btn-sm px-8 text-white"
             title="Clear Account"
           />
         </div>
-        <div className="flex justify-end mb-2">
+        <div className="flex justify-start flex-col items-start gap-3 mb-2">
           <FilterScheduledForm holderText="Account ..." />
+          <div className="flex">
+            <Button
+              title="Recently date"
+              className="px-5 btn-sm bg-gray-800 text-white rounded-none hover:bg-gray-700"
+            />
+            <Button
+              title="Ascending order"
+              className="px-5 btn-sm rounded-none"
+            />
+            <Button title="All" className="px-5 btn-sm rounded-none" />
+          </div>
         </div>
-        <div className="w-full mx-auto">
+        <div className="w-full mx-auto rounded-2xl shadow-xl">
           <div className="flex flex-col">
             <div className="overflow-x-auto">
               <div className="inline-block min-w-full align-middle">
-                <div className="overflow-hidden">
+                <div className="overflow-hidden rounded-2xl">
                   <table className="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-700">
                     <thead className="bg-green-700 dark:bg-gray-700">
                       <tr>

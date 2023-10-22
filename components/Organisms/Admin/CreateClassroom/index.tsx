@@ -104,30 +104,44 @@ export const CreateClassroomTab: FC<ICreateClassroomTab> = ({}) => {
     <div className="flex flex-col gap-5 mt-5">
       <div className="flex-grow">
         <div className="flex justify-between items-center my-2">
-          <h4 className="pb-3 font-medium">All account lecturer</h4>
+          <div className="mb-3">
+            <h4 className="font-medium">Account lecturers</h4>
+            <p className="text-sm text-slate-500">Total 3 lecturer accounts</p>
+          </div>
           {checkedAccounts.length > 0 ? (
             <Button
-              className="bg-green-700 btn-sm hover:bg-green-800 px-8 text-white"
-              title="Create classroom"
+              className="bg-green-700 rounded-none btn-sm hover:bg-green-800 px-8 text-white"
+              title="Add new classroom"
               toggle={openCreateClass}
               setToggle={setOpenCreateClass}
             />
           ) : (
             <Button
-              className=" btn-sm px-8 text-gray-800"
-              title="Create classroom"
+              className="px-8 bg-slate-500 rounded-none btn-sm text-white hover:bg-gray-600"
+              title="Add new classroom"
             />
           )}
         </div>
-        <div className="flex justify-end mb-2">
-          <FilterScheduledForm holderText="Filter lecturer ..." />
+        <div className="flex justify-between mb-2">
+          <div className="flex">
+            <Button
+              title="Recently date"
+              className="px-5 btn-sm bg-gray-800 text-white rounded-none hover:bg-gray-700"
+            />
+            <Button
+              title="Ascending order"
+              className="px-5 btn-sm rounded-none"
+            />
+            <Button title="All" className="px-5 btn-sm rounded-none" />
+          </div>
+          <FilterScheduledForm holderText="Search lecturer ..." />
         </div>
         {/* TABLE ACCOUNT LECTURERS */}
-        <div className="w-full mx-auto">
+        <div className="w-full mx-auto shadow-xl rounded-2xl">
           <div className="flex flex-col">
             <div className="overflow-x-auto">
               <div className="inline-block min-w-full align-middle">
-                <div className="overflow-hidden">
+                <div className="overflow-hidden rounded-2xl border">
                   <table className="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-700">
                     <thead className="bg-green-700 dark:bg-gray-700">
                       <tr>
@@ -149,31 +163,31 @@ export const CreateClassroomTab: FC<ICreateClassroomTab> = ({}) => {
                         </th>
                         <th
                           scope="col"
-                          className="py-3 px-6 text-sm font-normal tracking-wider text-left text-gray-200  dark:text-green-400"
+                          className="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-200  dark:text-green-400"
                         >
                           Email
                         </th>
                         <th
                           scope="col"
-                          className="py-3 px-6 text-sm font-normal tracking-wider text-left text-gray-200  dark:text-green-400"
+                          className="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-200  dark:text-green-400"
                         >
                           Full Name
                         </th>
                         <th
                           scope="col"
-                          className="py-3 px-6 text-sm font-normal tracking-wider text-left text-gray-200  dark:text-green-400"
+                          className="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-200  dark:text-green-400"
                         >
                           Department
                         </th>
                         <th
                           scope="col"
-                          className="py-3 px-6 text-sm font-normal tracking-wider text-left text-gray-200  dark:text-green-400"
+                          className="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-200  dark:text-green-400"
                         >
                           Field
                         </th>
                         <th
                           scope="col"
-                          className="py-3 px-6 text-sm font-normal tracking-wider text-left text-gray-200  dark:text-green-400"
+                          className="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-200  dark:text-green-400"
                         >
                           Manager
                         </th>
@@ -245,7 +259,10 @@ export const CreateClassroomTab: FC<ICreateClassroomTab> = ({}) => {
       </div>
       <div className="flex-grow">
         <div className="flex justify-between items-center my-2">
-          <h4 className="pb-3 font-medium">Classrooms</h4>
+          <div className="mb-3">
+            <h4 className="font-medium">Classrooms</h4>
+            <p className="text-sm text-slate-500">Total 3 classrooms</p>
+          </div>
           {checkedClassrooms.length > 0 ? (
             <>
               <ul className="flex gap-2 text-sm cursor-pointer">
@@ -270,15 +287,26 @@ export const CreateClassroomTab: FC<ICreateClassroomTab> = ({}) => {
             </div>
           )}
         </div>
-        <div className="flex justify-end mb-2">
-          <FilterScheduledForm holderText="Filter classroom ..." />
+        <div className="flex justify-between mb-2">
+          <div className="flex">
+            <Button
+              title="Recently date"
+              className="px-5 btn-sm bg-gray-800 text-white rounded-none"
+            />
+            <Button
+              title="Ascending order"
+              className="px-5 btn-sm rounded-none"
+            />
+            <Button title="All" className="px-5 btn-sm rounded-none" />
+          </div>
+          <FilterScheduledForm holderText="Search classroom ..." />
         </div>
         {/* TABLE CLASSROOM */}
-        <div className="w-full mx-auto">
+        <div className="w-full mx-auto shadow-xl rounded-2xl">
           <div className="flex flex-col">
             <div className="overflow-x-auto">
               <div className="inline-block min-w-full align-middle">
-                <div className="overflow-hidden">
+                <div className="overflow-hidden  rounded-2xl">
                   <table className="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-700">
                     <thead className="bg-green-700 dark:bg-gray-700">
                       <tr>
@@ -300,43 +328,43 @@ export const CreateClassroomTab: FC<ICreateClassroomTab> = ({}) => {
                         </th>
                         <th
                           scope="col"
-                          className="py-3 px-6 text-sm font-normal tracking-wider text-left text-gray-200  dark:text-green-400"
+                          className="py-3 px-6 text-sm font-medium capitalize tracking-wider text-left text-gray-200  dark:text-green-400"
                         >
                           status
                         </th>
                         <th
                           scope="col"
-                          className="py-3 px-6 text-sm font-normal tracking-wider text-left text-gray-200  dark:text-green-400"
+                          className="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-200  dark:text-green-400"
                         >
                           Name classroom
                         </th>
                         <th
                           scope="col"
-                          className="py-3 px-6 text-sm font-normal tracking-wider text-left text-gray-200  dark:text-green-400"
+                          className="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-200  dark:text-green-400"
                         >
                           Lecturer
                         </th>
                         <th
                           scope="col"
-                          className="py-3 px-6 text-sm font-normal tracking-wider text-left text-gray-200  dark:text-green-400"
+                          className="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-200  dark:text-green-400"
                         >
                           Course
                         </th>
                         <th
                           scope="col"
-                          className="py-3 px-6 text-sm font-normal tracking-wider text-left text-gray-200  dark:text-green-400"
+                          className="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-200  dark:text-green-400"
                         >
                           Quantity
                         </th>
                         <th
                           scope="col"
-                          className="py-3 px-6 text-sm font-normal tracking-wider text-left text-gray-200  dark:text-green-400"
+                          className="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-200  dark:text-green-400"
                         >
                           Manager
                         </th>
                         <th
                           scope="col"
-                          className="py-3 px-6 text-sm font-normal tracking-wider text-left text-gray-200  dark:text-green-400"
+                          className="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-200  dark:text-green-400"
                         >
                           Created at
                         </th>

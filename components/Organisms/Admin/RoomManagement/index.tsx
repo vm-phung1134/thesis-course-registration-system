@@ -50,24 +50,31 @@ export const CreateRoomTab: FC<ICreateRoomTab> = ({}) => {
         <CreateRoomForm />
       </div>
       <div className="col-span-7 mt-5">
+        <div className="mb-3">
+          <h4 className="font-medium">Room council</h4>
+          <p className="text-sm text-slate-500">Total 2 rooms</p>
+        </div>
         <div className="flex justify-between">
           <div className="flex mb-3">
             <Button
               title="Recently date"
-              className="px-5 btn-sm bg-gray-800 text-white"
+              className="px-5 btn-sm bg-gray-800 text-white rounded-none"
             />
-            <Button title="Ascending order" className="px-5 btn-sm" />
-            <Button title="All" className="px-5 btn-sm" />
+            <Button
+              title="Ascending order"
+              className="px-5 btn-sm rounded-none"
+            />
+            <Button title="All" className="px-5 btn-sm rounded-none" />
           </div>
           <div>
-            <FilterScheduledForm holderText="Filter schedule time ..." />
+            <FilterScheduledForm holderText="Search schedule time ..." />
           </div>
         </div>
-        <div className="w-full mx-auto">
+        <div className="w-full mx-auto shadow-xl rounded-2xl">
           <div className="flex flex-col">
             <div className="overflow-x-auto">
               <div className="inline-block min-w-full align-middle">
-                <div className="overflow-hidden">
+                <div className="overflow-hidden rounded-2xl">
                   <table className="min-w-full border divide-y divide-gray-200 table-fixed dark:divide-gray-700">
                     <thead className="bg-green-700 dark:bg-gray-700">
                       <tr>

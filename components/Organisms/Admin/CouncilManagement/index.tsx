@@ -100,7 +100,10 @@ export const CouncilManagementTab: FC<ICouncilManagementTab> = ({}) => {
     <div className="flex flex-col gap-5 mt-5">
       <div className="flex-grow">
         <div className="flex justify-between items-center my-2">
-          <h4 className="pb-3 font-medium">List of lecturers</h4>
+          <div className="mb-3">
+            <h4 className="font-medium">Lecturers</h4>
+            <p className="text-sm text-slate-500">Total 15 lecturers</p>
+          </div>
           {checkedLecturers.length > 0 ? (
             <ul className="flex gap-2 text-sm cursor-pointer">
               <li
@@ -128,21 +131,24 @@ export const CouncilManagementTab: FC<ICouncilManagementTab> = ({}) => {
           <div className="flex mb-3">
             <Button
               title="Recently date"
-              className="px-5 btn-sm bg-gray-800 text-white"
+              className="px-5 btn-sm bg-gray-800 text-white rounded-none"
             />
-            <Button title="Ascending order" className="px-5 btn-sm" />
-            <Button title="All" className="px-5 btn-sm" />
+            <Button
+              title="Ascending order"
+              className="px-5 btn-sm rounded-none"
+            />
+            <Button title="All" className="px-5 btn-sm rounded-none" />
           </div>
           <div>
             <FilterScheduledForm holderText="Filter schedule time ..." />
           </div>
         </div>
         {/* TABLE LECTURERS */}
-        <div className="w-full mx-auto">
+        <div className="w-full mx-auto rounded-2xl shadow-xl">
           <div className="flex flex-col">
             <div className="overflow-x-auto">
               <div className="inline-block min-w-full align-middle">
-                <div className="overflow-hidden">
+                <div className="overflow-hidden rounded-2xl">
                   <table className="min-w-full border divide-y divide-gray-200 table-fixed dark:divide-gray-700">
                     <thead className="bg-green-700 dark:bg-gray-700">
                       <tr>
@@ -260,29 +266,30 @@ export const CouncilManagementTab: FC<ICouncilManagementTab> = ({}) => {
       </div>
       <div className="flex-grow">
         <div className="flex justify-between items-center my-2">
-          <h4 className="pb-3 font-medium">
-            Council list has been established
-          </h4>
+          <div className="mb-3">
+            <h4 className="font-medium">Council list has been established</h4>
+            <p className="text-sm text-slate-500">Total 15 Councils</p>
+          </div>
         </div>
         <div className="flex justify-between">
-          <div className="flex mb-3">
+          <div className="flex mb-3 rounded-none">
             <Button
               title="Recently date"
-              className="px-5 btn-sm bg-gray-800 text-white"
+              className="px-5 btn-sm bg-gray-800 text-white rounded-none"
             />
-            <Button title="Ascending order" className="px-5 btn-sm" />
-            <Button title="All" className="px-5 btn-sm" />
+            <Button title="Ascending order" className="px-5 btn-sm rounded-none" />
+            <Button title="All" className="px-5 btn-sm rounded-none" />
           </div>
           <div>
-            <FilterScheduledForm holderText="Filter schedule time ..." />
+            <FilterScheduledForm holderText="Search schedule time ..." />
           </div>
         </div>
         {/* TABLE COUNCIL */}
-        <div className="w-full mx-auto">
+        <div className="w-full mx-auto rounded-2xl shadow-xl">
           <div className="flex flex-col">
             <div className="overflow-x-auto">
               <div className="inline-block min-w-full align-middle">
-                <div className="overflow-hidden">
+                <div className="overflow-hidden rounded-2xl">
                   <table className="min-w-full divide-y border divide-gray-200 table-fixed dark:divide-gray-700">
                     <thead className="bg-green-700 dark:bg-gray-700">
                       <tr>
@@ -365,7 +372,7 @@ export const CouncilManagementTab: FC<ICouncilManagementTab> = ({}) => {
                           <td className="py-4 px-6 lowercase text-sm text-gray-900 whitespace-nowrap dark:text-white">
                             {council?.email}
                           </td>
-                          <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
+                          <td className="py-4 px-6 capitalize text-sm text-gray-900 whitespace-nowrap dark:text-white">
                             {council?.name}
                           </td>
                           <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap capitalize dark:text-white">

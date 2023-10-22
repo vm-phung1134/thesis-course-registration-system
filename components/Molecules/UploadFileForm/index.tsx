@@ -80,7 +80,7 @@ export const UploadFileForm: FC<IUploadFormProps> = ({ exercise, submit }) => {
     >
       {({ setFieldValue }) => (
         <Form>
-          <div className="w-full h-fit border border-dashed py-5 mb-5 relative">
+          <div className="w-full h-fit border rounded-xl border-dashed py-5 mb-5 relative">
             <div className="flex gap-3 flex-col h-full w-full items-center justify-center">
               {submit.status ? (
                 // GET FILE HAS BEEN SUBMITED
@@ -88,7 +88,7 @@ export const UploadFileForm: FC<IUploadFormProps> = ({ exercise, submit }) => {
                   <ul className="text-sm w-full flex flex-col gap-2 mb-10 font-medium px-2">
                     {submit?.attachments.map((file) => (
                       <li
-                        className="border flex gap-5 items-center px-5 py-1"
+                        className="bg-slate-100 rounded-lg flex gap-5 items-center px-5 py-1"
                         key={file.id}
                       >
                         <i className="fa-regular fa-file-word"></i>
@@ -145,13 +145,13 @@ export const UploadFileForm: FC<IUploadFormProps> = ({ exercise, submit }) => {
           {submit.status ? (
             <Button
               type="button"
-              className="rounded-none hover:bg-green-600 w-full my-5 bg-green-700 text-white"
+              className="rounded-lg hover:bg-green-600 w-full my-5 bg-green-700 text-white"
               title="Cancel"
             />
           ) : (
             <Button
               type="submit"
-              className="rounded-none hover:bg-green-600 w-full my-5 bg-green-700 text-white"
+              className="rounded-lg hover:bg-green-600 w-full my-5 bg-green-700 text-white"
               title="Submit your report"
             />
           )}

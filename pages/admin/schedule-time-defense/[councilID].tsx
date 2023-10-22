@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Avatar, Breadcrumb, SnipperRound } from "@/components/Atoms";
+import {
+  Avatar,
+  Breadcrumb,
+  Button,
+  NormalAvatar,
+  SnipperRound,
+} from "@/components/Atoms";
 import { AdminTemplate } from "@/components/Templates";
 import { useAppDispatch } from "@/redux/store";
 import { getOneCouncilInScheduleStudent } from "@/redux/reducer/schedule-def/api";
@@ -7,8 +13,9 @@ import { ICouncilDef } from "@/interface/schedule";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
 import { BREADCRUMB_SCHEDULE_DEDTAIL } from "./mock-data";
+import { FilterScheduledForm } from "@/components/Molecules";
 
-function DashboardPage() {
+function ScheduleDetailPage() {
   const dispatch = useAppDispatch();
   const params = useSearchParams();
   const id = params.get("councilID") || "";
@@ -21,7 +28,7 @@ function DashboardPage() {
     },
   });
   let currentDate = new Date(
-    councilInSchedule?.schedule.timeSlots[0].timeSlot.date || ""
+    councilInSchedule?.schedule?.timeSlots[0]?.timeSlot?.date ?? "11 6, 2023"
   );
   const day = currentDate.getDate();
   const getDayInWeek = (numDay: number) => {
@@ -44,11 +51,15 @@ function DashboardPage() {
         ) : (
           <>
             <Breadcrumb dataBreadcrumb={BREADCRUMB_SCHEDULE_DEDTAIL} />
-            <h4 className="uppercase text-green-700 font-medium py-2">
-              Detail information schedule thesis defense
-            </h4>
+            <div className="my-3 py-2 flex gap-2 items-center">
+              <h4 className="text-xl capitalize text-green-700 font-medium ">
+                Detail information Schedule
+                <span className="text-orange-600"> thesis defense</span>
+              </h4>
+              <div className="flex-grow h-[0.5px] bg-green-700"></div>
+            </div>
             <div className="my-5">
-              <h5 className="font-medium text-sm tracking-wider my-2 text-gray-600 font-mono uppercase">
+              <h5 className="font-medium tracking-wider my-2 text-black">
                 Thesis committee member
               </h5>
               <div className="flex justify-between">
@@ -56,23 +67,33 @@ function DashboardPage() {
                   {councilInSchedule?.council.map((council) => (
                     <div
                       key={council.id}
-                      className="shadow-md w-fit px-5 py-3 flex flex-col justify-center"
+                      className="shadow-lg overflow-hidden relative w-fit rounded-xl px-5 py-3 flex flex-col justify-center"
                     >
-                      <p>
-                        Examinator:
-                        <span className="capitalize text-sm font-medium">
-                          {council.name}
-                        </span>
-                      </p>
-                      <div className="text-sm">
-                        <p>
-                          <span className="text-gray-500">Email: </span>
-                          {council.email}
+                      <div className="top-0 -left-10 bottom-0 bg-slate-50 absolute w-full h-full -skew-x-[30deg]"></div>
+                      <div className="absolute bottom-0 right-0">
+                        <NormalAvatar
+                          photoSrc={council.photoSrc}
+                          setSize="w-8"
+                        />
+                      </div>
+                      <div className="relative">
+                        <p className="text-sm font-semibold">
+                          Examinator -
+                          <span className="capitalize text-sm font-medium">
+                            {" "}
+                            {council.name}
+                          </span>
                         </p>
-                        <p>
-                          <span className="text-gray-500">Field: </span>
-                          {council.major}
-                        </p>
+                        <div className="text-sm">
+                          <p>
+                            <span className="text-gray-500">Email: </span>
+                            {council.email}
+                          </p>
+                          <p>
+                            <span className="text-gray-500">Field: </span>
+                            {council.major}
+                          </p>
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -182,40 +203,57 @@ function DashboardPage() {
               </div>
             </div>
             <div>
-              <h5 className="font-medium text-sm tracking-wider my-2 text-gray-600 font-mono uppercase">
-                Schedule defense of students
-              </h5>
-              <div className="mt-5">
-                <div className="overflow-x-auto">
+              <div className="mb-3">
+                <h4 className="font-medium">Schedule defense of students</h4>
+                <p className="text-sm text-slate-500">Total 12 students</p>
+              </div>
+              <div className="flex justify-between">
+                <div className="flex mb-3 rounded-none">
+                  <Button
+                    title="Recently date"
+                    className="px-5 btn-sm bg-gray-800 text-white rounded-none"
+                  />
+                  <Button
+                    title="Ascending order"
+                    className="px-5 btn-sm rounded-none"
+                  />
+                  <Button title="All" className="px-5 btn-sm rounded-none" />
+                </div>
+                <div>
+                  <FilterScheduledForm holderText="Search schedule time ..." />
+                </div>
+              </div>
+              <div className="mt-5 shadow-xl">
+                <div className="overflow-x-auto rounded-2xl">
                   <table className="table-auto w-full">
-                    <thead className="text-sm font-normal capitalize text-gray-200 bg-green-700">
+                    <thead className="text-sm font-medium capitalize text-gray-200 bg-green-700">
                       <tr>
                         <th className="px-5 py-3 whitespace-nowrap">
-                          <div className="font-normal text-left">Full name</div>
+                          <div className="font-medium text-left">Full name</div>
                         </th>
                         <th className="px-5 py-3 whitespace-nowrap">
-                          <div className="font-normal text-left">Email</div>
+                          <div className="font-medium text-left">Email</div>
                         </th>
                         <th className="px-5 py-3 whitespace-nowrap">
-                          <div className="font-normal text-left">Date</div>
+                          <div className="font-medium text-left">Date</div>
                         </th>
                         <th className="px-5 py-3 whitespace-nowrap">
-                          <div className="font-normal text-center">Room</div>
+                          <div className="font-medium text-center">Room</div>
                         </th>
                         <th className="px-5 py-3 whitespace-nowrap">
-                          <div className="font-normal text-center">Shift</div>
+                          <div className="font-medium text-center">Shift</div>
                         </th>
                         <th className="px-5 py-3 whitespace-nowrap">
-                          <div className="font-normal text-center">Time</div>
+                          <div className="font-medium text-center">Time</div>
                         </th>
                         <th className="px-5 py-3 whitespace-nowrap">
-                          <div className="font-normal text-end">Actions</div>
+                          <div className="font-medium text-end">Actions</div>
                         </th>
                       </tr>
                     </thead>
                     {
                       <tbody className="text-sm divide-y divide-gray-100">
-                        {councilInSchedule?.schedule.timeSlots
+                        {councilInSchedule?.schedule?.timeSlots
                           ?.filter((item) => item.timeSlot.shift === "Morning")
                           .map((student, index) => (
                             <React.Fragment key={index}>
@@ -231,7 +269,7 @@ function DashboardPage() {
                                           }
                                         />
                                       </div>
-                                      <div className="font-medium text-gray-800">
+                                      <div className="text-gray-800">
                                         {student.student.infor.name}
                                       </div>
                                     </div>
@@ -379,69 +417,4 @@ function DashboardPage() {
   );
 }
 
-export default DashboardPage;
-
-{
-  /* <tbody className="text-sm divide-y divide-gray-100">
-                        {scheduled?.thesis.map((scheduled, index) => (
-                          <React.Fragment key={index}>
-                            {scheduled?.schedule.timeSlots.map(
-                              (student, studentIndex) => (
-                                <React.Fragment key={studentIndex}>
-                                  {student.student.id && (
-                                    <tr>
-                                      <td className="px-5 py-2 whitespace-nowrap">
-                                        <div className="flex items-center">
-                                          <div className="w-10 h-10 flex-shrink-0 mr-2 sm:mr-3">
-                                            <Avatar
-                                              widthStr="50"
-                                              srcImg={
-                                                student.student.infor.photoSrc
-                                              }
-                                            />
-                                          </div>
-                                          <div className="font-medium text-gray-800">
-                                            {student.student.infor.name}
-                                          </div>
-                                        </div>
-                                      </td>
-                                      <td className="px-5 py-2 whitespace-nowrap">
-                                        <div className="text-left">
-                                          {student.student.infor.email}
-                                        </div>
-                                      </td>
-                                      <td className="px-5 py-2 whitespace-nowrap">
-                                        <div className="text-left">
-                                          {student.timeSlot.date}
-                                        </div>
-                                      </td>
-                                      <td className="px-5 py-2 whitespace-nowrap">
-                                        <div className="text-center">
-                                          {scheduled.schedule.room.name}
-                                        </div>
-                                      </td>
-                                      <td className="px-5 py-2 whitespace-nowrap">
-                                        <div className="text-center">
-                                          {student.timeSlot.shift}
-                                        </div>
-                                      </td>
-                                      <td className="px-5 py-2 whitespace-nowrap">
-                                        <div className="text-center">
-                                          {student.timeSlot.time}
-                                        </div>
-                                      </td>
-                                      <td className="px-5 py-2 whitespace-nowrap">
-                                        <div className="justify-end flex gap-3">
-                                          <button>Update</button>
-                                          <button>Detail</button>
-                                        </div>
-                                      </td>
-                                    </tr>
-                                  )}
-                                </React.Fragment>
-                              )
-                            )}
-                          </React.Fragment>
-                        ))}
-                      </tbody> */
-}
+export default ScheduleDetailPage;
