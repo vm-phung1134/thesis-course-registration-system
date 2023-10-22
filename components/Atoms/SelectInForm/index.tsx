@@ -23,12 +23,12 @@ export const SelectInForm: FC<ISelectInFormProps> = ({
   };
   return (
     <>
-      <p className="text-sm mb-2">{title}</p>
+      <p className="text-sm mb-2 font-medium">{title}</p>
       <Select
         styles={{
           control: (provided, state) => ({
             ...provided,
-            borderRadius: "none",
+            borderRadius: "0.75rem",
             fontSize: "14px",
             padding: "5px",
             boxShadow: state.isFocused ? "none" : provided.boxShadow,
@@ -36,6 +36,7 @@ export const SelectInForm: FC<ISelectInFormProps> = ({
           }),
           option: (provided, state) => ({
             ...provided,
+            borderRadius: "0.75rem",
             backgroundColor: state.isFocused ? "#018739" : "white",
             color: state.isFocused ? "white" : "black",
             cursor: "pointer",
@@ -43,7 +44,7 @@ export const SelectInForm: FC<ISelectInFormProps> = ({
           }),
           menu: (provided) => ({
             ...provided,
-            borderRadius: "none",
+            borderRadius: "0.75rem",
             boxShadow:
               "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
           }),

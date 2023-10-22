@@ -9,20 +9,28 @@ import classNames from "classnames";
 import { InforMemberModal } from "@/components/Organisms";
 import { useQuery } from "@tanstack/react-query";
 import { IMemberObject } from "@/interface/member";
-import {
-  getAllMemberClassroom,
-} from "@/redux/reducer/member/api";
+import { getAllMemberClassroom } from "@/redux/reducer/member/api";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { getTopic } from "@/redux/reducer/topic/api";
 import { useClassroomStateContext } from "@/contexts/classroomState";
+import {
+  DATA_FILTER_COURSE,
+  DATA_FILTER_TOPICS,
+} from "@/components/Organisms/MainboardStatus/mock-data";
 
 function MemberTab() {
-  const [selectedFilter, setSelectedFilter] = useState<
+  const [filterCourse, setFilterCourse] = useState<
     IOptionItem | ICategoryObject
   >({
-    label: "Filter list student",
+    label: "Filter course",
     value: "",
   });
+  const [filterTopic, setFilterTopic] = useState<IOptionItem | ICategoryObject>(
+    {
+      label: "Filter Topic",
+      value: "",
+    }
+  );
   const [openModalMemberDetail, setOpenModalMemberDetail] =
     useState<boolean>(false);
   const modalClass = classNames({
@@ -37,9 +45,7 @@ function MemberTab() {
   const { data: members } = useQuery<IMemberObject[]>({
     queryKey: ["members", authClassroomState],
     queryFn: async () => {
-      const action = await dispatch(
-        getAllMemberClassroom(authClassroomState)
-      );
+      const action = await dispatch(getAllMemberClassroom(authClassroomState));
       return action.payload || [];
     },
     initialData: [],
@@ -49,16 +55,36 @@ function MemberTab() {
   };
   return (
     <ClassroomTemplate title="Members | Thesis course registration system">
-      <div className="py-5">
-        <div className="flex justify-between items-center">
-          <h4 className="uppercase text-md py-5 text-green-700 font-medium">
-            List students <span className="text-xs">{`( ${members.length | 0}/15 members )`}</span>
+      <>
+        <div className="flex flex-col">
+          <h4 className="text-xl py-5 text-green-700 font-medium">
+            List students{" "}
+            <span className="text-xs">{`( ${
+              members.length | 0
+            }/15 Students )`}</span>
           </h4>
-          <SelectBox
-            options={DATA_FILTER_MEMBER}
-            selected={selectedFilter}
-            setSelected={setSelectedFilter}
-          />
+          <div>
+            <div className="flex justify-between items-center">
+              <div className="mt-3 flex gap-3 w-1/3">
+                <div className="flex-grow">
+                  <SelectBox
+                    setSelected={setFilterCourse}
+                    selected={filterCourse}
+                    options={DATA_FILTER_COURSE}
+                    setPadding="lg"
+                  />
+                </div>
+                <div className="flex-grow">
+                  <SelectBox
+                    setSelected={setFilterTopic}
+                    selected={filterTopic}
+                    options={DATA_FILTER_TOPICS}
+                    setPadding="lg"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div className="grid grid-cols-3 gap-5 mt-5">
           {members?.map((member) => {
@@ -79,7 +105,7 @@ function MemberTab() {
           setOpenMemberModal={setOpenModalMemberDetail}
           openMemberModal={openModalMemberDetail}
         />
-      </div>
+      </>
     </ClassroomTemplate>
   );
 }

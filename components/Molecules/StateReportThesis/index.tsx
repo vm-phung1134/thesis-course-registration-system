@@ -9,7 +9,7 @@ export interface IStateReportThesisProps {
 
 export const StateReportThesis: FC<IStateReportThesisProps> = ({ stage }) => {
   return (
-    <div className="relative text-center">
+    <div className="relative text-center shadow-xl bg-slate-100 p-3 rounded-xl">
       <div className="flex items-center justify-center w-16 h-16 mx-auto mb-4 rounded-full bg-green-600 text-white sm:w-10 sm:h-10">
         <svg
           className="w-8 h-8 sm:w-8 sm:h-8"
@@ -34,7 +34,7 @@ export const StateReportThesis: FC<IStateReportThesisProps> = ({ stage }) => {
       >
         <Button
           title="View report"
-          className="inline-flex bg-transparent border-none text-sm items-center"
+          className="inline-flex text-green-700 bg-white w-full hover:bg-white rounded-lg text-sm items-center"
         />
       </Link>
       <div className="top-0 right-3 flex items-center justify-center h-24 lg:-mr-8 lg:absolute">

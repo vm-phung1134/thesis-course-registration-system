@@ -116,10 +116,7 @@ export const CreatePostForm: FC<ICreatePostFormProps> = ({
         return (
           <Form>
             <div className="flex justify-between items-center">
-              <TitleFormField
-                className="font-medium uppercase text-green-700 text-lg mb-5"
-                title="Create new post"
-              />
+            <h4 className="text-xl font-bold mb-5">Create new notification</h4>
               <div className="w-40">
                 <SelectBox
                   setSelected={setSelected}
@@ -132,6 +129,7 @@ export const CreatePostForm: FC<ICreatePostFormProps> = ({
               placeholder="Ex: Report progress"
               type="text"
               label="Post title"
+              className="rounded-xl bg-slate-100 border-none"
               nameField="title"
               value={values?.title}
             />
@@ -146,6 +144,7 @@ export const CreatePostForm: FC<ICreatePostFormProps> = ({
             <FormField
               type="text"
               label="Description"
+              className="rounded-xl bg-slate-100 border-none"
               nameField="description"
               value={values?.description}
             />
@@ -203,12 +202,12 @@ export const CreatePostForm: FC<ICreatePostFormProps> = ({
                 toggle={toggleForm}
                 type="button"
                 title="Cancel"
-                className="bg-transparent border-none hover:border-none hover:bg-transparent"
+                className="bg-transparent border-none rounded-lg hover:border-none hover:bg-transparent"
               />
               <Button
                 type="submit"
-                title="Submit"
-                className="hover:bg-[#165b31] bg-green-700 text-white"
+                title="Create notification"
+                className="hover:bg-[#165b31] rounded-lg bg-green-700 text-white"
               />
             </div>
           </Form>

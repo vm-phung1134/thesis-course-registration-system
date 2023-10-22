@@ -29,7 +29,6 @@ export const SelectBox: FC<ISelectBoxProps> = ({
       styles={{
         control: (provided, state) => ({
           ...provided,
-          borderRadius: "none",
           fontSize: "13px",
           padding: `${setPadding === "lg" ? "5px" : ""}`,
           boxShadow: state.isFocused ? "none" : provided.boxShadow,
@@ -44,7 +43,6 @@ export const SelectBox: FC<ISelectBoxProps> = ({
         }),
         menu: (provided) => ({
           ...provided,
-          borderRadius: "none",
           boxShadow:
             "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
         }),

@@ -80,7 +80,7 @@ export const CardRequireMember: FC<ICardRequireMemberProps> = ({
     dispatch(getTopic(require?.member));
   }, [dispatch, require?.member]);
   return (
-    <div className="p-3 border shadow-lg rounded-xl">
+    <div className="p-3 bg-slate-100 shadow-lg rounded-xl">
       <div className="flex gap-4 items-center">
         <Avatar
           online={true}

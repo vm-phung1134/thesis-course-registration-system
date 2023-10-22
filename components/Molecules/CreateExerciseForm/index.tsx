@@ -112,10 +112,7 @@ export const CreateExerciseForm: FC<ICreateExerciseFormProps> = ({
         return (
           <Form>
             <div className="flex justify-between items-center">
-              <TitleFormField
-                className="font-medium uppercase text-green-700 text-lg mb-5"
-                title="Create new exercise"
-              />
+            <h4 className="text-xl font-bold mb-5">Create new report stage</h4>
               <div className="w-40">
                 <SelectBox
                   setSelected={setSelected}
@@ -128,6 +125,7 @@ export const CreateExerciseForm: FC<ICreateExerciseFormProps> = ({
               placeholder="Ex: Report progress"
               type="text"
               label="Post title"
+              className="rounded-xl bg-slate-100 border-none"
               nameField="title"
               value={values?.title}
             />
@@ -143,6 +141,7 @@ export const CreateExerciseForm: FC<ICreateExerciseFormProps> = ({
               <FormField
                 type="date"
                 label="Set Deadline"
+                className="rounded-xl bg-slate-100 border-none"
                 nameField="deadline"
                 value={values.deadline}
               />
@@ -150,6 +149,7 @@ export const CreateExerciseForm: FC<ICreateExerciseFormProps> = ({
             <FormField
               value={values.description}
               type="text"
+              className="rounded-xl bg-slate-100 border-none"
               label="Description"
               nameField="description"
             />
@@ -198,7 +198,7 @@ export const CreateExerciseForm: FC<ICreateExerciseFormProps> = ({
                 </div>
               </div>
             </div>
-            <small className="text-gray-500">
+            <small className="text-gray-500 italic font-thin text-xs">
               Noticed ! File size of your document should not exceed 10MB
             </small>
             <div className="flex justify-end items-center">
@@ -207,12 +207,12 @@ export const CreateExerciseForm: FC<ICreateExerciseFormProps> = ({
                 toggle={toggleForm}
                 type="button"
                 title="Cancel"
-                className="bg-transparent border-none hover:border-none hover:bg-transparent"
+                className="bg-transparent rounded-lg border-none hover:border-none hover:bg-transparent"
               />
               <Button
                 type="submit"
-                title="Submit"
-                className="hover:bg-[#165b31] bg-green-700 text-white"
+                title="Create exercise"
+                className="hover:bg-[#165b31] rounded-lg bg-green-700 text-white"
               />
             </div>
           </Form>

@@ -91,9 +91,13 @@ function ReportStageDetailPage() {
             <Breadcrumb dataBreadcrumb={BREADCRUMB_REPORT_DETAIL_PAGE} />
             <div className="grid grid-cols-12 gap-5 mt-5">
               <div className="col-span-8">
-                <h4 className="uppercase text-green-700 font-medium py-2">
-                  post and expercise for this phase
-                </h4>
+                <div className="my-3 py-2 flex gap-2 items-center">
+                  <h4 className="text-xl capitalize text-green-700 font-medium ">
+                    post and expercise for
+                    <span className="text-orange-600"> requirement gathering</span>
+                  </h4>
+                  <div className="flex-grow h-[0.5px] bg-green-700"></div>
+                </div>
                 {posts?.map((post, index) => (
                   <PostReportCard
                     handleOpenTaskModal={handleOpenPostModal}
@@ -112,7 +116,7 @@ function ReportStageDetailPage() {
               <div className="col-span-4">
                 <TargetTable namePhase="Requirement gathering">
                   <svg
-                    className="w-10 h-10 text-green-700 sm:w-20 sm:h-20"
+                    className="w-8 h-8 text-green-700"
                     stroke="currentColor"
                     viewBox="0 0 52 52"
                   >

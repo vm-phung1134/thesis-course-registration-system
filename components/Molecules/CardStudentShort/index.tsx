@@ -10,22 +10,29 @@ export const CardStudentShort: FC<ICardStudentShortClassProps> = ({
   submit,
 }) => {
   return (
-    <div className="border py-1 px-2 w-full">
+    <div className="bg-slate-200 rounded-xl py-2 px-2 w-full relative shadow-lg">
+      <span className="absolute -top-1 right-0 bg-green-600 w-5 h-5 text-[10px] text-white rounded-full pl-1.5 pt-1">
+              <i className="fa-solid fa-check"></i>
+            </span>
       <div className="flex gap-2 items-center">
         <Avatar
-          widthStr="w-7 h-7"
+          widthStr="w-9 h-9"
           srcImg={
             submit?.student?.photoSrc ||
             "https://images.pexels.com/photos/39866/entrepreneur-startup-start-up-man-39866.jpeg?auto=compress&cs=tinysrgb&w=600"
           }
         />
         <div className="cursor-pointer">
-          <p className="uppercase text-[13px]">{submit?.student?.name}</p>
-          <p className=" text-[13px] text-gray-500">Submited</p>
+          <p className="text-sm text-black">
+            {submit?.student?.name}
+          </p>
           <ul className="w-fit">
             {submit?.attachments?.map((att) => (
               <li key={att.id} className="w-fit flex flex-wrap">
-                <a className="text-[13px] text-blue-600" href={att.src}>
+                <a
+                  className="text-[13px] text-blue-600 truncate"
+                  href={att.src}
+                >
                   {att?.name}
                 </a>
               </li>
