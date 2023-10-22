@@ -73,7 +73,7 @@ function ManageClassroomTab() {
             {exercises && posts ? (
               <CriticalTask />
             ) : (
-              <div className="h-52 flex justify-center items-center p-5 border shadow-xl">
+              <div className="h-52 flex justify-center items-center p-5 border rounded-xl">
                 <p className="uppercase text-green-700">
                   OPS! Not have any critiacal task for you
                 </p>
@@ -84,38 +84,42 @@ function ManageClassroomTab() {
             <div className="h-fit w-full">
               {exercises.length > 0 || posts.length > 0 ? (
                 <>
-                  <div className="py-3 shadow-xl mb-5 flex flex-col gap-2">
-                    {exercises?.map((exercise) => {
-                      return (
-                        <div key={exercise.id}>
-                          <NewFeedCard
-                            handleOpenTaskModal={handleOpenExModal}
-                            task={exercise}
-                          />
-                          <div className="px-5 py-2 flex flex-col gap-1">
-                            <ContentComment quantity={1} task={exercise} />
-                            <CommentForm task={exercise} />
+                  {exercises.length > 0 && (
+                    <div className="mb-5 flex flex-col gap-2 rounded-xl shadow-xl">
+                      {exercises?.map((exercise) => {
+                        return (
+                          <div key={exercise.id}>
+                            <NewFeedCard
+                              handleOpenTaskModal={handleOpenExModal}
+                              task={exercise}
+                            />
+                            <div className="px-5 mb-5 py-2 flex flex-col gap-1">
+                              <ContentComment quantity={1} task={exercise} />
+                              <CommentForm task={exercise} />
+                            </div>
                           </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                  <div className="border p-5 shadow-xl">
-                    {posts?.map((post) => {
-                      return (
-                        <div key={post.id}>
-                          <NewFeedCard
-                            handleOpenTaskModal={handleOpenPostModal}
-                            task={post}
-                          />
-                          <div className="p-5 flex flex-col gap-1 border">
-                            <ContentComment quantity={1} task={post} />
-                            <CommentForm task={post} />
+                        );
+                      })}
+                    </div>
+                  )}
+                  {posts.length > 0 && (
+                    <div className="border p-5">
+                      {posts?.map((post) => {
+                        return (
+                          <div key={post.id}>
+                            <NewFeedCard
+                              handleOpenTaskModal={handleOpenPostModal}
+                              task={post}
+                            />
+                            <div className="p-5 flex flex-col gap-1 border">
+                              <ContentComment quantity={1} task={post} />
+                              <CommentForm task={post} />
+                            </div>
                           </div>
-                        </div>
-                      );
-                    })}
-                  </div>
+                        );
+                      })}
+                    </div>
+                  )}
                 </>
               ) : (
                 <div className="h-60 flex flex-col justify-center items-center border p-5 shadow-xl">

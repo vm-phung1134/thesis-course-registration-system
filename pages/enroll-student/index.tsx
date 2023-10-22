@@ -59,10 +59,10 @@ function EnrollStudentPage() {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 1200);
+    }, 1500);
   }, []);
   return (
-    <MainboardTemplate title="Create classroom">
+    <MainboardTemplate title="Enroll & schedule | Thesis course registration system">
       {loading ? (
         <SnipperRound />
       ) : (
@@ -77,14 +77,32 @@ function EnrollStudentPage() {
                 objectFit="cover"
                 objectPosition="center"
               />
-              <div className="flex gap-3 flex-col items-center">
-                <h4 className="">
+              <div className="flex gap-10 flex-col items-center">
+                <h4 className="text-2xl font-bold">
                   Here is your schedule thesis defense
-                  <span className="uppercase font-medium"> CT550/HK1-2023</span>
+                  <span className="uppercase"> CT550/HK1-2023</span>
                 </h4>
-                <div className="flex gap-5">
-                  <div className="flex flex-grow px-5 py-2 flex-col gap-2">
-                    <h5 className="text-sm uppercase text-green-700 font-medium">
+                <div className="flex gap-3">
+                  <div className="flex flex-grow p-5 flex-col gap-2 border shadow-lg rounded-xl">
+                    <h5 className="text-lg text-green-700 font-bold capitalize tracking-wider">
+                      The thesis committee
+                    </h5>
+                    <div className="flex gap-5">
+                      {studentScheduled?.council.map((lecturer, index) => (
+                        <ul key={lecturer?.id} className="capitalize text-sm">
+                          <li>
+                            <p className="flex flex-col gap-1">
+                              <span className="text-gray-500">{`Examinator ${(index += 1)}`}</span>
+                              <span className="text-gray-500"></span>
+                              {lecturer?.name}
+                            </p>
+                          </li>
+                        </ul>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="flex flex-grow p-5 flex-col gap-2 border shadow-lg rounded-xl">
+                    <h5 className="text-lg text-green-700 font-bold capitalize tracking-wider">
                       Your time particular
                     </h5>
                     <ul className="capitalize text-sm flex flex-col gap-2">
@@ -115,24 +133,6 @@ function EnrollStudentPage() {
                       </li>
                     </ul>
                   </div>
-                  <div className="flex flex-grow px-5 py-2 flex-col gap-2">
-                    <h5 className="text-sm uppercase text-green-700 font-medium">
-                      The thesis committee
-                    </h5>
-                    {studentScheduled.council.map((lecturer, index) => (
-                      <ul
-                        key={lecturer.id}
-                        className="capitalize text-sm flex flex-col gap-2"
-                      >
-                        <li>
-                          <p>
-                            <span className="text-gray-500">{`Examinator ${index+=1}:`}</span>{" "}
-                            {lecturer.name}
-                          </p>
-                        </li>
-                      </ul>
-                    ))}
-                  </div>
                 </div>
                 <p className="italic font-thin text-xs">
                   Noticed: If you have any question or problems please directly
@@ -140,8 +140,8 @@ function EnrollStudentPage() {
                 </p>
                 <div className="flex justify-end w-full">
                   <Button
-                    className="bg-green-700 btn-sm mt-2 text-white px-10"
-                    title="Send"
+                    className="bg-green-700 btn-sm mt-2 rounded-lg text-white px-10"
+                    title="Send request"
                   />
                 </div>
               </div>
@@ -201,7 +201,7 @@ function EnrollStudentPage() {
                               <Button
                                 otherType="subscribe"
                                 handleActions={handleEnrollMember}
-                                className="bg-green-700 text-white px-10"
+                                className="bg-green-700 text-white px-10 rounded-lg"
                                 title="Enroll me"
                               />
                             </div>

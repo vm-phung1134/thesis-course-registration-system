@@ -25,11 +25,11 @@ export const ClassroomFound: FC<IClassroomFoundProps> = ({
   const [timeLeft, setTimeLeft] = useState<number>(0);
   return (
     <div className="px-5">
-      <div className="grid grid-cols-12 gap-4 py-5">
-        <div className="col-span-4 p-5 border">
+      <div className="grid grid-cols-12 gap-4 my-3">
+        <div className="col-span-4 p-5 border rounded-xl">
           <CardLecturerInClass lecturer={classroom?.lecturer} />
         </div>
-        <div className="bg-gray-800 col-span-8 h-fit w-full text-white">
+        <div className="bg-gray-800 col-span-8 h-fit w-full text-white rounded-xl">
           <div className="p-5">
             <MenuClassroom
               listMenu={

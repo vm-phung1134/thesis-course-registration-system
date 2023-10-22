@@ -36,7 +36,7 @@ export const ClassroomContentCard: FC<IClassroomContentCardProps> = ({
         <div className="absolute -top-8 right-3">
           <NormalAvatar setSize="w-14" photoSrc={item?.lecturer?.photoSrc} />
         </div>
-        <div className="flex flex-col">
+        <div className="flex flex-col mb-5">
           <p className="text-xs uppercase text-green-700 py-2">Information</p>
           <ul>
             <ItemUserInfor
@@ -47,8 +47,6 @@ export const ClassroomContentCard: FC<IClassroomContentCardProps> = ({
             <ItemUserInfor title="Email" content={item?.lecturer?.email} />
             <ItemUserInfor title="Phone" content={item?.lecturer?.phone} />
           </ul>
-          <p className="text-xs uppercase text-green-700 py-2">Topics</p>
-          {/* <TopicTag arrTopics={item?.topicTags} /> */}
         </div>
         {checkStatusWaiting(item) ? (
           <div className="flex justify-end items-center mt-auto">

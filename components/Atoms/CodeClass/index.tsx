@@ -6,7 +6,7 @@ export interface ICodeClassProps {
 
 export const CodeClass: FC<ICodeClassProps> = ({ code }) => {
   return (
-    <div className="border w-fit p-2">
+    <div className="border w-fit p-2 rounded-xl">
       <div className="flex justify-center items-center">
         <p className="text-sm">Classroom Course</p>
       </div>

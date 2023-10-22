@@ -31,7 +31,7 @@ export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
     "modal modal-bottom sm:modal-middle": true,
     "modal-open": openLeaveClass,
   });
-  const {authClassroomState} = useClassroomStateContext()
+  const { authClassroomState } = useClassroomStateContext();
   const queryClient = useQueryClient();
   const { currentUser } = useCurrentUser();
   const deleteMutation = useMutation(
@@ -90,15 +90,42 @@ export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
 
   return (
     <>
-      <h3 className="text-sm uppercase">Thesis graduation - CT550</h3>
+      <h3 className="text-sm font-medium capitalize">
+        Thesis graduation - CT550
+      </h3>
       <h4 className="text-[24px] font-semibold uppercase">{lecturer?.name}</h4>
-      <h5 className="font-medium text-green-700">Major: {lecturer?.major}</h5>
+      <div className="flex justify-between items-center">
+        <h5 className="font-medium text-green-700 my-1">Major / {lecturer?.major}</h5>
+        <button className="flex gap-2 px-2 py-1 text-sm items-center">
+          <svg
+            className="w-3 h-3"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+            />
+          </svg>
+          <p>Edit</p>
+        </button>
+      </div>
       <ul>
-        <li className="text-base flex gap-2">
-          <span className="">Email: {lecturer?.email}</span>
+        <li>
+          <p className="flex gap-3 items-center">
+            <i className="fa-regular fa-envelope"></i>
+            <span>{lecturer?.email}</span>
+          </p>
         </li>
-        <li className="text-base flex gap-2">
-          <span className="">Phone: {lecturer?.phone}</span>
+        <li>
+          <p className="flex gap-3 items-center">
+            <i className="fa-solid fa-mobile"></i>
+            <span>{`(84+) ${lecturer?.phone}`}</span>
+          </p>
         </li>
       </ul>
       <div className="flex justify-end items-end">
@@ -109,7 +136,7 @@ export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
                 <button
                   value="UN_LOCK"
                   onClick={handleOpenModal}
-                  className="btn rounded-none bg-transparent border border-red-600 hover:bg-red-600 hover:text-white text-red-600 font-medium"
+                  className="btn rounded-lg bg-transparent border border-red-600 hover:bg-red-600 hover:text-white text-red-600 font-medium"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -130,7 +157,7 @@ export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
                 <button
                   value="LOCK"
                   onClick={handleOpenModal}
-                  className="btn rounded-none outline-none hover:outline-none bg-transparent border border-red-600 hover:bg-red-600 hover:text-white text-red-600 font-medium"
+                  className="btn rounded-lg outline-none hover:outline-none bg-transparent border border-red-600 hover:bg-red-600 hover:text-white text-red-600 font-medium"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -145,7 +172,7 @@ export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
                     <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                     <path d="M7 11V7a5 5 0 0 1 9.9-1" />
                   </svg>
-                  <p className="text-sm normal-case">Opened</p>
+                  <p className="text-sm normal-case">Opening</p>
                 </button>
               )}
             </>
@@ -161,7 +188,7 @@ export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
             )}
           {currentUser.role === ROLE_ASSIGNMENT.STUDENT &&
             authClassroomState.status === STATE_LECTURER_CLASSROOM.LOCK && (
-              <button className="btn rounded-none bg-transparent border border-red-600 hover:bg-red-600 hover:text-white text-red-600 font-medium">
+              <button className="btn rounded-lg bg-transparent border border-red-600 hover:bg-red-600 hover:text-white text-red-600 font-medium">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
