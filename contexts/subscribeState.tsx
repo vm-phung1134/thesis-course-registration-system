@@ -24,7 +24,6 @@ export const SubscribeStateContextProvider: React.FC<SubscribeStateProps> = ({
   children,
 }) => {
   const { currentUser } = useCurrentUser();
-  console.log(currentUser)
   const dispatch = useAppDispatch();
   const { data: subscribeState } = useQuery<
     IMemberObject[] | { status: string }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Avatar, Button, SnipperRound } from "@/components/Atoms";
+import { Avatar, Breadcrumb, Button, SnipperRound } from "@/components/Atoms";
 import { AdminTemplate } from "@/components/Templates";
 import { FilterScheduledForm, ScheduleForm } from "@/components/Molecules";
 import { useAppDispatch } from "@/redux/store";
@@ -7,6 +7,7 @@ import { getScheduleDef } from "@/redux/reducer/schedule-def/api";
 import { IThesisDef } from "@/interface/schedule";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
+import { BREADCRUMB_SCHEDULE } from "./mock-data";
 
 function DashboardPage() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -32,14 +33,16 @@ function DashboardPage() {
           <SnipperRound />
         ) : (
           <>
+            <Breadcrumb dataBreadcrumb={BREADCRUMB_SCHEDULE} />
             <div className="flex flex-col gap-3">
               <div className="flex justify-between mt-5">
-                <h4 className="uppercase text-green-700 font-medium text-base">
-                  Schedule time thesis defense
-                </h4>
-                <button className="border px-10 py-2 text-sm">
-                  More Actions
-                </button>
+                <div className="py-1 flex gap-2 items-center w-full">
+                  <h4 className="text-xl capitalize text-green-700 font-medium ">
+                    Schedule time
+                    <span className="text-orange-600"> thesis defense</span>
+                  </h4>
+                  <div className="flex-grow h-[0.5px] bg-green-700"></div>
+                </div>
               </div>
               <ul className="flex gap-3 mt-2 border-b text-[15px] cursor-pointer">
                 <li className="border-b-2 px-3 py-2 border-green-700">
@@ -86,20 +89,20 @@ function DashboardPage() {
               <div className="px-3">
                 <div className="flex justify-between items-center">
                   <div className="mb-3">
-                  <h4 className="font-medium">Progress scheduled</h4>
-                  <p className="text-sm text-slate-500">Total 8 schedules</p>
+                    <h4 className="font-medium">Progress scheduled</h4>
+                    <p className="text-sm text-slate-500">Total 8 schedules</p>
+                  </div>
+                  <div className="flex justify-end my-3">
+                    <ul className="flex gap-2 text-sm cursor-pointer">
+                      <li className="text-green-700">Save to database</li>
+                      <span className="text-gray-400">|</span>
+                      <li className="text-red-700">Delete</li>
+                      <span className="text-gray-400">|</span>
+                      <li className="text-red-700">Clear all</li>
+                    </ul>
+                  </div>
                 </div>
-                <div className="flex justify-end my-3">
-                  <ul className="flex gap-2 text-sm cursor-pointer">
-                    <li className="text-green-700">Save to database</li>
-                    <span className="text-gray-400">|</span>
-                    <li className="text-red-700">Delete</li>
-                    <span className="text-gray-400">|</span>
-                    <li className="text-red-700">Clear all</li>
-                  </ul>
-                </div>
-                </div>
-                
+
                 <div className="flex justify-between">
                   <div className="flex">
                     <Button

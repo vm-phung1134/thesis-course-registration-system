@@ -19,7 +19,7 @@ export const SidebarAdminView: FC<ISidebarAdminViewProps> = ({}) => {
           <li>
             <Link
               className="rounded-none hover:bg-green-700 hover:text-white"
-              href="/dashboard"
+              href="/admin/dashboard"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
