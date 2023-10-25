@@ -170,31 +170,31 @@ export const CouncilManagementTab: FC<ICouncilManagementTab> = ({}) => {
                         </th>
                         <th
                           scope="col"
-                          className="py-3 px-6 text-sm font-normal tracking-wider text-left text-gray-200  dark:text-green-400"
+                          className="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-200  dark:text-green-400"
                         >
                           Email
                         </th>
                         <th
                           scope="col"
-                          className="py-3 px-6 text-sm font-normal tracking-wider text-left text-gray-200  dark:text-green-400"
+                          className="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-200  dark:text-green-400"
                         >
                           Full Name
                         </th>
                         <th
                           scope="col"
-                          className="py-3 px-6 text-sm font-normal tracking-wider text-left text-gray-200  dark:text-green-400"
+                          className="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-200  dark:text-green-400"
                         >
                           Department
                         </th>
                         <th
                           scope="col"
-                          className="py-3 px-6 text-sm font-normal tracking-wider text-left text-gray-200  dark:text-green-400"
+                          className="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-200  dark:text-green-400"
                         >
                           Field
                         </th>
                         <th
                           scope="col"
-                          className="py-3 px-6 text-sm font-normal tracking-wider text-left text-gray-200  dark:text-green-400"
+                          className="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-200  dark:text-green-400"
                         >
                           Manager
                         </th>
@@ -311,31 +311,31 @@ export const CouncilManagementTab: FC<ICouncilManagementTab> = ({}) => {
                         </th>
                         <th
                           scope="col"
-                          className="py-3 px-6 text-sm font-normal tracking-wider text-left text-gray-200  dark:text-green-400"
+                          className="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-200  dark:text-green-400"
                         >
                           Email
                         </th>
                         <th
                           scope="col"
-                          className="py-3 px-6 text-sm font-normal tracking-wider text-left text-gray-200  dark:text-green-400"
+                          className="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-200  dark:text-green-400"
                         >
                           Full Name
                         </th>
                         <th
                           scope="col"
-                          className="py-3 px-6 text-sm font-normal tracking-wider text-left text-gray-200  dark:text-green-400"
+                          className="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-200  dark:text-green-400"
                         >
                           Department
                         </th>
                         <th
                           scope="col"
-                          className="py-3 px-6 text-sm font-normal tracking-wider text-left text-gray-200  dark:text-green-400"
+                          className="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-200  dark:text-green-400"
                         >
                           Field
                         </th>
                         <th
                           scope="col"
-                          className="py-3 px-6 text-sm font-normal tracking-wider text-left text-gray-200  dark:text-green-400"
+                          className="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-200  dark:text-green-400"
                         >
                           Manager
                         </th>

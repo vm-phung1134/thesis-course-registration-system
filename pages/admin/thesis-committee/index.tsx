@@ -38,9 +38,13 @@ function ThesisCommittee() {
             <Breadcrumb
               dataBreadcrumb={BREADCRUMB_ADMIN_CLASSROOM_MANAGEMENT}
             />
-            <h4 className="text-base uppercase text-green-700 font-medium mt-3">
-              Thesis committee
-            </h4>
+            <div className="py-1 flex gap-2 items-center w-full">
+                  <h4 className="text-xl capitalize text-green-700 font-medium ">
+                  Thesis committee
+                    <span className="text-green-700"></span>
+                  </h4>
+                  <div className="flex-grow h-[0.5px] bg-green-700"></div>
+                </div>
             <ul className="flex gap-3 mt-2 border-b text-[15px] cursor-pointer">
               {menuItems.map((item) => (
                 <li

@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { Form, Formik } from "formik";
-import { Button, FormField } from "@/components/Atoms";
+import { Button, CountInput, FormField } from "@/components/Atoms";
 import { useAppDispatch } from "@/redux/store";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { IThesisDef } from "@/interface/schedule";
@@ -57,12 +57,10 @@ export const ScheduleForm: FC<IScheduleFormProps> = ({
         const { values } = formik;
         return (
           <Form className="flex gap-5">
-            <FormField
-              label="Select a start date"
-              type="date"
-              nameField="startTime"
-              value={values.startTime}
-            />
+            <div className="w-1/2">
+              <CountInput className="h-12" label="QL. Expected weeks" />
+            </div>
+            
             <FormField
               label="Select a end date"
               type="date"

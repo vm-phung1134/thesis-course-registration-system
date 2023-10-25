@@ -19,4 +19,5 @@ export * from "./ToggleDarkMode";
 export * from "./CodeClass";
 export * from "./TopicTag";
 export * from "./ItemUserInfor";
-export * from "./NormalAvatar"
+export * from "./NormalAvatar";
+export * from "./CountInput"

@@ -64,34 +64,36 @@ export const MemberEnrolled: FC<IMemberEnrolledProps> = ({}) => {
     });
   };
 
-  // const handleFakeDataStudentDef = async () => {
-  //   for (let i = 80; i < 90; i++) {
-  //     await addMutation.mutate({
-  //       infor: {
-  //         name: `Student ${i}`,
-  //         photoSrc:
-  //           "https://images.pexels.com/photos/445109/pexels-photo-445109.jpeg?auto=compress&cs=tinysrgb&w=600",
-  //         email: `user${i}b191000${i}.student.ctu.edu.vn`,
-  //         phone: "0999999999",
-  //         class: `DI19V7A${i}`,
-  //         major: "IT1",
-  //         role: "student",
-  //         id: `SV${i}`,
-  //       },
-  //       instructor: {
-  //         name: "truc anh dai",
-  //         photoSrc:
-  //           "https://images.pexels.com/photos/445109/pexels-photo-445109.jpeg?auto=compress&cs=tinysrgb&w=600",
-  //         email: "tadai@cit.ctu.edu.vn",
-  //         phone: "0123456789",
-  //         class: "IT1",
-  //         major: "CNTT",
-  //         role: "lecturer",
-  //         id: "GV9",
-  //       },
-  //     } as IStudentDefObject);
-  //   }
-  // };
+  const handleFakeDataStudentDef = async () => {
+    for (let k = 1; k < 10; k++) {
+      for (let i = 1; i < 16; i++) {
+        await addMutation.mutate({
+          infor: {
+            name: `Student ${i}`,
+            photoSrc:
+              "https://images.pexels.com/photos/445109/pexels-photo-445109.jpeg?auto=compress&cs=tinysrgb&w=600",
+            email: `user${i}b191000${i}.student.ctu.edu.vn`,
+            phone: "0999999999",
+            class: `DI19V7A${i}`,
+            major: "IT1",
+            role: "student",
+            id: `SV${i}SV${k}`,
+          },
+          instructor: {
+            name: `Giang vien ${k}`,
+            photoSrc:
+              "https://images.pexels.com/photos/445109/pexels-photo-445109.jpeg?auto=compress&cs=tinysrgb&w=600",
+            email: `gv${k}@cit.ctu.edu.vn`,
+            phone: "0123456789",
+            class: "IT1",
+            major: "CNTT",
+            role: "lecturer",
+            id: `GV${k}`,
+          },
+        } as IStudentDefObject);
+      }
+    }
+  };
 
   return (
     <div className="px-3 my-5">
@@ -114,6 +116,7 @@ export const MemberEnrolled: FC<IMemberEnrolledProps> = ({}) => {
           <FilterScheduledForm holderText="Filter schedule time ..." />
         </div>
       </div>
+      <button onClick={handleFakeDataStudentDef}>Click me</button>
       <div className="w-full mx-auto my-5">
         <div className="flex flex-col">
           <div className="overflow-x-auto">

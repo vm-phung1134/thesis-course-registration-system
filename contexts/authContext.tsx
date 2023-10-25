@@ -95,7 +95,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           await addMutation.mutate(authObject);
           const token = await result.user.getIdToken();
           const role = roleAssignment(result.user.email || "");
-          role === "admin" ? router.push("/admin") : router.push("/mainboard");
+          role === "admin"
+            ? router.push("/admin/dashboard")
+            : router.push("/mainboard");
           Cookies.set("token", token);
           setUserCookies(authObject);
           setIsAuthenticated(true);

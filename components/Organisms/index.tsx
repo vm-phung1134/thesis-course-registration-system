@@ -8,4 +8,5 @@ export * from "./InforMemberModal";
 export * from "./MainboardStatus";
 export * from "./ClassroomStatus";
 export * from "./ClassroomCard";
-export * from "./MemberState"
+export * from "./MemberState";
+export * from "./ScheduleTime";
