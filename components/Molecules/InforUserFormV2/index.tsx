@@ -93,10 +93,10 @@ export const InforUserFormV2: FC<IInforUserFormV2Props> = ({
               <SnipperRound />
             ) : (
               <div>
-                <h3 className="text-xs mb-3">Step {switchingForm} of 2</h3>
+                <h3 className="text-xs font-medium mb-3">Step {switchingForm} of 2</h3>
                 <Form>
                   <TitleFormField
-                    className="text-base uppercase text-green-700 font-medium mb-5"
+                    className="text-xl font-bold mb-5"
                     title="Update personal information"
                   />
                   <FormField
@@ -140,7 +140,7 @@ export const InforUserFormV2: FC<IInforUserFormV2Props> = ({
                     <Button
                       type="submit"
                       title="Next step"
-                      className="hover:bg-[#165b31] btn rounded-none font-normal normal-case w-28 bg-green-700 text-white px-5"
+                      className="hover:bg-[#165b31] btn rounded-lg font-normal normal-case w-28 bg-green-700 text-white px-5"
                     />
                   </div>
                 </Form>

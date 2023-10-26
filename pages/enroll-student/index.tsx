@@ -1,5 +1,9 @@
-import { Button, SnipperRound } from "@/components/Atoms";
-import { InforUserFormV2 } from "@/components/Molecules";
+import { Button, NormalAvatar, SnipperRound } from "@/components/Atoms";
+import {
+  InforUserFormV2,
+  UploadFileForm,
+  UploadFinalFileForm,
+} from "@/components/Molecules";
 import { EnrollSuccess } from "@/components/Organisms/MemberState/EnrollSuccess";
 import { MainboardTemplate } from "@/components/Templates";
 import { INITIATE_MEMBER } from "@/data";
@@ -68,84 +72,120 @@ function EnrollStudentPage() {
       ) : (
         <>
           {studentScheduled ? (
-            <div className="flex gap-2 justify-center items-center min-h-[70%] max-h-full">
-              <Image
-                src="https://img.freepik.com/free-vector/design-inspiration-concept-illustration_114360-3957.jpg?w=740&t=st=1697188462~exp=1697189062~hmac=4107cde7d1b1bb3072f74a5d4614544b955a348d55322b833a1874440721b3dd"
-                alt="bg-create-class"
-                width="300"
-                height="300"
-                objectFit="cover"
-                objectPosition="center"
-              />
-              <div className="flex gap-10 flex-col items-center">
-                <h4 className="text-2xl font-bold">
-                  Here is your schedule thesis defense
-                  <span className="uppercase"> CT550/HK1-2023</span>
-                </h4>
-                <div className="flex gap-3">
-                  <div className="flex flex-grow p-5 flex-col gap-2 border shadow-lg rounded-xl">
-                    <h5 className="text-lg text-green-700 font-bold capitalize tracking-wider">
-                      The thesis committee
-                    </h5>
-                    <div className="flex gap-5">
-                      {studentScheduled?.council.map((lecturer, index) => (
-                        <ul key={lecturer?.id} className="capitalize text-sm">
-                          <li>
-                            <p className="flex flex-col gap-1">
-                              <span className="text-gray-500">{`Examinator ${(index += 1)}`}</span>
-                              <span className="text-gray-500"></span>
-                              {lecturer?.name}
-                            </p>
-                          </li>
-                        </ul>
-                      ))}
-                    </div>
+            <>
+              <div className="flex justify-center items-center my-12 gap-5">
+                <Image
+                  src="https://img.freepik.com/free-vector/design-inspiration-concept-illustration_114360-3957.jpg?w=740&t=st=1697188462~exp=1697189062~hmac=4107cde7d1b1bb3072f74a5d4614544b955a348d55322b833a1874440721b3dd"
+                  alt="bg-create-class"
+                  width="300"
+                  height="300"
+                  objectFit="cover"
+                  objectPosition="center"
+                />
+                <div>
+                  <h4 className="text-2xl font-bold">
+                    Here is your schedule thesis defense
+                    <span className="uppercase"> CT550/HK1-2023</span>
+                  </h4>
+                  <div className="w-fit">
+                    <h4 className="my-2 font-bold tracking-wider">
+                      Upload your final files
+                    </h4>
+                    <UploadFinalFileForm />
                   </div>
-                  <div className="flex flex-grow p-5 flex-col gap-2 border shadow-lg rounded-xl">
-                    <h5 className="text-lg text-green-700 font-bold capitalize tracking-wider">
-                      Your time particular
-                    </h5>
-                    <ul className="capitalize text-sm flex flex-col gap-2">
-                      <li>
-                        <p>
-                          <span className="text-gray-500">Date:</span>{" "}
-                          {studentScheduled.schedule.timeSlots[0].timeSlot.date}
-                        </p>
-                      </li>
-                      <li>
-                        <p>
-                          <span className="text-gray-500">Department:</span>{" "}
-                          {
-                            studentScheduled.schedule.timeSlots[0].student
-                              .instructor.class
-                          }
-                        </p>
-                      </li>
-                      <li className="flex gap-5">
-                        <p>
-                          <span className="text-gray-500">Room:</span>{" "}
-                          {studentScheduled.schedule.room.name}
-                        </p>
-                        <p>
-                          <span className="text-gray-500">Time:</span>{" "}
-                          {studentScheduled.schedule.timeSlots[0].timeSlot.time}
-                        </p>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-                <p className="italic font-thin text-xs">
-                  Noticed: If you have any question or problems please directly
-                  send a request to system via under button
-                </p>
-                <div className="flex justify-end w-full">
-                  <Button
-                    className="bg-green-700 btn-sm mt-2 rounded-lg text-white px-10"
-                    title="Send request"
-                  />
                 </div>
               </div>
-            </div>
+              <div className="flex gap-5 w-full my-10">
+                <div className="flex flex-grow w-7/12 p-5 flex-col gap-2 bg-slate-50 rounded-xl">
+                  <h5 className="text-lg text-green-700 font-bold capitalize tracking-wider">
+                    The thesis committee
+                  </h5>
+                  <div className="grid grid-cols-3 gap-3">
+                    {studentScheduled?.council?.map((lecturer, index) => (
+                      <div key={lecturer?.id}>
+                        <div className="">
+                          <p className="text-gray-500">{`Examinator ${(index += 1)}`}</p>
+                          <div className="flex items-center bg-white shadow-lg rounded-lg p-3 my-2">
+                            <NormalAvatar
+                              setSize="w-8"
+                              photoSrc={lecturer?.photoSrc}
+                            />
+                            <div className="flex flex-col">
+                              <p className="font-medium capitalize">
+                                {lecturer?.name}
+                              </p>
+                              <p className="text-sm font-thin">
+                                {lecturer?.email}
+                              </p>
+                              <p className="text-sm font-thin">
+                                {lecturer?.major}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="flex flex-grow p-5 flex-col gap-2 bg-slate-50 rounded-xl">
+                  <h5 className="text-lg text-green-700 font-bold capitalize tracking-wider">
+                    Your schedule thesis defense
+                  </h5>
+                  <p className="font-thin text-xs italic text-orange-600">Noticed: Please arrive at the room 10 minutes in advance to prepare!!!</p>
+                  <ul className="capitalize flex flex-col gap-2">
+                    <li>
+                      <p className="flex gap-3">
+                        <span className="text-gray-500">Date:</span>
+                        <span className="font-medium">
+                          {
+                            studentScheduled?.schedule?.timeSlots[0]?.timeSlot
+                              .date
+                          }
+                        </span>
+                      </p>
+                    </li>
+                    <li>
+                      <p className="flex gap-3">
+                        <span className="text-gray-500">Department:</span>
+                        <span className="font-medium">
+                          {
+                            studentScheduled?.schedule?.timeSlots[0]?.student
+                              ?.instructor?.class
+                          }
+                        </span>
+                      </p>
+                    </li>
+                    <li className="flex gap-5">
+                      <p className="flex gap-3">
+                        <span className="text-gray-500">Room:</span>
+                        <span className="font-medium">
+                          {studentScheduled?.schedule?.room?.name}
+                        </span>
+                      </p>
+                      <p className="flex gap-3">
+                        <span className="text-gray-500">Time:</span>
+                        <span className="font-medium">
+                          {
+                            studentScheduled?.schedule?.timeSlots[0]?.timeSlot
+                              ?.time
+                          }
+                        </span>
+                      </p>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <p className="italic font-thin text-xs">
+                Noticed: If you have any question or problems please directly
+                send a request to system via under button
+              </p>
+              <div className="flex justify-start w-full">
+                <Button
+                  className="bg-green-700 btn-sm mt-2 rounded-lg text-white px-10"
+                  title="Send request"
+                />
+              </div>
+            </>
           ) : (
             <>
               {member?.registerDefense === true ? (
@@ -164,7 +204,7 @@ function EnrollStudentPage() {
                     />
                   </div>
                   <div className="flex h-fit items-center">
-                    <div className="p-5 w-[70%] mt-5 shadow-xl">
+                    <div className="p-5 w-[70%] mt-5 shadow-xl rounded-xl">
                       {switchingForm === 1 ? (
                         <InforUserFormV2
                           setSwitchingForm={setSwitchingForm}
@@ -172,11 +212,11 @@ function EnrollStudentPage() {
                         />
                       ) : (
                         <>
-                          <h3 className="text-xs mb-3">
+                          <h3 className="text-xs font-medium mb-3">
                             Step {switchingForm} of 2
                           </h3>
                           <div className="h-[50vh] flex flex-col gap-5 items-center justify-center">
-                            <h3 className="uppercase text-sm text-green-700 font-medium">
+                            <h3 className="uppercase text-green-700 font-bold">
                               Register thesis defense
                             </h3>
                             <h4 className="text-center font-medium">

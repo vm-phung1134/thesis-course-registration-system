@@ -18,6 +18,7 @@ import { convertToUnaccentedString } from "@/utils/convertString";
 import { useQuery } from "@tanstack/react-query";
 import { FC, useState } from "react";
 import { DATA_FILTER_COURSE } from "../MainboardStatus/mock-data";
+import Image from "next/image";
 
 export interface IExerciseModalProps {
   modalClass: string;
@@ -93,9 +94,16 @@ export const ExerciseModal: FC<IExerciseModalProps> = ({
                     return (
                       <div
                         key={arr.id}
-                        className="flex gap-3 text-blue-700 items-center px-3 py-1"
+                        className="flex gap-3 text-blue-700 font-medium rounded-md items-center px-3 py-2 bg-slate-200 shadow-md"
                       >
-                        <i className="fa-regular fa-file-word"></i>
+                        <Image
+                          width={20}
+                          height={20}
+                          src={
+                            "https://cdn-icons-png.flaticon.com/128/4726/4726010.png"
+                          }
+                          alt="icon-file-pdf"
+                        />
                         <a
                           className="text-[13px]"
                           target="_blank"

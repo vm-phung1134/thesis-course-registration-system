@@ -101,27 +101,29 @@ export const MemberEnrolled: FC<IMemberEnrolledProps> = ({}) => {
         <div className="flex">
           <Button
             title="Recently date"
-            className="px-5 btn-sm bg-gray-800 text-white"
+            className="px-5 btn-sm bg-gray-800 text-white rounded-none"
           />
-          <Button title="Ascending order" className="px-5 btn-sm" />
-          <Button title="All" className="px-5 btn-sm" />
+          <Button
+            title="Ascending order"
+            className="px-5 btn-sm rounded-none"
+          />
+          <Button title="All" className="px-5 btn-sm rounded-none" />
         </div>
         <div className="flex justify-end py-2 gap-3">
           <Button
             otherType="subscribe"
             handleActions={handleAddToStudentDef}
-            className=" btn-sm px-8 text-gray-800"
+            className=" btn-sm px-8 bg-green-700 text-white rounded-none"
             title="Submit to council"
           />
-          <FilterScheduledForm holderText="Filter schedule time ..." />
+          <FilterScheduledForm holderText="Search students ..." />
         </div>
       </div>
-      <button onClick={handleFakeDataStudentDef}>Click me</button>
-      <div className="w-full mx-auto my-5">
+      <div className="w-full mx-auto my-5 shadow-lg rounded-xl">
         <div className="flex flex-col">
           <div className="overflow-x-auto">
             <div className="inline-block min-w-full align-middle">
-              <div className="overflow-hidden">
+              <div className="overflow-hidden rounded-xl">
                 <table className="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-700">
                   <thead className="bg-green-700 dark:bg-gray-700">
                     <tr>

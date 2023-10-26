@@ -28,7 +28,7 @@ export const EnrollSuccess: FC<IEnrollSuccessProps> = () => {
               objectPosition="center"
             />
             <div className="flex gap-3 flex-col items-center">
-              <h4 className="">
+              <h4 className="text-black font-bold text-xl">
                 You subscribed for thesis defense in
                 <span className="uppercase font-medium"> CT550/HK1-2023</span>
               </h4>
@@ -38,9 +38,9 @@ export const EnrollSuccess: FC<IEnrollSuccessProps> = () => {
               </p>
               <div className="flex gap-3">
                 <Button
-                  title="the schedule
+                  title="Your schedule
                   expected 25/05/2023"
-                  className="px-5 bg-green-700 text-white hover:bg-green-600"
+                  className="px-5 bg-green-700 rounded-md text-white hover:bg-green-600"
                 />
               </div>
             </div>

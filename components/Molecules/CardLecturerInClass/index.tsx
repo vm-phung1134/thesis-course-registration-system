@@ -12,6 +12,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { FC, MouseEvent, useState } from "react";
 import { ModalConfirm } from "..";
 import classNames from "classnames";
+import Link from "next/link";
 
 export interface ICardLecturerInClassProps {
   lecturer: IAuthObject;
@@ -95,7 +96,9 @@ export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
       </h3>
       <h4 className="text-[24px] font-semibold uppercase">{lecturer?.name}</h4>
       <div className="flex justify-between items-center">
-        <h5 className="font-medium text-green-700 my-1">Major / {lecturer?.major}</h5>
+        <h5 className="font-medium text-green-700 my-1">
+          Major / {lecturer?.major}
+        </h5>
         <button className="flex gap-2 px-2 py-1 text-sm items-center">
           <svg
             className="w-3 h-3"
@@ -111,7 +114,11 @@ export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
               d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
             />
           </svg>
-          <p>Edit</p>
+          {currentUser?.role === ROLE_ASSIGNMENT.LECTURER && (
+            <Link href={"/account/account-lecturer"}>
+              <p>Edit</p>
+            </Link>
+          )}
         </button>
       </div>
       <ul>

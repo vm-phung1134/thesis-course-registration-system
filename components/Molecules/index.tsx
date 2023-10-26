@@ -31,5 +31,6 @@ export * from "./NewFeedCard";
 export * from "./CriticalTask";
 export * from "./FormSchedule";
 export * from "./SearchScheduled";
-export * from "./AssessForm"
-export * from "./Admin"
+export * from "./AssessForm";
+export * from "./Admin";
+export * from "./UploadFinalFileForm";
