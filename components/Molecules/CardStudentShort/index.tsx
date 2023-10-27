@@ -10,7 +10,7 @@ export const CardStudentShort: FC<ICardStudentShortClassProps> = ({
   submit,
 }) => {
   return (
-    <div className="bg-slate-200 rounded-xl py-2 px-2 w-full relative shadow-lg">
+    <div className="bg-slate-100 rounded-xl py-2 px-2 w-full relative shadow-md">
       <span className="absolute -top-1 right-0 bg-green-600 w-5 h-5 text-[10px] text-white rounded-full pl-1.5 pt-1">
               <i className="fa-solid fa-check"></i>
             </span>

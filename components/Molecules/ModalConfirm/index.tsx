@@ -28,10 +28,10 @@ export const ModalConfirm: FC<IModalConfirmProp> = ({
 }) => {
   return (
     <dialog id="my_modal_1" className={modalClass}>
-      <form method="dialog" className="bg-white p-7 shadow-lg w-4/12">
-        <h3 className="font-bold text-lg">{title}</h3>
-        <p className="py-4 text-[15px]">{message}</p>
-        <p className="text-sm font-thin italic">{`Noticed: ${underMessage}`}</p>
+      <form method="dialog" className="bg-white p-7 shadow-lg w-4/12 rounded-2xl">
+        <h3 className="font-bold text-2xl">{title}</h3>
+        <p className="py-4 font-medium">{message}</p>
+        <p className="text-xs font-thin italic w-80">{`Noticed: ${underMessage}`}</p>
         <div className="modal-action">
           <Button
             setToggle={setOpenModal}
@@ -47,7 +47,7 @@ export const ModalConfirm: FC<IModalConfirmProp> = ({
             handleActions={action}
             setToggle={setOpenModal}
             toggle={openModal}
-            className="hover:text-black bg-green-700 hover:bg-green-600 px-10 text-white"
+            className="hover:text-black bg-green-700 rounded-lg hover:bg-green-600 px-10 text-white"
           />
         </div>
       </form>

@@ -20,6 +20,8 @@ function ScheduleDetailPage() {
   const params = useSearchParams();
   const id = params.get("councilID") || "";
   const [loading, setLoading] = useState<boolean>(true);
+  const [getInstructor, setInstructor] = useState<string>("");
+
   const { data: councilInSchedule } = useQuery<ICouncilDef>({
     queryKey: ["council-in-schedule-student", id],
     queryFn: async () => {
@@ -27,6 +29,9 @@ function ScheduleDetailPage() {
       return action.payload || {};
     },
   });
+  const getInstructorInCouncil = (id: string) => {
+    setInstructor(id);
+  };
   let currentDate = new Date(
     councilInSchedule?.schedule?.timeSlots[0]?.timeSlot?.date ?? "11 6, 2023"
   );
@@ -64,10 +69,10 @@ function ScheduleDetailPage() {
               </h5>
               <div className="flex justify-between">
                 <div className="flex gap-3 tracking-wider">
-                  {councilInSchedule?.council.map((council) => (
+                  {councilInSchedule?.council?.map((council) => (
                     <div
                       key={council.id}
-                      className="shadow-lg overflow-hidden relative w-fit rounded-xl px-5 py-3 flex flex-col justify-center"
+                      className="shadow-lg overflow-hidden relative w-fit rounded-xl px-5 py-4 flex flex-col justify-center"
                     >
                       <div className="top-0 -left-10 bottom-0 bg-slate-50 absolute w-full h-full -skew-x-[30deg]"></div>
                       <div className="absolute bottom-0 right-0">
@@ -78,10 +83,13 @@ function ScheduleDetailPage() {
                       </div>
                       <div className="relative">
                         <p className="text-sm font-semibold">
-                          Examinator -
-                          <span className="capitalize text-sm font-medium">
-                            {" "}
-                            {council.name}
+                          <span className="capitalize font-bold">
+                            {council.name} {" "}
+                            <span className="text-red-500">
+                              {council.id ===
+                                councilInSchedule?.schedule?.timeSlots[0]
+                                  ?.student?.instructor?.id && "- Instructor"}
+                            </span>
                           </span>
                         </p>
                         <div className="text-sm">
@@ -223,30 +231,30 @@ function ScheduleDetailPage() {
                   <FilterScheduledForm holderText="Search schedule time ..." />
                 </div>
               </div>
-              <div className="mt-5 shadow-xl">
+              <div className="mt-5 shadow-xl rounded-2xl">
                 <div className="overflow-x-auto rounded-2xl">
                   <table className="table-auto w-full">
                     <thead className="text-sm font-medium capitalize text-gray-200 bg-green-700">
                       <tr>
-                        <th className="px-5 py-3 whitespace-nowrap">
+                        <th className="px-5 py-4 whitespace-nowrap">
                           <div className="font-medium text-left">Full name</div>
                         </th>
-                        <th className="px-5 py-3 whitespace-nowrap">
+                        <th className="px-5 py-4 whitespace-nowrap">
                           <div className="font-medium text-left">Email</div>
                         </th>
-                        <th className="px-5 py-3 whitespace-nowrap">
+                        <th className="px-5 py-4 whitespace-nowrap">
                           <div className="font-medium text-left">Date</div>
                         </th>
-                        <th className="px-5 py-3 whitespace-nowrap">
+                        <th className="px-5 py-4 whitespace-nowrap">
                           <div className="font-medium text-center">Room</div>
                         </th>
-                        <th className="px-5 py-3 whitespace-nowrap">
+                        <th className="px-5 py-4 whitespace-nowrap">
                           <div className="font-medium text-center">Shift</div>
                         </th>
-                        <th className="px-5 py-3 whitespace-nowrap">
+                        <th className="px-5 py-4 whitespace-nowrap">
                           <div className="font-medium text-center">Time</div>
                         </th>
-                        <th className="px-5 py-3 whitespace-nowrap">
+                        <th className="px-5 py-4 whitespace-nowrap">
                           <div className="font-medium text-end">Actions</div>
                         </th>
                       </tr>
@@ -315,39 +323,39 @@ function ScheduleDetailPage() {
                   </table>
                 </div>
               </div>
-              <div className="mt-5">
-                <div className="overflow-x-auto">
+              <div className="mt-5 shadow-xl rounded-2xl">
+                <div className="overflow-x-auto rounded-2xl">
                   <table className="table-auto w-full">
-                    <thead className="text-sm font-normal capitalize text-gray-200 bg-green-700">
+                    <thead className="text-sm font-medium capitalize text-gray-200 bg-green-700">
                       <tr>
-                        <th className="px-5 py-3 whitespace-nowrap">
-                          <div className="font-normal text-left">Full name</div>
+                        <th className="px-5 py-4 whitespace-nowrap">
+                          <div className="font-medium text-left">Full name</div>
                         </th>
-                        <th className="px-5 py-3 whitespace-nowrap">
-                          <div className="font-normal text-left">Email</div>
+                        <th className="px-5 py-4 whitespace-nowrap">
+                          <div className="font-medium text-left">Email</div>
                         </th>
-                        <th className="px-5 py-3 whitespace-nowrap">
-                          <div className="font-normal text-left">Date</div>
+                        <th className="px-5 py-4 whitespace-nowrap">
+                          <div className="font-medium text-left">Date</div>
                         </th>
-                        <th className="px-5 py-3 whitespace-nowrap">
-                          <div className="font-normal text-center">Room</div>
+                        <th className="px-5 py-4 whitespace-nowrap">
+                          <div className="font-medium text-center">Room</div>
                         </th>
-                        <th className="px-5 py-3 whitespace-nowrap">
-                          <div className="font-normal text-center">Shift</div>
+                        <th className="px-5 py-4 whitespace-nowrap">
+                          <div className="font-medium text-center">Shift</div>
                         </th>
-                        <th className="px-5 py-3 whitespace-nowrap">
-                          <div className="font-normal text-center">Time</div>
+                        <th className="px-5 py-4 whitespace-nowrap">
+                          <div className="font-medium text-center">Time</div>
                         </th>
-                        <th className="px-5 py-3 whitespace-nowrap">
-                          <div className="font-normal text-end">Actions</div>
+                        <th className="px-5 py-4 whitespace-nowrap">
+                          <div className="font-medium text-end">Actions</div>
                         </th>
                       </tr>
                     </thead>
                     {
                       <tbody className="text-sm divide-y divide-gray-100">
-                        {councilInSchedule?.schedule.timeSlots
+                        {councilInSchedule?.schedule?.timeSlots
                           ?.filter(
-                            (item) => item.timeSlot.shift === "Afternoon"
+                            (item) => item?.timeSlot?.shift === "Afternoon"
                           )
                           .map((student, index) => (
                             <React.Fragment key={index}>
@@ -359,38 +367,38 @@ function ScheduleDetailPage() {
                                         <Avatar
                                           widthStr="50"
                                           srcImg={
-                                            student.student.infor.photoSrc
+                                            student?.student?.infor?.photoSrc
                                           }
                                         />
                                       </div>
                                       <div className="font-medium text-gray-800">
-                                        {student.student.infor.name}
+                                        {student?.student?.infor?.name}
                                       </div>
                                     </div>
                                   </td>
                                   <td className="px-5 py-2 whitespace-nowrap">
                                     <div className="text-left">
-                                      {student.student.infor.email}
+                                      {student?.student?.infor?.email}
                                     </div>
                                   </td>
                                   <td className="px-5 py-2 whitespace-nowrap">
                                     <div className="text-left">
-                                      {student.timeSlot.date}
+                                      {student?.timeSlot.date}
                                     </div>
                                   </td>
                                   <td className="px-5 py-2 whitespace-nowrap">
                                     <div className="text-center">
-                                      {councilInSchedule.schedule.room.name}
+                                      {councilInSchedule?.schedule?.room?.name}
                                     </div>
                                   </td>
                                   <td className="px-5 py-2 whitespace-nowrap">
                                     <div className="text-center">
-                                      {student.timeSlot.shift}
+                                      {student?.timeSlot?.shift}
                                     </div>
                                   </td>
                                   <td className="px-5 py-2 whitespace-nowrap">
                                     <div className="text-center">
-                                      {student.timeSlot.time}
+                                      {student?.timeSlot?.time}
                                     </div>
                                   </td>
                                   <td className="px-5 py-2 whitespace-nowrap">

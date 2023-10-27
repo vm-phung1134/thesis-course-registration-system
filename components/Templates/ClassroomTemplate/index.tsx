@@ -73,7 +73,7 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
               <SnipperRound />
             ) : (
               <>
-                {authClassroomState.classCourse !== "" &&
+                {authClassroomState?.classCourse !== "" &&
                   currentUser.role === ROLE_ASSIGNMENT.LECTURER && (
                     <ClassroomFound
                       classroom={authClassroomState}
@@ -83,7 +83,7 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
                       {children}
                     </ClassroomFound>
                   )}
-                {authClassroomState.classCourse !== "" &&
+                {authClassroomState?.classCourse !== "" &&
                   currentUser.role === ROLE_ASSIGNMENT.STUDENT && (
                     <ClassroomFound
                       classroom={authClassroomState}
@@ -93,7 +93,7 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
                       {children}
                     </ClassroomFound>
                   )}
-                {!authClassroomState.classCourse && <ClassroomNotFound />}
+                {!authClassroomState?.classCourse && <ClassroomNotFound />}
               </>
             )}
           </div>

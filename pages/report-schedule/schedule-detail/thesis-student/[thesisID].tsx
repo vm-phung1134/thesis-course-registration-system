@@ -40,8 +40,8 @@ function ThesisDefenseStudentDetail() {
           <>
             <Breadcrumb dataBreadcrumb={BREADCRUMB_MAINBOARD} />
             <div className="grid grid-cols-12 gap-5 text-sm">
-              <div className="col-span-7 mt-5 flex gap-5 flex-col">
-                <div className="p-5 border">
+              <div className="col-span-7 mt-5 flex gap-5 flex-col tracking-wider">
+                <div className="p-5 bg-gray-100 rounded-xl">
                   <div className="text-sm my-1 flex gap-2 items-center">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -57,11 +57,11 @@ function ThesisDefenseStudentDetail() {
                     </svg>{" "}
                     <p> Back to schedule</p>
                   </div>
-                  <h4 className="uppercase text-white py-2 px-3 bg-green-700 text-sm my-2">
+                  <h4 className="py-2 px-3 text-green-700 text-xl font-bold my-1">
                     Thesis defense of student
                   </h4>
-                  <div className="px-3">
-                    <h5 className="uppercase text-[13px] text-green-700 tracking-wider my-2">
+                  <div className="p-3 bg-white rounded-lg">
+                    <h5 className="text-sm text-green-700 my-2 font-medium">
                       Information student
                     </h5>
                     <ul className="flex gap-3 flex-wrap">
@@ -88,7 +88,7 @@ function ThesisDefenseStudentDetail() {
                         </p>
                       </li>
                     </ul>
-                    <h5 className="uppercase text-[13px] text-green-700 tracking-wider my-2">
+                    <h5 className="text-sm text-green-700 my-2 font-medium">
                       Time defense
                     </h5>
                     <ul className="flex gap-5">
@@ -119,12 +119,12 @@ function ThesisDefenseStudentDetail() {
                     </ul>
                   </div>
                 </div>
-                <div className="p-5 border">
-                  <h4 className="uppercase text-white py-2 px-3 bg-green-700 text-sm my-2">
+                <div className="p-5 bg-gray-100 rounded-xl">
+                  <h4 className="py-2 px-3 text-green-700 text-xl font-bold my-1">
                     Topic searching
                   </h4>
-                  <div className="px-3">
-                    <h5 className="uppercase text-[13px] text-green-700 tracking-wider my-2">
+                  <div className="p-3 rounded-xl bg-white">
+                    <h5 className="text-sm text-green-700 my-2 font-medium">
                       Information topic
                     </h5>
                     <ul className="flex flex-col gap-3">
@@ -159,10 +159,11 @@ function ThesisDefenseStudentDetail() {
                 </div>
               </div>
               <div className="col-span-5">
-                <h4 className="uppercase mt-5 text-green-700 font-medium tracking-wider">
+                <h4 className="py-2 text-green-700 text-xl font-bold my-1">
                   Review from the Dissertation Council
                 </h4>
-                <div className="mt-5 p-3 flex gap-5 border shadow-lg rounded-2xl">
+                <p className="text-xs text-gray-500 italic">Here is the part members of council give point and comment about thesis of students</p>
+                <div className="mt-5 p-3 flex gap-5 border shadow-md rounded-2xl">
                   <div className="flex flex-col items-center justify-center ">
                     <NormalAvatar
                       photoSrc="https://cit.ctu.edu.vn/images/cit2023/anh_dai_dien/CNTT/LHQBao.jpg"

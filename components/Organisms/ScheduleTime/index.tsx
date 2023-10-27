@@ -39,7 +39,7 @@ export const ScheduleTime: FC<IScheduleTimeProps> = ({
               </li>
             </ul>
           </div>
-          <div className="h-full w-60 shadow-xl bg-slate-50 rounded-xl py-3 px-5 cursor-pointer">
+          <div className="h-full w-60 shadow-xl bg-slate-50 rounded-xl py-4 px-5 cursor-pointer">
             <h4 className="text-sm font-bold py-2 text-green-700">
               Related Shortcut
             </h4>
@@ -90,29 +90,29 @@ export const ScheduleTime: FC<IScheduleTimeProps> = ({
             <table className="table-auto w-full">
               <thead className="text-sm font-medium capitalize text-gray-200 bg-green-700">
                 <tr>
-                  <th className="px-5 py-3 whitespace-nowrap">
+                  <th className="px-5 py-4 whitespace-nowrap">
                     <div className="font-medium text-left">Name council</div>
                   </th>
-                  <th className="px-5 py-3 whitespace-nowrap">
+                  <th className="px-5 py-4 whitespace-nowrap">
                     <div className="font-medium text-left">Room</div>
                   </th>
-                  <th className="px-5 py-3 whitespace-nowrap">
+                  <th className="px-5 py-4 whitespace-nowrap">
                     <div className="font-medium text-left">Date</div>
                   </th>
-                  <th className="px-5 py-3 whitespace-nowrap">
+                  <th className="px-5 py-4 whitespace-nowrap">
                     <div className="font-medium text-center">
                       Quantity member council
                     </div>
                   </th>
-                  <th className="px-5 py-3 whitespace-nowrap">
+                  <th className="px-5 py-4 whitespace-nowrap">
                     <div className="font-medium text-center">
                       Quantity student defense
                     </div>
                   </th>
-                  <th className="px-5 py-3 whitespace-nowrap">
+                  <th className="px-5 py-4 whitespace-nowrap">
                     <div className="font-medium text-center">Create at</div>
                   </th>
-                  <th className="px-5 py-3 whitespace-nowrap">
+                  <th className="px-5 py-4 whitespace-nowrap">
                     <div className="font-medium text-end">Actions</div>
                   </th>
                 </tr>
@@ -122,27 +122,27 @@ export const ScheduleTime: FC<IScheduleTimeProps> = ({
                   (scheduled: any, index: number) => (
                     <React.Fragment key={index}>
                       <tr className="">
-                        <td className="px-5 py-3 whitespace-nowrap">
+                        <td className="px-5 py-4 whitespace-nowrap">
                           <div className="text-left">
                             Council {`${(index += 1)}`}
                           </div>
                         </td>
-                        <td className="px-5 py-3 whitespace-nowrap">
+                        <td className="px-5 py-4 whitespace-nowrap">
                           <div className="text-left">
                             {scheduled.schedule.room.name}
                           </div>
                         </td>
-                        <td className="px-5 py-3 whitespace-nowrap">
+                        <td className="px-5 py-4 whitespace-nowrap">
                           <div className="text-left">
                             {scheduled.schedule.timeSlots[0].timeSlot.date}
                           </div>
                         </td>
-                        <td className="px-5 py-3 whitespace-nowrap">
+                        <td className="px-5 py-4 whitespace-nowrap">
                           <div className="text-center">
                             {scheduled.council.length}
                           </div>
                         </td>
-                        <td className="px-5 py-3 whitespace-nowrap">
+                        <td className="px-5 py-4 whitespace-nowrap">
                           <div className="text-center">
                             {
                               scheduled.schedule.timeSlots.filter(
@@ -151,10 +151,10 @@ export const ScheduleTime: FC<IScheduleTimeProps> = ({
                             }
                           </div>
                         </td>
-                        <td className="px-5 py-3 whitespace-nowrap">
+                        <td className="px-5 py-4 whitespace-nowrap">
                           <div className="text-center">Thurday, 27-12-2023</div>
                         </td>
-                        <td className="px-5 py-3 whitespace-nowrap">
+                        <td className="px-5 py-4 whitespace-nowrap">
                           <div className="justify-end flex gap-3">
                             <Link
                               href={`/admin/schedule-time-defense/${scheduled.id}`}

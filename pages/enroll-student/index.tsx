@@ -87,7 +87,7 @@ function EnrollStudentPage() {
                     Here is your schedule thesis defense
                     <span className="uppercase"> CT550/HK1-2023</span>
                   </h4>
-                  <div className="w-fit">
+                  <div className="w-[27rem]">
                     <h4 className="my-2 font-bold tracking-wider">
                       Upload your final files
                     </h4>

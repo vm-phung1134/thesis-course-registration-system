@@ -1,4 +1,4 @@
-import { Breadcrumb, SnipperRound } from "@/components/Atoms";
+import { Breadcrumb, Button, SnipperRound } from "@/components/Atoms";
 import { BREADCRUMB_MAINBOARD } from "@/components/Organisms/MainboardStatus/mock-data";
 import { MainboardTemplate } from "@/components/Templates";
 import { useState, useEffect } from "react";
@@ -8,6 +8,7 @@ import { useSearchParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { ICouncilDef } from "@/interface/schedule";
 import { getOneCouncilInScheduleLecturer } from "@/redux/reducer/schedule-def/api";
+import { FilterScheduledForm } from "@/components/Molecules";
 
 function ScheduleDetail() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -34,9 +35,9 @@ function ScheduleDetail() {
         ) : (
           <>
             <Breadcrumb dataBreadcrumb={BREADCRUMB_MAINBOARD} />
-            <div className="grid grid-cols-12 gap-3 mt-5">
+            <div className="grid grid-cols-12 gap-5 mt-5">
               <div className="col-span-4">
-                <div className="p-5 border">
+                <div className="p-5 bg-slate-50 shadow-lg rounded-xl">
                   <div className="text-sm my-1 flex gap-2 items-center">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -52,9 +53,9 @@ function ScheduleDetail() {
                     </svg>{" "}
                     <p> Back to schedule</p>
                   </div>
-                  <h5 className="text-green-700 text-sm my-2 font-medium uppercase">
+                  <h4 className="text-green-700 my-5 font-bold text-xl">
                     The Crown Prosecution Service
-                  </h5>
+                  </h4>
                   <p className="normal-case text-gray-400 text-xs italic">
                     Date of foundation of the council 14/11/2023
                   </p>
@@ -85,32 +86,47 @@ function ScheduleDetail() {
                 </div>
               </div>
               <div className="col-span-8">
-                <h5 className="text-green-700 text-sm my-2 font-medium uppercase">
-                  List student of defense session
-                </h5>
+                <h4 className="font-medium">List student of defense session</h4>
+                <p className="text-sm text-slate-500">Total 12 schedule students</p>
+                <div className="flex justify-between my-5">
+                  <div className="flex">
+                    <Button
+                      title="Recently date"
+                      className="px-5 bg-gray-700 text-white btn-sm rounded-none"
+                    />
+                    <Button
+                      title="Ascending order"
+                      className="px-5 btn-sm rounded-none"
+                    />
+                    <Button title="All" className="px-5 btn-sm rounded-none" />
+                  </div>
+                  <div>
+                    <FilterScheduledForm holderText="Filter schedule time ..." />
+                  </div>
+                </div>
                 <div>
-                  <div className="overflow-x-auto">
-                    <table className="table-auto w-full border">
-                      <thead className="text-sm font-normal capitalize text-gray-200 bg-green-700">
+                  <div className="overflow-x-auto rounded-2xl shadow-lg">
+                    <table className="table-auto w-full rounded-2xl shadow-lg">
+                      <thead className="text-sm font-medium capitalize text-gray-200 bg-green-700">
                         <tr>
-                          <th className="px-5 py-3 whitespace-nowrap">
-                            <div className="font-normal text-left">Email</div>
+                          <th className="px-5 py-4 whitespace-nowrap">
+                            <div className="font-medium text-left">Email</div>
                           </th>
-                          <th className="px-5 py-3 whitespace-nowrap">
-                            <div className="font-normal text-left">Name</div>
+                          <th className="px-5 py-4 whitespace-nowrap">
+                            <div className="font-medium text-left">Name</div>
                           </th>
-                          <th className="px-5 py-3 whitespace-nowrap">
-                            <div className="font-normal text-left">
+                          <th className="px-5 py-4 whitespace-nowrap">
+                            <div className="font-medium text-left">
                               ID Student
                             </div>
                           </th>
-                          <th className="px-5 py-3 whitespace-nowrap">
-                            <div className="font-normal text-center">
+                          <th className="px-5 py-4 whitespace-nowrap">
+                            <div className="font-medium text-center">
                               {`Time ( 24 hours )`}
                             </div>
                           </th>
-                          <th className="px-5 py-3 whitespace-nowrap">
-                            <div className="font-normal text-end">Actions</div>
+                          <th className="px-5 py-4 whitespace-nowrap">
+                            <div className="font-medium text-end">Actions</div>
                           </th>
                         </tr>
                       </thead>
@@ -119,25 +135,25 @@ function ScheduleDetail() {
                           .filter((item) => item.timeSlot.shift === "Morning")
                           .map((student, index) => (
                             <tr key={student.student.id} className="border-b">
-                              <td className="px-5 py-3 whitespace-nowrap">
+                              <td className="px-5 py-4 whitespace-nowrap">
                                 <div className="text-left">
                                   {student.student.infor.email}
                                 </div>
                               </td>
-                              <td className="px-5 py-3 whitespace-nowrap">
+                              <td className="px-5 py-4 whitespace-nowrap">
                                 <div className="text-left">
                                   {student.student.infor.name}
                                 </div>
                               </td>
-                              <td className="px-5 py-3 whitespace-nowrap">
+                              <td className="px-5 py-4 whitespace-nowrap">
                                 <div className="text-left">B1910282</div>
                               </td>
-                              <td className="px-5 py-3 whitespace-nowrap">
+                              <td className="px-5 py-4 whitespace-nowrap">
                                 <div className="text-center">
                                   {student.timeSlot.time}
                                 </div>
                               </td>
-                              <td className="px-5 py-3 whitespace-nowrap">
+                              <td className="px-5 py-4 whitespace-nowrap">
                                 <div className="justify-end flex gap-3">
                                   <Link
                                     href={`/report-schedule/schedule-detail/thesis-student/${student.student.infor.id}`}
@@ -153,55 +169,55 @@ function ScheduleDetail() {
                       </tbody>
                     </table>
                   </div>
-                  <div className="overflow-x-auto my-5">
+                  <div className="overflow-x-auto my-5 rounded-2xl shadow-lg">
                     <table className="table-auto w-full border">
-                      <thead className="text-sm font-normal capitalize text-gray-200 bg-green-700">
+                      <thead className="text-sm font-medium capitalize text-gray-200 bg-green-700">
                         <tr>
-                          <th className="px-5 py-3 whitespace-nowrap">
-                            <div className="font-normal text-left">Email</div>
+                          <th className="px-5 py-4 whitespace-nowrap">
+                            <div className="font-medium text-left">Email</div>
                           </th>
-                          <th className="px-5 py-3 whitespace-nowrap">
-                            <div className="font-normal text-left">Name</div>
+                          <th className="px-5 py-4 whitespace-nowrap">
+                            <div className="font-medium text-left">Name</div>
                           </th>
-                          <th className="px-5 py-3 whitespace-nowrap">
-                            <div className="font-normal text-left">
+                          <th className="px-5 py-4 whitespace-nowrap">
+                            <div className="font-medium text-left">
                               ID Student
                             </div>
                           </th>
-                          <th className="px-5 py-3 whitespace-nowrap">
-                            <div className="font-normal text-center">
+                          <th className="px-5 py-4 whitespace-nowrap">
+                            <div className="font-medium text-center">
                               {`Time ( 24 hours )`}
                             </div>
                           </th>
-                          <th className="px-5 py-3 whitespace-nowrap">
-                            <div className="font-normal text-end">Actions</div>
+                          <th className="px-5 py-4 whitespace-nowrap">
+                            <div className="font-medium text-end">Actions</div>
                           </th>
                         </tr>
                       </thead>
                       <tbody className="text-sm divide-y divide-gray-100">
                         {councilInSchedule?.schedule.timeSlots
-                          .filter((item) => item.timeSlot.shift === "Afternoon")
+                          .filter((item) => item.timeSlot.shift === "Afternoon" && item.student.id !== "")
                           .map((student, index) => (
                             <tr key={student.student.id} className="border-b">
-                              <td className="px-5 py-3 whitespace-nowrap">
+                              <td className="px-5 py-4 whitespace-nowrap">
                                 <div className="text-left">
                                   {student.student.infor.email}
                                 </div>
                               </td>
-                              <td className="px-5 py-3 whitespace-nowrap">
+                              <td className="px-5 py-4 whitespace-nowrap">
                                 <div className="text-left">
                                   {student.student.infor.name}
                                 </div>
                               </td>
-                              <td className="px-5 py-3 whitespace-nowrap">
+                              <td className="px-5 py-4 whitespace-nowrap">
                                 <div className="text-left">B1910282</div>
                               </td>
-                              <td className="px-5 py-3 whitespace-nowrap">
+                              <td className="px-5 py-4 whitespace-nowrap">
                                 <div className="text-center">
                                   {student.timeSlot.time}
                                 </div>
                               </td>
-                              <td className="px-5 py-3 whitespace-nowrap">
+                              <td className="px-5 py-4 whitespace-nowrap">
                                 <div className="justify-end flex gap-3">
                                   <Link
                                     href={`/report-schedule/schedule-detail/thesis-student/${student.student.infor.id}`}

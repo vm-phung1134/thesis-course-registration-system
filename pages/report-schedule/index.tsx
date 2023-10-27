@@ -16,7 +16,7 @@ function ScheduleThesisDefensePage() {
   const dispatch = useAppDispatch();
   const { currentUser } = useCurrentUser();
   const { data: scheduleForLecturer } = useQuery<ICouncilDef[]>({
-    queryKey: ["schedule-lecturer", currentUser],
+    queryKey: ["schedule-lecturer", currentUser.id],
     queryFn: async () => {
       const action = await dispatch(getScheduleForLecturer(currentUser.id));
       return action.payload || [];
@@ -27,8 +27,9 @@ function ScheduleThesisDefensePage() {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 500);
+    }, 1500);
   }, []);
+  console.log(scheduleForLecturer.length < 0)
   return (
     <MainboardTemplate title="Schedule report | Thesis course registration system">
       {loading ? (
@@ -37,53 +38,62 @@ function ScheduleThesisDefensePage() {
         <>
           <Breadcrumb dataBreadcrumb={BREADCRUMB_MAINBOARD} />
           <div>
-            <h4 className="uppercase text-green-700 font-medium">
-              Thesis defense review schedule
-            </h4>
+            <div className="my-3 py-2 flex gap-2 items-center">
+              <h4 className="text-xl capitalize text-green-700 font-medium ">
+                Thesis defense{" "}
+                <span className="text-orange-600"> review schedule</span>
+              </h4>
+              <div className="flex-grow h-[0.5px] bg-green-700"></div>
+            </div>
+            <h4 className="font-medium">Your schedule arrange</h4>
+            <p className="text-sm text-slate-500">Total 12 schedule time slots</p>
             <div className="flex justify-between mt-5">
               <div className="flex">
                 <Button
                   title="Recently date"
-                  className="px-5 bg-gray-700 text-white btn-sm"
+                  className="px-5 bg-gray-700 text-white btn-sm rounded-none"
                 />
-                <Button title="Ascending order" className="px-5 btn-sm" />
-                <Button title="All" className="px-5 btn-sm" />
+                <Button
+                  title="Ascending order"
+                  className="px-5 btn-sm rounded-none"
+                />
+                <Button title="All" className="px-5 btn-sm rounded-none" />
               </div>
               <div>
                 <FilterScheduledForm holderText="Filter schedule time ..." />
               </div>
             </div>
             <div className="mt-8">
-              <div className="overflow-x-auto">
+              <div className="overflow-x-auto shadow-xl rounded-2xl">
                 <table className="table-auto w-full border">
-                  <thead className="text-sm font-normal capitalize text-gray-200 bg-green-700">
+                  <thead className="text-sm font-medium capitalize text-gray-200 bg-green-700">
                     <tr>
-                      <th className="px-5 py-3 whitespace-nowrap">
-                        <div className="font-normal text-left">Email</div>
+                      <th className="px-5 py-4 whitespace-nowrap">
+                        <div className="font-medium text-left">Email</div>
                       </th>
-                      <th className="px-5 py-3 whitespace-nowrap">
-                        <div className="font-normal text-left">
+                      <th className="px-5 py-4 whitespace-nowrap">
+                        <div className="font-medium text-left">
                           Role council
                         </div>
                       </th>
-                      <th className="px-5 py-3 whitespace-nowrap">
-                        <div className="font-normal text-left">Date</div>
+                      <th className="px-5 py-4 whitespace-nowrap">
+                        <div className="font-medium text-left">Date</div>
                       </th>
-                      <th className="px-5 py-3 whitespace-nowrap">
-                        <div className="font-normal text-center">Room</div>
+                      <th className="px-5 py-4 whitespace-nowrap">
+                        <div className="font-medium text-center">Room</div>
                       </th>
-                      <th className="px-5 py-3 whitespace-nowrap">
-                        <div className="font-normal text-center">
+                      <th className="px-5 py-4 whitespace-nowrap">
+                        <div className="font-medium text-center">
                           Quantity student
                         </div>
                       </th>
-                      <th className="px-5 py-3 whitespace-nowrap">
-                        <div className="font-normal text-center">
+                      <th className="px-5 py-4 whitespace-nowrap">
+                        <div className="font-medium text-center">
                           {`Time ( 24 hours )`}
                         </div>
                       </th>
                       <th className="px-5 py-3 whitespace-nowrap">
-                        <div className="font-normal text-end">Actions</div>
+                        <div className="font-medium text-end">Actions</div>
                       </th>
                     </tr>
                   </thead>
@@ -91,14 +101,14 @@ function ScheduleThesisDefensePage() {
                     {scheduleForLecturer.map((schedule, index) => (
                       <React.Fragment key={index}>
                         {schedule.council
-                          .filter((item) => item.id === "GV5")
+                          .filter((item) => item.id === "GV2")
                           .map((council) => (
                             <tr key={council.id} className="border-b">
                               <td className="px-5 py-3 whitespace-nowrap">
                                 <div className="text-left">{council.email}</div>
                               </td>
                               <td className="px-5 py-3 whitespace-nowrap">
-                                <div className="text-left">GVHD</div>
+                                <div className="text-left">Instructor</div>
                               </td>
                               <td className="px-5 py-3 whitespace-nowrap">
                                 <div className="text-left">
@@ -112,7 +122,12 @@ function ScheduleThesisDefensePage() {
                               </td>
                               <td className="px-5 py-3 whitespace-nowrap">
                                 <div className="text-center">
-                                  {schedule.schedule.timeSlots.length}
+                                  {
+                                    schedule.schedule.timeSlots.filter(
+                                      (item) => item.student.id !== ""
+                                    ).length
+                                  }{" "}
+                                  / {schedule.schedule.timeSlots.length}
                                 </div>
                               </td>
                               <td className="px-5 py-3 whitespace-nowrap">

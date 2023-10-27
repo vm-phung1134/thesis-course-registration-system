@@ -24,20 +24,20 @@ export const UnSubscribeView: FC<IUnSubscribeViewProps> = ({ classroom }) => {
             <Image
               src="https://tailwindcomponents.com/svg/queue-animate.svg"
               alt="bg-create-class"
-              width="300"
-              height="300"
+              width="350"
+              height="350"
               className="-hue-rotate-[38deg] saturate-[.85]"
               objectFit="cover"
               objectPosition="center"
             />
             <div className="flex gap-3 flex-col items-center">
-              <h4 className="">
-                You subscribed classroom of{" "}
-                <span className="uppercase font-medium">
+              <h4 className="text-xl font-medium">
+                You subscribed classroom of{" "} 
+                <span className="uppercase font-bold">
                   {classroom?.lecturer?.name}
                 </span>
               </h4>
-              <p className="font-thin">
+              <p className="">
                 <span className="font-medium">Congratulation </span>! You have
                 been added into class
               </p>
