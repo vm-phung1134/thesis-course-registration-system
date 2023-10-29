@@ -124,6 +124,7 @@ export const INITIATE_COUNCIL_DEF: IAuthObject = {
 export const INITIATE_UPLOAD_REPORT: IUploadReportObject = {
   uid: "",
   student: INITIATE_AUTH,
+  status: ""
 };
 
 export enum STATE_AUTH_CLASSROOM {

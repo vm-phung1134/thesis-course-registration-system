@@ -155,7 +155,7 @@ export const SidebarAdminView: FC<ISidebarAdminViewProps> = ({}) => {
               <ul className="flex gap-2 flex-col ml-7 mt-4 text-[15px] font-medium">
                 <li>
                   <Link
-                    href=""
+                    href="/admin/alumnus/topic-research"
                     className="rounded-none hover:bg-green-700 hover:text-white"
                   >
                     Topic research
@@ -163,7 +163,7 @@ export const SidebarAdminView: FC<ISidebarAdminViewProps> = ({}) => {
                 </li>
                 <li>
                   <Link
-                    href=""
+                    href="/admin/alumnus/register-defense"
                     className="rounded-none hover:bg-green-700 hover:text-white"
                   >
                     Register defense
