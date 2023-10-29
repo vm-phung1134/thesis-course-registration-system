@@ -1,22 +1,25 @@
 import React, { FC, useRef, useState } from "react";
 import { Form, Formik } from "formik";
 import { Button } from "@/components/Atoms";
-import { INITIATE_SUBMIT } from "@/data";
+import { INITIATE_SUBMIT, INITIATE_UPLOAD_REPORT } from "@/data";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
-import { IExerciseObject } from "@/interface/exercise";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ISubmitObject } from "@/interface/submit";
-import { createSubmit } from "@/redux/reducer/submit/api";
 import { useAppDispatch } from "@/redux/store";
 import { v4 as uuidv4 } from "uuid";
 import Image from "next/image";
+import { IUploadReportObject } from "@/interface/upload";
+import {
+  createUploadReport,
+  getUploadReport,
+} from "@/redux/reducer/upload-def/api";
 const objectId = uuidv4();
 interface IUploadFinalFileFormProps {
-  submit?: ISubmitObject;
+  uploadReport?: IUploadReportObject;
 }
 
 export const UploadFinalFileForm: FC<IUploadFinalFileFormProps> = ({
-  submit,
+  uploadReport,
 }) => {
   const fileInputRef = useRef<HTMLInputElement>(null!);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
@@ -26,10 +29,6 @@ export const UploadFinalFileForm: FC<IUploadFinalFileFormProps> = ({
   const handleUploadClick = () => {
     fileInputRef.current?.click();
   };
-  const resetSelectedFiles = () => {
-    setSelectedFiles([]);
-    fileInputRef.current.value = "";
-  };
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (files) {
@@ -37,26 +36,25 @@ export const UploadFinalFileForm: FC<IUploadFinalFileFormProps> = ({
       setSelectedFiles((prevFiles) => [...prevFiles, ...newFiles]);
     }
   };
-
-  //   const addMutation = useMutation(
-  //     (postData: ISubmitObject) => {
-  //       return new Promise((resolve, reject) => {
-  //         dispatch(createSubmit(postData))
-  //           .unwrap()
-  //           .then((data) => {
-  //             resolve(data);
-  //           })
-  //           .catch((error) => {
-  //             reject(error);
-  //           });
-  //       });
-  //     },
-  //     {
-  //       onSuccess: () => {
-  //         queryClient.invalidateQueries(["submit"]);
-  //       },
-  //     }
-  //   );
+  const addMutation = useMutation(
+    (postData: IUploadReportObject) => {
+      return new Promise((resolve, reject) => {
+        dispatch(createUploadReport(postData))
+          .unwrap()
+          .then((data) => {
+            resolve(data);
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      });
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["uploads"]);
+      },
+    }
+  );
 
   return (
     <Formik
@@ -67,7 +65,12 @@ export const UploadFinalFileForm: FC<IUploadFinalFileFormProps> = ({
       }}
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
-          console.log(values);
+          addMutation.mutate({
+            student: currentUser,
+            attachments: selectedFiles,
+            uid: objectId,
+            status: "submitted",
+          });
         }, 400);
       }}
     >
@@ -75,11 +78,11 @@ export const UploadFinalFileForm: FC<IUploadFinalFileFormProps> = ({
         <Form>
           <div className="w-full border-gray-400 h-fit border rounded-xl border-dashed py-5 mb-5 relative">
             <div className="flex gap-3 flex-col h-full w-full items-center justify-center px-5">
-              {submit?.status ? (
+              {uploadReport?.status ? (
                 // GET FILE HAS BEEN SUBMITED
                 <div className="w-full">
                   <ul className="text-sm w-full flex flex-col gap-2 mb-10 font-medium px-2">
-                    {submit?.attachments.map((file) => (
+                    {uploadReport?.attachments?.map((file) => (
                       <div
                         key={file.id}
                         className="flex gap-3 text-blue-700 font-medium rounded-md items-center px-3 py-2 bg-slate-200 shadow-md"
@@ -108,8 +111,8 @@ export const UploadFinalFileForm: FC<IUploadFinalFileFormProps> = ({
                 <ul className="text-sm w-full flex flex-col gap-2 mb-5 font-medium px-2">
                   {selectedFiles.map((file) => (
                     <li
-                    className="flex gap-3 text-blue-700 font-medium rounded-md items-center px-3 py-2 bg-slate-200 shadow-md"
-                    key={file.name}
+                      className="flex gap-3 text-blue-700 font-medium rounded-md items-center px-3 py-2 bg-slate-200 shadow-md"
+                      key={file.name}
                     >
                       <Image
                         width={20}
@@ -156,14 +159,21 @@ export const UploadFinalFileForm: FC<IUploadFinalFileFormProps> = ({
                     className="text-sm px-5 py-2 rounded-lg flex gap-3 "
                     onClick={handleUploadClick}
                   >
-                    <Image width={20} height={20} src={"https://cdn-icons-png.flaticon.com/128/4903/4903802.png"} alt=""/>
+                    <Image
+                      width={20}
+                      height={20}
+                      src={
+                        "https://cdn-icons-png.flaticon.com/128/4903/4903802.png"
+                      }
+                      alt=""
+                    />
                     <p className="font-medium tracking-wider">Add new file</p>
                   </button>
                 )}
               </div>
             </div>
           </div>
-          {submit?.status ? (
+          {uploadReport?.status ? (
             <Button
               type="button"
               className="rounded-lg hover:bg-green-600 w-full bg-green-700 text-white"

@@ -6,12 +6,14 @@ import {
 } from "@/components/Molecules";
 import { EnrollSuccess } from "@/components/Organisms/MemberState/EnrollSuccess";
 import { MainboardTemplate } from "@/components/Templates";
-import { INITIATE_MEMBER } from "@/data";
+import { INITIATE_MEMBER, INITIATE_UPLOAD_REPORT } from "@/data";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { IMemberObject } from "@/interface/member";
 import { ICouncilDef } from "@/interface/schedule";
+import { IUploadReportObject } from "@/interface/upload";
 import { getMember, updateMember } from "@/redux/reducer/member/api";
 import { getScheduleForStudent } from "@/redux/reducer/schedule-def/api";
+import { getUploadReport } from "@/redux/reducer/upload-def/api";
 import { useAppDispatch } from "@/redux/store";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
@@ -60,6 +62,17 @@ function EnrollStudentPage() {
   const handleEnrollMember = () => {
     updateMutation.mutate({ ...member, registerDefense: true });
   };
+
+  // HANDLE FINAL UPLOAD
+  const { data: uploadReport } = useQuery<IUploadReportObject>({
+    queryKey: ["upload-def", currentUser],
+    queryFn: async () => {
+      const action = await dispatch(getUploadReport(currentUser));
+      return action.payload || INITIATE_UPLOAD_REPORT;
+    },
+    initialData: INITIATE_UPLOAD_REPORT,
+  });
+
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
@@ -91,7 +104,7 @@ function EnrollStudentPage() {
                     <h4 className="my-2 font-bold tracking-wider">
                       Upload your final files
                     </h4>
-                    <UploadFinalFileForm />
+                    <UploadFinalFileForm uploadReport={uploadReport} />
                   </div>
                 </div>
               </div>
@@ -131,7 +144,10 @@ function EnrollStudentPage() {
                   <h5 className="text-lg text-green-700 font-bold capitalize tracking-wider">
                     Your schedule thesis defense
                   </h5>
-                  <p className="font-thin text-xs italic text-orange-600">Noticed: Please arrive at the room 10 minutes in advance to prepare!!!</p>
+                  <p className="font-thin text-xs italic text-orange-600">
+                    Noticed: Please arrive at the room 10 minutes in advance to
+                    prepare!!!
+                  </p>
                   <ul className="capitalize flex flex-col gap-2">
                     <li>
                       <p className="flex gap-3">

@@ -26,10 +26,10 @@ export const UploadFileForm: FC<IUploadFormProps> = ({ exercise, submit }) => {
   const handleUploadClick = () => {
     fileInputRef.current?.click();
   };
-  const resetSelectedFiles = () => {
-    setSelectedFiles([]);
-    fileInputRef.current.value = "";
-  };
+  // const resetSelectedFiles = () => {
+  //   setSelectedFiles([]);
+  //   fileInputRef.current.value = "";
+  // };
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (files) {
@@ -74,7 +74,7 @@ export const UploadFileForm: FC<IUploadFormProps> = ({ exercise, submit }) => {
             uid: objectId,
             status: "submited",
           });
-          resetSelectedFiles();
+          // resetSelectedFiles();
           setSubmitting(false);
         }, 400);
       }}

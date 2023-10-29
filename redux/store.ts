@@ -17,6 +17,7 @@ import studentDefSlice from "./reducer/student-def";
 import roomDefSlice from "./reducer/room-def";
 import councilDefSlice from "./reducer/council-def";
 import scheduleDefSlice from "./reducer/schedule-def";
+import uploadReportSlice from "./reducer/upload-def";
 
 const rootReducer = combineReducers({
   authReducer: authSlice,
@@ -33,6 +34,7 @@ const rootReducer = combineReducers({
   roomDefReducer: roomDefSlice,
   councilDefReducer: councilDefSlice,
   scheduleDefReducer: scheduleDefSlice,
+  uploadReportReducer: uploadReportSlice,
 });
 
 const store = configureStore({

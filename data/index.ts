@@ -3,13 +3,13 @@ import { ICategoryObject } from "@/interface/category";
 import { IClassroomObject } from "@/interface/classroom";
 import { ICommentObject } from "@/interface/comment";
 import { IExerciseObject } from "@/interface/exercise";
-import { IOptionItem } from "@/interface/filter";
 import { IMemberObject } from "@/interface/member";
 import { IPostObject } from "@/interface/post";
 import { IRoomDefObject } from "@/interface/room";
 import { IStudentDefObject } from "@/interface/studef";
 import { ISubmitObject } from "@/interface/submit";
 import { ITopicObject } from "@/interface/topic";
+import { IUploadReportObject } from "@/interface/upload";
 
 export const INITIATE_AUTH: IAuthObject = {
   name: "",
@@ -119,6 +119,11 @@ export const INITIATE_COUNCIL_DEF: IAuthObject = {
   major: "",
   role: "",
   id: "",
+};
+
+export const INITIATE_UPLOAD_REPORT: IUploadReportObject = {
+  uid: "",
+  student: INITIATE_AUTH,
 };
 
 export enum STATE_AUTH_CLASSROOM {
