@@ -10,8 +10,8 @@ const initialState: ReportStageState = {
   error: null,
 };
 
-const classroomSlice = createSlice({
-  name: "classroom",
+const reportStageSlice = createSlice({
+  name: "reportStage",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -45,4 +45,4 @@ const classroomSlice = createSlice({
   },
 });
 
-export default classroomSlice.reducer;
+export default reportStageSlice.reducer;

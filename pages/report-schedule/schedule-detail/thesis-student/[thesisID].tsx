@@ -8,6 +8,7 @@ import { AssessForm } from "@/components/Molecules";
 import { BREADCRUMB_MAINBOARD } from "@/components/Organisms/MainboardStatus/mock-data";
 import { MainboardTemplate } from "@/components/Templates";
 import { INITIATE_AUTH, INITIATE_TOPIC } from "@/data";
+import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { ICouncilDef } from "@/interface/schedule";
 import { ITopicObject } from "@/interface/topic";
 import { IUploadReportObject } from "@/interface/upload";
@@ -23,6 +24,7 @@ import { useState, useEffect } from "react";
 function ThesisDefenseStudentDetail() {
   const [loading, setLoading] = useState<boolean>(true);
   const dispatch = useAppDispatch();
+  const { currentUser } = useCurrentUser();
   const params = useSearchParams();
   const id = params.get("thesisID") || "";
   const { data: studentScheduled } = useQuery<ICouncilDef>({
@@ -217,19 +219,9 @@ function ThesisDefenseStudentDetail() {
                   Here is the part members of council give point and comment
                   about thesis of students
                 </p>
-                <div className="mt-5 p-3 flex gap-5 border shadow-md rounded-2xl">
-                  <div className="flex flex-col items-center justify-center ">
-                    <NormalAvatar
-                      photoSrc="https://cit.ctu.edu.vn/images/cit2023/anh_dai_dien/CNTT/LHQBao.jpg"
-                      setSize="w-10"
-                    />
-                    <p className="capitalize font-medium">Bui vo quoc bao</p>
-                    <p>vbqbao@cit.ctu.edu.vn</p>
-                  </div>
-                  <div className="mt-2 flex-grow">
-                    <AssessForm />
-                  </div>
-                </div>
+                <AssessForm
+                  student={studentScheduled?.schedule?.timeSlots[0]?.student}
+                />
               </div>
             </div>
           </>

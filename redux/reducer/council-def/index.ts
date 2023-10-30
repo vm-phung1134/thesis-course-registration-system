@@ -17,8 +17,8 @@ const initialState: CouncilDefState = {
   error: null,
 };
 
-const authSlice = createSlice({
-  name: "auth",
+const councilSlice = createSlice({
+  name: "council",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -92,4 +92,4 @@ const authSlice = createSlice({
   },
 });
 
-export default authSlice.reducer;
+export default councilSlice.reducer;

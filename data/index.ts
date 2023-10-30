@@ -4,6 +4,7 @@ import { IClassroomObject } from "@/interface/classroom";
 import { ICommentObject } from "@/interface/comment";
 import { IExerciseObject } from "@/interface/exercise";
 import { IMemberObject } from "@/interface/member";
+import { IAssessItem, IPointDefObject } from "@/interface/pointDef";
 import { IPostObject } from "@/interface/post";
 import { IRoomDefObject } from "@/interface/room";
 import { IStudentDefObject } from "@/interface/studef";
@@ -124,7 +125,19 @@ export const INITIATE_COUNCIL_DEF: IAuthObject = {
 export const INITIATE_UPLOAD_REPORT: IUploadReportObject = {
   uid: "",
   student: INITIATE_AUTH,
-  status: ""
+  status: "",
+};
+
+export const INITIATE_POINT_DEF: IPointDefObject = {
+  id: "",
+  student: INITIATE_AUTH,
+  assesses: [],
+};
+
+export const INITIATE_ASSESS: Omit<IAssessItem, "id"> = {
+  lecturer: INITIATE_AUTH,
+  point: 0,
+  comment: "",
 };
 
 export enum STATE_AUTH_CLASSROOM {
