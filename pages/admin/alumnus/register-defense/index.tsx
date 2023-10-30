@@ -12,31 +12,42 @@ import useCheckedBox from "@/hooks/useCheckedBox";
 import { IStudentDefObject } from "@/interface/studef";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { getAllStudentDefs } from "@/redux/reducer/student-def/api";
-import { FilterScheduledForm } from "@/components/Molecules";
+import {
+  getAllStudentDefPag,
+  getAllStudentDefs,
+} from "@/redux/reducer/student-def/api";
+import { FilterScheduledForm, Pagination } from "@/components/Molecules";
 import { InforMemberModal } from "@/components/Organisms";
 import { getTopic } from "@/redux/reducer/topic/api";
 import classNames from "classnames";
+import { usePagination } from "@/hooks/usePagination";
+import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 
 function RegisterDefensePageAdmin() {
   const [loading, setLoading] = useState<boolean>(true);
   const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
+  const { currentUser } = useCurrentUser();
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalPages] = useState<number>(10);
   const [openModalStudefDetail, setOpenModalStudefDetail] =
     useState<boolean>(false);
   const modalClass = classNames({
     "modal modal-bottom sm:modal-middle": true,
     "modal-open": openModalStudefDetail,
   });
+  const handlePrevPage = () => {
+    setCurrentPage((prevPage) => prevPage - 1);
+  };
 
+  const handleNextPage = () => {
+    setCurrentPage((prevPage) => prevPage + 1);
+  };
   const { topic } = useAppSelector((state) => state.topicReducer);
-  const { data: studentDef } = useQuery<IStudentDefObject[]>({
-    queryKey: ["student-def"],
-    queryFn: async () => {
-      const action = await dispatch(getAllStudentDefs());
-      return action.payload || [];
-    },
-    initialData: [],
+  const { data: studentDef } = usePagination({
+    page: currentPage,
+    limit: 10,
+    uid: currentUser.id,
   });
   const {
     checkedItems: checkedStudents,
@@ -45,7 +56,7 @@ function RegisterDefensePageAdmin() {
   } = useCheckedBox<IStudentDefObject>(studentDef);
   const handleGetTopicMember = (studef: IStudentDefObject) => {
     dispatch(getTopic(studef?.infor));
-    setOpenModalStudefDetail(!openModalStudefDetail)
+    setOpenModalStudefDetail(!openModalStudefDetail);
   };
   useEffect(() => {
     setTimeout(() => {
@@ -215,6 +226,14 @@ function RegisterDefensePageAdmin() {
                   </div>
                 </div>
               </div>
+            </div>
+            <div className="flex justify-center mt-10">
+              <Pagination
+                handleNextPage={handleNextPage}
+                handlePrevPage={handlePrevPage}
+                totalPages={totalPages}
+                currentPage={currentPage}
+              />
             </div>
           </div>
           <InforMemberModal

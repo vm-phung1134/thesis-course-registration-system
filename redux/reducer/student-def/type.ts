@@ -8,4 +8,10 @@ export interface StudentDefState {
   error: string | null;
 }
 
+export interface StudentDefLimit {
+  uid: string;
+  page: number;
+  limit: number;
+}
+
 export const token = Cookies.get("token");

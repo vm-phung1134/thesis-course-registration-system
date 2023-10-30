@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { token } from "./type";
+import { StudentDefLimit, token } from "./type";
 import { IStudentDefObject } from "@/interface/studef";
 
 // GET ONE STUDENT DEF
@@ -27,6 +27,22 @@ const getAllStudentDefs = createAsyncThunk(
   "studef/getAllStudentDefs",
   async () => {
     const response = await axios.get(`http://localhost:5000/api/student-def`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (response.status === 200) {
+      return response.data;
+    }
+    throw new Error("Failed to get all auths");
+  }
+);
+
+// GET ALL STUDENT DEFS PAGINATION
+const getAllStudentDefPag = createAsyncThunk(
+  "studef/getAllStudentDefPag",
+  async (params: StudentDefLimit) => {
+    const response = await axios.get(`http://localhost:5000/api/student-def/list-studef/id=${params.uid}?page=${params.page}&limit=${params.limit}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -103,4 +119,5 @@ export {
   updateStudentDef,
   createStudentDef,
   deleteStudentDef,
+  getAllStudentDefPag,
 };

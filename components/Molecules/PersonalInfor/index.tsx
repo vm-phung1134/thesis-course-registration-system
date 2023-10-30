@@ -9,8 +9,8 @@ export interface IPersonalInforProps {
 export const PersonalInfor: FC<IPersonalInforProps> = ({ member }) => {
   return (
     <div>
-      <h5 className="mb-5 font-medium capitalize">Personal information</h5>
-      <ul className="text-sm flex flex-col gap-3">
+      <h5 className="mb-5 font-medium capitalize text-green-700">Personal information</h5>
+      <ul className="text-sm flex flex-col gap-3 text-black">
         <li className="flex gap-3">
           <p className="text-gray-500">Fullname: </p>
           <p className="uppercase">{convertToUnaccentedString(member?.name)}</p>
