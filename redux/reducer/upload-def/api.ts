@@ -1,7 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { token } from "./type";
-import { IClassroomObject } from "@/interface/classroom";
 import { IUploadReportObject } from "@/interface/upload";
 import { IAuthObject } from "@/interface/auth";
 
@@ -27,9 +26,9 @@ const getAllUploadReports = createAsyncThunk(
 // GET ONE UPLOAD REPORT
 const getUploadReport = createAsyncThunk(
   "upload/getUploadReport",
-  async (postData: IAuthObject) => {
+  async (id: string) => {
     const response = await axios.get(
-      `http://localhost:5000/api/upload-report/${postData.id}`,
+      `http://localhost:5000/api/upload-report/${id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

@@ -7,10 +7,16 @@ import {
 import { AssessForm } from "@/components/Molecules";
 import { BREADCRUMB_MAINBOARD } from "@/components/Organisms/MainboardStatus/mock-data";
 import { MainboardTemplate } from "@/components/Templates";
+import { INITIATE_AUTH, INITIATE_TOPIC } from "@/data";
 import { ICouncilDef } from "@/interface/schedule";
+import { ITopicObject } from "@/interface/topic";
+import { IUploadReportObject } from "@/interface/upload";
 import { getScheduleForStudent } from "@/redux/reducer/schedule-def/api";
-import { useAppDispatch } from "@/redux/store";
+import { getTopic } from "@/redux/reducer/topic/api";
+import { getUploadReport } from "@/redux/reducer/upload-def/api";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { useQuery } from "@tanstack/react-query";
+import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 
@@ -20,12 +26,37 @@ function ThesisDefenseStudentDetail() {
   const params = useSearchParams();
   const id = params.get("thesisID") || "";
   const { data: studentScheduled } = useQuery<ICouncilDef>({
-    queryKey: ["studentScheduled"],
+    queryKey: ["studentScheduled", id],
     queryFn: async () => {
       const action = await dispatch(getScheduleForStudent(id));
       return action.payload || {};
     },
   });
+
+  const { data: uploadReport } = useQuery<IUploadReportObject>({
+    queryKey: ["upload-report", id],
+    queryFn: async () => {
+      const action = await dispatch(getUploadReport(id));
+      return action.payload || {};
+    },
+  });
+
+  const { data: topic } = useQuery<ITopicObject>({
+    queryKey: [
+      "topic",
+      studentScheduled?.schedule?.timeSlots[0]?.student?.infor,
+    ],
+    queryFn: async () => {
+      const action = await dispatch(
+        getTopic(
+          studentScheduled?.schedule?.timeSlots[0]?.student?.infor ||
+            INITIATE_AUTH
+        )
+      );
+      return action.payload || INITIATE_TOPIC;
+    },
+  });
+
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
@@ -69,8 +100,8 @@ function ThesisDefenseStudentDetail() {
                         <p className="text-gray-600">Full name:</p>
                         <p className="text-gray-700 font-medium">
                           {
-                            studentScheduled?.schedule.timeSlots[0].student
-                              .infor.name
+                            studentScheduled?.schedule?.timeSlots[0]?.student
+                              ?.infor?.name
                           }
                         </p>
                       </li>
@@ -82,8 +113,8 @@ function ThesisDefenseStudentDetail() {
                         <p className="text-gray-600">Email:</p>
                         <p className="text-gray-700 font-medium">
                           {
-                            studentScheduled?.schedule.timeSlots[0].student
-                              .infor.email
+                            studentScheduled?.schedule?.timeSlots[0]?.student
+                              ?.infor?.email
                           }
                         </p>
                       </li>
@@ -96,23 +127,23 @@ function ThesisDefenseStudentDetail() {
                         <p className="text-gray-600">Date report:</p>
                         <p className="text-gray-700 font-medium">
                           {
-                            studentScheduled?.schedule.timeSlots[0].timeSlot
-                              .date
+                            studentScheduled?.schedule?.timeSlots[0].timeSlot
+                              ?.date
                           }
                         </p>
                       </li>
                       <li className="flex gap-2">
                         <p className="text-gray-600">Room:</p>
                         <p className="text-gray-700 font-medium">
-                          {studentScheduled?.schedule.room.name}
+                          {studentScheduled?.schedule?.room?.name}
                         </p>
                       </li>
                       <li className="flex gap-2">
                         <p className="text-gray-600">Time:</p>
                         <p className="text-gray-700 font-medium">
                           {
-                            studentScheduled?.schedule.timeSlots[0].timeSlot
-                              .time
+                            studentScheduled?.schedule?.timeSlots[0]?.timeSlot
+                              ?.time
                           }
                         </p>
                       </li>
@@ -127,23 +158,43 @@ function ThesisDefenseStudentDetail() {
                     <h5 className="text-sm text-green-700 my-2 font-medium">
                       Information topic
                     </h5>
-                    <ul className="flex flex-col gap-3">
-                      <li className="flex gap-2">
+                    <div className="flex flex-col gap-3">
+                      <div className="flex gap-2">
                         <p className="text-gray-600">Name topic:</p>
                         <p className="text-gray-700 font-medium">
-                          Build blog website for bussiness
+                          {topic?.title}
                         </p>
-                      </li>
-                      <li className="flex gap-2 flex-col">
+                      </div>
+                      <div className="flex gap-2 flex-col">
                         <p className="text-gray-600">File thesis report:</p>
-                        <a
-                          href="https://console.firebase.google.com/u/0/project/thesis-course-registration"
-                          className="font-medium text-blue-600"
-                        >
-                          https://console.firebase.google.com/u/0/project/thesis-course-registration
-                        </a>
-                      </li>
-                      <li className="flex flex-col gap-2">
+                        <div className="w-full">
+                          <ul className="text-sm w-full flex flex-col gap-2 mb-10 font-medium px-2">
+                            {uploadReport?.attachments?.map((file) => (
+                              <div
+                                key={file?.id}
+                                className="flex gap-3 text-blue-700 font-medium rounded-md items-center px-3 py-2 bg-slate-200 shadow-md"
+                              >
+                                <Image
+                                  width={20}
+                                  height={20}
+                                  src={
+                                    "https://cdn-icons-png.flaticon.com/128/4725/4725970.png"
+                                  }
+                                  alt="icon-file-pdf"
+                                />
+                                <a
+                                  className="text-[13px] truncate"
+                                  target="_blank"
+                                  href={file?.src}
+                                >
+                                  {file?.name}
+                                </a>
+                              </div>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                      <div className="flex flex-col gap-2">
                         <p className="text-gray-600">Description:</p>
                         <p className="flex gap-2 flex-col">
                           <span className="text-gray-700">
@@ -153,8 +204,8 @@ function ThesisDefenseStudentDetail() {
                             - Chatbox real time by using socket.io
                           </span>
                         </p>
-                      </li>
-                    </ul>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -162,7 +213,10 @@ function ThesisDefenseStudentDetail() {
                 <h4 className="py-2 text-green-700 text-xl font-bold my-1">
                   Review from the Dissertation Council
                 </h4>
-                <p className="text-xs text-gray-500 italic">Here is the part members of council give point and comment about thesis of students</p>
+                <p className="text-xs text-gray-500 italic">
+                  Here is the part members of council give point and comment
+                  about thesis of students
+                </p>
                 <div className="mt-5 p-3 flex gap-5 border shadow-md rounded-2xl">
                   <div className="flex flex-col items-center justify-center ">
                     <NormalAvatar

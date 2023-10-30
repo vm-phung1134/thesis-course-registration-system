@@ -65,9 +65,9 @@ function EnrollStudentPage() {
 
   // HANDLE FINAL UPLOAD
   const { data: uploadReport } = useQuery<IUploadReportObject>({
-    queryKey: ["upload-def", currentUser],
+    queryKey: ["upload-def", currentUser.id],
     queryFn: async () => {
-      const action = await dispatch(getUploadReport(currentUser));
+      const action = await dispatch(getUploadReport(currentUser.id));
       return action.payload || INITIATE_UPLOAD_REPORT;
     },
     initialData: INITIATE_UPLOAD_REPORT,

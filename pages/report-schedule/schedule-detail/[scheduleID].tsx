@@ -1,4 +1,9 @@
-import { Breadcrumb, Button, SnipperRound } from "@/components/Atoms";
+import {
+  Breadcrumb,
+  Button,
+  NormalAvatar,
+  SnipperRound,
+} from "@/components/Atoms";
 import { BREADCRUMB_MAINBOARD } from "@/components/Organisms/MainboardStatus/mock-data";
 import { MainboardTemplate } from "@/components/Templates";
 import { useState, useEffect } from "react";
@@ -73,21 +78,51 @@ function ScheduleDetail() {
                     </li>
                   </ul>
                   <div className="bg-green-700 h-[0.5px] w-full my-3"></div>
-                  <ul className="text-sm flex flex-col gap-2">
-                    {councilInSchedule?.council.map((lecturer, index) => (
-                      <li key={lecturer.id} className="flex gap-2">
-                        <p>Examner {`${(index += 1)}`}: </p>
-                        <p className="capitalize font-medium">
-                          {lecturer.name}
-                        </p>
-                      </li>
+                  <div className="flex gap-3 flex-col-reverse tracking-wider">
+                    {councilInSchedule?.council?.map((council) => (
+                      <div
+                        key={council?.id}
+                        className="shadow-lg overflow-hidden relative w-full rounded-xl px-5 py-4 flex flex-col justify-center"
+                      >
+                        <div className="top-0 -left-10 bottom-0 bg-white absolute w-full h-full -skew-x-[30deg]"></div>
+                        <div className="absolute bottom-0 right-0">
+                          <NormalAvatar
+                            photoSrc={council?.photoSrc}
+                            setSize="w-10"
+                          />
+                        </div>
+                        <div className="relative">
+                          <p className="text-sm font-semibold">
+                            <span className="capitalize font-bold">
+                              {council.name}{" "}
+                              <span className="text-red-500">
+                                {council.id ===
+                                  councilInSchedule?.schedule?.timeSlots[0]
+                                    ?.student?.instructor?.id && "- Instructor"}
+                              </span>
+                            </span>
+                          </p>
+                          <div className="text-sm">
+                            <p>
+                              <span className="text-gray-500">Email: </span>
+                              {council?.email}
+                            </p>
+                            <p>
+                              <span className="text-gray-500">Field: </span>
+                              {council?.major}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
                     ))}
-                  </ul>
+                  </div>
                 </div>
               </div>
               <div className="col-span-8">
                 <h4 className="font-medium">List student of defense session</h4>
-                <p className="text-sm text-slate-500">Total 12 schedule students</p>
+                <p className="text-sm text-slate-500">
+                  Total 12 schedule students
+                </p>
                 <div className="flex justify-between my-5">
                   <div className="flex">
                     <Button
@@ -196,7 +231,11 @@ function ScheduleDetail() {
                       </thead>
                       <tbody className="text-sm divide-y divide-gray-100">
                         {councilInSchedule?.schedule.timeSlots
-                          .filter((item) => item.timeSlot.shift === "Afternoon" && item.student.id !== "")
+                          .filter(
+                            (item) =>
+                              item.timeSlot.shift === "Afternoon" &&
+                              item.student.id !== ""
+                          )
                           .map((student, index) => (
                             <tr key={student.student.id} className="border-b">
                               <td className="px-5 py-4 whitespace-nowrap">
