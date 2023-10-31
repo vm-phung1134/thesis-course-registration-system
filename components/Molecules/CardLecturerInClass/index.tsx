@@ -13,6 +13,7 @@ import { FC, MouseEvent, useState } from "react";
 import { ModalConfirm } from "..";
 import classNames from "classnames";
 import Link from "next/link";
+import Image from "next/image";
 
 export interface ICardLecturerInClassProps {
   lecturer: IAuthObject;
@@ -143,43 +144,31 @@ export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
                 <button
                   value="UN_LOCK"
                   onClick={handleOpenModal}
-                  className="btn rounded-lg bg-transparent border border-red-600 hover:bg-red-600 hover:text-white text-red-600 font-medium"
+                  className="btn border-none hover:border-none capitalize bg-transparent hover:bg-transparent"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="w-5 h-5"
-                  >
-                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                  </svg>
-                  <p className="text-sm normal-case">Locked</p>
+                  <Image
+                    width={40}
+                    height={40}
+                    alt="icon-message"
+                    src={"https://cdn-icons-gif.flaticon.com/6569/6569164.gif"}
+                  />
+                  <p className="text-xs">Locked</p>
                 </button>
               ) : (
                 <button
                   value="LOCK"
                   onClick={handleOpenModal}
-                  className="btn rounded-lg outline-none hover:outline-none bg-transparent border border-red-600 hover:bg-red-600 hover:text-white text-red-600 font-medium"
+                  className="btn border-none hover:border-none capitalize bg-transparent hover:bg-transparent"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="w-5 h-5"
-                  >
-                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                    <path d="M7 11V7a5 5 0 0 1 9.9-1" />
-                  </svg>
-                  <p className="text-sm normal-case">Opening</p>
+                  <Image
+                    width={40}
+                    height={40}
+                    alt="icon-message"
+                    src={
+                      "https://cdn-icons-gif.flaticon.com/10352/10352708.gif"
+                    }
+                  />
+                  <p className="text-xs">Opening</p>
                 </button>
               )}
             </>
@@ -195,21 +184,14 @@ export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
             )}
           {currentUser.role === ROLE_ASSIGNMENT.STUDENT &&
             authClassroomState.status === STATE_LECTURER_CLASSROOM.LOCK && (
-              <button className="btn rounded-lg bg-transparent border border-red-600 hover:bg-red-600 hover:text-white text-red-600 font-medium">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="w-5 h-5"
-                >
-                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                  <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                </svg>
-                <p className="text-sm normal-case">Locked</p>
+              <button className="btn border-none hover:border-none capitalize bg-transparent hover:bg-transparent">
+                <Image
+                  width={40}
+                  height={40}
+                  alt="icon-message"
+                  src={"https://cdn-icons-gif.flaticon.com/6569/6569164.gif"}
+                />
+                <p className="text-xs">Locked</p>
               </button>
             )}
         </div>

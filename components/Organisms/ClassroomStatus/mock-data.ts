@@ -19,7 +19,7 @@ export const DATA_MENU_CLASSROOM_STUDENT: ImenuClassroomItem[] = [
   },
   {
     id: "4",
-    href: "/manage-classroom/",
+    href: "/manage-classroom/point",
     title: "point",
   },
 ];

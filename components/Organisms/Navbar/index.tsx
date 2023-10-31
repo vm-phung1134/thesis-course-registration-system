@@ -48,18 +48,37 @@ export const Navbar: FC<INavbarProps> = () => {
 
             <button className="btn btn-ghost btn-circle">
               <div className="indicator text-lg p-1">
-                <i className="fa-regular fa-bookmark"></i>
+                <Image
+                  width={18}
+                  height={18}
+                  alt="icon-message"
+                  src={
+                    "https://cdn-icons-png.flaticon.com/128/2541/2541979.png"
+                  }
+                />
               </div>
             </button>
             <button className="btn btn-ghost btn-circle">
               <div className="indicator text-lg p-1">
-                <i className="fa-regular fa-comment"></i>
+                <Image
+                  width={18}
+                  height={18}
+                  alt="icon-message"
+                  src={"https://cdn-icons-png.flaticon.com/128/134/134808.png"}
+                />
                 <span className="badge h-[0.6rem] text-[10px] px-[4px] bg-red-500 indicator-item"></span>
               </div>
             </button>
             <button className="btn btn-ghost btn-circle">
               <div className="indicator text-lg p-1">
-                <i className="fa-regular fa-bell"></i>
+                <Image
+                  width={18}
+                  height={18}
+                  alt="icon-message"
+                  src={
+                    "https://cdn-icons-png.flaticon.com/128/1157/1157051.png"
+                  }
+                />
                 <span className="badge h-[0.6rem] text-[10px] px-[4px] bg-red-500 indicator-item"></span>
               </div>
             </button>
@@ -70,7 +89,9 @@ export const Navbar: FC<INavbarProps> = () => {
               className="flex gap-3 items-center cursor-pointer"
             >
               <div className="flex flex-col text-[15px] font-normal items-end">
-                <p className="font-medium text-sm capitalize">{currentUser?.name || "Username B190000"}</p>
+                <p className="font-medium text-sm capitalize">
+                  {currentUser?.name || "Username B190000"}
+                </p>
                 <p className="text-green-800 text-sm capitalize">
                   Pov: {currentUser?.role || "Student"}
                 </p>

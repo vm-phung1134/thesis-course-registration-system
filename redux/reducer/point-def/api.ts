@@ -2,11 +2,12 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { IAssessLecturerItem, token } from "./type";
 import { IPointDefObject } from "@/interface/pointDef";
+import { IAuthObject } from "@/interface/auth";
 
 // GET ONE COUNCIL DEF
 const getOnePointDef = createAsyncThunk(
   "point/getOnePointDef",
-  async (postData: IPointDefObject) => {
+  async (postData: IAuthObject) => {
     const response = await axios.get(
       `http://localhost:5000/api/point-def/${postData.id}`,
       {

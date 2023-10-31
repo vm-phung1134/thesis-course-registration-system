@@ -127,10 +127,10 @@ function EnrollStudentPage() {
                               <p className="font-medium capitalize">
                                 {lecturer?.name}
                               </p>
-                              <p className="text-sm font-thin">
+                              <p className="text-sm">
                                 {lecturer?.email}
                               </p>
-                              <p className="text-sm font-thin">
+                              <p className="text-sm">
                                 {lecturer?.major}
                               </p>
                             </div>
