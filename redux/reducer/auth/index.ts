@@ -4,6 +4,7 @@ import { INITIATE_AUTH, INITIATE_CLASSROOM } from "@/data";
 import {
   checkAuthRoleForClassroomState,
   checkStateSubscribe,
+  deleteAuth,
   getAllAuths,
   getAllLecturers,
   getOneAuth,
@@ -96,6 +97,19 @@ const authSlice = createSlice({
       state.auth = action.payload;
     });
     builder.addCase(updateAuth.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.error.message ?? "Something went wrong.";
+    });
+
+    // DELETE AUTH
+    builder.addCase(deleteAuth.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(deleteAuth.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.auth = action.payload;
+    });
+    builder.addCase(deleteAuth.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.error.message ?? "Something went wrong.";
     });

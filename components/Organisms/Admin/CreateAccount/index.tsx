@@ -1,21 +1,22 @@
 /* eslint-disable @next/next/no-img-element */
-import { Button, NormalAvatar } from "@/components/Atoms";
+import { Button, IconButton, NormalAvatar } from "@/components/Atoms";
 import { FilterScheduledForm, ModalConfirm } from "@/components/Molecules";
 import { useAuthContext } from "@/contexts/authContext";
 import useCheckedBox from "@/hooks/useCheckedBox";
 import { IAuthObject } from "@/interface/auth";
 import { DATA_LECTURER_CIT } from "@/pages/admin/classroom-management/mock-data";
-import { getAllLecturers } from "@/redux/reducer/auth/api";
+import { deleteAuth, getAllLecturers } from "@/redux/reducer/auth/api";
 import { useAppDispatch } from "@/redux/store";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import classNames from "classnames";
-import { FC, useState } from "react";
-
+import { FC, useState, useEffect } from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 interface ICreateAccountTab {}
 
 export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
   //   LECTURER SERVICE
-
   // Check box
   const {
     checkedItems: checkedLecturers,
@@ -48,25 +49,81 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
       signUpWithEmailPassword(email, password || "nopassword", lecturer);
     });
   };
+
+  // ACCOUNT SERVICE
+  // Open modal
+  const [openDelAccount, setOpenDelAccount] = useState<boolean>(false);
+  const modalClassDelAccount = classNames({
+    "modal modal-bottom sm:modal-middle": true,
+    "modal-open": openDelAccount,
+  });
+  const queryClient = useQueryClient();
+  const deleteMutation = useMutation(
+    (postData: IAuthObject) => {
+      return new Promise((resolve, reject) => {
+        dispatch(deleteAuth(postData))
+          .unwrap()
+          .then((data) => {
+            resolve(data);
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      });
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["accounts"]);
+      },
+    }
+  );
+  const {
+    checkedItems: checkedAccounts,
+    handleCheckAll: handleCheckAllAccount,
+    handleCheckItem: handleCheckAccount,
+  } = useCheckedBox<IAuthObject>(accounts);
+  const handleDelAccount = () => {
+    checkedAccounts.forEach((account: IAuthObject) => {
+      deleteMutation.mutate(account);
+    });
+  };
+  useEffect(() => {
+    if (deleteMutation.isSuccess) {
+      toast.success("Account was successfully deleted", {
+        position: toast.POSITION.BOTTOM_LEFT,
+        autoClose: 2000,
+      });
+    }
+  }, [deleteMutation.isSuccess]);
   return (
     <div className="grid grid-cols-12 gap-5">
       <div className="col-span-7 mt-3">
         <div className="flex justify-between items-center py-2">
           <div className="mb-3">
             <h4 className="font-medium">CIT HR systems</h4>
-            <p className="text-sm text-slate-500">Total 15 lecturers</p>
+            <p className="text-sm text-slate-500">
+              Total {DATA_LECTURER_CIT.length} lecturers
+            </p>
           </div>
           {checkedLecturers.length > 0 ? (
-            <Button
-              className="bg-green-700 btn-sm px-8 rounded-none text-white"
-              title="Create account"
-              setToggle={setOpenCreateAccount}
-              toggle={openCreateAccount}
+            <IconButton
+              setToggleForm={setOpenCreateAccount}
+              toggleForm={openCreateAccount}
+              className="btn-sm rounded-none px-8 border-none bg-green-700 text-white"
+              title="Create Account"
+              classNameIcon={"w-5"}
+              srcIcon={
+                "https://cdn-icons-png.flaticon.com/128/5482/5482806.png"
+              }
             />
           ) : (
-            <Button
-              className=" btn-sm px-8 text-gray-800 rounded-none"
-              title="Create account"
+            <IconButton
+              className="btn-sm px-8 text-gray-800 rounded-none"
+              title="Create Account"
+              classNameIcon={"w-5"}
+              srcIcon={
+                "https://cdn-icons-png.flaticon.com/128/5482/5482806.png"
+              }
             />
           )}
         </div>
@@ -84,11 +141,11 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
           </div>
           <FilterScheduledForm holderText="Filter lecturer ..." />
         </div>
-        <div className="w-full mx-auto shadow-xl rounded-2xl">
+        <div className="w-full mx-auto">
           <div className="flex flex-col">
             <div className="overflow-x-auto">
               <div className="inline-block min-w-full align-middle">
-                <div className="overflow-hidden rounded-2xl">
+                <div className="overflow-hidden border">
                   <table className="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-700">
                     <thead className="bg-green-700 dark:bg-gray-700">
                       <tr>
@@ -133,9 +190,9 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
                       </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
-                      {DATA_LECTURER_CIT.map((account) => (
+                      {DATA_LECTURER_CIT.map((lecturer) => (
                         <tr
-                          key={account.id}
+                          key={lecturer.id}
                           className="hover:bg-gray-100 cursor-pointer dark:hover:bg-gray-700"
                         >
                           <td className="p-4 w-4">
@@ -144,9 +201,9 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
                                 id="checkbox-table-2"
                                 type="checkbox"
                                 className="w-4 h-4 "
-                                checked={checkedLecturers.includes(account)}
+                                checked={checkedLecturers.includes(lecturer)}
                                 onChange={(event) =>
-                                  handleCheckLecturer(event, account)
+                                  handleCheckLecturer(event, lecturer)
                                 }
                               />
                               <label
@@ -158,14 +215,14 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
                             </div>
                           </td>
                           <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
-                            {account.email}
+                            {lecturer.email}
                           </td>
                           <td className="py-4 px-6 text-sm capitalize text-gray-500 whitespace-nowrap dark:text-white">
-                            {account.name}
+                            {lecturer.name}
                           </td>
                           <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
                             <NormalAvatar
-                              photoSrc={account.photoSrc}
+                              photoSrc={lecturer.photoSrc}
                               setSize="w-10"
                             />
                           </td>
@@ -191,11 +248,17 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
         <div className="flex justify-between items-center py-2">
           <div className="mb-3">
             <h4 className="font-medium">Account system</h4>
-            <p className="text-sm text-slate-500">Total 15 accounts</p>
+            <p className="text-sm text-slate-500">
+              Total {accounts.length} accounts
+            </p>
           </div>
-          <Button
-            className="bg-gray-700 rounded-none btn-sm px-8 text-white"
+          <IconButton
+            className="bg-red-100 btn-sm rounded-none px-5 border-none text-red-500"
             title="Clear Account"
+            setToggleForm={setOpenDelAccount}
+            toggleForm={openDelAccount}
+            classNameIcon={"w-5"}
+            srcIcon={"https://cdn-icons-png.flaticon.com/128/9068/9068885.png"}
           />
         </div>
         <div className="flex justify-start flex-col items-start gap-3 mb-2">
@@ -212,11 +275,11 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
             <Button title="All" className="px-5 btn-sm rounded-none" />
           </div>
         </div>
-        <div className="w-full mx-auto rounded-2xl shadow-xl">
+        <div className="w-full mx-auto">
           <div className="flex flex-col">
             <div className="overflow-x-auto">
               <div className="inline-block min-w-full align-middle">
-                <div className="overflow-hidden rounded-2xl">
+                <div className="overflow-hidden border">
                   <table className="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-700">
                     <thead className="bg-green-700 dark:bg-gray-700">
                       <tr>
@@ -226,6 +289,10 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
                               id="checkbox-all"
                               type="checkbox"
                               className="w-4 h-4"
+                              checked={
+                                checkedAccounts.length === accounts.length
+                              }
+                              onChange={handleCheckAllAccount}
                             />
                             <label htmlFor="checkbox-all" className="sr-only">
                               checkbox
@@ -261,6 +328,10 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
                                 id="checkbox-table-2"
                                 type="checkbox"
                                 className="w-4 h-4 "
+                                checked={checkedAccounts.includes(account)}
+                                onChange={(event) =>
+                                  handleCheckAccount(event, account)
+                                }
                               />
                               <label
                                 htmlFor="checkbox-table-2"
@@ -294,14 +365,32 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
           </div>
         </div>
       </div>
+      <ToastContainer
+        toastStyle={{
+          color: "black",
+          fontSize: "14px",
+          fontFamily: "Red Hat Text",
+        }}
+      />
       <ModalConfirm
         modalClass={modalClassCreateAccount}
         setOpenModal={setOpenCreateAccount}
         openModal={openCreateAccount}
         action={handleCreateAccountLecturer}
         typeButton="subscribe"
+        underMessage="No message!!"
         title="Message!!!"
         message="Do you want to create account for lecturers"
+      />
+      <ModalConfirm
+        modalClass={modalClassDelAccount}
+        setOpenModal={setOpenDelAccount}
+        openModal={openDelAccount}
+        action={handleDelAccount}
+        typeButton="subscribe"
+        underMessage="Once you delete this accounts if will be gone forever"
+        title="Message!!!"
+        message="Are you sure that you want to delete this accounts?"
       />
     </div>
   );

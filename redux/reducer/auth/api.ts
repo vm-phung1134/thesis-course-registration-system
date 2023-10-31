@@ -152,6 +152,24 @@ const unsubscribeState = createAsyncThunk(
   }
 );
 
+const deleteAuth = createAsyncThunk(
+  "auth/deleteAuth",
+  async (postData: IAuthObject) => {
+    const response = await axios.delete(
+      `http://localhost:5000/api/auth/${postData.id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    if (response.status === 200) {
+      return response.data;
+    }
+    throw new Error("Failed to delete auth");
+  }
+);
+
 export {
   getAllAuths,
   unsubscribeState,
@@ -161,4 +179,5 @@ export {
   getAllLecturers,
   checkStateSubscribe,
   checkAuthRoleForClassroomState,
+  deleteAuth
 };
