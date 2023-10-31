@@ -7,15 +7,19 @@ import { IStudentDefObject } from "@/interface/studef";
 import { v4 as uuidv4 } from "uuid";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAppDispatch } from "@/redux/store";
-import { IPointDefObject } from "@/interface/pointDef";
+import { IAssessItem, IPointDefObject } from "@/interface/pointDef";
 import { createPointDef } from "@/redux/reducer/point-def/api";
 const objectId = uuidv4();
 
 export interface IAssessFormProps {
   student?: IStudentDefObject;
+  assessStudent?: IAssessItem;
 }
 
-export const AssessForm: FC<IAssessFormProps> = ({ student }) => {
+export const AssessForm: FC<IAssessFormProps> = ({
+  student,
+  assessStudent,
+}) => {
   const { currentUser } = useCurrentUser();
   const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
@@ -40,7 +44,8 @@ export const AssessForm: FC<IAssessFormProps> = ({ student }) => {
   );
   return (
     <Formik
-      initialValues={INITIATE_ASSESS}
+      enableReinitialize
+      initialValues={assessStudent || INITIATE_ASSESS}
       validate={(values) => {
         const errors = {};
         return errors;

@@ -101,7 +101,7 @@ function ScheduleThesisDefensePage() {
                     {scheduleForLecturer.map((schedule, index) => (
                       <React.Fragment key={index}>
                         {schedule.council
-                          .filter((item) => item.id === "GV2")
+                          .filter((item) => item.id === "GV5")
                           .map((council) => (
                             <tr key={council.id} className="border-b">
                               <td className="px-5 py-3 whitespace-nowrap">

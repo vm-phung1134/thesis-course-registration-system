@@ -299,6 +299,7 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
         setOpenModal={setOpenCreateAccount}
         openModal={openCreateAccount}
         action={handleCreateAccountLecturer}
+        typeButton="subscribe"
         title="Message!!!"
         message="Do you want to create account for lecturers"
       />

@@ -7,11 +7,16 @@ import {
 import { AssessForm } from "@/components/Molecules";
 import { BREADCRUMB_MAINBOARD } from "@/components/Organisms/MainboardStatus/mock-data";
 import { MainboardTemplate } from "@/components/Templates";
-import { INITIATE_AUTH, INITIATE_TOPIC } from "@/data";
+import { INITIATE_ASSESS, INITIATE_AUTH, INITIATE_TOPIC } from "@/data";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
+import { IAssessItem } from "@/interface/pointDef";
 import { ICouncilDef } from "@/interface/schedule";
 import { ITopicObject } from "@/interface/topic";
 import { IUploadReportObject } from "@/interface/upload";
+import {
+  getOnePointDef,
+  getOnePointDefForLecturer,
+} from "@/redux/reducer/point-def/api";
 import { getScheduleForStudent } from "@/redux/reducer/schedule-def/api";
 import { getTopic } from "@/redux/reducer/topic/api";
 import { getUploadReport } from "@/redux/reducer/upload-def/api";
@@ -59,6 +64,23 @@ function ThesisDefenseStudentDetail() {
     },
   });
 
+  const { data: assessStudent } = useQuery<IAssessItem>({
+    queryKey: [
+      "assess-student",
+      studentScheduled?.schedule?.timeSlots[0]?.student?.infor.id,
+      currentUser.id,
+    ],
+    queryFn: async () => {
+      const action = await dispatch(
+        getOnePointDefForLecturer({
+          studentId:
+            studentScheduled?.schedule?.timeSlots[0]?.student?.infor.id || "",
+          lecturerId: currentUser.id,
+        })
+      );
+      return action.payload || INITIATE_ASSESS;
+    },
+  });
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
@@ -221,6 +243,7 @@ function ThesisDefenseStudentDetail() {
                 </p>
                 <AssessForm
                   student={studentScheduled?.schedule?.timeSlots[0]?.student}
+                  assessStudent={assessStudent}
                 />
               </div>
             </div>

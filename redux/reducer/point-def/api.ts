@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { token } from "./type";
+import { IAssessLecturerItem, token } from "./type";
 import { IPointDefObject } from "@/interface/pointDef";
 
 // GET ONE COUNCIL DEF
@@ -9,6 +9,25 @@ const getOnePointDef = createAsyncThunk(
   async (postData: IPointDefObject) => {
     const response = await axios.get(
       `http://localhost:5000/api/point-def/${postData.id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    if (response.status === 200) {
+      return response.data;
+    }
+    throw new Error("Failed to get one auth");
+  }
+);
+
+// GET ONE COUNCIL DEF FOR LECTURER
+const getOnePointDefForLecturer = createAsyncThunk(
+  "point/getOnePointDefForLecturer",
+  async (postData: IAssessLecturerItem) => {
+    const response = await axios.get(
+      `http://localhost:5000/api/point-def/student-point/${postData.studentId}&${postData.lecturerId}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -100,4 +119,5 @@ export {
   updatePointDef,
   createPointDef,
   deletePointDef,
+  getOnePointDefForLecturer,
 };

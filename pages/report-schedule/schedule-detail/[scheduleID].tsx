@@ -148,9 +148,6 @@ function ScheduleDetail() {
                             <div className="font-medium text-left">Email</div>
                           </th>
                           <th className="px-5 py-4 whitespace-nowrap">
-                            <div className="font-medium text-left">Name</div>
-                          </th>
-                          <th className="px-5 py-4 whitespace-nowrap">
                             <div className="font-medium text-left">
                               ID Student
                             </div>
@@ -181,9 +178,6 @@ function ScheduleDetail() {
                                 </div>
                               </td>
                               <td className="px-5 py-4 whitespace-nowrap">
-                                <div className="text-left">B1910282</div>
-                              </td>
-                              <td className="px-5 py-4 whitespace-nowrap">
                                 <div className="text-center">
                                   {student.timeSlot.time}
                                 </div>
@@ -210,9 +204,6 @@ function ScheduleDetail() {
                         <tr>
                           <th className="px-5 py-4 whitespace-nowrap">
                             <div className="font-medium text-left">Email</div>
-                          </th>
-                          <th className="px-5 py-4 whitespace-nowrap">
-                            <div className="font-medium text-left">Name</div>
                           </th>
                           <th className="px-5 py-4 whitespace-nowrap">
                             <div className="font-medium text-left">
@@ -247,9 +238,6 @@ function ScheduleDetail() {
                                 <div className="text-left">
                                   {student.student.infor.name}
                                 </div>
-                              </td>
-                              <td className="px-5 py-4 whitespace-nowrap">
-                                <div className="text-left">B1910282</div>
                               </td>
                               <td className="px-5 py-4 whitespace-nowrap">
                                 <div className="text-center">
