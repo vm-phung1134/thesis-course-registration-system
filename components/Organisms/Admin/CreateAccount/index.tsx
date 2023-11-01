@@ -9,10 +9,13 @@ import { deleteAuth, getAllLecturers } from "@/redux/reducer/auth/api";
 import { useAppDispatch } from "@/redux/store";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import classNames from "classnames";
-import { FC, useState, useEffect } from "react";
+import { FC, useState, useEffect, useCallback } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
+import { useDebounce } from "@uidotdev/usehooks";
+import { useTableSearch } from "@/hooks/useTableSearch";
+
 interface ICreateAccountTab {}
 
 export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
@@ -87,6 +90,10 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
       deleteMutation.mutate(account);
     });
   };
+
+  // Use custom hook to search item in table by using useDebounce
+  const { filteredData, handleSearch } = useTableSearch(accounts);
+
   useEffect(() => {
     if (deleteMutation.isSuccess) {
       toast.success("Account was successfully deleted", {
@@ -262,7 +269,10 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
           />
         </div>
         <div className="flex justify-start flex-col items-start gap-3 mb-2">
-          <FilterScheduledForm holderText="Account ..." />
+          <FilterScheduledForm
+            handleSearch={handleSearch}
+            holderText="Account ..."
+          />
           <div className="flex">
             <Button
               title="Recently date"
@@ -317,46 +327,48 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
                       </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
-                      {accounts?.map((account) => (
-                        <tr
-                          key={account.id}
-                          className="hover:bg-gray-100 cursor-pointer dark:hover:bg-gray-700"
-                        >
-                          <td className="p-4 w-4">
-                            <div className="flex items-center">
-                              <input
-                                id="checkbox-table-2"
-                                type="checkbox"
-                                className="w-4 h-4 "
-                                checked={checkedAccounts.includes(account)}
-                                onChange={(event) =>
-                                  handleCheckAccount(event, account)
-                                }
-                              />
-                              <label
-                                htmlFor="checkbox-table-2"
-                                className="sr-only"
+                      {(filteredData.length > 0 ? filteredData : accounts)?.map(
+                        (account) => (
+                          <tr
+                            key={account.id}
+                            className="hover:bg-gray-100 cursor-pointer dark:hover:bg-gray-700"
+                          >
+                            <td className="p-4 w-4">
+                              <div className="flex items-center">
+                                <input
+                                  id="checkbox-table-2"
+                                  type="checkbox"
+                                  className="w-4 h-4 "
+                                  checked={checkedAccounts.includes(account)}
+                                  onChange={(event) =>
+                                    handleCheckAccount(event, account)
+                                  }
+                                />
+                                <label
+                                  htmlFor="checkbox-table-2"
+                                  className="sr-only"
+                                >
+                                  checkbox
+                                </label>
+                              </div>
+                            </td>
+                            <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
+                              {account?.email}
+                            </td>
+                            <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
+                              {account?.password}
+                            </td>
+                            <td className="py-4 px-6 text-sm text-right whitespace-nowrap">
+                              <a
+                                href="#"
+                                className="text-blue-600 dark:text-blue-500"
                               >
-                                checkbox
-                              </label>
-                            </div>
-                          </td>
-                          <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
-                            {account?.email}
-                          </td>
-                          <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
-                            {account?.password}
-                          </td>
-                          <td className="py-4 px-6 text-sm text-right whitespace-nowrap">
-                            <a
-                              href="#"
-                              className="text-blue-600 dark:text-blue-500"
-                            >
-                              Edit
-                            </a>
-                          </td>
-                        </tr>
-                      ))}
+                                Edit
+                              </a>
+                            </td>
+                          </tr>
+                        )
+                      )}
                     </tbody>
                   </table>
                 </div>

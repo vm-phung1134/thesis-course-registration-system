@@ -1,12 +1,14 @@
 import { Field, Form, Formik } from "formik";
-import { FC } from "react";
+import { FC, SetStateAction } from "react";
 
 export interface IFilterScheduledFormProps {
   holderText: string;
+  handleSearch?: (value: string) => void;
 }
 
 export const FilterScheduledForm: FC<IFilterScheduledFormProps> = ({
   holderText,
+  handleSearch,
 }) => {
   return (
     <Formik
@@ -20,7 +22,14 @@ export const FilterScheduledForm: FC<IFilterScheduledFormProps> = ({
       }}
     >
       {(formik) => {
-        const { values } = formik;
+        const { values, handleChange } = formik;
+        const handleInputChange = (
+          event: React.ChangeEvent<HTMLInputElement>
+        ) => {
+          const { value } = event.target;
+          handleChange(event);
+          handleSearch?.(value);
+        };
         return (
           <Form>
             <div className="flex rounded-full w-80 px-3 items-center bg-gray-100">
@@ -43,6 +52,7 @@ export const FilterScheduledForm: FC<IFilterScheduledFormProps> = ({
                 placeholder={holderText}
                 type="text"
                 id="search"
+                onChange={handleInputChange}
                 className="input placeholder:tracking-wide bg-gray-100 tracking-wide dark:bg-black h-8 text-sm focus:outline-none placeholder:font-thin flex-1"
               />
             </div>
