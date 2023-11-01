@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { INITIATE_CLASSROOM } from "@/data";
 import {
   createClassroom,
+  deleteClassroom,
   getAllClassrooms,
   getClassroom,
   updateClassroom,
@@ -71,6 +72,19 @@ const classroomSlice = createSlice({
       state.classroom = action.payload;
     });
     builder.addCase(updateClassroom.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.error.message ?? "Something went wrong.";
+    });
+    // DELETE CLASSROOM
+    builder.addCase(deleteClassroom.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    });
+    builder.addCase(deleteClassroom.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.classroom = action.payload;
+    });
+    builder.addCase(deleteClassroom.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.error.message ?? "Something went wrong.";
     });

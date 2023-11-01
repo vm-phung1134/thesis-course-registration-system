@@ -21,6 +21,7 @@
     "eslint-config-next": "13.4.19",
     "firebase": "^10.3.0",
     "formik": "^2.4.3",
+    "framer-motion": "^10.16.4",
     "js-cookie": "^3.0.5",
     "next": "^13.4.19",
     "next-intl": "^2.20.0",

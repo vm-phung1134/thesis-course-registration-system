@@ -79,4 +79,28 @@ const updateClassroom = createAsyncThunk(
   }
 );
 
-export { getAllClassrooms, getClassroom, createClassroom, updateClassroom };
+const deleteClassroom = createAsyncThunk(
+  "classroom/deleteClassroom",
+  async (postData: IClassroomObject) => {
+    const response = await axios.delete(
+      `http://localhost:5000/api/classroom/${postData.id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    if (response.status === 200) {
+      return response.data;
+    }
+    throw new Error("Failed to delete classroom");
+  }
+);
+
+export {
+  getAllClassrooms,
+  getClassroom,
+  createClassroom,
+  updateClassroom,
+  deleteClassroom,
+};

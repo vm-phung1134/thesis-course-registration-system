@@ -9,11 +9,11 @@ import { deleteAuth, getAllLecturers } from "@/redux/reducer/auth/api";
 import { useAppDispatch } from "@/redux/store";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import classNames from "classnames";
-import { FC, useState, useEffect, useCallback } from "react";
+import { FC, useState, useEffect } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
-import { useDebounce } from "@uidotdev/usehooks";
 import { useTableSearch } from "@/hooks/useTableSearch";
 
 interface ICreateAccountTab {}
@@ -26,6 +26,8 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
     handleCheckAll: handleCheckAllLecturer,
     handleCheckItem: handleCheckLecturer,
   } = useCheckedBox<IAuthObject>(DATA_LECTURER_CIT);
+  const { filteredData: cit_filteredData, handleSearch: cit_handleSearch } =
+    useTableSearch(DATA_LECTURER_CIT);
   // Open modal
   const [openCreateAccount, setOpenCreateAccount] = useState<boolean>(false);
   const modalClassCreateAccount = classNames({
@@ -92,7 +94,10 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
   };
 
   // Use custom hook to search item in table by using useDebounce
-  const { filteredData, handleSearch } = useTableSearch(accounts);
+  const {
+    filteredData: account_filteredData,
+    handleSearch: account_handleSearch,
+  } = useTableSearch(accounts);
 
   useEffect(() => {
     if (deleteMutation.isSuccess) {
@@ -112,27 +117,37 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
               Total {DATA_LECTURER_CIT.length} lecturers
             </p>
           </div>
-          {checkedLecturers.length > 0 ? (
+          <div className="flex gap-3">
             <IconButton
-              setToggleForm={setOpenCreateAccount}
-              toggleForm={openCreateAccount}
-              className="btn-sm rounded-none px-8 border-none bg-green-700 text-white"
-              title="Create Account"
-              classNameIcon={"w-5"}
+              className="btn-sm rounded-none hover:text-black px-5 text-green-700 border"
+              title="New lecturer"
+              classNameIcon={"w-4"}
               srcIcon={
-                "https://cdn-icons-png.flaticon.com/128/5482/5482806.png"
+                "https://cdn-icons-png.flaticon.com/128/9698/9698073.png"
               }
             />
-          ) : (
-            <IconButton
-              className="btn-sm px-8 text-gray-800 rounded-none"
-              title="Create Account"
-              classNameIcon={"w-5"}
-              srcIcon={
-                "https://cdn-icons-png.flaticon.com/128/5482/5482806.png"
-              }
-            />
-          )}
+            {checkedLecturers.length > 0 ? (
+              <IconButton
+                setToggleForm={setOpenCreateAccount}
+                toggleForm={openCreateAccount}
+                className="btn-sm rounded-none px-5 border-none bg-green-700 text-white"
+                title="Generate Account"
+                classNameIcon={"w-5"}
+                srcIcon={
+                  "https://cdn-icons-png.flaticon.com/128/5482/5482806.png"
+                }
+              />
+            ) : (
+              <IconButton
+                className="btn-sm px-5 text-gray-800 rounded-none"
+                title="Generate Account"
+                classNameIcon={"w-5"}
+                srcIcon={
+                  "https://cdn-icons-png.flaticon.com/128/5482/5482806.png"
+                }
+              />
+            )}
+          </div>
         </div>
         <div className="flex justify-between mb-2">
           <div className="flex">
@@ -146,12 +161,15 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
             />
             <Button title="All" className="px-5 btn-sm rounded-none" />
           </div>
-          <FilterScheduledForm holderText="Filter lecturer ..." />
+          <FilterScheduledForm
+            handleSearch={cit_handleSearch}
+            holderText="Filter lecturer ..."
+          />
         </div>
         <div className="w-full mx-auto">
           <div className="flex flex-col">
             <div className="overflow-x-auto">
-              <div className="inline-block min-w-full align-middle">
+              <div className="inline-block min-w-full align-middle min-h-[50vh]">
                 <div className="overflow-hidden border">
                   <table className="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-700">
                     <thead className="bg-green-700 dark:bg-gray-700">
@@ -175,19 +193,19 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
                         </th>
                         <th
                           scope="col"
-                          className="py-3 px-6 text-sm font-normal tracking-wider text-left text-gray-200 dark:text-green-400"
+                          className="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-200 dark:text-green-400"
                         >
                           Email
                         </th>
                         <th
                           scope="col"
-                          className="py-3 px-6 text-sm font-normal tracking-wider text-left text-gray-200 dark:text-green-400"
+                          className="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-200 dark:text-green-400"
                         >
                           Full Name
                         </th>
                         <th
                           scope="col"
-                          className="py-3 px-6 text-sm font-normal tracking-wider text-left text-gray-200 dark:text-green-400"
+                          className="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-200 dark:text-green-400"
                         >
                           Avatar
                         </th>
@@ -197,52 +215,58 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
                       </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
-                      {DATA_LECTURER_CIT.map((lecturer) => (
-                        <tr
-                          key={lecturer.id}
-                          className="hover:bg-gray-100 cursor-pointer dark:hover:bg-gray-700"
-                        >
-                          <td className="p-4 w-4">
-                            <div className="flex items-center">
-                              <input
-                                id="checkbox-table-2"
-                                type="checkbox"
-                                className="w-4 h-4 "
-                                checked={checkedLecturers.includes(lecturer)}
-                                onChange={(event) =>
-                                  handleCheckLecturer(event, lecturer)
-                                }
+                      <AnimatePresence>
+                        {cit_filteredData?.map((lecturer) => (
+                          <motion.tr
+                            layout
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            key={lecturer.id}
+                            className="hover:bg-gray-100 cursor-pointer dark:hover:bg-gray-700"
+                          >
+                            <td className="p-4 w-4">
+                              <div className="flex items-center">
+                                <input
+                                  id="checkbox-table-2"
+                                  type="checkbox"
+                                  className="w-4 h-4 "
+                                  checked={checkedLecturers.includes(lecturer)}
+                                  onChange={(event) =>
+                                    handleCheckLecturer(event, lecturer)
+                                  }
+                                />
+                                <label
+                                  htmlFor="checkbox-table-2"
+                                  className="sr-only"
+                                >
+                                  checkbox
+                                </label>
+                              </div>
+                            </td>
+                            <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
+                              {lecturer.email}
+                            </td>
+                            <td className="py-4 px-6 text-sm capitalize text-gray-500 whitespace-nowrap dark:text-white">
+                              {lecturer.name}
+                            </td>
+                            <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
+                              <NormalAvatar
+                                photoSrc={lecturer.photoSrc}
+                                setSize="w-10"
                               />
-                              <label
-                                htmlFor="checkbox-table-2"
-                                className="sr-only"
+                            </td>
+                            <td className="py-4 px-6 text-sm text-right whitespace-nowrap">
+                              <a
+                                href="#"
+                                className="text-blue-600 dark:text-blue-500"
                               >
-                                checkbox
-                              </label>
-                            </div>
-                          </td>
-                          <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
-                            {lecturer.email}
-                          </td>
-                          <td className="py-4 px-6 text-sm capitalize text-gray-500 whitespace-nowrap dark:text-white">
-                            {lecturer.name}
-                          </td>
-                          <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
-                            <NormalAvatar
-                              photoSrc={lecturer.photoSrc}
-                              setSize="w-10"
-                            />
-                          </td>
-                          <td className="py-4 px-6 text-sm text-right whitespace-nowrap">
-                            <a
-                              href="#"
-                              className="text-blue-600 dark:text-blue-500"
-                            >
-                              Edit
-                            </a>
-                          </td>
-                        </tr>
-                      ))}
+                                Edit
+                              </a>
+                            </td>
+                          </motion.tr>
+                        ))}
+                      </AnimatePresence>
                     </tbody>
                   </table>
                 </div>
@@ -270,7 +294,7 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
         </div>
         <div className="flex justify-start flex-col items-start gap-3 mb-2">
           <FilterScheduledForm
-            handleSearch={handleSearch}
+            handleSearch={account_handleSearch}
             holderText="Account ..."
           />
           <div className="flex">
@@ -288,7 +312,7 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
         <div className="w-full mx-auto">
           <div className="flex flex-col">
             <div className="overflow-x-auto">
-              <div className="inline-block min-w-full align-middle">
+              <div className="inline-block min-w-full align-middle min-h-[50vh]">
                 <div className="overflow-hidden border">
                   <table className="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-700">
                     <thead className="bg-green-700 dark:bg-gray-700">
@@ -311,13 +335,13 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
                         </th>
                         <th
                           scope="col"
-                          className="py-3 px-6 text-sm font-normal tracking-wider text-left text-gray-200 dark:text-green-400"
+                          className="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-200 dark:text-green-400"
                         >
                           Account
                         </th>
                         <th
                           scope="col"
-                          className="py-3 px-6 text-sm font-normal tracking-wider text-left text-gray-200 dark:text-green-400"
+                          className="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-200 dark:text-green-400"
                         >
                           Password
                         </th>
@@ -326,10 +350,15 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
                         </th>
                       </tr>
                     </thead>
+
                     <tbody className="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
-                      {(filteredData.length > 0 ? filteredData : accounts)?.map(
-                        (account) => (
-                          <tr
+                      <AnimatePresence>
+                        {account_filteredData?.map((account) => (
+                          <motion.tr
+                            layout
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
                             key={account.id}
                             className="hover:bg-gray-100 cursor-pointer dark:hover:bg-gray-700"
                           >
@@ -366,9 +395,9 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
                                 Edit
                               </a>
                             </td>
-                          </tr>
-                        )
-                      )}
+                          </motion.tr>
+                        ))}
+                      </AnimatePresence>
                     </tbody>
                   </table>
                 </div>
@@ -377,6 +406,7 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
           </div>
         </div>
       </div>
+
       <ToastContainer
         toastStyle={{
           color: "black",

@@ -5,26 +5,25 @@ import { INITIATE_CLASSROOM } from "@/data";
 import { useAppDispatch } from "@/redux/store";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { IClassroomObject } from "@/interface/classroom";
-import { createClassroom } from "@/redux/reducer/classroom/api";
-import { IAuthObject } from "@/interface/auth";
+import { updateClassroom } from "@/redux/reducer/classroom/api";
 
-export interface IACreateClassroomFormProps {
-  listAccount: IAuthObject[];
+export interface IAEditClassroomFormProps {
+  classroom: IClassroomObject;
   setOpenModal?: React.Dispatch<React.SetStateAction<boolean>>;
   openModal?: boolean;
 }
 
-export const ACreateClassroomForm: FC<IACreateClassroomFormProps> = ({
-  listAccount,
+export const AEditClassroomForm: FC<IAEditClassroomFormProps> = ({
+  classroom,
   setOpenModal,
   openModal,
 }) => {
   const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
-  const addMutation = useMutation(
-    (postData: Omit<IClassroomObject, "id">) => {
+  const updateMutation = useMutation(
+    (postData: IClassroomObject) => {
       return new Promise((resolve, reject) => {
-        dispatch(createClassroom(postData))
+        dispatch(updateClassroom(postData))
           .unwrap()
           .then((data) => {
             resolve(data);
@@ -43,22 +42,15 @@ export const ACreateClassroomForm: FC<IACreateClassroomFormProps> = ({
 
   return (
     <Formik
-      initialValues={INITIATE_CLASSROOM}
+      enableReinitialize
+      initialValues={classroom || INITIATE_CLASSROOM}
       validate={(values) => {
         const errors = {};
         return errors;
       }}
-      onSubmit={(values, { setSubmitting, resetForm }) => {
+      onSubmit={(values) => {
         setTimeout(() => {
-          listAccount.forEach(async (account: IAuthObject) => {
-            await addMutation.mutate({
-              lecturer: account,
-              quantityStudent: values.quantityStudent,
-              classCourse: values.classCourse,
-              status: "UN_LOCK",
-            });
-          });
-          resetForm();
+          updateMutation.mutate(values);
           setOpenModal?.(!openModal);
         }, 400);
       }}
@@ -69,21 +61,48 @@ export const ACreateClassroomForm: FC<IACreateClassroomFormProps> = ({
           <Form>
             <div className="flex gap-5">
               <FormField
+                label="Name instructor"
+                type="text"
+                nameField="name"
+                className="rounded-xl bg-slate-100 border-none capitalize"
+                placeholder="Ex: Nguyen Van Tuan"
+                value={values?.lecturer?.name}
+              />
+              <FormField
+                label="Email"
+                type="text"
+                nameField="email"
+                className="rounded-xl bg-slate-100 border-none"
+                placeholder="Ex: nvtuan@cit.ctu.edu.vn"
+                value={values?.lecturer?.email}
+              />
+            </div>
+
+            <div className="flex gap-5">
+              <FormField
                 label="Classroom course"
                 type="text"
                 nameField="classCourse"
                 className="rounded-xl bg-slate-100 border-none"
                 placeholder="Ex: CT550/HK1-2023"
-                value={values.classCourse}
+                value={values?.classCourse}
               />
               <FormField
                 label="Quantity student"
                 type="number"
                 className="rounded-xl bg-slate-100 border-none"
-                nameField="quantity"
-                value={values.quantityStudent}
+                nameField="quantityStudent"
+                value={values?.quantityStudent}
+              />
+              <FormField
+                label="Classroom status"
+                type="text"
+                className="rounded-xl bg-slate-100 border-none"
+                nameField="status"
+                value={values?.status}
               />
             </div>
+
             <p className="text-xs font-thin italic tracking-wide">
               Noticed: You can set quantity more than 15 people each classroom
             </p>
@@ -97,7 +116,7 @@ export const ACreateClassroomForm: FC<IACreateClassroomFormProps> = ({
               />
               <Button
                 type="submit"
-                title="Confirm"
+                title="Save changes"
                 className="hover:bg-[#165b31] rounded-lg normal-case bg-green-700 text-white px-10"
               />
             </div>
