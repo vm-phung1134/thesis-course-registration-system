@@ -5,20 +5,26 @@ import { INITIATE_ROOM_DEF } from "@/data";
 import { useAppDispatch } from "@/redux/store";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { IRoomDefObject } from "@/interface/room";
-import { createRoomDef } from "@/redux/reducer/room-def/api";
-import { ModalConfirm } from "../..";
-import classNames from "classnames";
+import { updateRoomDef } from "@/redux/reducer/room-def/api";
 import useToastifyMessage from "@/hooks/useToastify";
 
-export interface ICreateRoomFormProps {}
+export interface IEditRoomFormProps {
+  room: IRoomDefObject;
+  setToggleForm?: React.Dispatch<React.SetStateAction<boolean>>;
+  toggleForm?: boolean;
+}
 
-export const CreateRoomForm: FC<ICreateRoomFormProps> = ({}) => {
+export const EditRoomForm: FC<IEditRoomFormProps> = ({
+  room,
+  setToggleForm,
+  toggleForm,
+}) => {
   const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
-  const addMutation = useMutation(
-    (postData: Omit<IRoomDefObject, "id">) => {
+  const updateMutation = useMutation(
+    (postData: IRoomDefObject) => {
       return new Promise((resolve, reject) => {
-        dispatch(createRoomDef(postData))
+        dispatch(updateRoomDef(postData))
           .unwrap()
           .then((data) => {
             resolve(data);
@@ -35,19 +41,20 @@ export const CreateRoomForm: FC<ICreateRoomFormProps> = ({}) => {
     }
   );
 
-  useToastifyMessage(addMutation, "Create room defense was successfully");
+  useToastifyMessage(updateMutation, "Update room defense was successfully");
 
   return (
     <Formik
-      initialValues={INITIATE_ROOM_DEF}
+      initialValues={room}
+      enableReinitialize
       validate={(values) => {
         const errors = {};
         return errors;
       }}
       onSubmit={(values, { setSubmitting, resetForm }) => {
         setTimeout(() => {
-          addMutation.mutate(values);
-          resetForm()
+          updateMutation.mutate(values);
+          setToggleForm?.(!toggleForm);
         }, 400);
       }}
     >
@@ -56,16 +63,14 @@ export const CreateRoomForm: FC<ICreateRoomFormProps> = ({}) => {
         return (
           <>
             <Form>
-              <h4 className="text-xl font-bold mb-5">
-                Create new Room council
-              </h4>
+              <h4 className="text-xl font-bold mb-5">Edit Room council</h4>
               <div className="flex gap-5">
                 <FormField
                   label="Name room"
                   type="text"
                   nameField="name"
                   className="rounded-xl bg-slate-100 border-none"
-                  placeholder="Ex: DI/101"
+                  placeholder="Ex: CT550/HK1-2023"
                   value={values.name}
                 />
                 <FormField
@@ -73,7 +78,6 @@ export const CreateRoomForm: FC<ICreateRoomFormProps> = ({}) => {
                   type="text"
                   className="rounded-xl bg-slate-100 border-none"
                   nameField="type"
-                  placeholder="Ex: Lab"
                   value={values.type}
                 />
               </div>
@@ -87,19 +91,21 @@ export const CreateRoomForm: FC<ICreateRoomFormProps> = ({}) => {
               <FormField
                 label="Description"
                 type="text"
-                placeholder="Ex: Enter description about room..."
                 className="rounded-xl bg-slate-100 border-none"
                 nameField="description"
                 value={values.description || ""}
               />
-              <p className="text-xs font-thin italic tracking-wide">
-                Noticed: Adding a room to the assembly will be based on
-                classroom schedule of the IT school
-              </p>
               <div className="flex justify-end items-center mt-3">
                 <Button
+                  setToggle={setToggleForm}
+                  toggle={toggleForm}
+                  type="button"
+                  title="Cancel"
+                  className="bg-transparent border-none hover:border-none hover:bg-transparent"
+                />
+                <Button
                   type="submit"
-                  title="Create room"
+                  title="Save Changes"
                   className="hover:bg-[#165b31] rounded-xl normal-case bg-green-700 text-white px-10"
                 />
               </div>

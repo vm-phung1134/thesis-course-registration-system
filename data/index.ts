@@ -104,8 +104,7 @@ export const INITIATE_STUDENT_DEF: IStudentDefObject = {
   instructor: INITIATE_AUTH,
 };
 
-export const INITIATE_ROOM_DEF: IRoomDefObject = {
-  id: "",
+export const INITIATE_ROOM_DEF: Omit<IRoomDefObject, "id"> = {
   name: "",
   type: "",
   school: "",

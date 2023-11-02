@@ -22,6 +22,9 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import classNames from "classnames";
 import { FC, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
+import useToastifyMessage from "@/hooks/useToastify";
 
 interface ICreateClassroomTab {}
 
@@ -132,7 +135,7 @@ export const CreateClassroomTab: FC<ICreateClassroomTab> = ({}) => {
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["classrooms-admin"]);
+        queryClient.invalidateQueries(["classrooms"]);
       },
     }
   );
@@ -157,6 +160,9 @@ export const CreateClassroomTab: FC<ICreateClassroomTab> = ({}) => {
     setOpenModalEditClassForm(!openModalEditClassForm);
     dispatch(getClassroom(lecturer));
   };
+
+  useToastifyMessage(deleteMutation, "Classroom was successfully deleted");
+  useToastifyMessage(updateMutation, "Classrooms status switched to lock");
 
   return (
     <div className="flex flex-col gap-5 mt-5">
@@ -341,25 +347,16 @@ export const CreateClassroomTab: FC<ICreateClassroomTab> = ({}) => {
             <p className="text-sm text-slate-500">Total 3 classrooms</p>
           </div>
           <div className="flex gap-3">
-            {checkedClassrooms.length > 0 ? (
-              <IconButton
-                className="btn-sm rounded-none px-5 border-none text-blue-500"
-                title="Lock Classroom"
-                classNameIcon={"w-5"}
-                srcIcon={
-                  "https://cdn-icons-png.flaticon.com/128/3817/3817037.png"
-                }
-              />
-            ) : (
-              <IconButton
-                className="btn-sm px-5 text-blue-500 rounded-none"
-                title="Lock Classroom"
-                classNameIcon={"w-5"}
-                srcIcon={
-                  "https://cdn-icons-png.flaticon.com/128/3817/3817037.png"
-                }
-              />
-            )}
+            <IconButton
+              className="btn-sm px-5 text-blue-500 rounded-none"
+              title="Lock Classroom"
+              setToggleForm={setOpenModalLock}
+              toggleForm={openModalLock}
+              classNameIcon={"w-5"}
+              srcIcon={
+                "https://cdn-icons-png.flaticon.com/128/3817/3817037.png"
+              }
+            />
             <IconButton
               toggleForm={openModalClearClass}
               setToggleForm={setOpenModalClearClass}
@@ -582,6 +579,13 @@ export const CreateClassroomTab: FC<ICreateClassroomTab> = ({}) => {
         underMessage="Once you delete this classrooms if will be gone forever"
         title="Message!!!"
         message="Are you sure do you want to delete this classrooms"
+      />
+      <ToastContainer
+        toastStyle={{
+          color: "black",
+          fontSize: "14px",
+          fontFamily: "Red Hat Text",
+        }}
       />
     </div>
   );

@@ -7,6 +7,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { IClassroomObject } from "@/interface/classroom";
 import { createClassroom } from "@/redux/reducer/classroom/api";
 import { IAuthObject } from "@/interface/auth";
+import useToastifyMessage from "@/hooks/useToastify";
 
 export interface IACreateClassroomFormProps {
   listAccount: IAuthObject[];
@@ -40,6 +41,8 @@ export const ACreateClassroomForm: FC<IACreateClassroomFormProps> = ({
       },
     }
   );
+
+  useToastifyMessage(addMutation, "Generating the classroom successfully");
 
   return (
     <Formik

@@ -6,6 +6,7 @@ import { useAppDispatch } from "@/redux/store";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { IClassroomObject } from "@/interface/classroom";
 import { updateClassroom } from "@/redux/reducer/classroom/api";
+import useToastifyMessage from "@/hooks/useToastify";
 
 export interface IAEditClassroomFormProps {
   classroom: IClassroomObject;
@@ -39,6 +40,8 @@ export const AEditClassroomForm: FC<IAEditClassroomFormProps> = ({
       },
     }
   );
+
+  useToastifyMessage(updateMutation, "Classroom was successfully updated");
 
   return (
     <Formik

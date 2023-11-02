@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { token } from "./type";
 import { IAuthObject } from "@/interface/auth";
+import { ICouncilDef } from "@/interface/schedule";
 
 // GET ONE COUNCIL DEF
 const getOneCouncilDef = createAsyncThunk(
