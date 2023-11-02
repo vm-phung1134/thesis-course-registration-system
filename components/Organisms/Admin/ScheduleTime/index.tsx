@@ -3,6 +3,11 @@ import { FilterScheduledForm, ScheduleForm } from "@/components/Molecules";
 import { IThesisDef } from "@/interface/schedule";
 import Link from "next/link";
 import React, { FC, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import useToastifyMessage from "@/hooks/useToastify";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
+import { useTableSearch } from "@/hooks/useTableSearch";
 
 export interface IScheduleTimeProps {
   setCreateScheduled: React.Dispatch<any>;
@@ -15,6 +20,10 @@ export const ScheduleTime: FC<IScheduleTimeProps> = ({
   createScheduled,
   scheduled,
 }) => {
+  const {
+    filteredData: schedule_filteredData,
+    handleSearch: schedule_handleSearch,
+  } = useTableSearch(scheduled?.thesis as any);
   return (
     <>
       <div className="w-full mt-5 px-3">
@@ -82,11 +91,14 @@ export const ScheduleTime: FC<IScheduleTimeProps> = ({
             <Button title="All" className="px-5 btn-sm rounded-none" />
           </div>
           <div>
-            <FilterScheduledForm holderText="Filter schedule time ..." />
+            <FilterScheduledForm
+              handleSearch={schedule_handleSearch}
+              holderText="Filter schedule time ..."
+            />
           </div>
         </div>
-        <div className="mt-3 shadow-xl">
-          <div className="overflow-x-auto rounded-2xl">
+        <div className="mt-3 min-h-[80vh] w-full">
+          <div className="overflow-x-auto border shadow-xl">
             <table className="table-auto w-full">
               <thead className="text-sm font-medium capitalize text-gray-200 bg-green-700">
                 <tr>
@@ -118,55 +130,64 @@ export const ScheduleTime: FC<IScheduleTimeProps> = ({
                 </tr>
               </thead>
               <tbody className="text-sm divide-y divide-gray-100">
-                {(scheduled?.thesis || []).map(
-                  (scheduled: any, index: number) => (
-                    <React.Fragment key={index}>
-                      <tr className="">
-                        <td className="px-5 py-4 whitespace-nowrap">
-                          <div className="text-left">
-                            Council {`${(index += 1)}`}
-                          </div>
-                        </td>
-                        <td className="px-5 py-4 whitespace-nowrap">
-                          <div className="text-left">
-                            {scheduled.schedule.room.name}
-                          </div>
-                        </td>
-                        <td className="px-5 py-4 whitespace-nowrap">
-                          <div className="text-left">
-                            {scheduled.schedule.timeSlots[0].timeSlot.date}
-                          </div>
-                        </td>
-                        <td className="px-5 py-4 whitespace-nowrap">
-                          <div className="text-center">
-                            {scheduled.council.length}
-                          </div>
-                        </td>
-                        <td className="px-5 py-4 whitespace-nowrap">
-                          <div className="text-center">
-                            {
-                              scheduled.schedule.timeSlots.filter(
-                                (item: any) => item.student.infor.id !== ""
-                              ).length
-                            }
-                          </div>
-                        </td>
-                        <td className="px-5 py-4 whitespace-nowrap">
-                          <div className="text-center">Thurday, 27-12-2023</div>
-                        </td>
-                        <td className="px-5 py-4 whitespace-nowrap">
-                          <div className="justify-end flex gap-3">
-                            <Link
-                              href={`/admin/schedule-time-defense/${scheduled.id}`}
-                            >
-                              <button className="text-blue-500">View</button>
-                            </Link>
-                          </div>
-                        </td>
-                      </tr>
-                    </React.Fragment>
-                  )
-                )}
+                <AnimatePresence>
+                  {(schedule_filteredData || []).map(
+                    (scheduled: any, index: number) => (
+                      <React.Fragment key={index}>
+                        <motion.tr
+                          layout
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                        >
+                          <td className="px-5 py-4 whitespace-nowrap">
+                            <div className="text-left">
+                              Council {`${(index += 1)}`}
+                            </div>
+                          </td>
+                          <td className="px-5 py-4 whitespace-nowrap">
+                            <div className="text-left">
+                              {scheduled.schedule.room.name}
+                            </div>
+                          </td>
+                          <td className="px-5 py-4 whitespace-nowrap">
+                            <div className="text-left">
+                              {scheduled.schedule.timeSlots[0].timeSlot.date}
+                            </div>
+                          </td>
+                          <td className="px-5 py-4 whitespace-nowrap">
+                            <div className="text-center">
+                              {scheduled.council.length}
+                            </div>
+                          </td>
+                          <td className="px-5 py-4 whitespace-nowrap">
+                            <div className="text-center">
+                              {
+                                scheduled.schedule.timeSlots.filter(
+                                  (item: any) => item.student.infor.id !== ""
+                                ).length
+                              }
+                            </div>
+                          </td>
+                          <td className="px-5 py-4 whitespace-nowrap">
+                            <div className="text-center">
+                              Thurday, 27-12-2023
+                            </div>
+                          </td>
+                          <td className="px-5 py-4 whitespace-nowrap">
+                            <div className="justify-end flex gap-3">
+                              <Link
+                                href={`/admin/schedule-time-defense/${scheduled.id}`}
+                              >
+                                <button className="text-blue-500">View</button>
+                              </Link>
+                            </div>
+                          </td>
+                        </motion.tr>
+                      </React.Fragment>
+                    )
+                  )}
+                </AnimatePresence>
               </tbody>
             </table>
           </div>

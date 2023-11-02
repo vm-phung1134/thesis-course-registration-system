@@ -2,18 +2,27 @@ import React, { FC, useState } from "react";
 export interface ICountInputProps {
   label: string;
   className?: string;
+  valueNumber: number;
+  onChange: (newValue: number) => void;
 }
-export const CountInput: FC<ICountInputProps> = ({label, className}) => {
-  const [value, setValue] = useState(0);
+export const CountInput: FC<ICountInputProps> = ({
+  label,
+  className,
+  valueNumber,
+  onChange,
+}) => {
+  const [value, setValue] = useState(valueNumber);
 
   const decrement = () => {
     if (value > 0) {
       setValue((prevValue) => prevValue - 1);
+      onChange(value - 1);
     }
   };
   const increment = () => {
     if (value < 5) {
       setValue((prevValue) => prevValue + 1);
+      onChange(value + 1);
     }
   };
 
@@ -25,8 +34,11 @@ export const CountInput: FC<ICountInputProps> = ({label, className}) => {
       >
         {label}
       </label>
-      <div className={`${className} flex flex-row rounded-lg relative bg-transparent mt-1`}>
+      <div
+        className={`${className} flex flex-row rounded-lg relative bg-transparent mt-1`}
+      >
         <button
+          type="button"
           data-action="decrement"
           className="bg-slate-200 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-full rounded-l-full cursor-pointer outline-none"
           onClick={decrement}
@@ -41,6 +53,7 @@ export const CountInput: FC<ICountInputProps> = ({label, className}) => {
           onChange={(e) => setValue(parseInt(e.target.value))}
         />
         <button
+          type="button"
           data-action="increment"
           className="bg-slate-200 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-full rounded-r-full cursor-pointer"
           onClick={increment}

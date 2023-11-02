@@ -9,7 +9,7 @@ export function useTableSearch<T>(initialData: T[]) {
     (value: string) => {
       setSearchTerm(value);
       setFilteredData(
-        initialData.filter((entry) =>
+        initialData?.filter((entry) =>
           Object.values(entry as any).some(
             (val) =>
               typeof val === "string" &&
