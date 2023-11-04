@@ -3,33 +3,60 @@ import { LogoApp } from "@/components/Molecules";
 import { AuthForm } from "@/components/Organisms";
 import { AuthTemplate } from "@/components/Templates";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 const IntroPage = () => {
+  const text = "The College of Information Technology";
+  const textArray = text.split(" ");
   return (
     <div className="flex flex-col gap-5 w-full px-20">
-      <div className="flex gap-5 items-center">
+      <div className="flex gap-5 items-center w-full">
         <Image
           src="https://yu.ctu.edu.vn/images/upload/article/2020/03/0305-logo-ctu.png"
           width="70"
           height="20"
           alt="Logo CTU"
         />
-        <h2 className="text-2xl uppercase tracking-wide font-medium text-white">
-          The College of Information Technology
-        </h2>
+        <div className="flex gap-3">
+          {textArray.map((char, index) => (
+            <motion.h2
+              key={index}
+              className="text-xl w-full uppercase font-medium text-white"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: index * 0.2 }}
+            >
+              {char}
+            </motion.h2>
+          ))}
+        </div>
       </div>
-      <h4 className="uppercase text-[53px] my-3 font-bold text-green-400 tracking-wider leading-[3.5rem]">
+      <motion.h4
+        initial={{ opacity: 0, x: -200 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
+        className="uppercase text-[53px] my-3 font-bold text-green-400 tracking-wider leading-[3.5rem]"
+      >
         The thesis course registration system
-      </h4>
+      </motion.h4>
       <div className="flex flex-col gap-10 max-w-2xl">
         <p className="text-base text-gray-100 text-start tracking-wider">
           The thesis course registration system website for students is a useful
           and efficient tool for students to manage and register for their
           theses easily...
         </p>
-        <div className="flex justify-end">
-          <LearnMoreBtn title="Read More" className="text-orange-600" href="/" />
-        </div>
+        <motion.div
+          className="flex justify-end"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 2, ease: "easeOut" }}
+        >
+          <LearnMoreBtn
+            title="Read More"
+            className="text-orange-600"
+            href="/"
+          />
+        </motion.div>
       </div>
     </div>
   );

@@ -240,6 +240,12 @@ export const CreateClassroomTab: FC<ICreateClassroomTab> = ({}) => {
                         </th>
                         <th
                           scope="col"
+                          className="py-3 pl-3 text-sm text-start font-medium tracking-wider text-gray-200  dark:text-green-400"
+                        >
+                          No.
+                        </th>
+                        <th
+                          scope="col"
                           className="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-200  dark:text-green-400"
                         >
                           Email
@@ -275,7 +281,7 @@ export const CreateClassroomTab: FC<ICreateClassroomTab> = ({}) => {
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
                       <AnimatePresence>
-                        {lec_filteredData?.map((lecturer) => (
+                        {lec_filteredData?.map((lecturer, index) => (
                           <motion.tr
                             layout
                             initial={{ opacity: 0 }}
@@ -302,6 +308,9 @@ export const CreateClassroomTab: FC<ICreateClassroomTab> = ({}) => {
                                   checkbox
                                 </label>
                               </div>
+                            </td>
+                            <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
+                              {(index += 1)}
                             </td>
                             <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
                               {lecturer?.email}
@@ -413,6 +422,12 @@ export const CreateClassroomTab: FC<ICreateClassroomTab> = ({}) => {
                         </th>
                         <th
                           scope="col"
+                          className="py-3 pl-3 text-sm text-start font-medium tracking-wider text-gray-200  dark:text-green-400"
+                        >
+                          No.
+                        </th>
+                        <th
+                          scope="col"
                           className="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-200  dark:text-green-400"
                         >
                           Name classroom
@@ -454,7 +469,7 @@ export const CreateClassroomTab: FC<ICreateClassroomTab> = ({}) => {
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
                       <AnimatePresence>
-                        {classroom_filteredData?.map((classroom) => (
+                        {classroom_filteredData?.map((classroom, index) => (
                           <motion.tr
                             layout
                             initial={{ opacity: 0 }}
@@ -484,7 +499,9 @@ export const CreateClassroomTab: FC<ICreateClassroomTab> = ({}) => {
                                 </label>
                               </div>
                             </td>
-
+                            <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
+                              {(index += 1)}
+                            </td>
                             <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
                               {classroom?.lecturer?.email}
                             </td>

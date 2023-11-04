@@ -48,7 +48,7 @@ function ScheduleDetailPage() {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 1300);
+    }, 1200);
   }, []);
   return (
     <>
@@ -236,13 +236,22 @@ function ScheduleDetailPage() {
                   <FilterScheduledForm holderText="Search schedule time ..." />
                 </div>
               </div>
-              <div className="mt-5 min-h-[50vh]">
+              <div className="mt-2 min-h-[50vh]">
+              <h4 className="font-medium tracking-wider text-green-700 mb-2">Morning session</h4>
                 <div className="overflow-x-auto shadow-xl">
                   <table className="table-auto w-full">
                     <thead className="text-sm font-medium capitalize text-gray-200 bg-green-700">
                       <tr>
+                        <th
+                          scope="col"
+                          className="py-3 pl-3 text-sm text-start font-medium tracking-wider text-gray-200  dark:text-green-400"
+                        >
+                          No.
+                        </th>
                         <th className="px-5 py-4 whitespace-nowrap">
-                          <div className="font-medium text-left">Full name</div>
+                          <div className="font-medium text-left">
+                            Student ID
+                          </div>
                         </th>
                         <th className="px-5 py-4 whitespace-nowrap">
                           <div className="font-medium text-left">Email</div>
@@ -252,9 +261,6 @@ function ScheduleDetailPage() {
                         </th>
                         <th className="px-5 py-4 whitespace-nowrap">
                           <div className="font-medium text-center">Room</div>
-                        </th>
-                        <th className="px-5 py-4 whitespace-nowrap">
-                          <div className="font-medium text-center">Shift</div>
                         </th>
                         <th className="px-5 py-4 whitespace-nowrap">
                           <div className="font-medium text-center">Time</div>
@@ -264,89 +270,93 @@ function ScheduleDetailPage() {
                         </th>
                       </tr>
                     </thead>
-                    {
-                      <tbody className="text-sm divide-y divide-gray-100">
-                        <AnimatePresence>
-                          {councilInSchedule?.schedule?.timeSlots
-                            ?.filter(
-                              (item) => item?.timeSlot?.shift === "Morning"
-                            )
-                            .map((student, index) => (
-                              <React.Fragment key={index}>
-                                {student?.student?.id && (
-                                  <motion.tr
-                                    layout
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    exit={{ opacity: 0 }}
-                                  >
-                                    <td className="px-5 py-2 whitespace-nowrap">
-                                      <div className="flex items-center">
-                                        <div className="w-10 h-10 flex-shrink-0 mr-2 sm:mr-3">
-                                          <Avatar
-                                            widthStr="50"
-                                            srcImg={
-                                              student?.student?.infor?.photoSrc
-                                            }
-                                          />
-                                        </div>
-                                        <div className="text-gray-800">
-                                          {student?.student?.infor?.name}
-                                        </div>
+                    <tbody className="text-sm divide-y divide-gray-100">
+                      <AnimatePresence>
+                        {councilInSchedule?.schedule?.timeSlots
+                          ?.filter(
+                            (item) => item?.timeSlot?.shift === "Morning"
+                          )
+                          .map((student, index) => (
+                            <React.Fragment key={index}>
+                              {student?.student?.id && (
+                                <motion.tr
+                                  layout
+                                  initial={{ opacity: 0 }}
+                                  animate={{ opacity: 1 }}
+                                  exit={{ opacity: 0 }}
+                                >
+                                  <td className="px-5 py-2 whitespace-nowrap">
+                                    <div className="text-left">
+                                      {(index += 1)}
+                                    </div>
+                                  </td>
+                                  <td className="px-5 py-2 whitespace-nowrap">
+                                    <div className="flex items-center">
+                                      <div className="w-10 h-10 flex-shrink-0 mr-2 sm:mr-3">
+                                        <Avatar
+                                          widthStr="40"
+                                          srcImg={
+                                            student?.student?.infor?.photoSrc
+                                          }
+                                        />
                                       </div>
-                                    </td>
-                                    <td className="px-5 py-2 whitespace-nowrap">
-                                      <div className="text-left">
-                                        {student?.student?.infor?.email}
+                                      <div className="text-gray-800">
+                                        {student?.student?.infor?.name}
                                       </div>
-                                    </td>
-                                    <td className="px-5 py-2 whitespace-nowrap">
-                                      <div className="text-left">
-                                        {student?.timeSlot?.date}
-                                      </div>
-                                    </td>
-                                    <td className="px-5 py-2 whitespace-nowrap">
-                                      <div className="text-center">
-                                        {
-                                          councilInSchedule?.schedule?.room
-                                            ?.name
-                                        }
-                                      </div>
-                                    </td>
-                                    <td className="px-5 py-2 whitespace-nowrap">
-                                      <div className="text-center">
-                                        {student?.timeSlot?.shift}
-                                      </div>
-                                    </td>
-                                    <td className="px-5 py-2 whitespace-nowrap">
-                                      <div className="text-center">
-                                        {student?.timeSlot?.time}
-                                      </div>
-                                    </td>
-                                    <td className="px-5 py-2 whitespace-nowrap">
-                                      <div className="justify-end flex gap-3">
-                                        <button className="text-blue-500">
-                                          Edit
-                                        </button>
-                                      </div>
-                                    </td>
-                                  </motion.tr>
-                                )}
-                              </React.Fragment>
-                            ))}
-                        </AnimatePresence>
-                      </tbody>
-                    }
+                                    </div>
+                                  </td>
+                                  <td className="px-5 py-2 whitespace-nowrap">
+                                    <div className="text-left">
+                                      {student?.student?.infor?.email}
+                                    </div>
+                                  </td>
+                                  <td className="px-5 py-2 whitespace-nowrap">
+                                    <div className="text-left">
+                                      {student?.timeSlot?.date}
+                                    </div>
+                                  </td>
+                                  <td className="px-5 py-2 whitespace-nowrap">
+                                    <div className="text-center">
+                                      {councilInSchedule?.schedule?.room?.name}
+                                    </div>
+                                  </td>
+                                  <td className="px-5 py-2 whitespace-nowrap">
+                                    <div className="text-center">
+                                      {student?.timeSlot?.time}
+                                    </div>
+                                  </td>
+                                  <td className="px-5 py-2 whitespace-nowrap">
+                                    <div className="justify-end flex gap-3">
+                                      <button className="text-blue-500">
+                                        Edit
+                                      </button>
+                                    </div>
+                                  </td>
+                                </motion.tr>
+                              )}
+                            </React.Fragment>
+                          ))}
+                      </AnimatePresence>
+                    </tbody>
                   </table>
                 </div>
               </div>
               <div className="mt-5 shadow-xl min-h-[50vh]">
+                <h4 className="font-medium tracking-wider text-green-700 mb-2">Afternoon session</h4>
                 <div className="overflow-x-auto">
                   <table className="table-auto w-full">
                     <thead className="text-sm font-medium capitalize text-gray-200 bg-green-700">
                       <tr>
+                        <th
+                          scope="col"
+                          className="py-3 pl-3 text-sm text-start font-medium tracking-wider text-gray-200  dark:text-green-400"
+                        >
+                          No.
+                        </th>
                         <th className="px-5 py-4 whitespace-nowrap">
-                          <div className="font-medium text-left">Full name</div>
+                          <div className="font-medium text-left">
+                            Student ID
+                          </div>
                         </th>
                         <th className="px-5 py-4 whitespace-nowrap">
                           <div className="font-medium text-left">Email</div>
@@ -356,9 +366,6 @@ function ScheduleDetailPage() {
                         </th>
                         <th className="px-5 py-4 whitespace-nowrap">
                           <div className="font-medium text-center">Room</div>
-                        </th>
-                        <th className="px-5 py-4 whitespace-nowrap">
-                          <div className="font-medium text-center">Shift</div>
                         </th>
                         <th className="px-5 py-4 whitespace-nowrap">
                           <div className="font-medium text-center">Time</div>
@@ -385,10 +392,15 @@ function ScheduleDetailPage() {
                                     exit={{ opacity: 0 }}
                                   >
                                     <td className="px-5 py-2 whitespace-nowrap">
+                                      <div className="text-left">
+                                        {(index += 1)}
+                                      </div>
+                                    </td>
+                                    <td className="px-5 py-2 whitespace-nowrap">
                                       <div className="flex items-center">
                                         <div className="w-10 h-10 flex-shrink-0 mr-2 sm:mr-3">
                                           <Avatar
-                                            widthStr="50"
+                                            widthStr="40"
                                             srcImg={
                                               student?.student?.infor?.photoSrc
                                             }
@@ -415,11 +427,6 @@ function ScheduleDetailPage() {
                                           councilInSchedule?.schedule?.room
                                             ?.name
                                         }
-                                      </div>
-                                    </td>
-                                    <td className="px-5 py-2 whitespace-nowrap">
-                                      <div className="text-center">
-                                        {student?.timeSlot?.shift}
                                       </div>
                                     </td>
                                     <td className="px-5 py-2 whitespace-nowrap">

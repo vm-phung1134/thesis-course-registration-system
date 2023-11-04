@@ -193,6 +193,12 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
                         </th>
                         <th
                           scope="col"
+                          className="py-3 pl-3 text-sm text-start font-medium tracking-wider text-gray-200  dark:text-green-400"
+                        >
+                          No.
+                        </th>
+                        <th
+                          scope="col"
                           className="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-200 dark:text-green-400"
                         >
                           Email
@@ -216,7 +222,7 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
                       <AnimatePresence>
-                        {cit_filteredData?.map((lecturer) => (
+                        {cit_filteredData?.map((lecturer, index) => (
                           <motion.tr
                             layout
                             initial={{ opacity: 0 }}
@@ -243,6 +249,9 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
                                   checkbox
                                 </label>
                               </div>
+                            </td>
+                            <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
+                              {(index += 1)}
                             </td>
                             <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
                               {lecturer.email}
@@ -275,7 +284,7 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
           </div>
         </div>
       </div>
-      <div className="col-span-5 m-3">
+      <div className="col-span-5">
         <div className="flex justify-between items-center py-2">
           <div className="mb-3">
             <h4 className="font-medium">Account system</h4>
@@ -335,6 +344,12 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
                         </th>
                         <th
                           scope="col"
+                          className="py-3 pl-3 text-sm text-start font-medium tracking-wider text-gray-200  dark:text-green-400"
+                        >
+                          No.
+                        </th>
+                        <th
+                          scope="col"
                           className="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-200 dark:text-green-400"
                         >
                           Account
@@ -353,7 +368,7 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
 
                     <tbody className="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
                       <AnimatePresence>
-                        {account_filteredData?.map((account) => (
+                        {account_filteredData?.map((account, index) => (
                           <motion.tr
                             layout
                             initial={{ opacity: 0 }}
@@ -380,6 +395,9 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
                                   checkbox
                                 </label>
                               </div>
+                            </td>
+                            <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
+                              {(index += 1)}
                             </td>
                             <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
                               {account?.email}

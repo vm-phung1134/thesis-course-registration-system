@@ -1,7 +1,9 @@
-import { Button, SnipperRound } from "@/components/Atoms";
+import { Button, IconButton, SnipperRound } from "@/components/Atoms";
 import { FilterScheduledForm } from "@/components/Molecules";
 import { AdminTemplate } from "@/components/Templates";
-import { SetStateAction, useEffect, useState } from "react";
+import Link from "next/link";
+import { AnimatePresence, motion } from "framer-motion";
+import React, { useEffect, useState } from "react";
 import {
   PieChart,
   Pie,
@@ -17,6 +19,11 @@ import {
   BarChart,
   Bar,
 } from "recharts";
+import { useTableSearch } from "@/hooks/useTableSearch";
+import { useAppDispatch } from "@/redux/store";
+import { useQuery } from "@tanstack/react-query";
+import { IThesisDef } from "@/interface/schedule";
+import { getScheduleDef } from "@/redux/reducer/schedule-def/api";
 
 function DashBoardPage(this: any) {
   const [loading, setLoading] = useState<boolean>(true);
@@ -69,11 +76,24 @@ function DashBoardPage(this: any) {
       amt: 2100,
     },
   ];
-//   const [activeIndex, setActiveIndex] = useState(0);
+  const dispatch = useAppDispatch();
+  const { data: scheduled } = useQuery<IThesisDef | null>({
+    queryKey: ["scheduled"],
+    queryFn: async () => {
+      const action = await dispatch(getScheduleDef());
+      return action.payload || {};
+    },
+    initialData: null,
+  });
+  const {
+    filteredData: schedule_filteredData,
+    handleSearch: schedule_handleSearch,
+  } = useTableSearch(scheduled?.thesis as any);
+  //   const [activeIndex, setActiveIndex] = useState(0);
 
-//   const onPieEnter = (_: any, index: SetStateAction<number>) => {
-//     setActiveIndex(index);
-//   };
+  //   const onPieEnter = (_: any, index: SetStateAction<number>) => {
+  //     setActiveIndex(index);
+  //   };
   return (
     <AdminTemplate title="Dashboard | Thesis course registration system">
       {loading ? (
@@ -214,63 +234,80 @@ function DashBoardPage(this: any) {
           </div>
           <div className="grid grid-cols-2 mt-10 gap-10">
             <div className="col-span-1 p-5 bg-slate-50 rounded-xl">
-                <LineChart
-                  width={550}
-                  height={300}
-                  data={data2}
-                  margin={{
-                    top: 5,
-                    right: 30,
-                    left: 20,
-                    bottom: 5,
-                  }}
-                >
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
-                  <Line
-                    type="monotone"
-                    dataKey="pv"
-                    stroke="#8884d8"
-                    activeDot={{ r: 8 }}
-                  />
-                  <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
-                </LineChart>
+              <LineChart
+                width={550}
+                height={300}
+                data={data2}
+                margin={{
+                  top: 5,
+                  right: 30,
+                  left: 20,
+                  bottom: 5,
+                }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Line
+                  type="monotone"
+                  dataKey="pv"
+                  stroke="#8884d8"
+                  activeDot={{ r: 8 }}
+                />
+                <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
+              </LineChart>
             </div>
             <div className="col-span-1 w-full">
-                <BarChart
-                  width={550}
-                  height={300}
-                  className="w-full"
-                  data={data2}
-                  margin={{
-                    top: 20,
-                    right: 30,
-                    left: 20,
-                    bottom: 5,
-                  }}
-                >
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
-                  <Bar dataKey="pv" stackId="a" fill="#8884d8" />
-                  <Bar dataKey="uv" stackId="a" fill="#82ca9d" />
-                </BarChart>
+              <BarChart
+                width={550}
+                height={300}
+                className="w-full"
+                data={data2}
+                margin={{
+                  top: 20,
+                  right: 30,
+                  left: 20,
+                  bottom: 5,
+                }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="pv" stackId="a" fill="#8884d8" />
+                <Bar dataKey="uv" stackId="a" fill="#82ca9d" />
+              </BarChart>
             </div>
           </div>
 
           {/* TABLE */}
           <div className="col-span-2">
-            <h4 className="font-medium my-3">Schedule defense</h4>
-            <div className="flex justify-between items-start gap-3 mb-2">
+            <div className="mb-3 flex justify-between items-center">
+              <div>
+                <h4 className="font-medium">Progress scheduled</h4>
+                <p className="text-sm text-slate-500">
+                  Total {schedule_filteredData.length} schedules
+                </p>
+              </div>
+              <Link href={"/admin/schedule-time-defense"}>
+                <IconButton
+                  className="text-sky-600 rounded-none bg-transparent border-none"
+                  title="Arrange schedule time thesis defense"
+                  srcIcon={
+                    "https://cdn-icons-png.flaticon.com/128/556/556690.png"
+                  }
+                  classNameIcon={"w-5"}
+                />
+              </Link>
+            </div>
+            <div className="flex justify-between">
               <div className="flex">
                 <Button
                   title="Recently date"
-                  className="px-5 btn-sm bg-gray-800 text-white rounded-none hover:bg-gray-700"
+                  className="px-5 btn-sm bg-gray-800 text-white rounded-none"
                 />
                 <Button
                   title="Ascending order"
@@ -278,82 +315,126 @@ function DashBoardPage(this: any) {
                 />
                 <Button title="All" className="px-5 btn-sm rounded-none" />
               </div>
-              <FilterScheduledForm holderText="Seach thesis schedule ..." />
+              <div>
+                <FilterScheduledForm
+                  handleSearch={schedule_handleSearch}
+                  holderText="Filter schedule time ..."
+                />
+              </div>
             </div>
-            <div className="w-full mx-auto rounded-2xl shadow-lg">
-              <div className="flex flex-col">
-                <div className="overflow-x-auto">
-                  <div className="inline-block min-w-full align-middle">
-                    <div className="overflow-hidden rounded-2xl">
-                      <table className="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-700">
-                        <thead className="bg-green-700 dark:bg-gray-700">
-                          <tr>
-                            <th
-                              scope="col"
-                              className="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-200 dark:text-green-400"
-                            >
-                              Council
-                            </th>
-                            <th
-                              scope="col"
-                              className="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-200 dark:text-green-400"
-                            >
-                              Date
-                            </th>
-                            <th
-                              scope="col"
-                              className="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-200 dark:text-green-400"
-                            >
-                              Room
-                            </th>
-                            <th
-                              scope="col"
-                              className="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-200 dark:text-green-400"
-                            >
-                              Q. Member Council
-                            </th>
-                            <th
-                              scope="col"
-                              className="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-200 dark:text-green-400"
-                            >
-                              Q. Student
-                            </th>
-                            <th scope="col" className="p-4">
-                              <span className="sr-only">Edit</span>
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody className="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
-                          <tr className="hover:bg-gray-100 cursor-pointer dark:hover:bg-gray-700">
-                            <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
-                              Council 1
-                            </td>
-                            <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
-                              Thusday, 16/12/2023
-                            </td>
-                            <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
-                              DI/101
-                            </td>
-                            <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
-                              3
-                            </td>
-                            <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
-                              12
-                            </td>
-                            <td className="py-4 px-6 text-sm text-right whitespace-nowrap">
-                              <a
-                                href="#"
-                                className="text-blue-600 dark:text-blue-500"
+            <div className="mt-3 min-h-[50vh] w-full">
+              <div className="overflow-x-auto border shadow-xl">
+                <table className="table-auto w-full">
+                  <thead className="text-sm font-medium capitalize text-gray-200 bg-green-700">
+                    <tr>
+                      <th
+                        scope="col"
+                        className="py-3 pl-3 text-sm text-start font-medium tracking-wider text-gray-200  dark:text-green-400"
+                      >
+                        No.
+                      </th>
+                      <th className="px-5 py-4 whitespace-nowrap">
+                        <div className="font-medium text-left">
+                          Name council
+                        </div>
+                      </th>
+                      <th className="px-5 py-4 whitespace-nowrap">
+                        <div className="font-medium text-left">Room</div>
+                      </th>
+                      <th className="px-5 py-4 whitespace-nowrap">
+                        <div className="font-medium text-left">Date</div>
+                      </th>
+                      <th className="px-5 py-4 whitespace-nowrap">
+                        <div className="font-medium text-center">
+                          Q. member council
+                        </div>
+                      </th>
+                      <th className="px-5 py-4 whitespace-nowrap">
+                        <div className="font-medium text-center">
+                          Q. student defense
+                        </div>
+                      </th>
+                      <th className="px-5 py-4 whitespace-nowrap">
+                        <div className="font-medium text-center">Create at</div>
+                      </th>
+                      <th className="px-5 py-4 whitespace-nowrap">
+                        <div className="font-medium text-end">Actions</div>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="text-sm divide-y divide-gray-100">
+                    <AnimatePresence>
+                      {(schedule_filteredData || []).map(
+                        (scheduled: any, index: number) =>
+                          index < 5 && (
+                            <React.Fragment key={index}>
+                              <motion.tr
+                                layout
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
                               >
-                                Edit
-                              </a>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
+                                <td className="px-5 py-2 whitespace-nowrap">
+                                  <div className="text-left">
+                                    {(index += 1)}
+                                  </div>
+                                </td>
+                                <td className="px-5 py-4 whitespace-nowrap">
+                                  <div className="text-left">
+                                    Council {`${(index += 1)}`}
+                                  </div>
+                                </td>
+                                <td className="px-5 py-4 whitespace-nowrap">
+                                  <div className="text-left">
+                                    {scheduled.schedule.room.name}
+                                  </div>
+                                </td>
+                                <td className="px-5 py-4 whitespace-nowrap">
+                                  <div className="text-left">
+                                    {
+                                      scheduled.schedule.timeSlots[0].timeSlot
+                                        .date
+                                    }
+                                  </div>
+                                </td>
+                                <td className="px-5 py-4 whitespace-nowrap">
+                                  <div className="text-center">
+                                    {scheduled.council.length}
+                                  </div>
+                                </td>
+                                <td className="px-5 py-4 whitespace-nowrap">
+                                  <div className="text-center">
+                                    {
+                                      scheduled.schedule.timeSlots.filter(
+                                        (item: any) =>
+                                          item.student.infor.id !== ""
+                                      ).length
+                                    }
+                                  </div>
+                                </td>
+                                <td className="px-5 py-4 whitespace-nowrap">
+                                  <div className="text-center">
+                                    Thurday, 27-12-2023
+                                  </div>
+                                </td>
+                                <td className="px-5 py-4 whitespace-nowrap">
+                                  <div className="justify-end flex gap-3">
+                                    <Link
+                                      href={`/admin/schedule-time-defense/${scheduled.id}`}
+                                    >
+                                      <button className="text-blue-500">
+                                        View
+                                      </button>
+                                    </Link>
+                                  </div>
+                                </td>
+                              </motion.tr>
+                            </React.Fragment>
+                          )
+                      )}
+                    </AnimatePresence>
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>

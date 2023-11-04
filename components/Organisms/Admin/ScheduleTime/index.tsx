@@ -65,7 +65,9 @@ export const ScheduleTime: FC<IScheduleTimeProps> = ({
         <div className="flex justify-between items-center">
           <div className="mb-3">
             <h4 className="font-medium">Progress scheduled</h4>
-            <p className="text-sm text-slate-500">Total 8 schedules</p>
+            <p className="text-sm text-slate-500">
+              Total {schedule_filteredData.length} schedules
+            </p>
           </div>
           <div className="flex justify-end my-3">
             <ul className="flex gap-2 text-sm cursor-pointer">
@@ -77,7 +79,6 @@ export const ScheduleTime: FC<IScheduleTimeProps> = ({
             </ul>
           </div>
         </div>
-
         <div className="flex justify-between">
           <div className="flex">
             <Button
@@ -102,6 +103,12 @@ export const ScheduleTime: FC<IScheduleTimeProps> = ({
             <table className="table-auto w-full">
               <thead className="text-sm font-medium capitalize text-gray-200 bg-green-700">
                 <tr>
+                  <th
+                    scope="col"
+                    className="py-3 pl-3 text-sm text-start font-medium tracking-wider text-gray-200  dark:text-green-400"
+                  >
+                    No.
+                  </th>
                   <th className="px-5 py-4 whitespace-nowrap">
                     <div className="font-medium text-left">Name council</div>
                   </th>
@@ -113,12 +120,12 @@ export const ScheduleTime: FC<IScheduleTimeProps> = ({
                   </th>
                   <th className="px-5 py-4 whitespace-nowrap">
                     <div className="font-medium text-center">
-                      Quantity member council
+                      Q. member council
                     </div>
                   </th>
                   <th className="px-5 py-4 whitespace-nowrap">
                     <div className="font-medium text-center">
-                      Quantity student defense
+                      Q. student defense
                     </div>
                   </th>
                   <th className="px-5 py-4 whitespace-nowrap">
@@ -140,6 +147,9 @@ export const ScheduleTime: FC<IScheduleTimeProps> = ({
                           animate={{ opacity: 1 }}
                           exit={{ opacity: 0 }}
                         >
+                          <td className="px-5 py-2 whitespace-nowrap">
+                            <div className="text-left">{(index += 1)}</div>
+                          </td>
                           <td className="px-5 py-4 whitespace-nowrap">
                             <div className="text-left">
                               Council {`${(index += 1)}`}

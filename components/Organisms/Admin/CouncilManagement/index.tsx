@@ -173,34 +173,35 @@ export const CouncilManagementTab: FC<ICouncilManagementTab> = ({}) => {
           </div>
           <div className="flex gap-3">
             <IconButton
-            className="btn-sm rounded-none hover:text-black px-5 text-green-700 border"
-            title="New lecturer"
-            classNameIcon={"w-4"}
-            srcIcon={"https://cdn-icons-png.flaticon.com/128/9698/9698073.png"}
-          />
-          {checkedLecturers.length > 0 ? (
-            <IconButton
-              className="btn-sm rounded-none px-5 border-none bg-green-700 text-white"
-              title="Add to council"
-              classNameIcon={"w-5"}
-              setToggleForm={setOpenModalCreate}
-              toggleForm={openModalCreate}
+              className="btn-sm rounded-none hover:text-black px-5 text-green-700 border"
+              title="New lecturer"
+              classNameIcon={"w-4"}
               srcIcon={
-                "https://cdn-icons-png.flaticon.com/128/5482/5482806.png"
+                "https://cdn-icons-png.flaticon.com/128/9698/9698073.png"
               }
             />
-          ) : (
-            <IconButton
-              className="btn-sm px-5 text-gray-800 rounded-none"
-              title="Add to council"
-              classNameIcon={"w-5"}
-              srcIcon={
-                "https://cdn-icons-png.flaticon.com/128/5482/5482806.png"
-              }
-            />
-          )}
+            {checkedLecturers.length > 0 ? (
+              <IconButton
+                className="btn-sm rounded-none px-5 border-none bg-green-700 text-white"
+                title="Add to council"
+                classNameIcon={"w-5"}
+                setToggleForm={setOpenModalCreate}
+                toggleForm={openModalCreate}
+                srcIcon={
+                  "https://cdn-icons-png.flaticon.com/128/5482/5482806.png"
+                }
+              />
+            ) : (
+              <IconButton
+                className="btn-sm px-5 text-gray-800 rounded-none"
+                title="Add to council"
+                classNameIcon={"w-5"}
+                srcIcon={
+                  "https://cdn-icons-png.flaticon.com/128/5482/5482806.png"
+                }
+              />
+            )}
           </div>
-          
         </div>
         <div className="flex justify-between">
           <div className="flex mb-3">
@@ -248,6 +249,12 @@ export const CouncilManagementTab: FC<ICouncilManagementTab> = ({}) => {
                         </th>
                         <th
                           scope="col"
+                          className="py-3 pl-3 text-sm text-start font-medium tracking-wider text-gray-200  dark:text-green-400"
+                        >
+                          No.
+                        </th>
+                        <th
+                          scope="col"
                           className="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-200  dark:text-green-400"
                         >
                           Email
@@ -283,7 +290,7 @@ export const CouncilManagementTab: FC<ICouncilManagementTab> = ({}) => {
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
                       <AnimatePresence>
-                        {lec_filteredData?.map((lecturer) => (
+                        {lec_filteredData?.map((lecturer, index) => (
                           <motion.tr
                             layout
                             initial={{ opacity: 0 }}
@@ -310,6 +317,9 @@ export const CouncilManagementTab: FC<ICouncilManagementTab> = ({}) => {
                                   checkbox
                                 </label>
                               </div>
+                            </td>
+                            <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
+                              {(index += 1)}
                             </td>
                             <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
                               {lecturer?.email}
@@ -413,6 +423,12 @@ export const CouncilManagementTab: FC<ICouncilManagementTab> = ({}) => {
                         </th>
                         <th
                           scope="col"
+                          className="py-3 pl-3 text-sm text-start font-medium tracking-wider text-gray-200  dark:text-green-400"
+                        >
+                          No.
+                        </th>
+                        <th
+                          scope="col"
                           className="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-200  dark:text-green-400"
                         >
                           Email
@@ -448,7 +464,7 @@ export const CouncilManagementTab: FC<ICouncilManagementTab> = ({}) => {
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
                       <AnimatePresence>
-                        {council_filteredData?.map((council) => (
+                        {council_filteredData?.map((council, index) => (
                           <motion.tr
                             layout
                             initial={{ opacity: 0 }}
@@ -475,6 +491,9 @@ export const CouncilManagementTab: FC<ICouncilManagementTab> = ({}) => {
                                   checkbox
                                 </label>
                               </div>
+                            </td>
+                            <td className="py-4 px-6 lowercase text-sm text-gray-900 whitespace-nowrap dark:text-white">
+                              {(index += 1)}
                             </td>
                             <td className="py-4 px-6 lowercase text-sm text-gray-900 whitespace-nowrap dark:text-white">
                               {council?.email}

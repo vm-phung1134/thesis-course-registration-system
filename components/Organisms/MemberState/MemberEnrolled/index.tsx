@@ -65,33 +65,32 @@ export const MemberEnrolled: FC<IMemberEnrolledProps> = ({}) => {
   };
 
   const handleFakeDataStudentDef = async () => {
-    for (let k = 1; k < 10; k++) {
-      for (let i = 1; i < 16; i++) {
-        await addMutation.mutate({
-          infor: {
-            name: `Student ${i}`,
-            photoSrc:
-              "https://images.pexels.com/photos/445109/pexels-photo-445109.jpeg?auto=compress&cs=tinysrgb&w=600",
-            email: `user${i}b191000${i}.student.ctu.edu.vn`,
-            phone: "0999999999",
-            class: `DI19V7A${i}`,
-            major: "IT1",
-            role: "student",
-            id: `SV${i}SV${k}`,
-          },
-          instructor: {
-            name: `Giang vien ${k}`,
-            photoSrc:
-              "https://images.pexels.com/photos/445109/pexels-photo-445109.jpeg?auto=compress&cs=tinysrgb&w=600",
-            email: `gv${k}@cit.ctu.edu.vn`,
-            phone: "0123456789",
-            class: "IT1",
-            major: "CNTT",
-            role: "lecturer",
-            id: `GV${k}`,
-          },
-        } as IStudentDefObject);
-      }
+    let k = 8; //change 1
+    for (let i = 1; i < 15 + 1; i++) { // change 2
+      await addMutation.mutate({
+        infor: {
+          name: `Student ${i}`,
+          photoSrc:
+            "https://images.pexels.com/photos/445109/pexels-photo-445109.jpeg?auto=compress&cs=tinysrgb&w=600",
+          email: `user${i}b191000${i}.student.ctu.edu.vn`,
+          phone: "0999999999",
+          class: `DI19V7A${i}`,
+          major: "IT1",
+          role: "student",
+          id: `SV${i}GV${k}`,
+        },
+        instructor: {
+          name: `Giang vien ${k}`,
+          photoSrc:
+            "https://images.pexels.com/photos/445109/pexels-photo-445109.jpeg?auto=compress&cs=tinysrgb&w=600",
+          email: `gv${k}@cit.ctu.edu.vn`,
+          phone: "0123456789",
+          class: "IT1",
+          major: "CNTT",
+          role: "lecturer",
+          id: `GV${k}`,
+        },
+      } as IStudentDefObject);
     }
   };
 
@@ -108,6 +107,9 @@ export const MemberEnrolled: FC<IMemberEnrolledProps> = ({}) => {
             className="px-5 btn-sm rounded-none"
           />
           <Button title="All" className="px-5 btn-sm rounded-none" />
+          {/* <button onClick={handleFakeDataStudentDef} className="">
+            Click me
+          </button> */}
         </div>
         <div className="flex justify-end py-2 gap-3">
           <Button

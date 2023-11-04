@@ -129,7 +129,7 @@ export const SidebarAdminView: FC<ISidebarAdminViewProps> = ({}) => {
                 ></path>
               </svg>
               <span className="mx-2 text-[15px] font-medium">
-                Schedule report
+                Arrange schedule
               </span>
             </Link>
           </li>

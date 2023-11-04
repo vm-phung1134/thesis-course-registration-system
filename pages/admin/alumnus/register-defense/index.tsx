@@ -11,17 +11,18 @@ import { BREADCRUMB_REGISTER_DEFENSE_ADMIN } from "./mock-data";
 import useCheckedBox from "@/hooks/useCheckedBox";
 import { IStudentDefObject } from "@/interface/studef";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import {
-  getAllStudentDefPag,
-  getAllStudentDefs,
-} from "@/redux/reducer/student-def/api";
+import { useQueryClient } from "@tanstack/react-query";
 import { FilterScheduledForm, Pagination } from "@/components/Molecules";
 import { InforMemberModal } from "@/components/Organisms";
 import { getTopic } from "@/redux/reducer/topic/api";
 import classNames from "classnames";
 import { usePagination } from "@/hooks/usePagination";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
+import { AnimatePresence, motion } from "framer-motion";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
+import { useTableSearch } from "@/hooks/useTableSearch";
 
 function RegisterDefensePageAdmin() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -54,6 +55,8 @@ function RegisterDefensePageAdmin() {
     handleCheckAll: handleCheckAllStudent,
     handleCheckItem: handleCheckStudent,
   } = useCheckedBox<IStudentDefObject>(studentDef);
+  const { filteredData: stuf_filteredData, handleSearch: stuf_handleSearch } =
+  useTableSearch(studentDef);
   const handleGetTopicMember = (studef: IStudentDefObject) => {
     dispatch(getTopic(studef?.infor));
     setOpenModalStudefDetail(!openModalStudefDetail);
@@ -61,7 +64,7 @@ function RegisterDefensePageAdmin() {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 300);
+    }, 1200);
   }, []);
 
   return (
@@ -102,14 +105,14 @@ function RegisterDefensePageAdmin() {
                 />
                 <Button title="All" className="px-5 btn-sm rounded-none" />
               </div>
-              <FilterScheduledForm holderText="Search student ..." />
+              <FilterScheduledForm handleSearch={stuf_handleSearch} holderText="Search student ..." />
             </div>
             {/*---------------------------TABLE----------------------------- */}
-            <div className="w-full mx-auto shadow-xl rounded-2xl">
+            <div className="w-full mx-auto shadow-xl min-h-[70vh]">
               <div className="flex flex-col">
                 <div className="overflow-x-auto">
                   <div className="inline-block min-w-full align-middle">
-                    <div className="overflow-hidden rounded-2xl border">
+                    <div className="overflow-hidden border">
                       <table className="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-700">
                         <thead className="bg-green-700 dark:bg-gray-700">
                           <tr>
@@ -136,7 +139,7 @@ function RegisterDefensePageAdmin() {
                               scope="col"
                               className="py-3 pl-3 text-sm text-center font-medium tracking-wider text-gray-200  dark:text-green-400"
                             >
-                              Key
+                              No.
                             </th>
                             <th
                               scope="col"
@@ -168,58 +171,61 @@ function RegisterDefensePageAdmin() {
                           </tr>
                         </thead>
                         <tbody className="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
-                          {studentDef?.map(
-                            (stu, index) =>
-                              index < 10 && (
-                                <tr
-                                  key={stu.id}
-                                  className="hover:bg-gray-100  cursor-pointer dark:hover:bg-gray-700"
-                                >
-                                  <td className="p-4 w-4">
-                                    <div className="flex items-center">
-                                      <input
-                                        id="checkbox-table-2"
-                                        type="checkbox"
-                                        className="w-4 h-4 cursor-pointer"
-                                        checked={checkedStudents.includes(stu)}
-                                        onChange={(event) =>
-                                          handleCheckStudent(event, stu)
-                                        }
-                                      />
-                                      <label
-                                        htmlFor="checkbox-table-2"
-                                        className="sr-only"
-                                      >
-                                        checkbox
-                                      </label>
-                                    </div>
-                                  </td>
-                                  <td className="py-4 pl-3 text-center text-sm text-gray-900 whitespace-nowrap dark:text-white">
-                                    {(index += 1)}
-                                  </td>
-                                  <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
-                                    {stu?.infor?.email}
-                                  </td>
-                                  <td className="py-4 px-6 capitalize text-sm text-gray-900 whitespace-nowrap dark:text-white">
-                                    {stu?.infor?.name}
-                                  </td>
-                                  <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
-                                    {stu?.infor?.major}
-                                  </td>
-                                  <td className="py-4 px-6 text-sm capitalize text-gray-900 whitespace-nowrap dark:text-white">
-                                    {stu?.instructor?.name}
-                                  </td>
-                                  <td className="py-4 px-6 flex gap-3 text-sm text-right whitespace-nowrap">
-                                    <p
-                                      className="text-blue-600 dark:text-blue-500"
-                                      onClick={() => handleGetTopicMember(stu)}
+                          <AnimatePresence>
+                            {stuf_filteredData?.map((stu, index) => (
+                              <motion.tr
+                                layout
+                                initial={{ opacity: 0,  y:200 }}
+                                animate={{ opacity: 1, y:0 }}
+                 
+                                key={stu.id}
+                                className="hover:bg-gray-100  cursor-pointer dark:hover:bg-gray-700"
+                              >
+                                <td className="p-4 w-4">
+                                  <div className="flex items-center">
+                                    <input
+                                      id="checkbox-table-2"
+                                      type="checkbox"
+                                      className="w-4 h-4 cursor-pointer"
+                                      checked={checkedStudents.includes(stu)}
+                                      onChange={(event) =>
+                                        handleCheckStudent(event, stu)
+                                      }
+                                    />
+                                    <label
+                                      htmlFor="checkbox-table-2"
+                                      className="sr-only"
                                     >
-                                      Detail
-                                    </p>
-                                  </td>
-                                </tr>
-                              )
-                          )}
+                                      checkbox
+                                    </label>
+                                  </div>
+                                </td>
+                                <td className="py-4 pl-3 text-center text-sm text-gray-900 whitespace-nowrap dark:text-white">
+                                  {(index += 1)}
+                                </td>
+                                <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
+                                  {stu?.infor?.email}
+                                </td>
+                                <td className="py-4 px-6 capitalize text-sm text-gray-900 whitespace-nowrap dark:text-white">
+                                  {stu?.infor?.name}
+                                </td>
+                                <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
+                                  {stu?.infor?.major}
+                                </td>
+                                <td className="py-4 px-6 text-sm capitalize text-gray-900 whitespace-nowrap dark:text-white">
+                                  {stu?.instructor?.name}
+                                </td>
+                                <td className="py-4 px-6 flex gap-3 text-sm text-right whitespace-nowrap">
+                                  <p
+                                    className="text-blue-600 dark:text-blue-500"
+                                    onClick={() => handleGetTopicMember(stu)}
+                                  >
+                                    Detail
+                                  </p>
+                                </td>
+                              </motion.tr>
+                            ))}
+                          </AnimatePresence>
                         </tbody>
                       </table>
                     </div>

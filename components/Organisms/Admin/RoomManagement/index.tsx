@@ -151,6 +151,12 @@ export const CreateRoomTab: FC<ICreateRoomTab> = ({}) => {
                         </th>
                         <th
                           scope="col"
+                          className="py-3 pl-3 text-sm text-start font-medium tracking-wider text-gray-200  dark:text-green-400"
+                        >
+                          No.
+                        </th>
+                        <th
+                          scope="col"
                           className="py-3 px-6 text-sm font-normal tracking-wider text-left text-gray-200  dark:text-green-400"
                         >
                           Name
@@ -180,7 +186,7 @@ export const CreateRoomTab: FC<ICreateRoomTab> = ({}) => {
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
                       <AnimatePresence>
-                        {room_filteredData?.map((room) => (
+                        {room_filteredData?.map((room, index) => (
                           <motion.tr
                             layout
                             initial={{ opacity: 0 }}
@@ -207,6 +213,9 @@ export const CreateRoomTab: FC<ICreateRoomTab> = ({}) => {
                                   checkbox
                                 </label>
                               </div>
+                            </td>
+                            <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
+                              {(index += 1)}
                             </td>
                             <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
                               {room?.name}

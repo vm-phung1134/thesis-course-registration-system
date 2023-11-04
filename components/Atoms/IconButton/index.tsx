@@ -25,7 +25,7 @@ export const IconButton: FC<IIconButtonProps> = ({
       className={`btn rounded-full font-normal capitalize ${className}`}
     >
       <Image
-        className={classNameIcon}
+        className={`${classNameIcon} `}
         src={srcIcon}
         width="20"
         height="20"

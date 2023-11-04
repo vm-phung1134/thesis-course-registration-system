@@ -72,7 +72,7 @@ export const ScheduleForm: FC<IScheduleFormProps> = ({
     } else {
       const convertDate = wks * 6;
       const dateDefense = studef / convertDate;
-      return Math.round(dateDefense / 12);
+      return Math.ceil(dateDefense / 12);
     }
   };
 

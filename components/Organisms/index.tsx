@@ -9,4 +9,4 @@ export * from "./MainboardStatus";
 export * from "./ClassroomStatus";
 export * from "./ClassroomCard";
 export * from "./MemberState";
-export * from "./Admin/ScheduleTime";
+export * from "./Admin"

@@ -138,9 +138,9 @@ export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
       </ul>
       <div className="flex justify-end items-end">
         <div className="flex gap-5">
-          {currentUser.role === ROLE_ASSIGNMENT.LECTURER && (
+          {currentUser?.role === ROLE_ASSIGNMENT.LECTURER && (
             <>
-              {authClassroomState.status === STATE_LECTURER_CLASSROOM.LOCK ? (
+              {authClassroomState?.status === STATE_LECTURER_CLASSROOM.LOCK ? (
                 <button
                   value="UN_LOCK"
                   onClick={handleOpenModal}
@@ -173,8 +173,8 @@ export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
               )}
             </>
           )}
-          {currentUser.role === ROLE_ASSIGNMENT.STUDENT &&
-            authClassroomState.status === STATE_LECTURER_CLASSROOM.UN_LOCK && (
+          {currentUser?.role === ROLE_ASSIGNMENT.STUDENT &&
+            authClassroomState?.status === STATE_LECTURER_CLASSROOM.UN_LOCK && (
               <Button
                 handleActions={handleOpenModalLeave}
                 otherType="subscribe"
@@ -182,8 +182,8 @@ export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
                 title="Leave Group"
               />
             )}
-          {currentUser.role === ROLE_ASSIGNMENT.STUDENT &&
-            authClassroomState.status === STATE_LECTURER_CLASSROOM.LOCK && (
+          {currentUser?.role === ROLE_ASSIGNMENT.STUDENT &&
+            authClassroomState?.status === STATE_LECTURER_CLASSROOM.LOCK && (
               <button className="btn border-none hover:border-none capitalize bg-transparent hover:bg-transparent">
                 <Image
                   width={40}
@@ -204,7 +204,7 @@ export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
           typeButton="value"
           title="Message!!!"
           message={
-            authClassroomState.status === STATE_LECTURER_CLASSROOM.LOCK
+            authClassroomState?.status === STATE_LECTURER_CLASSROOM.LOCK
               ? "Do you want to open the classroom"
               : "Do you want to lock the classroom"
           }
