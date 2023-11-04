@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { AdminTemplate } from "@/components/Templates";
 import { Breadcrumb, NormalAvatar, SnipperRound } from "@/components/Atoms";
-import { InforUserForm } from "@/components/Molecules";
+import { ChangePassForm, InforUserForm } from "@/components/Molecules";
 import classNames from "classnames";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { BREADCRUMB_ACCOUNT_ADMIN } from "./mock-data";
@@ -130,9 +130,9 @@ function AccountAdminPage() {
                 </div>
               </section>
             </div>
-            <div className="my-5">
-              <h4 className="font-medium">Change password</h4>
-              {/* FORM CHANGE PASS */}
+            <div className="my-5 w-full">
+              <h4 className="font-medium text-green-700 mb-5">Change password</h4>
+              <ChangePassForm />
             </div>
             <dialog id="my_modal_lecturer" className={modalClass}>
               <div className="w-5/12 bg-white p-5 h-fit shadow-2xl rounded-xl">
