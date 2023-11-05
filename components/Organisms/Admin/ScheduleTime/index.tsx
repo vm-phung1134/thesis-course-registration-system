@@ -66,7 +66,7 @@ export const ScheduleTime: FC<IScheduleTimeProps> = ({
           <div className="mb-3">
             <h4 className="font-medium">Progress scheduled</h4>
             <p className="text-sm text-slate-500">
-              Total {schedule_filteredData.length} schedules
+              Total {schedule_filteredData?.length} schedules
             </p>
           </div>
           <div className="flex justify-end my-3">
@@ -157,25 +157,25 @@ export const ScheduleTime: FC<IScheduleTimeProps> = ({
                           </td>
                           <td className="px-5 py-4 whitespace-nowrap">
                             <div className="text-left">
-                              {scheduled.schedule.room.name}
+                              {scheduled?.schedule?.room?.name}
                             </div>
                           </td>
                           <td className="px-5 py-4 whitespace-nowrap">
                             <div className="text-left">
-                              {scheduled.schedule.timeSlots[0].timeSlot.date}
+                              {scheduled?.schedule?.timeSlots[0]?.timeSlot?.date}
                             </div>
                           </td>
                           <td className="px-5 py-4 whitespace-nowrap">
                             <div className="text-center">
-                              {scheduled.council.length}
+                              {scheduled?.council?.length}
                             </div>
                           </td>
                           <td className="px-5 py-4 whitespace-nowrap">
                             <div className="text-center">
                               {
-                                scheduled.schedule.timeSlots.filter(
-                                  (item: any) => item.student.infor.id !== ""
-                                ).length
+                                scheduled?.schedule?.timeSlots?.filter(
+                                  (item: any) => item?.student?.infor?.id !== ""
+                                )?.length
                               }
                             </div>
                           </td>
@@ -187,7 +187,7 @@ export const ScheduleTime: FC<IScheduleTimeProps> = ({
                           <td className="px-5 py-4 whitespace-nowrap">
                             <div className="justify-end flex gap-3">
                               <Link
-                                href={`/admin/schedule-time-defense/${scheduled.id}`}
+                                href={`/admin/schedule-time-defense/${scheduled?.id}`}
                               >
                                 <button className="text-blue-500">View</button>
                               </Link>

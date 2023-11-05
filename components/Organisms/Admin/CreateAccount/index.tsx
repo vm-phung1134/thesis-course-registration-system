@@ -344,7 +344,7 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
                         </th>
                         <th
                           scope="col"
-                          className="py-3 pl-3 text-sm text-start font-medium tracking-wider text-gray-200  dark:text-green-400"
+                          className="py-3 pl-2 text-sm text-start font-medium tracking-wider text-gray-200  dark:text-green-400"
                         >
                           No.
                         </th>
@@ -396,7 +396,7 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
                                 </label>
                               </div>
                             </td>
-                            <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
+                            <td className="py-4 px-3 text-sm text-gray-900 whitespace-nowrap dark:text-white">
                               {(index += 1)}
                             </td>
                             <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">

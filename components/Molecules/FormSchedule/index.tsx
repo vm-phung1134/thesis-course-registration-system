@@ -90,15 +90,13 @@ export const ScheduleForm: FC<IScheduleFormProps> = ({
         if (!values.quantityWeek) {
           errors.quantityWeek = "! Quantity week is required";
         }
-        console.log(errors)
+        console.log(errors);
         return errors;
       }}
-      
       onSubmit={(values, { setSubmitting, resetForm }) => {
         setTimeout(() => {
           // addMutation.mutate(values);
 
-          
           resetForm();
         }, 400);
       }}
@@ -143,6 +141,7 @@ export const ScheduleForm: FC<IScheduleFormProps> = ({
                   className="h-12"
                   onChange={handleChangeQuantityWeek}
                   label="QL. Expected weeks"
+                  limit={5}
                 />
               </div>
               <FormField

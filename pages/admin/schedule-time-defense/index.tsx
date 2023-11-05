@@ -5,6 +5,7 @@ import {
   FilterScheduledForm,
   ScheduleForm,
   SettingSchedule,
+  TestingSchedule,
 } from "@/components/Molecules";
 import { useAppDispatch } from "@/redux/store";
 import { getScheduleDef } from "@/redux/reducer/schedule-def/api";
@@ -22,7 +23,8 @@ function DashboardPage() {
   const menuItems: MenuItem[] = [
     { id: 1, label: "Schedule Time" },
     { id: 2, label: "Settings" },
-    { id: 3, label: "Calender" },
+    { id: 3, label: "Testing" },
+    { id: 4, label: "Calender" },
   ];
   const [loading, setLoading] = useState<boolean>(true);
   const [createScheduled, setCreateScheduled] = useState<any>({});
@@ -86,6 +88,7 @@ function DashboardPage() {
                 />
               )}
               {selectedItem.id === 2 && <SettingSchedule />}
+              {selectedItem.id === 3 && <TestingSchedule />}
             </div>
           </>
         )}

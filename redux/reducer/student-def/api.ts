@@ -42,11 +42,14 @@ const getAllStudentDefs = createAsyncThunk(
 const getAllStudentDefPag = createAsyncThunk(
   "studef/getAllStudentDefPag",
   async (params: StudentDefLimit) => {
-    const response = await axios.get(`http://localhost:5000/api/student-def/list-studef/id=${params.uid}?page=${params.page}&limit=${params.limit}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axios.get(
+      `http://localhost:5000/api/student-def/list-studef/id=${params.uid}?page=${params.page}&limit=${params.limit}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     if (response.status === 200) {
       return response.data;
     }
@@ -113,11 +116,31 @@ const deleteStudentDef = createAsyncThunk(
   }
 );
 
+// DELETE ALL STUDENT DEF
+const deleteAllStudentDef = createAsyncThunk(
+  "studef/deleteAllStudentDef",
+  async () => {
+    const response = await axios.delete(
+      `http://localhost:5000/api/student-def/`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    if (response.status === 200) {
+      return response.data;
+    }
+    throw new Error("Failed to delete student defense");
+  }
+);
+
 export {
   getAllStudentDefs,
   getOneStudentDef,
   updateStudentDef,
   createStudentDef,
   deleteStudentDef,
+  deleteAllStudentDef,
   getAllStudentDefPag,
 };

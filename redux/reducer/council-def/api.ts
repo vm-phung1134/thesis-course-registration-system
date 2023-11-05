@@ -98,10 +98,30 @@ const deleteCouncilDef = createAsyncThunk(
   }
 );
 
+// DELETE ALL COUNCIL DEF
+const deleteAllCouncilDef = createAsyncThunk(
+  "council/deleteAllCouncilDef",
+  async () => {
+    const response = await axios.delete(
+      `http://localhost:5000/api/council-def/`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    if (response.status === 200) {
+      return response.data;
+    }
+    throw new Error("Failed to delete all council defense");
+  }
+);
+
 export {
   getAllCouncilDefs,
   getOneCouncilDef,
   updateCouncilDef,
   createCouncilDef,
   deleteCouncilDef,
+  deleteAllCouncilDef,
 };

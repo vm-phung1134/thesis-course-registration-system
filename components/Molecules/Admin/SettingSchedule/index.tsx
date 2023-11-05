@@ -50,13 +50,19 @@ export const SettingSchedule: FC<ISettingScheduleProps> = ({}) => {
                           <CountInput
                             className="font-normal h-8 w-40"
                             label="Quantity students for Mor-shift"
-                          />
+                            valueNumber={0}
+                            onChange={function (newValue: number): void {
+                              throw new Error("Function not implemented.");
+                            } } limit={0}                          />
                         </div>
                         <div className="w-60 flex-grow">
                           <CountInput
                             className="font-normal h-8 w-40"
                             label="Quantity students for After-shift"
-                          />
+                            valueNumber={0}
+                            onChange={function (newValue: number): void {
+                              throw new Error("Function not implemented.");
+                            } } limit={0}                          />
                         </div>
                       </div>
                     </div>
@@ -75,7 +81,9 @@ export const SettingSchedule: FC<ISettingScheduleProps> = ({}) => {
                       </h6>
                       <h6 className="text-gray-500 text-sm flex gap-5">
                         <p>Room:</p>
-                        <span className="text-black">Same at the time / 2 rooms</span>
+                        <span className="text-black">
+                          Same at the time / 2 rooms
+                        </span>
                       </h6>
                     </div>
                     <div>
@@ -84,7 +92,10 @@ export const SettingSchedule: FC<ISettingScheduleProps> = ({}) => {
                           <CountInput
                             className="font-normal h-8 w-40"
                             label="QL. Council members"
-                          />
+                            valueNumber={0}
+                            onChange={function (newValue: number): void {
+                              throw new Error("Function not implemented.");
+                            } } limit={0}                          />
                         </div>
                       </div>
                     </div>
