@@ -8,8 +8,6 @@ import {
 } from "@/components/Organisms";
 import { ROLE_ASSIGNMENT } from "@/contexts/authContext";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
-import Image from "next/image";
-import Link from "next/link";
 import { BREADCRUMB_MAINBOARD } from "@/components/Organisms/MainboardStatus/mock-data";
 import { useClassroomStateContext } from "@/contexts/classroomState";
 import { useSubscribeStateContext } from "@/contexts/subscribeState";
@@ -80,7 +78,7 @@ function MainboardPage() {
               </ul>
             )}
           {/* GET UI FOR LECTURER ROLE */}
-          {currentUser.role === ROLE_ASSIGNMENT.LECTURER || currentUser.role === ROLE_ASSIGNMENT.GUEST && <NoSubscribeView />}
+          {(currentUser.role === ROLE_ASSIGNMENT.LECTURER || currentUser.role === ROLE_ASSIGNMENT.GUEST) && <NoSubscribeView />}
           {/* GET UI FOR STUDENT ROLE */}
           {currentUser.role === ROLE_ASSIGNMENT.STUDENT && (
             <>

@@ -14,6 +14,7 @@ import { useQuery } from "@tanstack/react-query";
 import { ICouncilDef } from "@/interface/schedule";
 import { getOneCouncilInScheduleLecturer } from "@/redux/reducer/schedule-def/api";
 import { FilterScheduledForm } from "@/components/Molecules";
+import { AnimatePresence, motion } from "framer-motion";
 
 function ScheduleDetail() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -108,7 +109,7 @@ function ScheduleDetail() {
                               {council?.email}
                             </p>
                             <p>
-                              <span className="text-gray-500">Field: </span>
+                              <span className="text-gray-500">Department: </span>
                               {council?.major}
                             </p>
                           </div>
@@ -144,6 +145,9 @@ function ScheduleDetail() {
                     <table className="table-auto w-full rounded-2xl shadow-lg">
                       <thead className="text-sm font-medium capitalize text-gray-200 bg-green-700">
                         <tr>
+                          <th className="pl-5 py-4 whitespace-nowrap">
+                            <div className="font-medium text-left">No.</div>
+                          </th>
                           <th className="px-5 py-4 whitespace-nowrap">
                             <div className="font-medium text-left">Email</div>
                           </th>
@@ -163,38 +167,54 @@ function ScheduleDetail() {
                         </tr>
                       </thead>
                       <tbody className="text-sm divide-y divide-gray-100">
-                        {councilInSchedule?.schedule.timeSlots
-                          .filter((item) => item.timeSlot.shift === "Morning")
-                          .map((student, index) => (
-                            <tr key={student.student.id} className="border-b">
-                              <td className="px-5 py-4 whitespace-nowrap">
-                                <div className="text-left">
-                                  {student.student.infor.email}
-                                </div>
-                              </td>
-                              <td className="px-5 py-4 whitespace-nowrap">
-                                <div className="text-left">
-                                  {student.student.infor.name}
-                                </div>
-                              </td>
-                              <td className="px-5 py-4 whitespace-nowrap">
-                                <div className="text-center">
-                                  {student.timeSlot.time}
-                                </div>
-                              </td>
-                              <td className="px-5 py-4 whitespace-nowrap">
-                                <div className="justify-end flex gap-3">
-                                  <Link
-                                    href={`/report-schedule/schedule-detail/thesis-student/${student.student.infor.id}`}
-                                  >
-                                    <button className="text-sky-700">
-                                      View
-                                    </button>
-                                  </Link>
-                                </div>
-                              </td>
-                            </tr>
-                          ))}
+                        <AnimatePresence>
+                          {councilInSchedule?.schedule?.timeSlots
+                            ?.filter(
+                              (item) => item?.timeSlot?.shift === "Morning"
+                            )
+                            .map((student, index) => (
+                              <motion.tr
+                                layout
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                key={student?.student?.id}
+                                className="border-b"
+                              >
+                                <td className="pl-5 py-4 whitespace-nowrap">
+                                  <div className="text-left">
+                                    {(index += 1)}
+                                  </div>
+                                </td>
+                                <td className="px-5 py-4 whitespace-nowrap">
+                                  <div className="text-left">
+                                    {student?.student?.infor?.email}
+                                  </div>
+                                </td>
+                                <td className="px-5 py-4 whitespace-nowrap">
+                                  <div className="text-left">
+                                    {student?.student?.infor?.name}
+                                  </div>
+                                </td>
+                                <td className="px-5 py-4 whitespace-nowrap">
+                                  <div className="text-center">
+                                    {student?.timeSlot?.time}
+                                  </div>
+                                </td>
+                                <td className="px-5 py-4 whitespace-nowrap">
+                                  <div className="justify-end flex gap-3">
+                                    <Link
+                                      href={`/report-schedule/schedule-detail/thesis-student/${student?.student?.infor?.id}`}
+                                    >
+                                      <button className="text-sky-700">
+                                        View
+                                      </button>
+                                    </Link>
+                                  </div>
+                                </td>
+                              </motion.tr>
+                            ))}
+                        </AnimatePresence>
                       </tbody>
                     </table>
                   </div>
@@ -202,6 +222,9 @@ function ScheduleDetail() {
                     <table className="table-auto w-full border">
                       <thead className="text-sm font-medium capitalize text-gray-200 bg-green-700">
                         <tr>
+                          <th className="pl-5 py-4 whitespace-nowrap">
+                            <div className="font-medium text-left">No.</div>
+                          </th>
                           <th className="px-5 py-4 whitespace-nowrap">
                             <div className="font-medium text-left">Email</div>
                           </th>
@@ -210,7 +233,7 @@ function ScheduleDetail() {
                               ID Student
                             </div>
                           </th>
-                          <th className="px-5 py-4 whitespace-nowrap">
+                          <th className="px-3 py-4 whitespace-nowrap">
                             <div className="font-medium text-center">
                               {`Time ( 24 hours )`}
                             </div>
@@ -221,42 +244,50 @@ function ScheduleDetail() {
                         </tr>
                       </thead>
                       <tbody className="text-sm divide-y divide-gray-100">
-                        {councilInSchedule?.schedule.timeSlots
-                          .filter(
-                            (item) =>
-                              item.timeSlot.shift === "Afternoon" &&
-                              item.student.id !== ""
-                          )
-                          .map((student, index) => (
-                            <tr key={student.student.id} className="border-b">
-                              <td className="px-5 py-4 whitespace-nowrap">
-                                <div className="text-left">
-                                  {student.student.infor.email}
-                                </div>
-                              </td>
-                              <td className="px-5 py-4 whitespace-nowrap">
-                                <div className="text-left">
-                                  {student.student.infor.name}
-                                </div>
-                              </td>
-                              <td className="px-5 py-4 whitespace-nowrap">
-                                <div className="text-center">
-                                  {student.timeSlot.time}
-                                </div>
-                              </td>
-                              <td className="px-5 py-4 whitespace-nowrap">
-                                <div className="justify-end flex gap-3">
-                                  <Link
-                                    href={`/report-schedule/schedule-detail/thesis-student/${student.student.infor.id}`}
-                                  >
-                                    <button className="text-sky-700">
-                                      View
-                                    </button>
-                                  </Link>
-                                </div>
-                              </td>
-                            </tr>
-                          ))}
+                        <AnimatePresence>
+                          {councilInSchedule?.schedule?.timeSlots
+                            .filter(
+                              (item) =>
+                                item?.timeSlot?.shift === "Afternoon" &&
+                                item?.student?.id !== ""
+                            )
+                            .map((student, index) => (
+                              <motion.tr
+                                key={student?.student?.id}
+                                className="border-b"
+                              >
+                                <td className="pl-5 py-4 whitespace-nowrap">
+                                  {(index += 1)}
+                                </td>
+                                <td className="px-5 py-4 whitespace-nowrap">
+                                  <div className="text-left">
+                                    {student?.student?.infor?.email}
+                                  </div>
+                                </td>
+                                <td className="px-5 py-4 whitespace-nowrap">
+                                  <div className="text-left">
+                                    {student?.student?.infor?.name}
+                                  </div>
+                                </td>
+                                <td className="px-3 py-4 whitespace-nowrap">
+                                  <div className="text-center">
+                                    {student?.timeSlot?.time}
+                                  </div>
+                                </td>
+                                <td className="px-5 py-4 whitespace-nowrap">
+                                  <div className="justify-end flex gap-3">
+                                    <Link
+                                      href={`/report-schedule/schedule-detail/thesis-student/${student?.student?.infor?.id}`}
+                                    >
+                                      <button className="text-sky-700">
+                                        View
+                                      </button>
+                                    </Link>
+                                  </div>
+                                </td>
+                              </motion.tr>
+                            ))}
+                        </AnimatePresence>
                       </tbody>
                     </table>
                   </div>

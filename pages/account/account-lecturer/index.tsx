@@ -14,6 +14,14 @@ function AccountLecturerPage() {
     "modal-open": toggle,
   });
   const { currentUser } = useCurrentUser();
+  function splitFullName(fullName: string): [string, string, string] {
+    const nameParts = fullName.split(" ");
+    const lastName = nameParts[0];
+    const middleName = nameParts.slice(1, -1).join(" ");
+    const firstName = nameParts[nameParts.length - 1];
+    return [lastName, middleName, firstName];
+  }
+  const [lastName, middleName, firstName] = splitFullName(currentUser?.name);
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
@@ -79,11 +87,13 @@ function AccountLecturerPage() {
                   <ul className="flex my-2">
                     <li className="flex-grow">
                       <p className="text-gray-500">First Name</p>
-                      <p className="capitalize">Le huynh bao</p>
+                      <p className="capitalize">
+                        {lastName + " " + middleName}
+                      </p>
                     </li>
                     <li className="flex-grow">
                       <p className="text-gray-500">Last Name</p>
-                      <p className="capitalize">Bao</p>
+                      <p className="capitalize">{firstName}</p>
                     </li>
                   </ul>
                   <ul className="flex my-2">

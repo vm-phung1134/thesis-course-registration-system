@@ -40,7 +40,7 @@ export const NewFeedCard: FC<INewFeedCardProps> = ({
             {task.type === "post" ? "Notification" : "Report progress"}
           </p>
           <div className="flex gap-3 items-center text-red-500">
-            <small>25, August 2023 - 20:30 PM</small>
+            <small>Saturday, 10/14/2023 - 11:59 PM</small>
           </div>
         </div>
       </div>

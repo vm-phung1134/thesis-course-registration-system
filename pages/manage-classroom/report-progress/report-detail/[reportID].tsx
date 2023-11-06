@@ -20,6 +20,9 @@ import { IExerciseObject } from "@/interface/exercise";
 import { ExerciseModal, PostModal } from "@/components/Organisms";
 import classNames from "classnames";
 import { useClassroomStateContext } from "@/contexts/classroomState";
+import { getReportStage } from "@/redux/reducer/report-stage/api";
+import { ICategoryObject } from "@/interface/category";
+import { INITIATE_CATEGORY } from "@/data";
 
 function ReportStageDetailPage() {
   const dispatch = useAppDispatch();
@@ -54,6 +57,14 @@ function ReportStageDetailPage() {
     },
     initialData: [],
   });
+  const { data: category } = useQuery<ICategoryObject>({
+    queryKey: ["get-category"],
+    queryFn: async () => {
+      const action = await dispatch(getReportStage(id || ""));
+      return action.payload || {};
+    },
+    initialData: INITIATE_CATEGORY,
+  });
   // HANLE OPEN POST/EXERCISE MODAL
   const { post } = useAppSelector((state) => state.postReducer);
   const { exercise } = useAppSelector((state) => state.exerciseReducer);
@@ -79,7 +90,7 @@ function ReportStageDetailPage() {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 1000);
+    }, 1200);
   }, []);
   return (
     <>
@@ -94,7 +105,7 @@ function ReportStageDetailPage() {
                 <div className="my-3 py-2 flex gap-2 items-center">
                   <h4 className="text-xl capitalize text-green-700 font-medium ">
                     post and expercise for
-                    <span className="text-orange-600"> requirement gathering</span>
+                    <span className="text-orange-600"> {category?.label}</span>
                   </h4>
                   <div className="flex-grow h-[0.5px] bg-green-700"></div>
                 </div>
@@ -114,7 +125,7 @@ function ReportStageDetailPage() {
                 ))}
               </div>
               <div className="col-span-4">
-                <TargetTable namePhase="Requirement gathering">
+                <TargetTable namePhase={category?.label}>
                   <svg
                     className="w-8 h-8 text-green-700"
                     stroke="currentColor"

@@ -18,7 +18,7 @@ export const ContentComment: FC<IContentCommentProps> = ({
 }) => {
   const dispatch = useAppDispatch();
   const { data } = useQuery<ICommentObject[]>({
-    queryKey: ["comments", task],
+    queryKey: ["comments"],
     queryFn: async () => {
       const action = await dispatch(getAllComments(task));
       return action.payload || [];

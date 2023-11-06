@@ -13,8 +13,8 @@ export const TargetTable: FC<ITargetTableProps> = ({ namePhase, children }) => {
       <div className="border-2 rounded-full border-green-700">{children}</div>
       <p className="uppercase text-xl text-green-700 font-bold">{namePhase}</p>
       <p className="text-sm italic">Week 1 - Week 3</p>
-      <p className="font-medium">The goal needs to be achieved at this phase:</p>
-      <ul className="list-decimal font-thin text-sm">
+      <p className="font-medium text-sm">The goal needs to be achieved at this phase:</p>
+      <ul className="list-disc font-thin text-sm">
         <li>Identify the sources of requirements</li>
         <li>Gather initial requirements</li>
         <li>Analyze requirements</li>

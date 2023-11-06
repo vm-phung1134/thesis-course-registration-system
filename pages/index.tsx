@@ -57,6 +57,34 @@ const IntroPage = () => {
             href="/"
           />
         </motion.div>
+        <div className="flex justify-end">
+          <div className="flex gap-5">
+            <button className="flex items-center gap-3 bg-black text-white px-6 py-2 rounded-xl">
+              <Image
+                src="https://cdn-icons-png.flaticon.com/128/6124/6124997.png"
+                width={30}
+                height={30}
+                alt=""
+              />
+              <p className="flex flex-col text-[13px] items-start">
+                <span className="text-[10px] tracking-wider font-medium">Get it on</span>
+                <span className="font-bold">Google Play</span>
+              </p>
+            </button>
+            <button className="flex  items-center gap-3 bg-black text-white px-6 py-2 rounded-xl">
+              <Image
+                src="https://cdn-icons-png.flaticon.com/128/5977/5977575.png"
+                width={30}
+                height={30}
+                alt=""
+              />
+               <p className="flex flex-col text-[13px]">
+                <span className="text-[10px] tracking-wider font-medium">Download on the</span>
+                <span className="font-bold">App Store</span>
+              </p>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );

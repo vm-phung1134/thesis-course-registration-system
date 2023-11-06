@@ -34,10 +34,10 @@ export const StateReportThesis: FC<IStateReportThesisProps> = ({ stage }) => {
       >
         <Button
           title="View report"
-          className="inline-flex text-green-700 bg-white w-full hover:bg-white rounded-lg text-sm items-center"
+          className="inline-flex text-white btn-sm bg-green-700 w-full hover:bg-green-700 rounded-lg text-sm items-center"
         />
       </Link>
-      <div className="top-0 right-3 flex items-center justify-center h-24 lg:-mr-8 lg:absolute">
+      <div className="top-1/3 right-3 flex items-center justify-center h-24 lg:-mr-8 lg:absolute">
         <svg
           className="w-4 text-gray-700 transform rotate-90 lg:rotate-0"
           stroke="currentColor"

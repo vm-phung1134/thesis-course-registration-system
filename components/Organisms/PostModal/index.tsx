@@ -4,6 +4,7 @@ import { IPostObject } from "@/interface/post";
 import { convertToUnaccentedString } from "@/utils/convertString";
 import { FC } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 export interface IPostModalProps {
   modalClass: string;
@@ -33,9 +34,16 @@ export const PostModal: FC<IPostModalProps> = ({
               </div>
               <button
                 onClick={() => setOpenModalPost?.(!openModalPost)}
-                className="btn btn-sm  btn-circle border"
+                className="btn btn-sm bg-transparent btn-circle border-none hover:bg-transparent"
               >
-                ✕
+                <Image
+                  width={30}
+                  height={30}
+                  src={
+                    "https://cdn-icons-png.flaticon.com/128/10995/10995393.png"
+                  }
+                  alt={""}
+                />
               </button>
             </div>
 

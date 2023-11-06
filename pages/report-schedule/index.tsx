@@ -3,6 +3,7 @@ import { FilterScheduledForm } from "@/components/Molecules";
 import { BREADCRUMB_MAINBOARD } from "@/components/Organisms/MainboardStatus/mock-data";
 import { MainboardTemplate } from "@/components/Templates";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
+import { useTableSearch } from "@/hooks/useTableSearch";
 import { ICouncilDef } from "@/interface/schedule";
 import { getScheduleForLecturer } from "@/redux/reducer/schedule-def/api";
 import { useAppDispatch } from "@/redux/store";
@@ -10,6 +11,7 @@ import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import React from "react";
 import { useState, useEffect } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 
 function ScheduleThesisDefensePage() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -29,7 +31,10 @@ function ScheduleThesisDefensePage() {
       setLoading(false);
     }, 1500);
   }, []);
-  console.log(scheduleForLecturer.length < 0)
+  const {
+    filteredData: council_filteredData,
+    handleSearch: council_handleSearch,
+  } = useTableSearch(scheduleForLecturer);
   return (
     <MainboardTemplate title="Schedule report | Thesis course registration system">
       {loading ? (
@@ -46,7 +51,9 @@ function ScheduleThesisDefensePage() {
               <div className="flex-grow h-[0.5px] bg-green-700"></div>
             </div>
             <h4 className="font-medium">Your schedule arrange</h4>
-            <p className="text-sm text-slate-500">Total 12 schedule time slots</p>
+            <p className="text-sm text-slate-500">
+              Total {scheduleForLecturer.length} schedule time slots
+            </p>
             <div className="flex justify-between mt-5">
               <div className="flex">
                 <Button
@@ -60,12 +67,15 @@ function ScheduleThesisDefensePage() {
                 <Button title="All" className="px-5 btn-sm rounded-none" />
               </div>
               <div>
-                <FilterScheduledForm holderText="Filter schedule time ..." />
+                <FilterScheduledForm
+                  handleSearch={council_handleSearch}
+                  holderText="Filter schedule time ..."
+                />
               </div>
             </div>
             <div className="mt-8">
-              <div className="overflow-x-auto shadow-xl rounded-2xl">
-                <table className="table-auto w-full border">
+              <div className="overflow-x-auto min-h-[50vh]">
+                <table className="table-auto w-full border shadow-lg">
                   <thead className="text-sm font-medium capitalize text-gray-200 bg-green-700">
                     <tr>
                       <th className="px-5 py-4 whitespace-nowrap">
@@ -92,62 +102,77 @@ function ScheduleThesisDefensePage() {
                           {`Time ( 24 hours )`}
                         </div>
                       </th>
-                      <th className="px-5 py-3 whitespace-nowrap">
+                      <th className="px-5 py-4 whitespace-nowrap">
                         <div className="font-medium text-end">Actions</div>
                       </th>
                     </tr>
                   </thead>
                   <tbody className="text-sm divide-y divide-gray-100">
-                    {scheduleForLecturer.map((schedule, index) => (
-                      <React.Fragment key={index}>
-                        {schedule.council
-                          .filter((item) => item.id === "GV5")
-                          .map((council) => (
-                            <tr key={council.id} className="border-b">
-                              <td className="px-5 py-3 whitespace-nowrap">
-                                <div className="text-left">{council.email}</div>
-                              </td>
-                              <td className="px-5 py-3 whitespace-nowrap">
-                                <div className="text-left">Instructor</div>
-                              </td>
-                              <td className="px-5 py-3 whitespace-nowrap">
-                                <div className="text-left">
-                                  {schedule.schedule.timeSlots[0].timeSlot.date}
-                                </div>
-                              </td>
-                              <td className="px-5 py-3 whitespace-nowrap">
-                                <div className="text-center">
-                                  {schedule.schedule.room.name}
-                                </div>
-                              </td>
-                              <td className="px-5 py-3 whitespace-nowrap">
-                                <div className="text-center">
-                                  {
-                                    schedule.schedule.timeSlots.filter(
-                                      (item) => item.student.id !== ""
-                                    ).length
-                                  }{" "}
-                                  / {schedule.schedule.timeSlots.length}
-                                </div>
-                              </td>
-                              <td className="px-5 py-3 whitespace-nowrap">
-                                <div className="text-center">7:00 - 17:30</div>
-                              </td>
-                              <td className="px-5 py-3 whitespace-nowrap">
-                                <div className="justify-end flex gap-3">
-                                  <Link
-                                    href={`/report-schedule/schedule-detail/${schedule.id}`}
-                                  >
-                                    <button className="text-sky-700">
-                                      Join room
-                                    </button>
-                                  </Link>
-                                </div>
-                              </td>
-                            </tr>
-                          ))}
-                      </React.Fragment>
-                    ))}
+                    <AnimatePresence>
+                      {council_filteredData?.map((schedule, index) => (
+                        <React.Fragment key={index}>
+                          {schedule?.council
+                            .filter((item) => item?.id === "GV5")
+                            .map((council) => (
+                              <motion.tr
+                                layout
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                key={council.id}
+                              >
+                                <td className="px-5 py-3 whitespace-nowrap">
+                                  <div className="text-left">
+                                    {council?.email}
+                                  </div>
+                                </td>
+                                <td className="px-5 py-3 whitespace-nowrap">
+                                  <div className="text-left">Instructor</div>
+                                </td>
+                                <td className="px-5 py-3 whitespace-nowrap">
+                                  <div className="text-left">
+                                    {
+                                      schedule?.schedule?.timeSlots[0]?.timeSlot
+                                        ?.date
+                                    }
+                                  </div>
+                                </td>
+                                <td className="px-5 py-3 whitespace-nowrap">
+                                  <div className="text-center">
+                                    {schedule?.schedule?.room?.name}
+                                  </div>
+                                </td>
+                                <td className="px-5 py-3 whitespace-nowrap">
+                                  <div className="text-center">
+                                    {
+                                      schedule?.schedule?.timeSlots?.filter(
+                                        (item) => item?.student?.id !== ""
+                                      ).length
+                                    }{" "}
+                                    / {schedule?.schedule?.timeSlots?.length}
+                                  </div>
+                                </td>
+                                <td className="px-5 py-3 whitespace-nowrap">
+                                  <div className="text-center">
+                                    7:00 - 17:30
+                                  </div>
+                                </td>
+                                <td className="px-5 py-3 whitespace-nowrap">
+                                  <div className="justify-end flex gap-3">
+                                    <Link
+                                      href={`/report-schedule/schedule-detail/${schedule?.id}`}
+                                    >
+                                      <button className="text-sky-700">
+                                        Join room
+                                      </button>
+                                    </Link>
+                                  </div>
+                                </td>
+                              </motion.tr>
+                            ))}
+                        </React.Fragment>
+                      ))}
+                    </AnimatePresence>
                   </tbody>
                 </table>
               </div>

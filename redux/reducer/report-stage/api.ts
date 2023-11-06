@@ -22,9 +22,9 @@ const getAllReportStage = createAsyncThunk(
 // GET ONE REPORT STAGE
 const getReportStage = createAsyncThunk(
   "report-stage/getReportStage",
-  async (postData: ICategoryObject) => {
+  async (id: string) => {
     const response = await axios.get(
-      `http://localhost:5000/api/report-stage/${postData.id}`,
+      `http://localhost:5000/api/report-stage/${id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

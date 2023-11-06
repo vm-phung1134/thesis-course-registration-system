@@ -25,7 +25,7 @@ function ReportProgressTab() {
               Report grogress
             </p>
           </div>
-          <h2 className="max-w-lg mb-6 capitalize font-sans text-2xl font-bold leading-none tracking-wide text-gray-900 md:mx-auto">
+          <h2 className="max-w-lg mb-6 uppercase font-sans text-2xl font-bold leading-2 tracking-wide text-gray-900 md:mx-auto">
             Stages of reporting the progress of the graduation thesis
           </h2>
         </div>

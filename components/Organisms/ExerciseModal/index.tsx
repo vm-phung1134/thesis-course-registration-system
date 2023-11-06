@@ -48,9 +48,20 @@ export const ExerciseModal: FC<IExerciseModalProps> = ({
     },
     initialData: INITIATE_SUBMIT,
   });
+  const convertDateTime = (date: string) => {
+    const currentDate = new Date(date);
+    const formattedDate = currentDate.toLocaleDateString("en-US", {
+      weekday: "long",
+      month: "numeric",
+      day: "numeric",
+      year: "numeric",
+    });
+    return formattedDate;
+  };
+
   return (
     <dialog id="my_modal_2" className={modalClass}>
-      <div className="w-8/12 bg-white p-5 h-fit shadow-2xl rounded-xl">
+      <div className="w-8/12 bg-white py-5 px-3 h-fit shadow-2xl rounded-xl">
         <div className="grid grid-cols-12 h-full">
           <div className="col-span-8 border-r px-3">
             <div className="border-b pb-5">
@@ -75,7 +86,7 @@ export const ExerciseModal: FC<IExerciseModalProps> = ({
                   <span className="text-xs">{`12:36 AM (Edited)`}</span>
                 </p>
                 <p className="text-red-500 text-sm">
-                  Deadline: Thusday, {exercise?.deadline}
+                  Deadline: {convertDateTime(exercise?.deadline)}
                 </p>
               </div>
             </div>
@@ -120,7 +131,7 @@ export const ExerciseModal: FC<IExerciseModalProps> = ({
             </div>
             <div className="py-5 flex flex-col gap-3">
               <CommentForm task={exercise} />
-              <ContentComment quantity={1000} task={exercise} />
+              <ContentComment quantity={1} task={exercise} />
               <Button
                 className="rounded-lg w-full"
                 title="View more comments"
@@ -132,9 +143,9 @@ export const ExerciseModal: FC<IExerciseModalProps> = ({
               <h3 className="font-medium text-xl">Status report</h3>
               <button
                 onClick={() => setOpenModalEx?.(!openModalEx)}
-                className="btn btn-sm  btn-circle border"
+                className="btn btn-sm bg-transparent btn-circle border-none hover:bg-transparent"
               >
-                ✕
+                <Image width={30} height={30} src={"https://cdn-icons-png.flaticon.com/128/10995/10995393.png"} alt={""} />
               </button>
             </div>
             {currentUser?.role === ROLE_ASSIGNMENT.STUDENT ? (

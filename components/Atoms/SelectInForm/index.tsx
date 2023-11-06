@@ -28,7 +28,6 @@ export const SelectInForm: FC<ISelectInFormProps> = ({
         styles={{
           control: (provided, state) => ({
             ...provided,
-            borderRadius: "0.75rem",
             fontSize: "14px",
             padding: "5px",
             boxShadow: state.isFocused ? "none" : provided.boxShadow,
@@ -36,7 +35,6 @@ export const SelectInForm: FC<ISelectInFormProps> = ({
           }),
           option: (provided, state) => ({
             ...provided,
-            borderRadius: "0.75rem",
             backgroundColor: state.isFocused ? "#018739" : "white",
             color: state.isFocused ? "white" : "black",
             cursor: "pointer",

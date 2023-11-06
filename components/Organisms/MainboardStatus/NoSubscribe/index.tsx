@@ -85,7 +85,7 @@ export const NoSubscribeView: FC<INoSubscribeViewProps> = () => {
               </div>
             </div>
           </div>
-          <div className="flex flex-wrap gap-3 mt-5">
+          <div className="flex flex-wrap gap-x-3 gap-y-5 mt-5">
             {classrooms?.map((item, index) => {
               return <ClassroomCard key={item.id} item={item} />;
             })}

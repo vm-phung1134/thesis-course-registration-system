@@ -73,9 +73,9 @@ export const ClassroomCard: FC<IClassroomCardProps> = ({ item }) => {
   });
   return (
     <>
-      <div className="w-[340px] shadow-lg">
-        <div className="bg-cover bg-[url('https://images.pexels.com/photos/301943/pexels-photo-301943.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load')]">
-          <div className="bg-black/60 p-5 text-gray-100">
+      <div className="w-[340px] shadow-lg rounded-xl">
+        <div className="bg-cover rounded-xl bg-[url('https://images.pexels.com/photos/301943/pexels-photo-301943.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load')]">
+          <div className="bg-black/60 p-5 text-gray-100 rounded-xl">
             <div className="flex justify-between gap-5 mb-2">
               <h3 className="text-md font-bold uppercase text-green-500">
                 {item?.lecturer?.name}
