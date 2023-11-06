@@ -20,6 +20,14 @@ function AccountStudentPage() {
     "modal-open": toggle,
   });
   const { currentUser } = useCurrentUser();
+  function splitFullName(fullName: string): [string, string, string] {
+    const nameParts = fullName.split(" ");
+    const lastName = nameParts[0];
+    const middleName = nameParts.slice(1, -1).join(" ");
+    const firstName = nameParts[nameParts.length - 1];
+    return [lastName, middleName, firstName];
+  }
+  const [lastName, middleName, firstName] = splitFullName(currentUser?.name);
   const dispatch = useAppDispatch();
   const { data } = useQuery<ITopicObject>({
     queryKey: ["topic", currentUser],
@@ -98,11 +106,11 @@ function AccountStudentPage() {
                     <ul className="grid grid-cols-2">
                       <li className="flex flex-col mt-4">
                         <p className="text-gray-500">Full Name</p>
-                        <p className="capitalize">{currentUser.name}</p>
+                        <p className="capitalize">{lastName + " " + middleName}</p>
                       </li>
                       <li className="flex flex-col mt-4">
                         <p className="text-gray-500">Student ID</p>
-                        <p className="capitalize">B1910282</p>
+                        <p className="capitalize">{firstName}</p>
                       </li>
                     </ul>
                     <ul className="grid grid-cols-2">

@@ -6,33 +6,38 @@ import { FC, useState } from "react";
 import { INITIATE_AUTH } from "@/data";
 import { ROLE_ASSIGNMENT } from "@/contexts/authContext";
 
-export interface IAccountFormProps {
+export interface IEditAccountFormProps {
   setToggle: React.Dispatch<React.SetStateAction<boolean>>;
   toggle: boolean;
+  lecturer?: IAuthObject;
 }
 
-export const AccountForm: FC<IAccountFormProps> = ({ setToggle, toggle }) => {
+export const EditAccountForm: FC<IEditAccountFormProps> = ({
+  setToggle,
+  toggle,
+  lecturer,
+}) => {
   const queryClient = useQueryClient();
-  const [isChecked, setIsChecked] = useState(false);
-  const mockDataAccount = (newAccount: IAuthObject) => {
+  const [isChecked, setIsChecked] = useState<boolean>(() => lecturer?.role === ROLE_ASSIGNMENT.LECTURER);
+  const updateMockLecturer = (lecturer: IAuthObject) => {
     return fetch(
-      "https://6548626ddd8ebcd4ab22d6a1.mockapi.io/api/cit-user/cit_lectuters",
+      `https://6548626ddd8ebcd4ab22d6a1.mockapi.io/api/cit-user/cit_lectuters/${lecturer.id}`,
       {
-        method: "POST",
+        method: "PUT",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify(newAccount),
+        body: JSON.stringify(lecturer),
       }
     ).then((res) => {
       if (res.ok) {
         return res.json();
       }
-      throw new Error("Failed to create user");
+      throw new Error("Failed to delete user");
     });
   };
 
-  const addMutation = useMutation(
+  const editLecturerMutation = useMutation(
     (postData: IAuthObject) => {
-      return mockDataAccount(postData);
+      return updateMockLecturer(postData);
     },
     {
       onSuccess: () => {
@@ -43,11 +48,11 @@ export const AccountForm: FC<IAccountFormProps> = ({ setToggle, toggle }) => {
 
   return (
     <Formik
-      initialValues={INITIATE_AUTH}
+      initialValues={lecturer || INITIATE_AUTH}
       enableReinitialize
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(async () => {
-          await addMutation.mutate({
+          await editLecturerMutation.mutate({
             ...values,
             role: isChecked ? ROLE_ASSIGNMENT.LECTURER : ROLE_ASSIGNMENT.GUEST,
           });
@@ -141,7 +146,7 @@ export const AccountForm: FC<IAccountFormProps> = ({ setToggle, toggle }) => {
                   type="submit"
                   setToggle={setToggle}
                   toggle={toggle}
-                  title="Create Lecturer"
+                  title="Confirm"
                   className="bg-green-700 rounded-xl hover:bg-green-600 text-white px-8"
                 />
               </div>

@@ -2,6 +2,7 @@
 import { Button, IconButton, NormalAvatar } from "@/components/Atoms";
 import {
   AccountForm,
+  EditAccountForm,
   FilterScheduledForm,
   ModalConfirm,
 } from "@/components/Molecules";
@@ -24,10 +25,22 @@ interface ICreateAccountTab {}
 
 export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
   // LECTURER SERVICE
+  const [getLecturer, setLecturer] = useState<IAuthObject>();
   const fetchData = async () => {
     try {
       const response = await axios.get(
         "https://6548626ddd8ebcd4ab22d6a1.mockapi.io/api/cit-user/cit_lectuters"
+      );
+      return response.data;
+    } catch (error) {
+      console.error(error);
+      throw new Error("Failed to fetch data");
+    }
+  };
+  const getOneData = async (id: string) => {
+    try {
+      const response = await axios.get(
+        `https://6548626ddd8ebcd4ab22d6a1.mockapi.io/api/cit-user/cit_lectuters/${id}`
       );
       return response.data;
     } catch (error) {
@@ -86,11 +99,22 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
     "modal modal-bottom sm:modal-middle": true,
     "modal-open": openDelLecturer,
   });
+  const [openEditLecturer, setOpenEditLecturer] = useState<boolean>(false);
+  const modalClassEditLecturer = classNames({
+    "modal modal-bottom sm:modal-middle": true,
+    "modal-open": openEditLecturer,
+  });
   const handleDelLecturer = () => {
     checkedLecturers.forEach((account: IAuthObject) => {
       deleteLecturerMutation.mutate(account);
     });
   };
+
+  const handleEditLecturer = async (lecturer: IAuthObject) => {
+    setLecturer(await getOneData(lecturer.id));
+    setOpenEditLecturer(!openEditLecturer);
+  };
+
   // ACCOUNT SERVICE
   // Get all accounts have been created
   const dispatch = useAppDispatch();
@@ -116,8 +140,6 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
       signUpWithEmailPassword(email, password || "nopassword", lecturer);
     });
   };
-
-  // ACCOUNT SERVICE
   // Open modal
   const [openDelAccount, setOpenDelAccount] = useState<boolean>(false);
   const modalClassDelAccount = classNames({
@@ -338,12 +360,12 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
                               />
                             </td>
                             <td className="py-4 px-6 text-sm text-right whitespace-nowrap">
-                              <a
-                                href="#"
+                              <button
+                                onClick={() => handleEditLecturer(lecturer)}
                                 className="text-blue-600 dark:text-blue-500"
                               >
                                 Edit
-                              </a>
+                              </button>
                             </td>
                           </motion.tr>
                         ))}
@@ -496,7 +518,10 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
           </div>
         </div>
       </div>
-      <dialog id="modal_admin_1" className={modalClassNewLecturer}>
+      <dialog
+        id="modal_admin_create_lecturer"
+        className={modalClassNewLecturer}
+      >
         <div className="w-5/12 bg-white h-fit shadow-2xl p-5 rounded-xl">
           <h4 className="text-xl font-bold mb-5 capitalize">
             Create New Lecturer
@@ -504,6 +529,16 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
           <AccountForm
             setToggle={setOpenNewLecturer}
             toggle={openNewLecturer}
+          />
+        </div>
+      </dialog>
+      <dialog id="modal_admin_edit_lecturer" className={modalClassEditLecturer}>
+        <div className="w-5/12 bg-white h-fit shadow-2xl p-5 rounded-xl">
+          <h4 className="text-xl font-bold mb-5 capitalize">Edit Lecturer</h4>
+          <EditAccountForm
+            setToggle={setOpenEditLecturer}
+            toggle={openEditLecturer}
+            lecturer={getLecturer}
           />
         </div>
       </dialog>

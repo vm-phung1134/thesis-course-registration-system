@@ -80,7 +80,7 @@ function MainboardPage() {
               </ul>
             )}
           {/* GET UI FOR LECTURER ROLE */}
-          {currentUser.role === ROLE_ASSIGNMENT.LECTURER && <NoSubscribeView />}
+          {currentUser.role === ROLE_ASSIGNMENT.LECTURER || currentUser.role === ROLE_ASSIGNMENT.GUEST && <NoSubscribeView />}
           {/* GET UI FOR STUDENT ROLE */}
           {currentUser.role === ROLE_ASSIGNMENT.STUDENT && (
             <>

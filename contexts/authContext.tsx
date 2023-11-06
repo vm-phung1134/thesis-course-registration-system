@@ -40,7 +40,7 @@ export enum ROLE_ASSIGNMENT {
   STUDENT = "student",
   LECTURER = "lecturer",
   ADMIN = "admin",
-  GUEST = "guest"
+  GUEST = "guest",
 }
 
 export const useAuthContext = () => {
@@ -82,7 +82,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     signInWithPopup(auth, provider)
       .then(async (result) => {
         if (
-          result?.user.email?.endsWith("cit.ctu.edu.vn") || // GIANG VIEN
+          // result?.user.email?.endsWith("cit.ctu.edu.vn") || // GIANG VIEN
           result?.user.email?.endsWith("student.ctu.edu.vn") || // SINH VIEN
           result?.user.email?.startsWith("tcrsystem911") // ADMIN OR THE CLERK TO THE COUNCIL
         ) {
@@ -124,12 +124,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           name: user.displayName || "",
           photoSrc: user.photoURL || "",
           email: email,
-          role: roleAssignment(email || ""),
         };
         setUserCookies(authObject);
         setIsAuthenticated(true);
-        const role = roleAssignment(user.email || "");
-        role === "admin" ? router.push("/admin") : router.push("/mainboard");
+        router.push("/mainboard");
       })
       .catch((error) => {
         setMessage(() => "Account invalid");
@@ -146,12 +144,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       .then(async (userCredential) => {
         const user = userCredential.user;
         await addMutation.mutate({
-          id: user.uid || "",
-          email: email || "",
-          name: lecturer.name || "",
-          photoSrc: lecturer.photoSrc || "",
-          role: roleAssignment(email || ""),
+          id: user.uid,
+          email: email,
+          name: lecturer.name,
+          photoSrc: lecturer.photoSrc,
+          role: lecturer.role,
           password: password,
+          phone: lecturer.phone,
+          class: lecturer.class,
+          major: lecturer.major,
         });
       })
       .catch((error) => {
@@ -195,8 +196,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       return ROLE_ASSIGNMENT.STUDENT;
     } else if (email.includes("system")) {
       return ROLE_ASSIGNMENT.ADMIN;
-    } else {
-      return ROLE_ASSIGNMENT.LECTURER;
     }
   };
   return (
