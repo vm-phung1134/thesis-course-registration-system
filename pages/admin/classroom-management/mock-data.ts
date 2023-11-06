@@ -24,6 +24,9 @@ export const DATA_LECTURER_CIT: IAuthObject[] = [
     id: "1",
     email: "ptphi@cit.ctu.edu.vn",
     name: "Dr. pham the phi",
+    class: "IT",
+    phone: "0900000000",
+    major: "computer science",
     photoSrc:
       "https://cit.ctu.edu.vn/images/cit2023/anh_dai_dien/CNTT/PTPhi.jpg",
     role: "lecturer",
@@ -32,6 +35,9 @@ export const DATA_LECTURER_CIT: IAuthObject[] = [
     id: "2",
     email: "tcan@cit.ctu.edu.vn",
     name: "Dr. tran cong an",
+    class: "IT",
+    phone: "0900000000",
+    major: "computer science",
     photoSrc:
       "https://cit.ctu.edu.vn/images/cit2023/anh_dai_dien/CNTT/TCAn.jpg",
     role: "lecturer",
@@ -40,6 +46,9 @@ export const DATA_LECTURER_CIT: IAuthObject[] = [
     id: "3",
     email: "lnkhang@cit.ctu.edu.vn",
     name: "Dr. lam nhut khang",
+    class: "IT",
+    phone: "0900000000",
+    major: "computer science",
     photoSrc:
       "https://cit.ctu.edu.vn/images/cit2023/anh_dai_dien/CNTT/LNKhang.jpg",
     role: "lecturer",
@@ -48,6 +57,9 @@ export const DATA_LECTURER_CIT: IAuthObject[] = [
     id: "4",
     email: "tmtuan@cit.ctu.edu.vn",
     name: "ph. thai minh tuan",
+    class: "IT",
+    phone: "0900000000",
+    major: "computer science",
     photoSrc:
       "https://cit.ctu.edu.vn/images/cit2023/anh_dai_dien/CNTT/TMTuan.jpg",
     role: "lecturer",
@@ -56,6 +68,9 @@ export const DATA_LECTURER_CIT: IAuthObject[] = [
     id: "5",
     email: "bvqbao@cit.ctu.edu.vn",
     name: "ph. bui vo quoc bao",
+    class: "IT",
+    phone: "0900000000",
+    major: "computer science",
     photoSrc:
       "https://cit.ctu.edu.vn/images/cit2023/anh_dai_dien/CNTT/BVQBao.png",
     role: "lecturer",
@@ -64,6 +79,9 @@ export const DATA_LECTURER_CIT: IAuthObject[] = [
     id: "6",
     email: "ptxdiem@cit.ctu.edu.vn",
     name: "MSc. pham thi xuan diem",
+    class: "IT",
+    phone: "0900000000",
+    major: "computer science",
     photoSrc:
       "https://cit.ctu.edu.vn/images/cit2023/anh_dai_dien/CNTT/PTXDiem.jpg",
     role: "lecturer",
@@ -72,6 +90,9 @@ export const DATA_LECTURER_CIT: IAuthObject[] = [
     id: "7",
     email: "lhlbuu@cit.ctu.edu.vn",
     name: "MSc le hoang lam buu",
+    class: "IT",
+    phone: "0900000000",
+    major: "computer science",
     photoSrc:
       "https://cit.ctu.edu.vn/images/cit2023/anh_dai_dien/CNTT/LHLBuu.jpg",
     role: "lecturer",
@@ -88,6 +109,9 @@ export const DATA_LECTURER_CIT: IAuthObject[] = [
     id: "9",
     email: "lvlam@ctu.edu.vn",
     name: "ph. le van lam",
+    class: "IT",
+    phone: "0900000000",
+    major: "computer science",
     photoSrc:
       "https://cit.ctu.edu.vn/images/cit2023/anh_dai_dien/CNTT/LVLam.jpg",
     role: "lecturer",
@@ -96,6 +120,9 @@ export const DATA_LECTURER_CIT: IAuthObject[] = [
     id: "10",
     email: "lhqbao@ctu.edu.vn",
     name: "MSc le huyenh quoc bao",
+    class: "IT",
+    phone: "0900000000",
+    major: "computer science",
     photoSrc:
       "https://cit.ctu.edu.vn/images/cit2023/anh_dai_dien/CNTT/LHQBao.jpg",
     role: "lecturer",

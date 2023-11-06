@@ -5,7 +5,7 @@ import { token } from "./type";
 
 const createScheduleDef = createAsyncThunk(
   "schedule/createScheduleDef",
-  async (postData: { quantityWeek: number; startDate: Date }) => {
+  async (postData: { quantityWeek: number; startDate: string }) => {
     const response = await axios.post(
       `http://localhost:5000/api/schedule-report/`,
       postData,

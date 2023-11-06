@@ -40,6 +40,7 @@ export enum ROLE_ASSIGNMENT {
   STUDENT = "student",
   LECTURER = "lecturer",
   ADMIN = "admin",
+  GUEST = "guest"
 }
 
 export const useAuthContext = () => {

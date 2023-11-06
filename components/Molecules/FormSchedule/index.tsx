@@ -46,12 +46,13 @@ export const ScheduleForm: FC<IScheduleFormProps> = ({
     initialData: [],
   });
   const addMutation = useMutation(
-    (postData: { quantityWeek: number; startDate: Date }) => {
+    (postData: { quantityWeek: number; startDate: string }) => {
       return new Promise((resolve, reject) => {
         dispatch(createScheduleDef(postData))
           .unwrap()
           .then((data: IThesisDef) => {
             setCreateScheduled(data);
+            resolve(data)
           })
           .catch((error) => {
             reject(error);
@@ -60,7 +61,7 @@ export const ScheduleForm: FC<IScheduleFormProps> = ({
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["scheduled"]);
+        queryClient.invalidateQueries(["schedule-def"]);
       },
     }
   );
@@ -95,8 +96,7 @@ export const ScheduleForm: FC<IScheduleFormProps> = ({
       }}
       onSubmit={(values, { setSubmitting, resetForm }) => {
         setTimeout(() => {
-          // addMutation.mutate(values);
-
+          addMutation.mutate(values);
           resetForm();
         }, 400);
       }}
@@ -151,11 +151,19 @@ export const ScheduleForm: FC<IScheduleFormProps> = ({
                 value={values.startDate}
               />
               <div className="flex justify-end items-center mt-3">
-                <Button
-                  type="submit"
-                  title="Proceed scheduling"
-                  className="hover:bg-[#165b31] normal-case w-60 bg-green-700 text-white px-5"
-                />
+                {addMutation.isLoading ? (
+                  <Button
+                    type="submit"
+                    title="Loading ..."
+                    className="hover:bg-[#165b31] normal-case w-60 bg-green-700 text-white px-5"
+                  />
+                ) : (
+                  <Button
+                    type="submit"
+                    title="Proceed scheduling"
+                    className="hover:bg-[#165b31] normal-case w-60 bg-green-700 text-white px-5"
+                  />
+                )}
               </div>
             </div>
             <div>

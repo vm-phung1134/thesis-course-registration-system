@@ -88,9 +88,11 @@ function ScheduleDetailPage() {
                           <span className="capitalize font-bold">
                             {council?.name}{" "}
                             <span className="text-red-500">
-                              {council.id ===
-                                councilInSchedule?.schedule?.timeSlots[0]
-                                  ?.student?.instructor?.id && "- Instructor"}
+                              {councilInSchedule?.schedule?.timeSlots.some(
+                                (instructor) =>
+                                  instructor?.student?.instructor?.id ===
+                                  council?.id
+                              ) && "- Instructor"}
                             </span>
                           </span>
                         </p>
@@ -237,7 +239,9 @@ function ScheduleDetailPage() {
                 </div>
               </div>
               <div className="mt-2 min-h-[50vh]">
-              <h4 className="font-medium tracking-wider text-green-700 mb-2">Morning session</h4>
+                <h4 className="font-medium tracking-wider text-green-700 mb-2">
+                  Morning session
+                </h4>
                 <div className="overflow-x-auto shadow-xl">
                   <table className="table-auto w-full">
                     <thead className="text-sm font-medium capitalize text-gray-200 bg-green-700">
@@ -342,7 +346,9 @@ function ScheduleDetailPage() {
                 </div>
               </div>
               <div className="mt-5 shadow-xl min-h-[50vh]">
-                <h4 className="font-medium tracking-wider text-green-700 mb-2">Afternoon session</h4>
+                <h4 className="font-medium tracking-wider text-green-700 mb-2">
+                  Afternoon session
+                </h4>
                 <div className="overflow-x-auto">
                   <table className="table-auto w-full">
                     <thead className="text-sm font-medium capitalize text-gray-200 bg-green-700">

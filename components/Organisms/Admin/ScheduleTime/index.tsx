@@ -24,6 +24,7 @@ export const ScheduleTime: FC<IScheduleTimeProps> = ({
     filteredData: schedule_filteredData,
     handleSearch: schedule_handleSearch,
   } = useTableSearch(scheduled?.thesis as any);
+  let studentCount = 0;
   return (
     <>
       <div className="w-full mt-5 px-3">
@@ -152,7 +153,7 @@ export const ScheduleTime: FC<IScheduleTimeProps> = ({
                           </td>
                           <td className="px-5 py-4 whitespace-nowrap">
                             <div className="text-left">
-                              Council {`${(index += 1)}`}
+                              Council {`${(index)}`}
                             </div>
                           </td>
                           <td className="px-5 py-4 whitespace-nowrap">
