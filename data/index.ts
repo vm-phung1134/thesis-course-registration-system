@@ -149,3 +149,12 @@ export enum STATE_LECTURER_CLASSROOM {
   UN_LOCK = "UN_LOCK",
   LOCK = "LOCK",
 }
+
+export enum TYPE_ACTION_NOTIFICATION {
+  SHARE_POST = "share-port",
+  COMMENT_POST = "comment-post",
+  LIKE_POST = "like-post",
+  WELLCOME = "wellcome",
+  FOLLOWING = "following",
+  ADD_POST = "add-post",
+}

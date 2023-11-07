@@ -96,12 +96,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           await addMutation.mutate(authObject);
           const token = await result.user.getIdToken();
           const role = roleAssignment(result.user.email || "");
+          setUserCookies(authObject);
+          setIsAuthenticated(true);
           role === "admin"
             ? router.push("/admin/dashboard")
             : router.push("/mainboard");
           Cookies.set("token", token);
-          setUserCookies(authObject);
-          setIsAuthenticated(true);
         } else {
           logout();
           setMessage("Your email must be from CTU organization");

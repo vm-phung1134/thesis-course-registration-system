@@ -27,11 +27,11 @@ export const ContentComment: FC<IContentCommentProps> = ({
   });
   return (
     <>
-      <p className="text-sm text-gray-500 tracking-wider pb-1">{data.length} Comment in this post</p>
+      <p className="text-sm text-gray-600 tracking-wider pb-1">{data.length} Comment in this post</p>
       {data?.map((comment, index) => {
         return (
           index < quantity && (
-            <div key={index} className="flex gap-1 py-3 border-t">
+            <div key={index} className="flex gap-2 py-3 border-t">
               <NormalAvatar setSize="w-10" photoSrc={comment?.user?.photoSrc} />
               <div className="text-sm">
                 <div className="flex gap-2 items-end">
