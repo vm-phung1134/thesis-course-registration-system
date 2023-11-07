@@ -8,7 +8,7 @@ export interface ISidebarStudentViewProps {}
 export const SidebarStudentView: FC<ISidebarStudentViewProps> = ({}) => {
   const { t } = useLanguageContext();
   return (
-    <div className="sticky top-0 left-0 bottom-0">
+    <div className="fixed top-0 left-0 bottom-0">
       <div className="flex justify-center">
         <LogoApp
           width={30}

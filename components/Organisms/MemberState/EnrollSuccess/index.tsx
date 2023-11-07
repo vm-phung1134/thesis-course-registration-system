@@ -18,7 +18,7 @@ export const EnrollSuccess: FC<IEnrollSuccessProps> = () => {
         <SnipperRound />
       ) : (
         <>
-          <div className="flex gap-2 justify-center items-center min-h-[70%] max-h-full">
+          <div className="flex gap-20 justify-center items-center min-h-[70%] max-h-full">
             <Image
               src="https://img.freepik.com/free-vector/design-inspiration-concept-illustration_114360-3957.jpg?w=740&t=st=1697188462~exp=1697189062~hmac=4107cde7d1b1bb3072f74a5d4614544b955a348d55322b833a1874440721b3dd"
               alt="bg-create-class"
@@ -27,21 +27,23 @@ export const EnrollSuccess: FC<IEnrollSuccessProps> = () => {
               objectFit="cover"
               objectPosition="center"
             />
-            <div className="flex gap-3 flex-col items-center">
-              <h4 className="text-black font-bold text-xl">
-                You subscribed for thesis defense in
-                <span className="uppercase font-medium"> CT550/HK1-2023</span>
-              </h4>
-              <p className="font-thin">
+            <div className="flex gap-3 flex-col items-start">
+              <div className="w-[30rem] relative h-fit">
+                <h4 className="uppercase text-[35px] text-[#141E37] italic font-bold leading-snug pl-8">
+                  You subscribed for thesis defense in
+                  <span className="uppercase font-medium"> CT550/HK1-2023</span>
+                </h4>
+                <span className="absolute top-3 bottom-3 w-1 bg-[#141E37]"></span>
+                <span className="absolute top-3 -left-1 h-14 w-3 bg-[#141E37]"></span>
+              </div>
+              <p>
                 Your graduation thesis defense schedule is being reviewed and
                 processed!
               </p>
               <div className="flex gap-3">
-                <Button
-                  title="Your schedule
-                  expected 25/05/2023"
-                  className="px-5 bg-green-700 rounded-md text-white hover:bg-green-600"
-                />
+                <button className="ml-5 mt-5 py-3 px-8 bg-green-700 hover:bg-[#141E37] transform ease-in-out duration-500 text-white -skew-x-[20deg]">
+                  <p className="skew-x-12">Your schedule expected - Saturday, 25/11/2023</p>
+                </button>
               </div>
             </div>
           </div>

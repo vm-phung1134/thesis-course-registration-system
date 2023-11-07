@@ -84,7 +84,7 @@ function EnrollStudentPage() {
         <SnipperRound />
       ) : (
         <>
-          {studentScheduled ? (
+          {studentScheduled?.id ? (
             <>
               <div className="flex justify-center items-center my-12 gap-5">
                 <Image

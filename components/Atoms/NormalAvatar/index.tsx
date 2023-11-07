@@ -7,7 +7,7 @@ interface INormalAvatarProp {
 
 export const NormalAvatar: FC<INormalAvatarProp> = ({ photoSrc, setSize }) => {
   return (
-    <div className={`${setSize} h-auto flex-shrink-0 mr-2 sm:mr-3`}>
+    <div className={`${setSize} h-auto flex-shrink-0`}>
       <div className="avatar object-center">
         <div className="rounded-full">
           <img width={100} height={100} alt="" src={photoSrc} />
