@@ -16,6 +16,7 @@ import { IOptionItem } from "@/interface/filter";
 import { SnipperRound } from "@/components/Atoms";
 import { useClassroomStateContext } from "@/contexts/classroomState";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
+import { useUserCookies } from "@/hooks/useCookies";
 
 export interface IClassroomProps {
   children: React.ReactNode;
@@ -45,6 +46,7 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
 
   // HANDLE API
   const { currentUser } = useCurrentUser();
+  const [user] = useUserCookies();
   const [loading, setLoading] = useState<boolean>(true);
   const { authClassroomState } = useClassroomStateContext();
   useEffect(() => {
@@ -61,9 +63,10 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
       <main>
         <div className="grid grid-cols-12 bg-base-100 tracking-wide">
           <div className="col-span-2 border-r h-screen dark:border-gray-500">
-            {currentUser?.role === ROLE_ASSIGNMENT.STUDENT ? (
+            {currentUser?.role === ROLE_ASSIGNMENT.STUDENT && (
               <SidebarStudentView />
-            ) : (
+            )}
+            {currentUser?.role === ROLE_ASSIGNMENT.LECTURER && (
               <SidebarLecturerView />
             )}
           </div>
@@ -73,33 +76,22 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
               <SnipperRound />
             ) : (
               <>
-                {authClassroomState?.classCourse !== "" &&
-                  currentUser.role === ROLE_ASSIGNMENT.LECTURER && (
-                    <ClassroomFound
-                      classroom={authClassroomState}
-                      setCreatePostModal={setCreatePostModal}
-                      openCreatePostModal={openCreatePostModal}
-                    >
-                      {children}
-                    </ClassroomFound>
-                  )}
-                {authClassroomState?.classCourse !== "" &&
-                  currentUser?.role === ROLE_ASSIGNMENT.STUDENT && (
-                    <ClassroomFound
-                      classroom={authClassroomState}
-                      setCreatePostModal={setCreatePostModal}
-                      openCreatePostModal={openCreatePostModal}
-                    >
-                      {children}
-                    </ClassroomFound>
-                  )}
+                {authClassroomState?.classCourse !== "" && (
+                  <ClassroomFound
+                    classroom={authClassroomState}
+                    setCreatePostModal={setCreatePostModal}
+                    openCreatePostModal={openCreatePostModal}
+                  >
+                    {children}
+                  </ClassroomFound>
+                )}
                 {!authClassroomState?.classCourse && <ClassroomNotFound />}
               </>
             )}
           </div>
           {/* POST / EXERCISE */}
           <dialog id="my_modal_3" className={modalClassPost}>
-            <div className="w-5/12 bg-white p-5 h-fit shadow-2xl">
+            <div className="w-5/12 bg-white p-5 h-fit shadow-2xl rounded-xl">
               {selected === DATA_LIST_OPTIONS[0] ? (
                 <CreateExerciseForm
                   classroom={authClassroomState}

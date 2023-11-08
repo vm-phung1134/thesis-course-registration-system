@@ -140,7 +140,7 @@ export const Navbar: FC<INavbarProps> = () => {
           <div tabIndex={0} className="flex gap-3 items-center cursor-pointer">
             <div className="flex flex-col text-[15px] font-normal items-end">
               <p className="font-medium text-sm capitalize">
-                {user?.name || "Username B190000"}
+                {currentUser?.name || "Username B190000"}
               </p>
               <p className="text-green-800 text-sm capitalize">
                 Pov: {currentUser?.role || "Student"}
@@ -153,7 +153,7 @@ export const Navbar: FC<INavbarProps> = () => {
                     width={100}
                     height={100}
                     alt=""
-                    src={user?.photoSrc}
+                    src={currentUser?.photoSrc}
                   />
                 </div>
               </div>

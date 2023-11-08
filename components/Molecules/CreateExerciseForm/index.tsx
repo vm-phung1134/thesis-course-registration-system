@@ -16,6 +16,7 @@ import { createExercise } from "@/redux/reducer/exercise/api";
 import { useAppDispatch } from "@/redux/store";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Form, Formik } from "formik";
+import Image from "next/image";
 import { FC, useState, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 const objectId = uuidv4();
@@ -112,7 +113,9 @@ export const CreateExerciseForm: FC<ICreateExerciseFormProps> = ({
         return (
           <Form>
             <div className="flex justify-between items-center">
-            <h4 className="text-xl font-bold mb-5">Create new report stage</h4>
+              <h4 className="text-xl font-bold mb-5">
+                Create new report stage
+              </h4>
               <div className="w-40">
                 <SelectBox
                   setSelected={setSelected}
@@ -156,13 +159,20 @@ export const CreateExerciseForm: FC<ICreateExerciseFormProps> = ({
             <div className="w-full h-fit border border-dashed py-5 mb-5 relative">
               <div className="flex gap-3 flex-col h-full w-full items-center justify-center">
                 {selectedFiles.length > 0 ? (
-                  <ul className="text-sm w-full flex flex-col gap-2 mb-10 font-medium px-2">
+                  <ul className="text-sm w-full flex flex-col gap-2 mb-5 font-medium px-2">
                     {selectedFiles.map((file) => (
                       <li
-                        className="border flex gap-5 items-center px-5 py-1"
+                        className="flex gap-3 text-blue-700 font-medium rounded-md items-center px-3 py-2 bg-slate-200 shadow-md"
                         key={file.name}
                       >
-                        <i className="fa-regular fa-file-word"></i>
+                        <Image
+                          width={20}
+                          height={20}
+                          src={
+                            "https://cdn-icons-png.flaticon.com/128/4725/4725970.png"
+                          }
+                          alt="icon-file-pdf"
+                        />
                         <p className="truncate">{file.name}</p>
                       </li>
                     ))}
@@ -172,11 +182,19 @@ export const CreateExerciseForm: FC<ICreateExerciseFormProps> = ({
                     className="text-sm flex gap-5 items-center font-thin cursor-pointer"
                     onClick={handleUploadClick}
                   >
-                    <i className="fa-solid fa-upload"></i>
-                    <span>Upload additional files</span>
+                    <Image
+                      width={40}
+                      height={40}
+                      src={
+                        "https://cdn-icons-png.flaticon.com/128/179/179378.png"
+                      }
+                      alt="upload-file-icon"
+                    />
+                    <span className="font-medium text-gray-500">
+                      Upload your files
+                    </span>
                   </p>
                 )}
-
                 <input
                   type="file"
                   name="files"
@@ -185,14 +203,21 @@ export const CreateExerciseForm: FC<ICreateExerciseFormProps> = ({
                   multiple
                   hidden
                 />
-                <div className="w-full absolute bottom-0 cursor-pointer">
+                <div className="w-full flex justify-end cursor-pointer">
                   {selectedFiles.length > 0 && (
                     <button
-                      type="button"
-                      className="text-sm font-thin border border-gray-400 w-full py-1 px-5"
+                      className="text-sm px-5 py-2 rounded-lg flex gap-3 "
                       onClick={handleUploadClick}
                     >
-                      + Add another file
+                      <Image
+                        width={20}
+                        height={20}
+                        src={
+                          "https://cdn-icons-png.flaticon.com/128/4903/4903802.png"
+                        }
+                        alt=""
+                      />
+                      <p className="font-medium tracking-wider">Add new file</p>
                     </button>
                   )}
                 </div>
