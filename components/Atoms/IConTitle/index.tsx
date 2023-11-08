@@ -10,7 +10,7 @@ export const IConTitle: FC<IIConTitleProps> = ({ className, title, children }) =
   return (
     <div className="flex gap-3 items-center">
         {children}
-      <p className={`font-medium ${className}`}>{title}</p>
+      <p className={`${className}`}>{title}</p>
     </div>
   );
 };

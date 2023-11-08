@@ -65,17 +65,33 @@ function ManageClassroomTab() {
     initialData: [],
   });
 
+  const handleCriticalEx = (arr: IExerciseObject[]) => {
+    return arr
+      .filter((task) => task?.attachments?.length === 0)
+      .sort(
+        (a, b) =>
+          new Date(a.deadline).getTime() - new Date(b.deadline).getTime()
+      );
+  };
+
   return (
     <>
       <ClassroomTemplate title="Manage Class | Thesis course registration system">
         <div className="grid grid-cols-12 gap-4">
           <div className="col-span-4">
-            {exercises && posts ? (
-              <CriticalTask />
+            {handleCriticalEx(exercises).length > 0 ? (
+              <CriticalTask exercise={handleCriticalEx(exercises)[0]} />
             ) : (
-              <div className="h-52 flex justify-center items-center p-5 border rounded-xl">
-                <p className="uppercase text-green-700">
-                  OPS! Not have any critiacal task for you
+              <div className="h-52 flex gap-5 flex-col justify-center shadow-xl items-center p-5 border rounded-xl">
+                <Image
+                  src="https://cdn-icons-gif.flaticon.com/8121/8121267.gif"
+                  width="50"
+                  height="50"
+                  className="-hue-rotate-[38deg] saturate-[.85]"
+                  alt=""
+                />
+                <p className="font-medium text-green-700">
+                  OPS! Not have any critical task for you today
                 </p>
               </div>
             )}
