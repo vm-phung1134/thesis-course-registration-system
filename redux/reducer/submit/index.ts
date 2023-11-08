@@ -13,6 +13,7 @@ const initialState: SubmitState = {
   submits: [],
   submit: INITIATE_SUBMIT,
   isLoading: false,
+  isDeleted: false,
   error: null,
 };
 
@@ -80,14 +81,16 @@ const submitSlice = createSlice({
     // DELETE SUBMIT 
     builder.addCase(deleteSubmit.pending, (state) => {
       state.isLoading = true;
+      state.isDeleted = false
     });
     builder.addCase(deleteSubmit.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.submit = action.payload;
+      state.isDeleted = action.payload;
     });
     builder.addCase(deleteSubmit.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.error.message ?? "Something went wrong.";
+      state.isDeleted = false
     });
   },
 });

@@ -11,10 +11,20 @@ export const ExerciseCard: FC<IExerciseProps> = ({
   exercise,
   handleOpenTaskModal,
 }) => {
+  const convertDateTime = (date: string) => {
+    const currentDate = new Date(date);
+    const formattedDate = currentDate.toLocaleDateString("en-US", {
+      weekday: "long",
+      month: "numeric",
+      day: "numeric",
+      year: "numeric",
+    });
+    return formattedDate;
+  };
   return (
     <div
       onClick={() => handleOpenTaskModal(exercise)}
-      className="bg-slate-100 shadow-md flex mt-5 p-5 justify-between gap-10 text-sm cursor-pointer rounded-xl"
+      className="bg-slate-100 shadow-md flex mt-5 p-5 justify-between gap-5 text-sm cursor-pointer rounded-xl"
     >
       <IConTitle title={exercise.title}>
         <svg
@@ -48,7 +58,7 @@ export const ExerciseCard: FC<IExerciseProps> = ({
           <path d="M11 17a1 1 0 001.447.894l4-2A1 1 0 0017 15V9.236a1 1 0 00-1.447-.894l-4 2a1 1 0 00-.553.894V17zM15.211 6.276a1 1 0 000-1.788l-4.764-2.382a1 1 0 00-.894 0L4.789 4.488a1 1 0 000 1.788l4.764 2.382a1 1 0 00.894 0l4.764-2.382zM4.447 8.342A1 1 0 003 9.236V15a1 1 0 00.553.894l4 2A1 1 0 009 17v-5.764a1 1 0 00-.553-.894l-4-2z"></path>
         </svg>
       </IConTitle>
-      <IConTitle className="textRed-600 font-normal text-red-600" title={exercise?.deadline}>
+      <IConTitle className="textRed-600 font-normal text-red-600" title={convertDateTime(exercise?.deadline)}>
         <svg
           className="w-4 h-4 fill-current inline-block"
           fill="currentColor"

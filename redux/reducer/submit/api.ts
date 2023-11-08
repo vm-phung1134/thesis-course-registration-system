@@ -101,7 +101,7 @@ const deleteSubmit = createAsyncThunk(
   "submit/deleteSubmit",
   async (submitData: ISubmitObject) => {
     const response = await axios.delete(
-      `http://localhost:5000/api/submit/${submitData.id}`,
+      `http://localhost:5000/api/submit/${submitData.id || ""}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

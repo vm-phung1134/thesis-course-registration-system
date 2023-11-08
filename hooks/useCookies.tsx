@@ -13,14 +13,12 @@ export const useUserCookies = (): [
     photoSrc: "",
     role: "",
   });
-
+  const cookiesUserData = Cookies.get("user");
   useEffect(() => {
-    const cookiesUserData = Cookies.get("user");
-
     if (cookiesUserData) {
       setUser(JSON.parse(cookiesUserData));
     }
-  }, []);
+  }, [cookiesUserData]);
 
   const updateUser = (newUser: IAuthObject) => {
     Cookies.set("user", JSON.stringify(newUser), { expires: 1 });

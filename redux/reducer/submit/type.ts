@@ -5,6 +5,7 @@ export interface SubmitState {
   submits: ISubmitObject[];
   submit: ISubmitObject;
   isLoading: boolean;
+  isDeleted: boolean;
   error: string | null;
 }
 

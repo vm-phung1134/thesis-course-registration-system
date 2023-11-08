@@ -84,7 +84,7 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
                     </ClassroomFound>
                   )}
                 {authClassroomState?.classCourse !== "" &&
-                  currentUser.role === ROLE_ASSIGNMENT.STUDENT && (
+                  currentUser?.role === ROLE_ASSIGNMENT.STUDENT && (
                     <ClassroomFound
                       classroom={authClassroomState}
                       setCreatePostModal={setCreatePostModal}

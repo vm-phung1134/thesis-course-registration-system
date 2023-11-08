@@ -36,10 +36,7 @@ export const ExerciseModal: FC<IExerciseModalProps> = ({
   const { currentUser } = useCurrentUser();
   const dispatch = useAppDispatch();
   const { data: submit } = useQuery<ISubmitObject>({
-    queryKey: [
-      "submit",
-      { exerciseId: exercise.uid, studentId: currentUser.id },
-    ],
+    queryKey: ["submit-exercise", { exerciseId: exercise.uid, studentId: currentUser.id }],
     queryFn: async () => {
       const action = await dispatch(
         getSubmit({ exerciseId: exercise.uid, studentId: currentUser.id })
@@ -140,12 +137,12 @@ export const ExerciseModal: FC<IExerciseModalProps> = ({
           </div>
           <div className="col-span-4 px-3">
             <div className="flex justify-between">
-              <h3 className="font-medium text-xl">Status report</h3>
+              <h3 className="font-bold text-xl">Status report</h3>
               <button
                 onClick={() => setOpenModalEx?.(!openModalEx)}
-                className="btn btn-sm bg-transparent btn-circle border-none hover:bg-transparent"
+                className="btn pr-5 text-xs btn-sm bg-transparent btn-circle border-none hover:bg-transparent"
               >
-                <Image width={30} height={30} src={"https://cdn-icons-png.flaticon.com/128/10995/10995393.png"} alt={""} />
+                Close
               </button>
             </div>
             {currentUser?.role === ROLE_ASSIGNMENT.STUDENT ? (
@@ -220,7 +217,7 @@ export const ReportStatusStudentView: FC<IReportStatusStudentViewProps> = ({
 }) => {
   return (
     <>
-      <div className="my-5 p-4 border rounded-xl shadow-lg">
+      <div className="my-5 p-4 border rounded-xl">
         <div className="flex justify-between mb-5">
           <h4 className="text-sm text-black font-medium">Report on stage</h4>
           <p className="text-xs text-red-600 font-medium capitalize">

@@ -51,11 +51,9 @@ const IntroPage = () => {
           animate={{ opacity: 1 }}
           transition={{ duration: 2, ease: "easeOut" }}
         >
-          <LearnMoreBtn
-            title="Read More"
-            className="text-orange-600"
-            href="/"
-          />
+          <button className="ml-5 mt-5 py-3 px-8 text-xs bg-[#141E37] transform ease-linear duration-300 text-white uppercase font-medium -skew-x-[20deg]">
+            <p className="skew-x-12">Read more</p>
+          </button> 
         </motion.div>
         <div className="flex justify-end">
           <div className="flex gap-5">
@@ -67,7 +65,9 @@ const IntroPage = () => {
                 alt=""
               />
               <p className="flex flex-col text-[13px] items-start">
-                <span className="text-[10px] tracking-wider font-medium">Get it on</span>
+                <span className="text-[10px] tracking-wider font-medium">
+                  Get it on
+                </span>
                 <span className="font-bold">Google Play</span>
               </p>
             </button>
@@ -78,8 +78,10 @@ const IntroPage = () => {
                 height={30}
                 alt=""
               />
-               <p className="flex flex-col text-[13px]">
-                <span className="text-[10px] tracking-wider font-medium">Download on the</span>
+              <p className="flex flex-col text-[13px]">
+                <span className="text-[10px] tracking-wider font-medium">
+                  Download on the
+                </span>
                 <span className="font-bold">App Store</span>
               </p>
             </button>
