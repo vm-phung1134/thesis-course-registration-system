@@ -32,7 +32,7 @@ import { IPostObject } from "@/interface/post";
 import Image from "next/image";
 
 function CriticalTasks() {
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [selectedStage, setSelectedStage] = useState<ICategoryObject>({
     id: "",
     label: "Select stage",
@@ -99,10 +99,9 @@ function CriticalTasks() {
   };
 
   useEffect(() => {
-    setLoading(true);
     setTimeout(() => {
       setLoading(false);
-    }, 1000);
+    }, 1200);
   }, []);
   return (
     <>

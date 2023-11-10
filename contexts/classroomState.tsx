@@ -11,7 +11,7 @@ import { useQuery } from "@tanstack/react-query";
 import React, { createContext, useContext, useState } from "react";
 
 interface IClassroomStateContext {
-  authClassroomState: IClassroomObject;
+  authClassroomState: IClassroomObject | null;
 }
 
 interface ClassroomStateProps {
@@ -19,7 +19,7 @@ interface ClassroomStateProps {
 }
 
 const ClassroomStateContext = createContext<IClassroomStateContext>({
-  authClassroomState: INITIATE_CLASSROOM,
+  authClassroomState: INITIATE_CLASSROOM || null,
 });
 
 export const useClassroomStateContext = () => useContext(ClassroomStateContext);
@@ -29,29 +29,28 @@ export const ClassroomStateContextProvider: React.FC<ClassroomStateProps> = ({
 }) => {
   const dispatch = useAppDispatch();
   const { currentUser } = useCurrentUser();
-  const { data: classroom } = useQuery<IClassroomObject>({
+  const { data: classroom } = useQuery<IClassroomObject | null>({
     queryKey: ["classroom", currentUser],
     queryFn: async () => {
       const action = await dispatch(getClassroom(currentUser));
       return action.payload || {};
     },
-    initialData: INITIATE_CLASSROOM,
+    initialData: null,
   });
 
-  const { data: member } = useQuery<IMemberObject>({
+  const { data: member } = useQuery<IMemberObject | null>({
     queryKey: ["member", currentUser],
     queryFn: async () => {
       const action = await dispatch(getMember(currentUser));
       return action.payload || {};
     },
-    initialData: INITIATE_MEMBER,
+    initialData: null,
   });
 
   return (
     <ClassroomStateContext.Provider
       value={{
-        authClassroomState:
-          member?.classroom?.id !== "" ? member?.classroom : classroom,
+        authClassroomState: (member ? member.classroom : classroom) ,
       }}
     >
       {children}

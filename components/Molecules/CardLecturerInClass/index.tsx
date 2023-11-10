@@ -87,7 +87,10 @@ export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
   };
   const handleLockClassroom = (e: React.MouseEvent<HTMLButtonElement>) => {
     const status_class: string = e.currentTarget.value;
-    updateMutation.mutate({ ...authClassroomState, status: status_class });
+    updateMutation.mutate({
+      ...(authClassroomState || INITIATE_CLASSROOM),
+      status: status_class,
+    });
   };
 
   return (
@@ -200,7 +203,7 @@ export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
           setOpenModal={setOpenLockClass}
           openModal={openLockClass}
           valueAction={handleLockClassroom}
-          status={authClassroomState.status}
+          status={authClassroomState?.status}
           typeButton="value"
           title="Message!!!"
           message={

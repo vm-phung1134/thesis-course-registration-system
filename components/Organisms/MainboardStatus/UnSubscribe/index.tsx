@@ -5,7 +5,7 @@ import { FC, useEffect, useState } from "react";
 import { IClassroomObject } from "@/interface/classroom";
 
 export interface IUnSubscribeViewProps {
-  classroom: IClassroomObject;
+  classroom: IClassroomObject | null;
 }
 
 export const UnSubscribeView: FC<IUnSubscribeViewProps> = ({ classroom }) => {
@@ -44,7 +44,7 @@ export const UnSubscribeView: FC<IUnSubscribeViewProps> = ({ classroom }) => {
                 </div>
                 <div className="flex gap-5 w-fit items-center px-5 relative h-fit">
                   <NormalAvatar
-                    photoSrc={classroom?.lecturer?.photoSrc}
+                    photoSrc={classroom?.lecturer?.photoSrc || ""}
                     setSize="w-32"
                   />
                   <div className="font-normal">

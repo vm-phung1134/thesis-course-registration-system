@@ -106,6 +106,7 @@ export const CreatePostForm: FC<ICreatePostFormProps> = ({
             lecturer: currentUser,
           });
           resetForm();
+          setToggleForm(!toggleForm)
           resetSelectedFiles();
           setSelectedStage(INITIATE_CATEGORY);
           setSubmitting(false);
@@ -153,12 +154,12 @@ export const CreatePostForm: FC<ICreatePostFormProps> = ({
             />
             <div className="w-full h-fit border border-dashed py-5 mb-5 relative">
               <div className="flex gap-3 flex-col h-full w-full items-center justify-center">
-                {selectedFiles.length > 0 ? (
+                {selectedFiles?.length > 0 ? (
                   <ul className="text-sm w-full flex flex-col gap-2 mb-5 font-medium px-2">
-                    {selectedFiles.map((file) => (
+                    {selectedFiles?.map((file) => (
                       <li
                         className="flex gap-3 text-blue-700 font-medium rounded-md items-center px-3 py-2 bg-slate-200 shadow-md"
-                        key={file.name}
+                        key={file?.name}
                       >
                         <Image
                           width={20}
@@ -168,7 +169,7 @@ export const CreatePostForm: FC<ICreatePostFormProps> = ({
                           }
                           alt="icon-file-pdf"
                         />
-                        <p className="truncate">{file.name}</p>
+                        <p className="truncate">{file?.name}</p>
                       </li>
                     ))}
                   </ul>
@@ -199,8 +200,9 @@ export const CreatePostForm: FC<ICreatePostFormProps> = ({
                   hidden
                 />
                 <div className="w-full flex justify-end cursor-pointer">
-                  {selectedFiles.length > 0 && (
+                  {selectedFiles?.length > 0 && (
                     <button
+                      type="button"
                       className="text-sm px-5 py-2 rounded-lg flex gap-3 "
                       onClick={handleUploadClick}
                     >

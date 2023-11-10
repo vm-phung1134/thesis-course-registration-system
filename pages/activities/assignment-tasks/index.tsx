@@ -21,6 +21,7 @@ import {
 } from "@/redux/reducer/exercise/api";
 import classNames from "classnames";
 import { ExerciseModal } from "@/components/Organisms";
+import { INITIATE_CLASSROOM } from "@/data";
 
 function AssignmentTasks() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -58,7 +59,7 @@ function AssignmentTasks() {
   const { data: exercises, isLoading } = useQuery<IExerciseObject[]>({
     queryKey: ["exercises", authClassroomState],
     queryFn: async () => {
-      const action = await dispatch(getAllExerciseInClass(authClassroomState));
+      const action = await dispatch(getAllExerciseInClass(authClassroomState || INITIATE_CLASSROOM));
       return action.payload || [];
     },
     initialData: [],

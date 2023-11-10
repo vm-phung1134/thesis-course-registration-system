@@ -6,9 +6,9 @@ import {
 } from "@/components/Molecules";
 import { ClassroomTemplate } from "@/components/Templates";
 import classNames from "classnames";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ExerciseModal, PostModal } from "@/components/Organisms";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { IPostObject } from "@/interface/post";
 import { getAllPostInClass, getPost } from "@/redux/reducer/post/api";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
@@ -19,10 +19,15 @@ import {
 import { IExerciseObject } from "@/interface/exercise";
 import { useClassroomStateContext } from "@/contexts/classroomState";
 import Image from "next/image";
+import { Button, NormalAvatar } from "@/components/Atoms";
+import { INITIATE_EXERCISE, INITIATE_POST } from "@/data";
 
 function ManageClassroomTab() {
+  const queryClient = useQueryClient();
   const [openModalPost, setOpenModalPost] = useState<boolean>(false);
   const [openModalEx, setOpenModalEx] = useState<boolean>(false);
+  const [exRenew, setExRenew] = useState<IExerciseObject>(INITIATE_EXERCISE);
+  const [postRenew, setPostRenew] = useState<IPostObject>(INITIATE_POST);
   const modalClassPost = classNames({
     "modal modal-bottom sm:modal-middle": true,
     "modal-open": openModalPost,
@@ -35,16 +40,15 @@ function ManageClassroomTab() {
   const { authClassroomState } = useClassroomStateContext();
   const handleOpenPostModal = (task: IPostObject) => {
     setOpenModalPost(!openModalPost);
-    dispatch(getPost(task));
+    setPostRenew(task);
   };
 
   const handleOpenExModal = (task: IExerciseObject) => {
     setOpenModalEx(!openModalEx);
-    dispatch(getExercise(task));
+    setExRenew(task);
   };
 
   // HANDLE POST
-  const { post } = useAppSelector((state) => state.postReducer);
   const { data: posts } = useQuery<IPostObject[]>({
     queryKey: ["posts", authClassroomState],
     queryFn: async () => {
@@ -53,9 +57,16 @@ function ManageClassroomTab() {
     },
     initialData: [],
   });
+  const { data: post_fetch } = useQuery<IPostObject>({
+    queryKey: ["post", postRenew],
+    queryFn: async () => {
+      const action = await dispatch(getPost(postRenew));
+      return action.payload || {};
+    },
+    initialData: postRenew,
+  });
 
   // HANDLE EXERCISE
-  const { exercise } = useAppSelector((state) => state.exerciseReducer);
   const { data: exercises } = useQuery<IExerciseObject[]>({
     queryKey: ["exercises", authClassroomState],
     queryFn: async () => {
@@ -63,6 +74,15 @@ function ManageClassroomTab() {
       return action.payload || [];
     },
     initialData: [],
+  });
+
+  const { data: ex_fetch } = useQuery<IExerciseObject>({
+    queryKey: ["exercise", exRenew],
+    queryFn: async () => {
+      const action = await dispatch(getExercise(exRenew));
+      return action.payload || {};
+    },
+    initialData: exRenew,
   });
 
   const handleCriticalEx = (arr: IExerciseObject[]) => {
@@ -77,59 +97,79 @@ function ManageClassroomTab() {
   return (
     <>
       <ClassroomTemplate title="Manage Class | Thesis course registration system">
-        <div className="grid grid-cols-12 gap-4">
+        <div className="grid grid-cols-12 gap-4 min-h-[80vh] max-h-fit">
           <div className="col-span-4">
-            {handleCriticalEx(exercises).length > 0 ? (
-              <CriticalTask exercise={handleCriticalEx(exercises)[0]} />
-            ) : (
-              <div className="h-52 flex gap-5 flex-col justify-center shadow-xl items-center p-5 border rounded-xl">
-                <Image
-                  src="https://cdn-icons-gif.flaticon.com/8121/8121267.gif"
-                  width="50"
-                  height="50"
-                  className="-hue-rotate-[38deg] saturate-[.85]"
-                  alt=""
-                />
-                <p className="font-medium text-green-700">
-                  OPS! Not have any critical task for you today
-                </p>
-              </div>
-            )}
+            <div className="flex flex-col gap-3">
+              {handleCriticalEx(exercises).length > 0 ? (
+                <CriticalTask exercise={handleCriticalEx(exercises)[0]} />
+              ) : (
+                <div className="h-52 flex gap-5 flex-col justify-center items-center p-5 border rounded-xl">
+                  <Image
+                    src="https://cdn-icons-gif.flaticon.com/8121/8121267.gif"
+                    width="50"
+                    height="50"
+                    className="-hue-rotate-[38deg] saturate-[.85]"
+                    alt=""
+                  />
+                  <p className="font-medium text-green-700">
+                    OPS! Not have any critical task for you today
+                  </p>
+                </div>
+              )}
+              <h4 className="text-sm capitalize font-bold">announcements</h4>
+              {posts.length > 0 && (
+                <div className="border rounded-xl flex flex-col gap-3">
+                  {posts?.map((post, index) => {
+                    return (
+                      <div key={post.id} className="text-xs">
+                        <div className="p-3 flex flex-col gap-2">
+                          <div>
+                            <p className="capitalize font-bold text-green-700">
+                              {post?.lecturer?.name}{" "}
+                              <span className="normal-case font-normal text-black">
+                                has post an announcement !!!
+                              </span>
+                            </p>
+                            <p className="text-[10px] ">
+                              Saturday, 10/14/2023 - 11:59 PM
+                            </p>
+                          </div>
+                          <h5 className="font-medium">{post?.title}</h5>
+                          <div className="flex justify-end">
+                            <Button
+                              otherType="subscribe"
+                              handleActions={() => handleOpenPostModal(post)}
+                              className="text-green-700 text-xs btn-sm bg-transparent border-none"
+                              title="Read announcement"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
           </div>
           <div className="col-span-8">
             <div className="h-fit w-full">
               {exercises.length > 0 || posts.length > 0 ? (
                 <>
                   {exercises.length > 0 && (
-                    <div className="mb-5 flex flex-col gap-2 rounded-xl shadow-xl">
+                    <div className="flex flex-col gap-3">
                       {exercises?.map((exercise) => {
                         return (
-                          <div key={exercise.id}>
+                          <div
+                            key={exercise.id}
+                            className="rounded-xl shadow-lg"
+                          >
                             <NewFeedCard
                               handleOpenTaskModal={handleOpenExModal}
                               task={exercise}
                             />
-                            <div className="px-5 mb-5 py-2 flex flex-col gap-1">
+                            <div className="px-5 py-2 flex flex-col">
                               <ContentComment quantity={1} task={exercise} />
                               <CommentForm task={exercise} />
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  )}
-                  {posts.length > 0 && (
-                    <div className="border p-5">
-                      {posts?.map((post) => {
-                        return (
-                          <div key={post.id}>
-                            <NewFeedCard
-                              handleOpenTaskModal={handleOpenPostModal}
-                              task={post}
-                            />
-                            <div className="p-5 flex flex-col gap-1 border">
-                              <ContentComment quantity={1} task={post} />
-                              <CommentForm task={post} />
                             </div>
                           </div>
                         );
@@ -156,13 +196,13 @@ function ManageClassroomTab() {
         </div>
         <PostModal
           modalClass={modalClassPost}
-          post={post}
+          post={post_fetch}
           setOpenModalPost={setOpenModalPost}
           openModalPost={openModalPost}
         />
         <ExerciseModal
           modalClass={modalClassEx}
-          exercise={exercise}
+          exercise={ex_fetch}
           setOpenModalEx={setOpenModalEx}
           openModalEx={openModalEx}
         />

@@ -178,8 +178,8 @@ const ReportStatusLecturerView: FC<IReportStatusLecturerViewProps> = ({
   });
   return (
     <>
-      <div className="bg-gray-300 my-3 h-[1px]"></div>
-      <div className="flex gap-3 my-3 pb-2 bg-slate-50 rounded-lg relative overflow-hidden">
+      <div className="my-3 h-[1px]"></div>
+      <div className="flex gap-3 my-3 pb-2 relative overflow-hidden">
         <div className="bg-green-700 transform rotate-45 absolute -top-[5.5rem] -left-36 bottom-0 h-[150px] w-full"></div>
         <p className="flex relative flex-col items-center flex-grow py-2 text-white">
           <span className="font-medium">Submitted</span>

@@ -16,8 +16,7 @@ export interface INavbarProps {}
 
 export const Navbar: FC<INavbarProps> = () => {
   const { logout, checkUserLoginState } = useAuthContext();
-  const { currentUser } = useCurrentUser();
-  const [user,] = useUserCookies()
+  const { currentUser, user } = useCurrentUser();
   const { allNotifications } = useSocket();
   const { handleChangeLanguage, localeValue } = useLanguageContext();
   useEffect(() => {
@@ -140,10 +139,10 @@ export const Navbar: FC<INavbarProps> = () => {
           <div tabIndex={0} className="flex gap-3 items-center cursor-pointer">
             <div className="flex flex-col text-[15px] font-normal items-end">
               <p className="font-medium text-sm capitalize">
-                {currentUser?.name || "Username B190000"}
+                {currentUser?.name || user?.name}
               </p>
               <p className="text-green-800 text-sm capitalize">
-                Pov: {currentUser?.role || "Student"}
+                Pov: {currentUser?.role || user?.role}
               </p>
             </div>
             <div className="w-11 h-10 flex-shrink-0 mr-2 sm:mr-3">
@@ -153,7 +152,7 @@ export const Navbar: FC<INavbarProps> = () => {
                     width={100}
                     height={100}
                     alt=""
-                    src={currentUser?.photoSrc}
+                    src={currentUser?.photoSrc || user?.photoSrc}
                   />
                 </div>
               </div>

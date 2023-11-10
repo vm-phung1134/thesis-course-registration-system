@@ -10,11 +10,11 @@ export interface ICriticalTaskProps {
 export const CriticalTask: FC<ICriticalTaskProps> = ({ exercise }) => {
   return (
     <div className="h-fit p-5 relative overflow-hidden shadow-xl">
-      <div className="absolute top-0 bottom-0 -left-48 w-full h-full bg-slate-200 -skew-x-[30deg]"></div>
+      <div className="absolute top-0 bottom-0 -left-48 w-full h-full bg-slate-100 -skew-x-[30deg]"></div>
       <div className="relative">
         <div className="flex flex-col gap-2">
-          <h2 className="font-medium text-sm capitalize text-green-700">
-            {exercise?.category?.label}
+          <h2 className="font-medium text-sm">
+            {exercise?.category?.label} stage
           </h2>
           <p className="text-red-600 font-medium text-sm mb-2">
             Deadline {convertDateTime(exercise?.deadline)}

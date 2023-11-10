@@ -49,7 +49,7 @@ export const ClassroomFound: FC<IClassroomFoundProps> = ({
                 ) : (
                   <p
                     onClick={() => setCreatePostModal(!openCreatePostModal)}
-                    className="hover:text-orange-600 ease-in-out duration-200"
+                    className="hover:text-orange-600-600 ease-in-out duration-200"
                   >
                     Write a message for your class today
                   </p>

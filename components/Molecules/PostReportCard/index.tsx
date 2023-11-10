@@ -39,7 +39,7 @@ export const PostReportCard: FC<IPostReportCardProps> = ({
             {post?.lecturer?.name}
             <span className="normal-case font-normal"> has added new post</span>
           </p>
-          <p className="font-medium">{post?.title}</p>
+          <p className="font-medium truncate w-80">{post?.title}</p>
         </div>
       </div>
       <IConTitle className="font-normal" title="Design phase">

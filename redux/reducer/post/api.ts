@@ -39,9 +39,9 @@ const getPost = createAsyncThunk(
 // GET ALL POST FOLLOW CLASS
 const getAllPostInClass = createAsyncThunk(
   "post/getAllPostInClass",
-  async (postData: IClassroomObject) => {
+  async (postData: IClassroomObject | null) => {
     const response = await axios.get(
-      `http://localhost:5000/api/post/class/${postData.id}`,
+      `http://localhost:5000/api/post/class/${postData?.id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

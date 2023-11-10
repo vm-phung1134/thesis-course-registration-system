@@ -57,7 +57,7 @@ function MemberTab() {
     <ClassroomTemplate title="Members | Thesis course registration system">
       <>
         <div className="flex flex-col">
-          <h4 className="text-xl py-5 text-green-700 font-medium">
+          <h4 className="text-xl py-5 text-green-700font-medium">
             List students{" "}
             <span className="text-xs">{`( ${
               members.length | 0

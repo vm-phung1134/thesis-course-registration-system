@@ -21,9 +21,9 @@ const getAllMembers = createAsyncThunk("member/getAllMembers", async () => {
 // GET ALL MEMBER BY CLASSROOM ID
 const getAllMemberClassroom = createAsyncThunk(
   "member/getAllMemberClassroom",
-  async (postData: IClassroomObject) => {
+  async (postData: IClassroomObject | null) => {
     const response = await axios.get(
-      `http://localhost:5000/api/member/class/${postData.id}`,
+      `http://localhost:5000/api/member/class/${postData?.id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

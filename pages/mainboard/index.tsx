@@ -12,7 +12,7 @@ import { BREADCRUMB_MAINBOARD } from "@/components/Organisms/MainboardStatus/moc
 import { useClassroomStateContext } from "@/contexts/classroomState";
 import { useSubscribeStateContext } from "@/contexts/subscribeState";
 import { IMemberObject } from "@/interface/member";
-import { STATE_AUTH_CLASSROOM } from "@/data";
+import { INITIATE_CLASSROOM, STATE_AUTH_CLASSROOM } from "@/data";
 
 function MainboardPage() {
   type MenuItem = {

@@ -119,9 +119,9 @@ const deleteExercise = createAsyncThunk(
 // GET ALL EXERCISE FOLLOW CLASS
 const getAllExerciseInClass = createAsyncThunk(
   "exercise/getAllExerciseInClass",
-  async (postData: IClassroomObject) => {
+  async (postData: IClassroomObject | null) => {
     const response = await axios.get(
-      `http://localhost:5000/api/exercise/class/${postData.id}`,
+      `http://localhost:5000/api/exercise/class/${postData?.id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
