@@ -1,15 +1,17 @@
-import { Button, NormalAvatar } from "@/components/Atoms";
-import { FilterScheduledForm } from "@/components/Molecules";
+import { Button, IconButton, NormalAvatar } from "@/components/Atoms";
+import { FilterScheduledForm, ModalConfirm } from "@/components/Molecules";
 import { useClassroomStateContext } from "@/contexts/classroomState";
 import useCheckedBox from "@/hooks/useCheckedBox";
-import { IClassroomObject } from "@/interface/classroom";
+import { useTableSearch } from "@/hooks/useTableSearch";
 import { IMemberObject } from "@/interface/member";
 import { IStudentDefObject } from "@/interface/studef";
 import { getAllMemberClassroom } from "@/redux/reducer/member/api";
 import { createStudentDef } from "@/redux/reducer/student-def/api";
 import { useAppDispatch } from "@/redux/store";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { FC } from "react";
+import classNames from "classnames";
+import { FC, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 
 interface IMemberEnrolledProps {}
 
@@ -55,45 +57,24 @@ export const MemberEnrolled: FC<IMemberEnrolledProps> = ({}) => {
     }
   );
 
+  const [openCreateConfirm, setOpenCreateConfirm] = useState<boolean>(false);
+  const modalClassCreateConfirm = classNames({
+    "modal modal-bottom sm:modal-middle": true,
+    "modal-open": openCreateConfirm,
+  });
+  const {
+    filteredData: member_filteredData,
+    handleSearch: member_handleSearch,
+  } = useTableSearch(members);
+
   const handleAddToStudentDef = () => {
     checkedMembers.forEach(async (member: IMemberObject) => {
       await addMutation.mutate({
         infor: member.member,
-        instructor: authClassroomState.lecturer,
+        instructor: authClassroomState?.lecturer,
       } as IStudentDefObject);
     });
   };
-
-  const handleFakeDataStudentDef = async () => {
-    let k = 8; //change 1
-    for (let i = 1; i < 15 + 1; i++) { // change 2
-      await addMutation.mutate({
-        infor: {
-          name: `Student ${i}`,
-          photoSrc:
-            "https://images.pexels.com/photos/445109/pexels-photo-445109.jpeg?auto=compress&cs=tinysrgb&w=600",
-          email: `user${i}b191000${i}.student.ctu.edu.vn`,
-          phone: "0999999999",
-          class: `DI19V7A${i}`,
-          major: "IT1",
-          role: "student",
-          id: `SV${i}GV${k}`,
-        },
-        instructor: {
-          name: `Giang vien ${k}`,
-          photoSrc:
-            "https://images.pexels.com/photos/445109/pexels-photo-445109.jpeg?auto=compress&cs=tinysrgb&w=600",
-          email: `gv${k}@cit.ctu.edu.vn`,
-          phone: "0123456789",
-          class: "IT1",
-          major: "CNTT",
-          role: "lecturer",
-          id: `GV${k}`,
-        },
-      } as IStudentDefObject);
-    }
-  };
-
   return (
     <div className="px-3 my-5">
       <div className="flex justify-between">
@@ -107,25 +88,27 @@ export const MemberEnrolled: FC<IMemberEnrolledProps> = ({}) => {
             className="px-5 btn-sm rounded-none"
           />
           <Button title="All" className="px-5 btn-sm rounded-none" />
-          {/* <button onClick={handleFakeDataStudentDef} className="">
-            Click me
-          </button> */}
         </div>
         <div className="flex justify-end py-2 gap-3">
-          <Button
-            otherType="subscribe"
-            handleActions={handleAddToStudentDef}
-            className=" btn-sm px-8 bg-green-700 text-white rounded-none"
+          <IconButton
+            setToggleForm={setOpenCreateConfirm}
+            toggleForm={openCreateConfirm}
+            className="btn-sm rounded-none px-5 border-none bg-green-700 text-white hover:text-black"
             title="Submit to council"
+            classNameIcon={"w-4"}
+            srcIcon={"https://cdn-icons-png.flaticon.com/128/9698/9698073.png"}
           />
-          <FilterScheduledForm holderText="Search students ..." />
+          <FilterScheduledForm
+            handleSearch={member_handleSearch}
+            holderText="Search students ..."
+          />
         </div>
       </div>
-      <div className="w-full mx-auto my-5 shadow-lg rounded-xl">
+      <div className="w-full mx-auto my-5 min-h-[50vh]">
         <div className="flex flex-col">
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto shadow-lg">
             <div className="inline-block min-w-full align-middle">
-              <div className="overflow-hidden rounded-xl">
+              <div className="overflow-hidden ">
                 <table className="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-700">
                   <thead className="bg-green-700 dark:bg-gray-700">
                     <tr>
@@ -180,60 +163,68 @@ export const MemberEnrolled: FC<IMemberEnrolledProps> = ({}) => {
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
-                    {filterMemberEnrolled(members).map((member) => (
-                      <tr
-                        key={member.id}
-                        className="hover:bg-gray-100 cursor-pointer dark:hover:bg-gray-700"
-                      >
-                        <td className="p-4 w-4">
-                          <div className="flex items-center">
-                            <input
-                              id="checkbox-table-2"
-                              type="checkbox"
-                              className="w-4 h-4 "
-                              checked={checkedMembers.includes(member)}
-                              onChange={(event) =>
-                                handleCheckMember(event, member)
-                              }
-                            />
-                            <label
-                              htmlFor="checkbox-table-2"
-                              className="sr-only"
-                            >
-                              checkbox
-                            </label>
-                          </div>
-                        </td>
-                        <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
-                          <NormalAvatar
-                            photoSrc={member?.member?.photoSrc}
-                            setSize="w-10"
-                          />
-                        </td>
-                        <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
-                          {member?.member?.name}
-                        </td>
-                        <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
-                          {member?.member?.email}
-                        </td>
-                        <td className="py-4 px-6 text-sm capitalize text-gray-900 whitespace-nowrap dark:text-white">
-                          10/13/2023
-                        </td>
-                        <td className="py-4 px-6 text-sm capitalize text-gray-900 whitespace-nowrap dark:text-white">
-                          {member?.registerDefense
-                            ? "Enrolled"
-                            : "Unregistered"}
-                        </td>
-                        <td className="py-4 px-6 text-sm text-right whitespace-nowrap">
-                          <a
-                            href="#"
-                            className="text-blue-600 dark:text-blue-500"
+                    <AnimatePresence>
+                      {filterMemberEnrolled(member_filteredData).map(
+                        (member) => (
+                          <motion.tr
+                            layout
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            key={member.id}
+                            className="hover:bg-gray-100 cursor-pointer dark:hover:bg-gray-700"
                           >
-                            Detail
-                          </a>
-                        </td>
-                      </tr>
-                    ))}
+                            <td className="p-4 w-4">
+                              <div className="flex items-center">
+                                <input
+                                  id="checkbox-table-2"
+                                  type="checkbox"
+                                  className="w-4 h-4 "
+                                  checked={checkedMembers.includes(member)}
+                                  onChange={(event) =>
+                                    handleCheckMember(event, member)
+                                  }
+                                />
+                                <label
+                                  htmlFor="checkbox-table-2"
+                                  className="sr-only"
+                                >
+                                  checkbox
+                                </label>
+                              </div>
+                            </td>
+                            <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
+                              <NormalAvatar
+                                photoSrc={member?.member?.photoSrc}
+                                setSize="w-10"
+                              />
+                            </td>
+                            <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
+                              {member?.member?.name}
+                            </td>
+                            <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
+                              {member?.member?.email}
+                            </td>
+                            <td className="py-4 px-6 text-sm capitalize text-gray-900 whitespace-nowrap dark:text-white">
+                              10/13/2023
+                            </td>
+                            <td className="py-4 px-6 text-sm capitalize text-gray-900 whitespace-nowrap dark:text-white">
+                              {member?.registerDefense
+                                ? "Enrolled"
+                                : "Unregistered"}
+                            </td>
+                            <td className="py-4 px-6 text-sm text-right whitespace-nowrap">
+                              <a
+                                href="#"
+                                className="text-blue-600 dark:text-blue-500"
+                              >
+                                Detail
+                              </a>
+                            </td>
+                          </motion.tr>
+                        )
+                      )}
+                    </AnimatePresence>
                   </tbody>
                 </table>
               </div>
@@ -241,6 +232,16 @@ export const MemberEnrolled: FC<IMemberEnrolledProps> = ({}) => {
           </div>
         </div>
       </div>
+      <ModalConfirm
+        modalClass={modalClassCreateConfirm}
+        setOpenModal={setOpenCreateConfirm}
+        openModal={openCreateConfirm}
+        action={handleAddToStudentDef}
+        typeButton="subscribe"
+        underMessage="No message!!"
+        title="Message!!!"
+        message="Do you want to submit these students to committee thesis"
+      />
     </div>
   );
 };

@@ -105,6 +105,15 @@ export const CreatePostForm: FC<ICreatePostFormProps> = ({
             attachments: selectedFiles,
             lecturer: currentUser,
           });
+          // console.log({
+          //   ...values,
+          //   type: "post",
+          //   uid: objectId,
+          //   classroom: classroom,
+          //   category: selectedStage,
+          //   attachments: selectedFiles,
+          //   lecturer: currentUser,
+          // })
           resetForm();
           setToggleForm(!toggleForm)
           resetSelectedFiles();

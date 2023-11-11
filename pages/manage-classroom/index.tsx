@@ -24,6 +24,8 @@ import { INITIATE_EXERCISE, INITIATE_POST } from "@/data";
 
 function ManageClassroomTab() {
   const queryClient = useQueryClient();
+  const { exercises } = useAppSelector((state) => state.exerciseReducer);
+  const { posts } = useAppSelector((state) => state.postReducer);
   const [openModalPost, setOpenModalPost] = useState<boolean>(false);
   const [openModalEx, setOpenModalEx] = useState<boolean>(false);
   const [exRenew, setExRenew] = useState<IExerciseObject>(INITIATE_EXERCISE);
@@ -49,14 +51,6 @@ function ManageClassroomTab() {
   };
 
   // HANDLE POST
-  const { data: posts } = useQuery<IPostObject[]>({
-    queryKey: ["posts", authClassroomState],
-    queryFn: async () => {
-      const action = await dispatch(getAllPostInClass(authClassroomState));
-      return action.payload || [];
-    },
-    initialData: [],
-  });
   const { data: post_fetch } = useQuery<IPostObject>({
     queryKey: ["post", postRenew],
     queryFn: async () => {
@@ -67,15 +61,6 @@ function ManageClassroomTab() {
   });
 
   // HANDLE EXERCISE
-  const { data: exercises } = useQuery<IExerciseObject[]>({
-    queryKey: ["exercises", authClassroomState],
-    queryFn: async () => {
-      const action = await dispatch(getAllExerciseInClass(authClassroomState));
-      return action.payload || [];
-    },
-    initialData: [],
-  });
-
   const { data: ex_fetch } = useQuery<IExerciseObject>({
     queryKey: ["exercise", exRenew],
     queryFn: async () => {
@@ -93,6 +78,11 @@ function ManageClassroomTab() {
           new Date(a.deadline).getTime() - new Date(b.deadline).getTime()
       );
   };
+
+  useEffect(() => {
+    dispatch(getAllExerciseInClass(authClassroomState));
+    dispatch(getAllPostInClass(authClassroomState));
+  }, [authClassroomState, dispatch]);
 
   return (
     <>

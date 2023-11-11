@@ -237,7 +237,7 @@ export const CreateExerciseForm: FC<ICreateExerciseFormProps> = ({
               <Button
                 type="submit"
                 title="Create exercise"
-                className="hover:bg-[#165b31] rounded-lg bg-green-700text-white"
+                className="hover:bg-[#165b31] rounded-lg bg-green-700 text-white"
               />
             </div>
           </Form>
