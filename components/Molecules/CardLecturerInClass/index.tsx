@@ -51,7 +51,7 @@ export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["member"]);
+        queryClient.invalidateQueries(["member", currentUser]);
       },
     }
   );

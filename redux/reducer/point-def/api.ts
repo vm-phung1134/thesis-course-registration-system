@@ -43,17 +43,23 @@ const getOnePointDefForLecturer = createAsyncThunk(
 );
 
 // GET ALL COUNCIL DEFS
-const getAllPointDefs = createAsyncThunk("point/getAllPointDefs", async () => {
-  const response = await axios.get(`http://localhost:5000/api/point-def`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  if (response.status === 200) {
-    return response.data;
+const getAllPointDefs = createAsyncThunk(
+  "point/getAllPointDefs",
+  async (postData: IAuthObject) => {
+    const response = await axios.get(
+      `http://localhost:5000/api/point-def/student-point/${postData?.id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    if (response.status === 200) {
+      return response.data;
+    }
+    throw new Error("Failed to get all auths");
   }
-  throw new Error("Failed to get all auths");
-});
+);
 
 // CREATE COUNCIL DEF
 const createPointDef = createAsyncThunk(

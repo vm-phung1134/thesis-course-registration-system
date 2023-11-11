@@ -17,6 +17,7 @@ import { SnipperRound } from "@/components/Atoms";
 import { useClassroomStateContext } from "@/contexts/classroomState";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { useUserCookies } from "@/hooks/useCookies";
+import { INITIATE_CLASSROOM } from "@/data";
 
 export interface IClassroomProps {
   children: React.ReactNode;
@@ -78,7 +79,7 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
               <>
                 {authClassroomState?.classCourse !== "" && (
                   <ClassroomFound
-                    classroom={authClassroomState}
+                    classroom={authClassroomState || INITIATE_CLASSROOM}
                     setCreatePostModal={setCreatePostModal}
                     openCreatePostModal={openCreatePostModal}
                   >
@@ -94,7 +95,7 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
             <div className="w-5/12 bg-white p-5 h-fit shadow-2xl rounded-xl">
               {selected === DATA_LIST_OPTIONS[0] ? (
                 <CreateExerciseForm
-                  classroom={authClassroomState}
+                  classroom={authClassroomState || INITIATE_CLASSROOM}
                   setToggleForm={setCreatePostModal}
                   toggleForm={openCreatePostModal}
                   selected={selected}
@@ -103,7 +104,7 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
                 />
               ) : (
                 <CreatePostForm
-                  classroom={authClassroomState}
+                  classroom={authClassroomState || INITIATE_CLASSROOM}
                   selected={selected}
                   setSelected={setSelected}
                   setToggleForm={setCreatePostModal}

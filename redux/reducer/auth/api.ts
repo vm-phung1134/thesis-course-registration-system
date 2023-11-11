@@ -137,7 +137,7 @@ const checkAuthRoleForClassroomState = createAsyncThunk(
 const unsubscribeState = createAsyncThunk(
   "auth/unsubscribeState",
   async (postData: IAuthObject) => {
-    const response = await axios.get(
+    const response = await axios.delete(
       `http://localhost:5000/api/auth/un-subscribe/${postData.id}`,
       {
         headers: {
