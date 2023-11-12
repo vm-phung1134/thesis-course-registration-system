@@ -1,23 +1,15 @@
-import {
-  Breadcrumb,
-  Button,
-  SelectBox,
-  SnipperRound,
-} from "@/components/Atoms";
-import { Pagination } from "@/components/Molecules";
+import { SelectBox, SnipperRound } from "@/components/Atoms";
+import { FilterScheduledForm } from "@/components/Molecules";
 import { ICategoryObject } from "@/interface/category";
 import { IOptionItem } from "@/interface/filter";
 import { FC, useState, useEffect } from "react";
-import {
-  BREADCRUMB_MAINBOARD,
-  DATA_FILTER_COURSE,
-  DATA_FILTER_TOPICS,
-} from "../mock-data";
+import { DATA_FILTER_COURSE, DATA_FILTER_TOPICS } from "../mock-data";
 import { ClassroomCard } from "../..";
 import { useAppDispatch } from "@/redux/store";
 import { useQuery } from "@tanstack/react-query";
 import { IClassroomObject } from "@/interface/classroom";
 import { getAllClassrooms } from "@/redux/reducer/classroom/api";
+import { useTableSearch } from "@/hooks/useTableSearch";
 
 export interface INoSubscribeViewProps {}
 
@@ -44,16 +36,8 @@ export const NoSubscribeView: FC<INoSubscribeViewProps> = () => {
     },
     initialData: [],
   });
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [totalPages] = useState<number>(10);
-  const handlePrevPage = () => {
-    setCurrentPage((prevPage) => prevPage - 1);
-  };
-
-  const handleNextPage = () => {
-    setCurrentPage((prevPage) => prevPage + 1);
-  };
-
+  const { filteredData: class_filteredData, handleSearch: class_handleSearch } =
+    useTableSearch(classrooms);
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
@@ -65,6 +49,13 @@ export const NoSubscribeView: FC<INoSubscribeViewProps> = () => {
         <SnipperRound />
       ) : (
         <>
+          <div className="py-2 flex gap-2 items-center">
+            <h4 className="text-xl capitalize text-green-700 font-medium ">
+              Register <span className="text-green-700"> for instructors</span>
+            </h4>
+            <div className="flex-grow h-[0.5px] bg-green-700"></div>
+          </div>
+          <p className="text-sm flex justify-end text-gray-600">{`Total classroom (${classrooms?.length})`}</p>
           <div className="flex justify-between items-center">
             <div className="mt-3 flex gap-3 w-1/3">
               <div className="flex-grow">
@@ -84,19 +75,15 @@ export const NoSubscribeView: FC<INoSubscribeViewProps> = () => {
                 />
               </div>
             </div>
+            <FilterScheduledForm
+              handleSearch={class_handleSearch}
+              holderText="Searching classroom ..."
+            />
           </div>
           <div className="flex flex-wrap gap-x-3 gap-y-5 mt-5">
-            {classrooms?.map((item, index) => {
-              return <ClassroomCard key={item.id} item={item} />;
+            {class_filteredData?.map((item, index) => {
+              return <ClassroomCard index={index} key={item.id} item={item} />;
             })}
-          </div>
-          <div className="flex justify-center mt-10">
-            <Pagination
-              handleNextPage={handleNextPage}
-              handlePrevPage={handlePrevPage}
-              totalPages={totalPages}
-              currentPage={currentPage}
-            />
           </div>
         </>
       )}

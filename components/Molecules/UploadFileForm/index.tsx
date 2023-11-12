@@ -78,7 +78,6 @@ export const UploadFileForm: FC<IUploadFormProps> = ({ exercise, submit }) => {
   const handleUnsubmitted = () => {
     deleteMutation.mutate(submit);
   };
-  console.log(submit);
   return (
     <>
       <Formik
@@ -205,7 +204,7 @@ export const UploadFileForm: FC<IUploadFormProps> = ({ exercise, submit }) => {
                 {deleteMutation.isLoading ? (
                   <Button
                     type="button"
-                    className="rounded-lg hover:bg-green-600 w-full my-5 normal-case bg-green-700 text-white"
+                    className="rounded-lg hover:bg-green-600 w-full normal-case bg-green-700 text-white"
                     title="Loading ..."
                   />
                 ) : (
@@ -214,7 +213,7 @@ export const UploadFileForm: FC<IUploadFormProps> = ({ exercise, submit }) => {
                     otherType="subscribe"
                     toggle={openDelSubmitted}
                     setToggle={setOpenDelSubmitted}
-                    className="rounded-lg hover:bg-green-600 w-full my-5 normal-case bg-green-700 text-white"
+                    className="rounded-lg hover:bg-green-600 w-full normal-case bg-green-700 text-white"
                     title="Cancel submit"
                   />
                 )}

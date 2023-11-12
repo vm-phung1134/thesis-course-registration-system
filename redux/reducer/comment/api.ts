@@ -8,9 +8,9 @@ import { IExerciseObject } from "@/interface/exercise";
 // GET ALL COMMENTS
 const getAllComments = createAsyncThunk(
   "comment/getAllComments",
-  async (postData: IPostObject | IExerciseObject) => {
+  async (id: string) => {
     const response = await axios.get(
-      `http://localhost:5000/api/comment/${postData.id}`,
+      `http://localhost:5000/api/comment/${id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

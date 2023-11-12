@@ -53,7 +53,7 @@ export const FilterScheduledForm: FC<IFilterScheduledFormProps> = ({
                 type="text"
                 id="search"
                 onChange={handleInputChange}
-                className="input placeholder:tracking-wide bg-gray-100 tracking-wide dark:bg-black h-8 text-sm focus:outline-none placeholder:font-thin flex-1"
+                className="input placeholder:tracking-wide bg-gray-100 tracking-wide dark:bg-black h-10 text-sm focus:outline-none flex-1"
               />
             </div>
           </Form>

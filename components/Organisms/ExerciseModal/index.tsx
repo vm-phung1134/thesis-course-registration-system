@@ -3,6 +3,7 @@ import {
   CardStudentShort,
   CommentForm,
   ContentComment,
+  ContentCommentModal,
   UploadFileForm,
 } from "@/components/Molecules";
 import { ROLE_ASSIGNMENT } from "@/contexts/authContext";
@@ -36,7 +37,10 @@ export const ExerciseModal: FC<IExerciseModalProps> = ({
   const { currentUser } = useCurrentUser();
   const dispatch = useAppDispatch();
   const { data: submit } = useQuery<ISubmitObject>({
-    queryKey: ["submit-exercise", { exerciseId: exercise.uid, studentId: currentUser.id }],
+    queryKey: [
+      "submit-exercise",
+      { exerciseId: exercise.uid, studentId: currentUser.id },
+    ],
     queryFn: async () => {
       const action = await dispatch(
         getSubmit({ exerciseId: exercise.uid, studentId: currentUser.id })
@@ -55,9 +59,8 @@ export const ExerciseModal: FC<IExerciseModalProps> = ({
     });
     return formattedDate;
   };
-
   return (
-    <dialog id="my_modal_2" className={modalClass}>
+    <dialog id="my_modal_exercise" className={modalClass}>
       <div className="w-8/12 bg-white py-5 px-3 h-fit shadow-2xl rounded-xl">
         <div className="grid grid-cols-12 h-full">
           <div className="col-span-8 border-r px-3">
@@ -128,11 +131,7 @@ export const ExerciseModal: FC<IExerciseModalProps> = ({
             </div>
             <div className="py-5 flex flex-col gap-3">
               <CommentForm task={exercise} />
-              <ContentComment quantity={1} task={exercise} />
-              <Button
-                className="rounded-lg w-full"
-                title="View more comments"
-              />
+              <ContentCommentModal quantity={5} task={exercise} />
             </div>
           </div>
           <div className="col-span-4 px-3">

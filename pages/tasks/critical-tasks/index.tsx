@@ -100,7 +100,7 @@ function CriticalTasks() {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-    }, 0);
+    }, 1200);
   }, []);
   return (
     <>

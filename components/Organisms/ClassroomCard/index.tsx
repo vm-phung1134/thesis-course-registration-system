@@ -15,12 +15,15 @@ import { getAllMemberClassroom } from "@/redux/reducer/member/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
+import { NormalAvatar } from "@/components/Atoms";
+import { motion } from "framer-motion";
 
 interface IClassroomCardProps {
   item: IClassroomObject;
+  index: number;
 }
 
-export const ClassroomCard: FC<IClassroomCardProps> = ({ item }) => {
+export const ClassroomCard: FC<IClassroomCardProps> = ({ item, index }) => {
   const [openModalClassroomDetail, setOpenModalClassroomDetail] =
     useState<boolean>(false);
   const modalClass = classNames({
@@ -63,56 +66,16 @@ export const ClassroomCard: FC<IClassroomCardProps> = ({ item }) => {
       });
     }
   };
-  const { data: members } = useQuery<IMemberObject[]>({
-    queryKey: ["members-in-classroom", item],
-    queryFn: async () => {
-      const action = await dispatch(getAllMemberClassroom(item));
-      return action.payload || [];
-    },
-    initialData: [],
-  });
   return (
     <>
-      <div className="w-[340px] shadow-lg rounded-xl">
-        <div className="bg-cover rounded-xl bg-[url('https://images.pexels.com/photos/301943/pexels-photo-301943.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load')]">
-          <div className="bg-black/60 p-5 text-gray-100 rounded-xl">
-            <div className="flex justify-between gap-5 mb-2">
-              <h3 className="text-md font-bold uppercase text-green-500">
-                {item?.lecturer?.name}
-              </h3>
-              <div>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4 rotate-90 text-gray-300"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
-                  ></path>
-                </svg>
-              </div>
-            </div>
-            <div className="flex gap-2 flex-col">
-              <p className="text-sm flex gap-2">
-                <span>Course:</span>
-                <span className="font-normal">{item.classCourse}</span>
-              </p>
-              <p className="text-sm flex gap-2">
-                <span>Students:</span>
-                <span className="font-normal">
-                  {members.length} / {item?.quantityStudent}
-                  <small>{` ( ${
-                    item?.quantityStudent - members.length
-                  } available )`}</small>
-                </span>
-              </p>
-            </div>
-          </div>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, delay: index * 0.2 }}
+        className="flex gap-5 justify-center rounded-lg bg-slate-100 relative items-center w-[24.5rem] shadow-lg"
+      >
+        <div className="pl-5">
+          <NormalAvatar setSize="w-16" photoSrc={item?.lecturer?.photoSrc} />
         </div>
         <ClassroomContentCard
           setOpenModalClassroomDetail={setOpenModalClassroomDetail}
@@ -120,7 +83,9 @@ export const ClassroomCard: FC<IClassroomCardProps> = ({ item }) => {
           handleSubcribeClass={handleSubcribeClass}
           item={item}
         />
-      </div>
+        <span className="absolute left-0 bottom-0 right-[15rem] h-[2px] bg-green-700"></span>
+      </motion.div>
+
       <ClassroomDetailModal
         item={item}
         setOpenModalClassroomDetail={setOpenModalClassroomDetail}

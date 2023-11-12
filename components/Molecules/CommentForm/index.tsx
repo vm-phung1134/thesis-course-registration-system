@@ -60,10 +60,13 @@ export const CommentForm: FC<ICommentFormProps> = ({ task }) => {
         setTimeout(() => {
           addMutation.mutate({
             ...values,
-            postId: task.id || "",
+            postId: task.uid,
             user: currentUser,
           });
-          handleNotification(currentUser, TYPE_ACTION_NOTIFICATION.COMMENT_POST);
+          handleNotification(
+            currentUser,
+            TYPE_ACTION_NOTIFICATION.COMMENT_POST
+          );
           resetForm();
         }, 400);
       }}
@@ -71,7 +74,7 @@ export const CommentForm: FC<ICommentFormProps> = ({ task }) => {
       <Form>
         <div className="relative">
           <Field
-            className="input text-sm rounded-full w-full border-gray-300  focus:outline-none"
+            className="input text-sm border-none bg-slate-100 rounded-full w-full  focus:outline-none"
             type="text"
             id="content"
             placeholder="Enter your comment ..."
@@ -79,9 +82,8 @@ export const CommentForm: FC<ICommentFormProps> = ({ task }) => {
           />
           <button
             type="submit"
-            className="absolute text-black w-28 text-[13px] rounded-full font-medium normal-case btn right-0 top-0 bottom-0"
+            className="absolute text-green-700 w-20 bg-transparent border-none text-base rounded-full font-medium normal-case btn right-0 top-0 bottom-0"
           >
-            Send
             <i className="fa-regular fa-paper-plane"></i>
           </button>
         </div>

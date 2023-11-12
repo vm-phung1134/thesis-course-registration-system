@@ -12,11 +12,9 @@ export const ItemUserInfor: FC<IItemUserInforProps> = ({
   className,
 }) => {
   return (
-    <li className="text-sm flex gap-2">
-      <span className="text-gray-900">{`${title}: `}</span>
-      <span className={`normal-case text-gray-600  ${className}`}>
-        {content}
-      </span>
+    <li className="text-sm flex flex-col">
+      <span className="text-gray-500">{`${title}`}</span>
+      <span className={`normal-case text-black ${className}`}>{content}</span>
     </li>
   );
 };
