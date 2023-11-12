@@ -18,7 +18,7 @@ const SocketContext = createContext<ISocketContext | null>(null);
 // Create the SocketProvider
 export function SocketProvider({ children }: ISocketProviderProps) {
   const [socket, setSocket] = useState<Socket | null>(null);
-  const [user,] = useUserCookies();
+  const {user}= useCurrentUser();
   const [isSocketConnected, setIsSocketConnected] = useState(false);
   const [allNotifications, setAllNotifications] = useState<INotification[]>([]);
   useEffect(() => {

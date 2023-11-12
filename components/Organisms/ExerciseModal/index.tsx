@@ -74,7 +74,7 @@ export const ExerciseModal: FC<IExerciseModalProps> = ({
                   {exercise?.category?.label} Stage
                 </p>
               </div>
-              <h3 className="font-medium text-green-700 text-xl capitalize">
+              <h3 className="font-medium text-green-700 text-lg capitalize">
                 {exercise?.title}
               </h3>
               <p className="font-medium capitalize py-1">
@@ -136,7 +136,7 @@ export const ExerciseModal: FC<IExerciseModalProps> = ({
           </div>
           <div className="col-span-4 px-3">
             <div className="flex justify-between">
-              <h3 className="font-bold text-xl">Status report</h3>
+              <h3 className="font-bold text-lg">Status report</h3>
               <button
                 onClick={() => setOpenModalEx?.(!openModalEx)}
                 className="btn pr-5 text-xs btn-sm bg-transparent btn-circle border-none hover:bg-transparent"

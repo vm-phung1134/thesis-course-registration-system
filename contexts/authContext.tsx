@@ -130,7 +130,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         router.push("/mainboard");
       })
       .catch((error) => {
-        setMessage(() => "Account invalid");
+        setMessage(() => "Account or password incorrect !!!");
         console.error("Error signing in:", error);
       });
   };

@@ -8,7 +8,7 @@ import { ClassroomTemplate } from "@/components/Templates";
 import classNames from "classnames";
 import { useEffect, useState } from "react";
 import { ExerciseModal, PostModal } from "@/components/Organisms";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { IPostObject } from "@/interface/post";
 import { getAllPostInClass, getPost } from "@/redux/reducer/post/api";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
@@ -19,11 +19,16 @@ import {
 import { IExerciseObject } from "@/interface/exercise";
 import { useClassroomStateContext } from "@/contexts/classroomState";
 import Image from "next/image";
-import { Button, NormalAvatar } from "@/components/Atoms";
+import { Button } from "@/components/Atoms";
 import { INITIATE_EXERCISE, INITIATE_POST } from "@/data";
+import { motion } from "framer-motion";
+import { ISubmitObject } from "@/interface/submit";
+import { useCurrentUser } from "@/hooks/useGetCurrentUser";
+import { getAllSubmitStud } from "@/redux/reducer/submit/api";
+import { getExerciseWithNearestDeadline } from "@/utils/getDeadline";
 
 function ManageClassroomTab() {
-  const queryClient = useQueryClient();
+  const { currentUser } = useCurrentUser();
   const { exercises } = useAppSelector((state) => state.exerciseReducer);
   const { posts } = useAppSelector((state) => state.postReducer);
   const [openModalPost, setOpenModalPost] = useState<boolean>(false);
@@ -69,15 +74,14 @@ function ManageClassroomTab() {
     },
     initialData: exRenew,
   });
-
-  const handleCriticalEx = (arr: IExerciseObject[]) => {
-    return arr
-      .filter((task) => task?.attachments?.length === 0)
-      .sort(
-        (a, b) =>
-          new Date(a.deadline).getTime() - new Date(b.deadline).getTime()
-      );
-  };
+  const { data: submitStuds } = useQuery<ISubmitObject[]>({
+    queryKey: ["submitStuds", currentUser],
+    queryFn: async () => {
+      const action = await dispatch(getAllSubmitStud(currentUser));
+      return action.payload || [];
+    },
+    initialData: [],
+  });
 
   useEffect(() => {
     dispatch(getAllExerciseInClass(authClassroomState));
@@ -90,8 +94,11 @@ function ManageClassroomTab() {
         <div className="grid grid-cols-12 gap-4 min-h-[80vh] max-h-fit">
           <div className="col-span-4">
             <div className="flex flex-col gap-3">
-              {handleCriticalEx(exercises).length > 0 ? (
-                <CriticalTask exercise={handleCriticalEx(exercises)[0]} />
+              {exercises.length > 0 ? (
+                <CriticalTask
+                  submitStuds={submitStuds}
+                  exercise={getExerciseWithNearestDeadline(exercises)}
+                />
               ) : (
                 <div className="h-52 flex gap-5 flex-col justify-center items-center p-5 border rounded-xl">
                   <Image
@@ -111,7 +118,13 @@ function ManageClassroomTab() {
                 <div className="border rounded-xl flex flex-col gap-3">
                   {posts?.map((post, index) => {
                     return (
-                      <div key={post.id} className="text-xs">
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 1, delay: index * 0.5 }}
+                        key={post.id}
+                        className="text-xs"
+                      >
                         <div className="p-3 flex flex-col gap-2">
                           <div>
                             <p className="capitalize font-bold text-green-700">
@@ -134,7 +147,7 @@ function ManageClassroomTab() {
                             />
                           </div>
                         </div>
-                      </div>
+                      </motion.div>
                     );
                   })}
                 </div>
@@ -147,9 +160,12 @@ function ManageClassroomTab() {
                 <>
                   {exercises.length > 0 && (
                     <div className="flex flex-col gap-3">
-                      {exercises?.map((exercise) => {
+                      {exercises?.map((exercise, index) => {
                         return (
-                          <div
+                          <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 1, delay: index * 0.5 }}
                             key={exercise.id}
                             className="rounded-xl shadow-lg"
                           >
@@ -161,7 +177,7 @@ function ManageClassroomTab() {
                               <ContentComment quantity={1} task={exercise} />
                               <CommentForm task={exercise} />
                             </div>
-                          </div>
+                          </motion.div>
                         );
                       })}
                     </div>

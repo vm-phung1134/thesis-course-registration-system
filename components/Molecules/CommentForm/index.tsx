@@ -63,10 +63,10 @@ export const CommentForm: FC<ICommentFormProps> = ({ task }) => {
             postId: task.uid,
             user: currentUser,
           });
-          handleNotification(
-            currentUser,
-            TYPE_ACTION_NOTIFICATION.COMMENT_POST
-          );
+          // handleNotification(
+          //   currentUser,
+          //   TYPE_ACTION_NOTIFICATION.COMMENT_POST
+          // );
           resetForm();
         }, 400);
       }}

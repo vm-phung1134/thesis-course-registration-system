@@ -30,6 +30,11 @@ import { getAllPostInClass, getPost } from "@/redux/reducer/post/api";
 import { IPointDefObject } from "@/interface/pointDef";
 import { IPostObject } from "@/interface/post";
 import Image from "next/image";
+import { INITIATE_EXERCISE, INITIATE_SUBMIT } from "@/data";
+import { ISubmitObject } from "@/interface/submit";
+import { getAllSubmitStud, getAllSubmits } from "@/redux/reducer/submit/api";
+import { useCurrentUser } from "@/hooks/useGetCurrentUser";
+import { getExerciseWithNearestDeadline } from "@/utils/getDeadline";
 
 function CriticalTasks() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -52,22 +57,12 @@ function CriticalTasks() {
     "modal-open": openModalEx,
   });
   const handleOpenExModal = (task: IExerciseObject) => {
-    setOpenModalEx?.(!openModalEx);
-    dispatch(getExercise(task));
-  };
-  // POST
-  const [openModalPost, setOpenModalPost] = useState<boolean>(false);
-  const modalClassPost = classNames({
-    "modal modal-bottom sm:modal-middle": true,
-    "modal-open": openModalPost,
-  });
-  const handleOpenPostModal = (task: IPostObject) => {
-    setOpenModalPost?.(!openModalPost);
-    dispatch(getPost(task));
+    setOpenModalEx(!openModalEx);
+    setExRenew(task);
   };
   const dispatch = useAppDispatch();
-  const { exercise } = useAppSelector((state) => state.exerciseReducer);
-  const { post } = useAppSelector((state) => state.postReducer);
+  const { currentUser } = useCurrentUser();
+  const [exRenew, setExRenew] = useState<IExerciseObject>(INITIATE_EXERCISE);
   const { authClassroomState } = useClassroomStateContext();
   const { data: exercises } = useQuery<IExerciseObject[]>({
     queryKey: ["exercises", authClassroomState],
@@ -77,27 +72,36 @@ function CriticalTasks() {
     },
     initialData: [],
   });
-  const { data: posts } = useQuery<IExerciseObject[]>({
-    queryKey: ["posts", authClassroomState],
+
+  const { data: ex_fetch } = useQuery<IExerciseObject>({
+    queryKey: ["exercise", exRenew],
     queryFn: async () => {
-      const action = await dispatch(getAllPostInClass(authClassroomState));
+      const action = await dispatch(getExercise(exRenew));
+      return action.payload || {};
+    },
+    initialData: exRenew,
+  });
+
+  const { data: submitStuds } = useQuery<ISubmitObject[]>({
+    queryKey: ["submitStuds", currentUser],
+    queryFn: async () => {
+      const action = await dispatch(getAllSubmitStud(currentUser));
       return action.payload || [];
     },
     initialData: [],
   });
 
-  const handleCompletedEx = (arr: IExerciseObject[]) => {
-    return arr
-      .filter((task) => task?.attachments?.length || 0 > 0)
-      .sort(
-        (a, b) =>
-          new Date(b.deadline).getTime() - new Date(a.deadline).getTime()
-      );
+  const checkCompletedTask = (
+    ex: IExerciseObject[],
+    submits: ISubmitObject[]
+  ) => {
+    return ex?.filter((item) =>
+      submits.some(
+        (sub) =>
+          sub.exerciseId === item.uid && sub.student.id === currentUser.id
+      )
+    );
   };
-  const handleCompletedPost = (arr: IPostObject[]) => {
-    return arr.filter((task) => task?.attachments?.length || 0 > 0);
-  };
-
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
@@ -113,7 +117,8 @@ function CriticalTasks() {
             <Breadcrumb dataBreadcrumb={BREADCRUMB_COMPLETED_TASKS} />
             <div className="my-3 py-2 flex gap-2 items-center">
               <h4 className="text-xl capitalize text-green-700 font-medium ">
-                Completed <span className="text-orange-500"> Tasks</span>
+                Completed{" "}
+                <span className="text-orange-500"> Report progress</span>
               </h4>
               <div className="flex-grow h-[0.5px] bg-green-700"></div>
             </div>
@@ -136,67 +141,45 @@ function CriticalTasks() {
                     />
                   </div>
                 </div>
-                {handleCompletedEx(exercises)?.map((ex, index) => (
-                  <ExerciseCard
-                    handleOpenTaskModal={handleOpenExModal}
-                    key={ex.id}
-                    exercise={ex}
-                  />
-                ))}
-                {handleCompletedPost(posts)?.map((post, index) => (
-                  <PostReportCard
-                    handleOpenTaskModal={handleOpenPostModal}
-                    key={post.id}
-                    post={post}
-                  />
-                ))}
-                {(handleCompletedPost(posts).length === 0 && (handleCompletedPost(exercises).length ===0) && (
-                  <div className="h-60 flex flex-col justify-center items-center p-5 mt-5">
-                    <Image
-                      src="https://yi-files.s3.eu-west-1.amazonaws.com/products/794000/794104/1354385-full.jpg"
-                      width="200"
-                      height="200"
-                      className="-hue-rotate-[38deg] saturate-[.85]"
-                      alt=""
+                {checkCompletedTask(exercises, submitStuds)?.map(
+                  (ex, index) => (
+                    <ExerciseCard
+                      handleOpenTaskModal={handleOpenExModal}
+                      key={ex.id}
+                      exercise={ex}
                     />
-                    <p className="uppercase text-sm text-green-700">
-                      Ops! We do not have exercise or post for you today
-                    </p>
-                  </div>
-                ))}
+                  )
+                )}
               </div>
               <div className="w-4/12">
-                {handleCompletedEx(exercises).length > 0 ? (
-                  <CriticalTask exercise={handleCompletedEx(exercises)[0]} />
+                {exercises.length > 0 ? (
+                  <CriticalTask
+                    submitStuds={submitStuds}
+                    exercise={getExerciseWithNearestDeadline(exercises)}
+                  />
                 ) : (
                   <>
                     <div className="h-60 flex gap-5 flex-col justify-center shadow-xl items-center p-5 border rounded-xl">
-                    <Image
-                      src="https://cdn-icons-gif.flaticon.com/8121/8121267.gif"
-                      width="50"
-                      height="50"
-                      className="-hue-rotate-[38deg] saturate-[.85]"
-                      alt=""
-                    />
-                    <p className="font-medium text-green-700">
-                      OPS! Not have any critical task for you today
-                    </p>
-                  </div>
+                      <Image
+                        src="https://cdn-icons-gif.flaticon.com/8121/8121267.gif"
+                        width="50"
+                        height="50"
+                        className="-hue-rotate-[38deg] saturate-[.85]"
+                        alt=""
+                      />
+                      <p className="font-medium text-green-700">
+                        OPS! Not have any critical task for you today
+                      </p>
+                    </div>
                   </>
                 )}
               </div>
             </div>
             <ExerciseModal
               modalClass={modalClassEx}
-              exercise={exercise}
+              exercise={ex_fetch}
               setOpenModalEx={setOpenModalEx}
               openModalEx={openModalEx}
-            />
-            <PostModal
-              modalClass={modalClassPost}
-              post={post}
-              setOpenModalPost={setOpenModalPost}
-              openModalPost={openModalPost}
             />
           </>
         )}

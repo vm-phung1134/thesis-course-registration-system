@@ -1,4 +1,3 @@
-import { Button } from "@/components/Atoms";
 import { ROLE_ASSIGNMENT } from "@/contexts/authContext";
 import { useClassroomStateContext } from "@/contexts/classroomState";
 import { INITIATE_CLASSROOM, STATE_LECTURER_CLASSROOM } from "@/data";
@@ -6,14 +5,15 @@ import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { IAuthObject } from "@/interface/auth";
 import { IClassroomObject } from "@/interface/classroom";
 import { unsubscribeState } from "@/redux/reducer/auth/api";
-import { getClassroom, updateClassroom } from "@/redux/reducer/classroom/api";
+import { updateClassroom } from "@/redux/reducer/classroom/api";
 import { useAppDispatch } from "@/redux/store";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { FC, MouseEvent, useState } from "react";
+import { FC, useState } from "react";
 import { ModalConfirm } from "..";
 import classNames from "classnames";
 import Link from "next/link";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 export interface ICardLecturerInClassProps {
   lecturer: IAuthObject;
@@ -94,7 +94,11 @@ export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
   };
 
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.7, ease: "easeOut" }}
+    >
       <h3 className="text-sm font-medium capitalize">
         Thesis graduation - CT550
       </h3>
@@ -224,6 +228,6 @@ export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
           underMessage="You will added into blacklist of lecturer"
         />
       </div>
-    </>
+    </motion.div>
   );
 };

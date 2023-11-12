@@ -1,8 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
-import { Button, NormalAvatar, SnipperRound } from "@/components/Atoms";
-import Image from "next/image";
+import { NormalAvatar, SnipperRound } from "@/components/Atoms";
 import { FC, useEffect, useState } from "react";
 import { IClassroomObject } from "@/interface/classroom";
+import { motion } from "framer-motion";
 
 export interface IUnSubscribeViewProps {
   classroom: IClassroomObject | null;
@@ -13,14 +13,19 @@ export const UnSubscribeView: FC<IUnSubscribeViewProps> = ({ classroom }) => {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 1500);
+    }, 1200);
   }, []);
   return (
     <>
       {loading ? (
         <SnipperRound />
       ) : (
-        <div className="fixed h-[100vh] w-full">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+          className="fixed h-[100vh] w-full pt-10"
+        >
           <div className="relative h-fit">
             <div className="absolute -top-28 bottom-0 left-0 -right-40">
               <div className="bg-gradient-to-t from-green-900 to-green-500">
@@ -116,7 +121,7 @@ export const UnSubscribeView: FC<IUnSubscribeViewProps> = ({ classroom }) => {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       )}
     </>
   );

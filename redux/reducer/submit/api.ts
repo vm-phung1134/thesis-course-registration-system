@@ -3,6 +3,7 @@ import axios from "axios";
 import { token } from "./type";
 import { ISubmitObject } from "@/interface/submit";
 import { IExerciseObject } from "@/interface/exercise";
+import { IAuthObject } from "@/interface/auth";
 
 // GET ALL SUBMITS
 const getAllSubmits = createAsyncThunk(
@@ -96,12 +97,31 @@ const updateSubmit = createAsyncThunk(
   }
 );
 
+// GET ALL SUBMITS OF STUDENT
+const getAllSubmitStud = createAsyncThunk(
+  "submit/getAllSubmitStud",
+  async (postData: IAuthObject) => {
+    const response = await axios.get(
+      `http://localhost:5000/api/submit/student/${postData.id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    if (response.status === 200) {
+      return response.data;
+    }
+    throw new Error("Failed to get all submit of student");
+  }
+);
+
 // DELETE SUBMIT
 const deleteSubmit = createAsyncThunk(
   "submit/deleteSubmit",
   async (submitData: ISubmitObject) => {
     const response = await axios.delete(
-      `http://localhost:5000/api/submit/${submitData.id || ""}`,
+      `http://localhost:5000/api/submit/${submitData.id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -115,4 +135,11 @@ const deleteSubmit = createAsyncThunk(
   }
 );
 
-export { getAllSubmits, getSubmit, createSubmit, updateSubmit, deleteSubmit };
+export {
+  getAllSubmits,
+  getSubmit,
+  createSubmit,
+  updateSubmit,
+  deleteSubmit,
+  getAllSubmitStud,
+};
