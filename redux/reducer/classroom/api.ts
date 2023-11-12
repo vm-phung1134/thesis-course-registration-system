@@ -6,7 +6,7 @@ import { IAuthObject } from "@/interface/auth";
 
 // GET ALL CLASSROOM
 const getAllClassrooms = createAsyncThunk(
-  "classroom/getAllClassroom",
+  "member/getAllClassrooms",
   async () => {
     const response = await axios.get("http://localhost:5000/api/classroom", {
       headers: {
@@ -16,7 +16,7 @@ const getAllClassrooms = createAsyncThunk(
     if (response.status === 200) {
       return response.data;
     }
-    throw new Error("Failed to get all classroom");
+    throw new Error("Failed to get all members");
   }
 );
 

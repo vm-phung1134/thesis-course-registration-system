@@ -69,12 +69,12 @@ function ScheduleDetail() {
                   <ul className="text-sm flex flex-col gap-2">
                     <li className="flex gap-2">
                       <p>Chairman of the Council: </p>
-                      <p className="capitalize font-medium">Tran cong an</p>
+                      <p className="capitalize font-medium">Nguyen Vo Danh</p>
                     </li>
                     <li className="flex gap-2">
                       <p>The clerk to the council: </p>
                       <p className="capitalize font-medium">
-                        Tran Thi thuy trang
+                        Tran Thi le trang
                       </p>
                     </li>
                   </ul>
@@ -158,7 +158,7 @@ function ScheduleDetail() {
                           </th>
                           <th className="px-5 py-4 whitespace-nowrap">
                             <div className="font-medium text-center">
-                              {`Time ( 24 hours )`}
+                              Time
                             </div>
                           </th>
                           <th className="px-5 py-4 whitespace-nowrap">
@@ -207,7 +207,7 @@ function ScheduleDetail() {
                                       href={`/report-schedule/schedule-detail/thesis-student/${student?.student?.infor?.id}`}
                                     >
                                       <button className="text-sky-700">
-                                        View
+                                        Join
                                       </button>
                                     </Link>
                                   </div>
@@ -235,7 +235,7 @@ function ScheduleDetail() {
                           </th>
                           <th className="px-3 py-4 whitespace-nowrap">
                             <div className="font-medium text-center">
-                              {`Time ( 24 hours )`}
+                              Time
                             </div>
                           </th>
                           <th className="px-5 py-4 whitespace-nowrap">
@@ -280,7 +280,7 @@ function ScheduleDetail() {
                                       href={`/report-schedule/schedule-detail/thesis-student/${student?.student?.infor?.id}`}
                                     >
                                       <button className="text-sky-700">
-                                        View
+                                        Join
                                       </button>
                                     </Link>
                                   </div>

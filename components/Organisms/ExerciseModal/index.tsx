@@ -179,14 +179,14 @@ const ReportStatusLecturerView: FC<IReportStatusLecturerViewProps> = ({
     <>
       <div className="my-3 h-[1px]"></div>
       <div className="flex gap-3 my-3 pb-2 relative overflow-hidden">
-        <div className="bg-green-700 transform rotate-45 absolute -top-[5.5rem] -left-36 bottom-0 h-[150px] w-full"></div>
+        <div className="bg-green-700 transform rotate-45 absolute -top-[5.8rem] -left-36 bottom-0 h-[150px] w-full"></div>
         <p className="flex relative flex-col items-center flex-grow py-2 text-white">
-          <span className="font-medium">Submitted</span>
-          <span className="text-xl font-bold">{submited.length || 0}</span>
+          <span className="text-sm">Submitted</span>
+          <span className="text-xl font-medium">{submited.length || 0}</span>
         </p>
         <p className="flex flex-col items-center flex-grow py-2">
-          <span className="font-medium">Assignment</span>
-          <span className="text-xl font-bold">15</span>
+          <span className="text-sm">Assignment</span>
+          <span className="text-xl font-medium">15</span>
         </p>
       </div>
       <div className="flex justify-start mb-3">
@@ -196,7 +196,7 @@ const ReportStatusLecturerView: FC<IReportStatusLecturerViewProps> = ({
           options={DATA_FILTER_COURSE}
         />
       </div>
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-2 overflow-y-scroll">
         {submited?.map((submit) => {
           return <CardStudentShort key={submit.id} submit={submit} />;
         })}

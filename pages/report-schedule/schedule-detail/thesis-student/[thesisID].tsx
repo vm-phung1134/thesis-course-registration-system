@@ -121,17 +121,13 @@ function ThesisDefenseStudentDetail() {
                     </h5>
                     <ul className="flex gap-3 flex-wrap">
                       <li className="flex gap-2">
-                        <p className="text-gray-600">Full name:</p>
+                        <p className="text-gray-600">ID Student:</p>
                         <p className="text-gray-700 font-medium">
                           {
                             studentScheduled?.schedule?.timeSlots[0]?.student
                               ?.infor?.name
                           }
                         </p>
-                      </li>
-                      <li className="flex gap-2">
-                        <p className="text-gray-600">ID student:</p>
-                        <p className="text-gray-700 font-medium">B1910282</p>
                       </li>
                       <li className="flex gap-2">
                         <p className="text-gray-600">Email:</p>

@@ -8,7 +8,11 @@ import { unsubscribeState } from "@/redux/reducer/auth/api";
 import { useAppDispatch } from "@/redux/store";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import classNames from "classnames";
-import { ModalConfirm } from "@/components/Molecules";
+import {
+  EmptySpace,
+  FilterScheduledForm,
+  ModalConfirm,
+} from "@/components/Molecules";
 import { ClassroomCard } from "../..";
 import { useSubscribeStateContext } from "@/contexts/subscribeState";
 import { IMemberObject } from "@/interface/member";
@@ -77,7 +81,7 @@ export const WaitingView: FC<IWaitingViewProps> = ({ classroom }) => {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 1300);
+    }, 1200);
   }, []);
   return (
     <>
@@ -104,11 +108,18 @@ export const WaitingView: FC<IWaitingViewProps> = ({ classroom }) => {
                 />
               </div>
             </div>
+            <FilterScheduledForm holderText="Searching classroom ..." />
           </div>
           <div className="flex flex-wrap gap-5 mt-5">
             {(subscribeState.length > 0 ? subscribeState : []).map(
               (item: IMemberObject) => {
-                return <ClassroomCard key={item.id} item={item.classroom} />;
+                return (
+                  <ClassroomCard
+                    key={item.id}
+                    item={item.classroom}
+                    index={0}
+                  />
+                );
               }
             )}
           </div>

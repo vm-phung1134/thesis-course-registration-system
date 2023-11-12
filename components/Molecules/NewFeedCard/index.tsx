@@ -14,7 +14,7 @@ export const NewFeedCard: FC<INewFeedCardProps> = ({
   handleOpenTaskModal,
 }) => {
   return (
-    <div className="rounded-t-xl px-5 py-3 text-sm border relative overflow-hidden">
+    <div className="rounded-t-xl px-5 py-3 text-sm relative overflow-hidden">
       <div className="-left-72 top-0 bottom-0 w-full h-full bg-green-700 absolute -skew-x-[40deg]"></div>
       <div className="flex justify-between items-center relative">
         <div className="flex gap-2">

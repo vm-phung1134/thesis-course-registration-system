@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { MainboardTemplate } from "@/components/Templates";
-import { Breadcrumb, Button, Spinner } from "@/components/Atoms";
+import { Breadcrumb, Spinner } from "@/components/Atoms";
 import {
   NoSubscribeView,
   UnSubscribeView,
@@ -12,7 +12,8 @@ import { BREADCRUMB_MAINBOARD } from "@/components/Organisms/MainboardStatus/moc
 import { useClassroomStateContext } from "@/contexts/classroomState";
 import { useSubscribeStateContext } from "@/contexts/subscribeState";
 import { IMemberObject } from "@/interface/member";
-import { INITIATE_CLASSROOM, STATE_AUTH_CLASSROOM } from "@/data";
+import { STATE_AUTH_CLASSROOM } from "@/data";
+
 type MenuItem = {
   id: number;
   label: string;
@@ -50,9 +51,8 @@ function MainboardPage() {
   const handleClick = (item: MenuItem) => {
     setSelectedItem(item);
   };
-
   const renderStudentView = () => {
-    if (authClassroomState?.classCourse !== "") {
+    if (authClassroomState && authClassroomState?.classCourse !== "") {
       return <UnSubscribeView classroom={authClassroomState} />;
     } else {
       switch (selectedItem?.id) {
@@ -90,11 +90,13 @@ function MainboardPage() {
         <Spinner />
       ) : (
         <MainboardTemplate title="Mainboard Thesis | Thesis course registration system">
-          {currentUser?.role === ROLE_ASSIGNMENT.STUDENT &&
-            checkIsField(
-              STATE_AUTH_CLASSROOM.WAITING,
-              STATE_AUTH_CLASSROOM.NO_SUB
-            ) && <Breadcrumb dataBreadcrumb={BREADCRUMB_MAINBOARD} />}
+          <Breadcrumb dataBreadcrumb={BREADCRUMB_MAINBOARD} />
+          <div className="py-2 my-3 flex gap-2 items-center">
+            <h4 className="text-xl capitalize text-green-700 font-medium ">
+              Register <span className="text-green-700"> for instructors</span>
+            </h4>
+            <div className="flex-grow h-[0.5px] bg-green-700"></div>
+          </div>
           {currentUser?.role === ROLE_ASSIGNMENT.STUDENT &&
             checkIsField(
               STATE_AUTH_CLASSROOM.WAITING,

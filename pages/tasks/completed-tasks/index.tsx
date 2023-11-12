@@ -150,6 +150,20 @@ function CriticalTasks() {
                     />
                   )
                 )}
+                {exercises.length === 0 && (
+                  <div className="h-60 flex flex-col justify-center items-center p-5 mt-5">
+                    <Image
+                      src="https://yi-files.s3.eu-west-1.amazonaws.com/products/794000/794104/1354385-full.jpg"
+                      width="200"
+                      height="200"
+                      className="-hue-rotate-[38deg] saturate-[.85]"
+                      alt=""
+                    />
+                    <p className="text-lg text-gray-400">
+                      Ops! We do not have exercise or post for you today
+                    </p>
+                  </div>
+                )}
               </div>
               <div className="w-4/12">
                 {exercises.length > 0 ? (

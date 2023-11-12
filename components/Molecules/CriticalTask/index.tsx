@@ -7,7 +7,7 @@ import { FC } from "react";
 
 export interface ICriticalTaskProps {
   exercise: IExerciseObject | null;
-  submitStuds: ISubmitObject[];
+  submitStuds?: ISubmitObject[];
 }
 
 export const CriticalTask: FC<ICriticalTaskProps> = ({
@@ -29,7 +29,7 @@ export const CriticalTask: FC<ICriticalTaskProps> = ({
           <div className="justify-between flex text-sm">
             <h2 className="font-medium">{exercise?.category?.label} stage</h2>
             <p className="text-xs font-medium">
-              {checkCompletedTask(submitStuds) ? "Submitted" : ""}
+              {checkCompletedTask(submitStuds || []) ? "Submitted" : ""}
             </p>
           </div>
 

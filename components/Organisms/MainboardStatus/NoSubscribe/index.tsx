@@ -1,5 +1,5 @@
 import { SelectBox, SnipperRound } from "@/components/Atoms";
-import { FilterScheduledForm } from "@/components/Molecules";
+import { EmptySpace, FilterScheduledForm } from "@/components/Molecules";
 import { ICategoryObject } from "@/interface/category";
 import { IOptionItem } from "@/interface/filter";
 import { FC, useState, useEffect } from "react";
@@ -10,6 +10,7 @@ import { useQuery } from "@tanstack/react-query";
 import { IClassroomObject } from "@/interface/classroom";
 import { getAllClassrooms } from "@/redux/reducer/classroom/api";
 import { useTableSearch } from "@/hooks/useTableSearch";
+import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 
 export interface INoSubscribeViewProps {}
 
@@ -29,7 +30,7 @@ export const NoSubscribeView: FC<INoSubscribeViewProps> = () => {
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState<boolean>(true);
   const { data: classrooms } = useQuery<IClassroomObject[]>({
-    queryKey: ["classrooms"],
+    queryKey: ["all-classrooms"],
     queryFn: async () => {
       const action = await dispatch(getAllClassrooms());
       return action.payload || [];
@@ -41,7 +42,7 @@ export const NoSubscribeView: FC<INoSubscribeViewProps> = () => {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 1300);
+    }, 1200);
   }, []);
   return (
     <>
@@ -49,13 +50,6 @@ export const NoSubscribeView: FC<INoSubscribeViewProps> = () => {
         <SnipperRound />
       ) : (
         <>
-          <div className="py-2 flex gap-2 items-center">
-            <h4 className="text-xl capitalize text-green-700 font-medium ">
-              Register <span className="text-green-700"> for instructors</span>
-            </h4>
-            <div className="flex-grow h-[0.5px] bg-green-700"></div>
-          </div>
-          <p className="text-sm flex justify-end text-gray-600">{`Total classroom (${classrooms?.length})`}</p>
           <div className="flex justify-between items-center">
             <div className="mt-3 flex gap-3 w-1/3">
               <div className="flex-grow">
@@ -85,6 +79,9 @@ export const NoSubscribeView: FC<INoSubscribeViewProps> = () => {
               return <ClassroomCard index={index} key={item.id} item={item} />;
             })}
           </div>
+          {classrooms?.length === 0 && (
+            <EmptySpace text="There is no classroom currently" />
+          )}
         </>
       )}
     </>

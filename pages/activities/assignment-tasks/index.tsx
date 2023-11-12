@@ -23,6 +23,8 @@ import classNames from "classnames";
 import { ExerciseModal } from "@/components/Organisms";
 import { INITIATE_CLASSROOM, INITIATE_EXERCISE } from "@/data";
 import Image from "next/image";
+import { getExerciseWithNearestDeadline } from "@/utils/getDeadline";
+import { ISubmitObject } from "@/interface/submit";
 
 function AssignmentTasks() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -39,12 +41,6 @@ function AssignmentTasks() {
     label: "Filter tasks",
     value: "",
   });
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-  }, []);
-
   // HANDLE EXERCISE
   const [openModalEx, setOpenModalEx] = useState<boolean>(false);
   const modalClassEx = classNames({
@@ -79,13 +75,17 @@ function AssignmentTasks() {
   });
 
   const handleCriticalEx = (arr: IExerciseObject[]) => {
-    return arr
-      .filter((task) => task?.attachments?.length === 0)
-      .sort(
-        (a, b) =>
-          new Date(a.deadline).getTime() - new Date(b.deadline).getTime()
-      );
+    return arr.sort(
+      (a, b) => new Date(b.deadline).getTime() - new Date(a.deadline).getTime()
+    );
   };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 1200);
+  }, []);
+
   return (
     <>
       <MainboardTemplate title="Assignment tasks | Thesis course registration system">
@@ -96,7 +96,8 @@ function AssignmentTasks() {
             <Breadcrumb dataBreadcrumb={BREADCRUMB_ASSIGNMENT_TASKS} />
             <div className="my-3 py-2 flex gap-2 items-center">
               <h4 className="text-xl capitalize text-green-700 font-medium ">
-                Assignment <span className="text-orange-600"> Tasks</span>
+                Assignment{" "}
+                <span className="text-orange-600"> Report progress</span>
               </h4>
               <div className="flex-grow h-[0.5px] bg-green-700"></div>
             </div>
@@ -119,7 +120,7 @@ function AssignmentTasks() {
                     />
                   </div>
                 </div>
-                {exercises?.map((ex, index) => (
+                {handleCriticalEx(exercises)?.map((ex, index) => (
                   <ExerciseCard
                     handleOpenTaskModal={handleOpenExModal}
                     key={ex.id}
@@ -128,7 +129,7 @@ function AssignmentTasks() {
                 ))}
               </div>
               <div className="w-4/12">
-                {handleCriticalEx(exercises).length > 0 ? (
+                {exercises.length > 0 ? (
                   <CriticalTask exercise={handleCriticalEx(exercises)[0]} />
                 ) : (
                   <div className="h-60 flex gap-5 flex-col justify-center shadow-xl items-center p-5 border rounded-xl">

@@ -35,4 +35,5 @@ export * from "./AssessForm";
 export * from "./Admin";
 export * from "./UploadFinalFileForm";
 export * from "./PointCard";
-export * from "./ContentCommentModal"
+export * from "./ContentCommentModal";
+export * from "./EmptySpace";

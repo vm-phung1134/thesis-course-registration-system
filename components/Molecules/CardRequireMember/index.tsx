@@ -7,8 +7,10 @@ import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { convertToUnaccentedString } from "@/utils/convertString";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { FC, useEffect } from "react";
+import { motion } from "framer-motion";
 
 export interface ICardRequireMemberProps {
+  index: number;
   require: IMemberObject;
   setOpenMemberModal: React.Dispatch<React.SetStateAction<boolean>>;
   openMemberModal: boolean;
@@ -16,6 +18,7 @@ export interface ICardRequireMemberProps {
 }
 export const CardRequireMember: FC<ICardRequireMemberProps> = ({
   require,
+  index,
   setOpenMemberModal,
   openMemberModal,
   handleGetTopicRequire,
@@ -80,7 +83,12 @@ export const CardRequireMember: FC<ICardRequireMemberProps> = ({
     dispatch(getTopic(require?.member));
   }, [dispatch, require?.member]);
   return (
-    <div className="p-3 bg-slate-100 shadow-lg rounded-xl">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1, delay: index * 0.2 }}
+      className="p-3 bg-slate-100 shadow-lg rounded-xl"
+    >
       <div className="flex gap-4 items-center">
         <Avatar
           online={true}
@@ -123,6 +131,6 @@ export const CardRequireMember: FC<ICardRequireMemberProps> = ({
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };

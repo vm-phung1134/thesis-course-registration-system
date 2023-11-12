@@ -77,7 +77,7 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
               <SnipperRound />
             ) : (
               <>
-                {authClassroomState?.classCourse !== "" && (
+                {(authClassroomState !== null) && (
                   <ClassroomFound
                     classroom={authClassroomState || INITIATE_CLASSROOM}
                     setCreatePostModal={setCreatePostModal}
@@ -86,7 +86,7 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
                     {children}
                   </ClassroomFound>
                 )}
-                {!authClassroomState?.classCourse && <ClassroomNotFound />}
+                {authClassroomState == null && <ClassroomNotFound />}
               </>
             )}
           </div>

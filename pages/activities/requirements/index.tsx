@@ -8,7 +8,7 @@ import {
 } from "@/components/Atoms";
 import { MainboardTemplate } from "@/components/Templates";
 import { BREADCRUMB_REQUIREMENT } from "./mock-data";
-import { CardRequireMember } from "@/components/Molecules";
+import { CardRequireMember, FilterScheduledForm } from "@/components/Molecules";
 import { InforMemberModal } from "@/components/Organisms";
 import { IMemberObject } from "@/interface/member";
 import { getAllRequirementClassroom } from "@/redux/reducer/requirement/api";
@@ -25,6 +25,7 @@ import {
   DATA_FILTER_COURSE,
   DATA_FILTER_TOPICS,
 } from "@/components/Organisms/MainboardStatus/mock-data";
+import { useTableSearch } from "@/hooks/useTableSearch";
 
 function RequirementPage() {
   const { currentUser } = useCurrentUser();
@@ -59,6 +60,11 @@ function RequirementPage() {
     initialData: [],
   });
 
+  const {
+    filteredData: require_filteredData,
+    handleSearch: require_handleSearch,
+  } = useTableSearch(requirements);
+
   const handleGetTopicRequire = (require: IMemberObject) => {
     dispatch(getTopic(require?.member));
   };
@@ -70,7 +76,7 @@ function RequirementPage() {
   }, []);
   return (
     <MainboardTemplate title="Requirements | Thesis manage registration">
-      {loading && requirements ? (
+      {loading ? (
         <SnipperRound />
       ) : (
         <div>
@@ -101,12 +107,17 @@ function RequirementPage() {
                   />
                 </div>
               </div>
+              <FilterScheduledForm
+                handleSearch={require_handleSearch}
+                holderText="Search requirement ..."
+              />
             </div>
-            {requirements.length > 0 ? (
+            {require_filteredData?.length > 0 ? (
               <div className="grid grid-cols-3 gap-3 mt-3">
-                {requirements?.map((listRequirement) => {
+                {requirements?.map((listRequirement, index) => {
                   return (
                     <CardRequireMember
+                      index={index}
                       handleGetTopicRequire={handleGetTopicRequire}
                       setOpenMemberModal={setOpenModalMemberDetail}
                       openMemberModal={openModalMemberDetail}

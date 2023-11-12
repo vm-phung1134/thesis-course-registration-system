@@ -15,7 +15,7 @@ export const ClassroomNotFound: FC<IClassroomNotFoundProps> = () => {
         className="-hue-rotate-[38deg] saturate-[.85]"
         alt=""
       />
-      <p className="py-5 text-gray-500 uppercase">
+      <p className="py-5 text-gray-400 text-lg">
         Ops! We have not found your classroom yet
       </p>
       <Link href="/mainboard">
