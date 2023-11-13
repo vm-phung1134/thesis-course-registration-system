@@ -1,9 +1,9 @@
-import { SelectBox, SnipperRound } from "@/components/Atoms";
+import { Breadcrumb, SelectBox, SnipperRound } from "@/components/Atoms";
 import { EmptySpace, FilterScheduledForm } from "@/components/Molecules";
 import { ICategoryObject } from "@/interface/category";
 import { IOptionItem } from "@/interface/filter";
 import { FC, useState, useEffect } from "react";
-import { DATA_FILTER_COURSE, DATA_FILTER_TOPICS } from "../mock-data";
+import { BREADCRUMB_MAINBOARD, DATA_FILTER_COURSE, DATA_FILTER_TOPICS } from "../mock-data";
 import { ClassroomCard } from "../..";
 import { useAppDispatch } from "@/redux/store";
 import { useQuery } from "@tanstack/react-query";
@@ -50,6 +50,13 @@ export const NoSubscribeView: FC<INoSubscribeViewProps> = () => {
         <SnipperRound />
       ) : (
         <>
+          <Breadcrumb dataBreadcrumb={BREADCRUMB_MAINBOARD} />
+          <div className="py-2 my-3 flex gap-2 items-center">
+            <h4 className="text-xl capitalize text-green-700 font-medium ">
+              Register <span className="text-green-700"> for instructors</span>
+            </h4>
+            <div className="flex-grow h-[0.5px] bg-green-700"></div>
+          </div>
           <div className="flex justify-between items-center">
             <div className="mt-3 flex gap-3 w-1/3">
               <div className="flex-grow">

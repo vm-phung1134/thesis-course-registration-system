@@ -1,4 +1,9 @@
-import { Button, SelectBox, SnipperRound } from "@/components/Atoms";
+import {
+  Breadcrumb,
+  Button,
+  SelectBox,
+  SnipperRound,
+} from "@/components/Atoms";
 import Image from "next/image";
 import { FC, useEffect, useState } from "react";
 import { IClassroomObject } from "@/interface/classroom";
@@ -18,7 +23,11 @@ import { useSubscribeStateContext } from "@/contexts/subscribeState";
 import { IMemberObject } from "@/interface/member";
 import { ICategoryObject } from "@/interface/category";
 import { IOptionItem } from "@/interface/filter";
-import { DATA_FILTER_COURSE, DATA_FILTER_TOPICS } from "../mock-data";
+import {
+  BREADCRUMB_MAINBOARD,
+  DATA_FILTER_COURSE,
+  DATA_FILTER_TOPICS,
+} from "../mock-data";
 
 export interface IWaitingViewProps {
   classroom?: IClassroomObject;
@@ -89,6 +98,13 @@ export const WaitingView: FC<IWaitingViewProps> = ({ classroom }) => {
         <SnipperRound />
       ) : (
         <>
+          <Breadcrumb dataBreadcrumb={BREADCRUMB_MAINBOARD} />
+          <div className="py-2 my-3 flex gap-2 items-center">
+            <h4 className="text-xl capitalize text-green-700 font-medium ">
+              Register <span className="text-green-700"> for instructors</span>
+            </h4>
+            <div className="flex-grow h-[0.5px] bg-green-700"></div>
+          </div>
           <div className="flex justify-between items-center">
             <div className="mt-3 flex gap-3 w-1/3">
               <div className="flex-grow">

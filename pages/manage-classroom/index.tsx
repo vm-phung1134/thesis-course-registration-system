@@ -156,7 +156,7 @@ function ManageClassroomTab() {
           </div>
           <div className="col-span-8">
             <div className="h-fit w-full">
-              {exercises.length > 0 || posts.length > 0 ? (
+              {exercises.length > 0 ? (
                 <>
                   {exercises.length > 0 && (
                     <div className="flex flex-col gap-3">

@@ -238,7 +238,6 @@ export const TestingSchedule: FC<ITestingScheduleprops> = ({}) => {
                 </div>
                 {addStudefMutation.isLoading ? (
                   <Button
-                    type="submit"
                     className="bg-green-700 text-white px-10"
                     title="Loading..."
                   />

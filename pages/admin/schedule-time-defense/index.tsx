@@ -45,7 +45,7 @@ function DashboardPage() {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 1300);
+    }, 1200);
   }, []);
   return (
     <>

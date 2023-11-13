@@ -41,14 +41,7 @@ function RequirementPage() {
       value: "",
     }
   );
-  const [openModalMemberDetail, setOpenModalMemberDetail] =
-    useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
-  const { topic } = useAppSelector((state) => state.topicReducer);
-  const modalClass = classNames({
-    "modal modal-bottom sm:modal-middle": true,
-    "modal-open": openModalMemberDetail,
-  });
   // HANDLE CALL API
   const dispatch = useAppDispatch();
   const { data: requirements } = useQuery<IMemberObject[]>({
@@ -65,14 +58,10 @@ function RequirementPage() {
     handleSearch: require_handleSearch,
   } = useTableSearch(requirements);
 
-  const handleGetTopicRequire = (require: IMemberObject) => {
-    dispatch(getTopic(require?.member));
-  };
-
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 1300);
+    }, 1200);
   }, []);
   return (
     <MainboardTemplate title="Requirements | Thesis manage registration">
@@ -118,9 +107,6 @@ function RequirementPage() {
                   return (
                     <CardRequireMember
                       index={index}
-                      handleGetTopicRequire={handleGetTopicRequire}
-                      setOpenMemberModal={setOpenModalMemberDetail}
-                      openMemberModal={openModalMemberDetail}
                       key={listRequirement.id}
                       require={listRequirement}
                     />
@@ -150,12 +136,6 @@ function RequirementPage() {
           </div>
         </div>
       )}
-      <InforMemberModal
-        topic={topic}
-        modalClass={modalClass}
-        setOpenMemberModal={setOpenModalMemberDetail}
-        openMemberModal={openModalMemberDetail}
-      />
     </MainboardTemplate>
   );
 }

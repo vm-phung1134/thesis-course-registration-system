@@ -105,6 +105,7 @@ export const CreateExerciseForm: FC<ICreateExerciseFormProps> = ({
           setSelectedFiles([]);
           setSelectedStage(INITIATE_CATEGORY);
           setSubmitting(false);
+          setToggleForm(!toggleForm)
         }, 400);
       }}
     >

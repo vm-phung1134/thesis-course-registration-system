@@ -90,13 +90,6 @@ function MainboardPage() {
         <Spinner />
       ) : (
         <MainboardTemplate title="Mainboard Thesis | Thesis course registration system">
-          <Breadcrumb dataBreadcrumb={BREADCRUMB_MAINBOARD} />
-          <div className="py-2 my-3 flex gap-2 items-center">
-            <h4 className="text-xl capitalize text-green-700 font-medium ">
-              Register <span className="text-green-700"> for instructors</span>
-            </h4>
-            <div className="flex-grow h-[0.5px] bg-green-700"></div>
-          </div>
           {currentUser?.role === ROLE_ASSIGNMENT.STUDENT &&
             checkIsField(
               STATE_AUTH_CLASSROOM.WAITING,

@@ -83,7 +83,7 @@ export const ACreateClassroomForm: FC<IACreateClassroomFormProps> = ({
                 label="Quantity student"
                 type="number"
                 className="rounded-xl bg-slate-100 border-none"
-                nameField="quantity"
+                nameField="quantityStudent"
                 value={values.quantityStudent}
               />
             </div>

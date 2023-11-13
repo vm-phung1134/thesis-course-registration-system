@@ -353,7 +353,7 @@ export const CreateClassroomTab: FC<ICreateClassroomTab> = ({}) => {
         <div className="flex justify-between items-center my-2">
           <div className="mb-3">
             <h4 className="font-medium">Classrooms</h4>
-            <p className="text-sm text-slate-500">Total 3 classrooms</p>
+            <p className="text-sm text-slate-500">Total {classrooms?.length} classrooms</p>
           </div>
           <div className="flex gap-3">
             <IconButton

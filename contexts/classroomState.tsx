@@ -30,18 +30,18 @@ export const ClassroomStateContextProvider: React.FC<ClassroomStateProps> = ({
   const dispatch = useAppDispatch();
   const { currentUser } = useCurrentUser();
   const { data: classroom } = useQuery<IClassroomObject | null>({
-    queryKey: ["classroom", currentUser],
+    queryKey: ["classroom", currentUser?.id],
     queryFn: async () => {
-      const action = await dispatch(getClassroom(currentUser));
+      const action = await dispatch(getClassroom(currentUser?.id));
       return action.payload || {};
     },
     initialData: null,
   });
 
   const { data: member } = useQuery<IMemberObject | null>({
-    queryKey: ["member", currentUser],
+    queryKey: ["member", currentUser?.id],
     queryFn: async () => {
-      const action = await dispatch(getMember(currentUser));
+      const action = await dispatch(getMember(currentUser?.id));
       return action.payload || {};
     },
     initialData: null,
@@ -50,7 +50,7 @@ export const ClassroomStateContextProvider: React.FC<ClassroomStateProps> = ({
   return (
     <ClassroomStateContext.Provider
       value={{
-        authClassroomState: (member ? member.classroom : classroom) ,
+        authClassroomState: member ? member.classroom : classroom,
       }}
     >
       {children}

@@ -1,5 +1,6 @@
 /* eslint-disable react/display-name */
 import { NormalAvatar } from "@/components/Atoms";
+import { INITIATE_COMMENT } from "@/data";
 import { ICommentObject } from "@/interface/comment";
 import { IExerciseObject } from "@/interface/exercise";
 import { IPostObject } from "@/interface/post";
@@ -17,11 +18,12 @@ export const ContentComment: FC<IContentCommentProps> = memo(
   ({ task, quantity }) => {
     const dispatch = useAppDispatch();
     const { data: comments } = useQuery<ICommentObject[]>({
-      queryKey: ["comments", task.uid],
+      queryKey: ["comments", task?.uid],
       queryFn: async () => {
         const action = await dispatch(getAllComments(task.uid));
         return action.payload;
       },
+      initialData: []
     });
     return (
       <>

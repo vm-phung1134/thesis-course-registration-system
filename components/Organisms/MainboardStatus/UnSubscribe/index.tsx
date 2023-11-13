@@ -27,7 +27,7 @@ export const UnSubscribeView: FC<IUnSubscribeViewProps> = ({ classroom }) => {
           className="fixed h-[100vh] w-full pt-10"
         >
           <div className="relative h-fit">
-            <div className="absolute -top-28 bottom-0 left-0 -right-40">
+            <div className="absolute -top-28 bottom-0 -left-5 -right-40">
               <div className="bg-gradient-to-t from-green-900 to-green-500">
                 <img
                   src="https://wildrift.leagueoflegends.com/static/volt-bottom-04-56cf6b160f445315e4c6a87da5bc5f23.png"
@@ -77,7 +77,7 @@ export const UnSubscribeView: FC<IUnSubscribeViewProps> = ({ classroom }) => {
             <button className="ml-5 mt-5 py-3 px-8 bg-green-700 hover:bg-[#141E37] transform ease-linear duration-300 text-white uppercase font-medium -skew-x-[20deg]">
               <p className="skew-x-12">Go to classroom</p>
             </button>
-            <div className="flex justify-end absolute right-[23rem] top-[19rem] text-gray-100">
+            <div className="flex justify-end absolute right-[23rem] top-[20rem] text-gray-100">
               <div className="w-[26rem]">
                 <h4 className="font-bold mb-3">
                   Information you need to know when participating in class:

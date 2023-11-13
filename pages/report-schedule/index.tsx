@@ -29,7 +29,7 @@ function ScheduleThesisDefensePage() {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 1500);
+    }, 1200);
   }, []);
   const {
     filteredData: council_filteredData,

@@ -109,7 +109,7 @@ function EnrollStudentPage() {
                 </div>
               </div>
               <div className="flex gap-5 w-full my-10">
-                <div className="flex flex-grow w-7/12 p-5 flex-col gap-2 bg-slate-50 rounded-xl">
+                <div className="flex flex-grow w-7/12 p-5 flex-col gap-2 border rounded-xl">
                   <h5 className="text-lg text-green-700 font-bold capitalize tracking-wider">
                     The thesis committee
                   </h5>
@@ -118,9 +118,9 @@ function EnrollStudentPage() {
                       <div key={lecturer?.id}>
                         <div className="">
                           <p className="text-gray-500">{`Examinator ${(index += 1)}`}</p>
-                          <div className="flex items-center bg-white shadow-lg rounded-lg p-3 my-2">
+                          <div className="flex items-center bg-slate-50 shadow-lg rounded-lg p-3 gap-3 my-2">
                             <NormalAvatar
-                              setSize="w-8"
+                              setSize="w-10"
                               photoSrc={lecturer?.photoSrc}
                             />
                             <div className="flex flex-col">

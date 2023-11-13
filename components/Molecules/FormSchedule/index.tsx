@@ -52,7 +52,7 @@ export const ScheduleForm: FC<IScheduleFormProps> = ({
           .unwrap()
           .then((data: IThesisDef) => {
             setCreateScheduled(data);
-            resolve(data)
+            resolve(data);
           })
           .catch((error) => {
             reject(error);

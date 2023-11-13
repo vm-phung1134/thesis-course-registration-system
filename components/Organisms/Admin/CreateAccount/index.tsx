@@ -322,7 +322,7 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
-                            key={lecturer.id}
+                            key={index}
                             className="hover:bg-gray-100 cursor-pointer dark:hover:bg-gray-700"
                           >
                             <td className="p-4 w-4">
