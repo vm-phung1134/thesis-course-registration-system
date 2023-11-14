@@ -18,6 +18,7 @@ import { useClassroomStateContext } from "@/contexts/classroomState";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { useUserCookies } from "@/hooks/useCookies";
 import { INITIATE_CLASSROOM } from "@/data";
+import { useCurrentUserContext } from "@/contexts/currentUserContext";
 
 export interface IClassroomProps {
   children: React.ReactNode;
@@ -46,7 +47,7 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
   // }, []);
 
   // HANDLE API
-  const { currentUser } = useCurrentUser();
+  const { currentUser } = useCurrentUserContext();
   const [user] = useUserCookies();
   const [loading, setLoading] = useState<boolean>(true);
   const { authClassroomState } = useClassroomStateContext();

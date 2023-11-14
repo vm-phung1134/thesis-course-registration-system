@@ -1,5 +1,6 @@
 import { Avatar, Button, NormalAvatar } from "@/components/Atoms";
 import { InforUserForm } from "@/components/Molecules";
+import { useCurrentUserContext } from "@/contexts/currentUserContext";
 import { INITIATE_AUTH } from "@/data";
 import { useUserCookies } from "@/hooks/useCookies";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
@@ -21,7 +22,7 @@ export const PersonalInformation: FC<IPersonalInformationProps> = () => {
     "modal modal-bottom sm:modal-middle": true,
     "modal-open": toggle,
   });
-  const { currentUser, user } = useCurrentUser();
+  const { currentUser } = useCurrentUserContext();
 
   const updateMutation = useMutation(
     (postData: IAuthObject) => {
@@ -38,7 +39,7 @@ export const PersonalInformation: FC<IPersonalInformationProps> = () => {
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["auth", user]);
+        queryClient.invalidateQueries(["auth", currentUser]);
       },
     }
   );

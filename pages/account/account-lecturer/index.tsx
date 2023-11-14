@@ -5,6 +5,7 @@ import { BREADCRUMB_ACCOUNT_LECTURER } from "./mock-data";
 import { ChangePassForm, InforUserForm } from "@/components/Molecules";
 import classNames from "classnames";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
+import { useCurrentUserContext } from "@/contexts/currentUserContext";
 
 function AccountLecturerPage() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -13,7 +14,7 @@ function AccountLecturerPage() {
     "modal modal-bottom sm:modal-middle": true,
     "modal-open": toggle,
   });
-  const { currentUser } = useCurrentUser();
+  const { currentUser } = useCurrentUserContext();
   function splitFullName(fullName: string): [string, string, string] {
     const nameParts = fullName.split(" ");
     const lastName = nameParts[0];

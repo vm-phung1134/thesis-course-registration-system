@@ -10,8 +10,11 @@ import { createStudentDef } from "@/redux/reducer/student-def/api";
 import { useAppDispatch } from "@/redux/store";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import classNames from "classnames";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 interface IMemberEnrolledProps {}
 
@@ -20,7 +23,7 @@ export const MemberEnrolled: FC<IMemberEnrolledProps> = ({}) => {
   const queryClient = useQueryClient();
   const { authClassroomState } = useClassroomStateContext();
   const { data: members } = useQuery<IMemberObject[]>({
-    queryKey: ["members", authClassroomState],
+    queryKey: ["members-enrolled", authClassroomState],
     queryFn: async () => {
       const action = await dispatch(getAllMemberClassroom(authClassroomState));
       return action.payload || [];
@@ -37,25 +40,18 @@ export const MemberEnrolled: FC<IMemberEnrolledProps> = ({}) => {
   };
 
   // Add student to student registered list and send to admin
-  const addMutation = useMutation(
-    (postData: IStudentDefObject) => {
-      return new Promise((resolve, reject) => {
-        dispatch(createStudentDef(postData))
-          .unwrap()
-          .then((data) => {
-            resolve(data);
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["members"]);
-      },
-    }
-  );
+  const addMutation = useMutation((postData: IStudentDefObject) => {
+    return new Promise((resolve, reject) => {
+      dispatch(createStudentDef(postData))
+        .unwrap()
+        .then((data) => {
+          resolve(data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  });
 
   const [openCreateConfirm, setOpenCreateConfirm] = useState<boolean>(false);
   const modalClassCreateConfirm = classNames({
@@ -75,6 +71,14 @@ export const MemberEnrolled: FC<IMemberEnrolledProps> = ({}) => {
       } as IStudentDefObject);
     });
   };
+  useEffect(() => {
+    if (addMutation.isSuccess) {
+      toast.success("Successfully send a list of student attend thesis defense", {
+        position: toast.POSITION.BOTTOM_LEFT,
+        autoClose: 2000,
+      });
+    }
+  }, [addMutation.isSuccess]);
   return (
     <div className="px-3 my-5">
       <div className="flex justify-between">
@@ -232,6 +236,13 @@ export const MemberEnrolled: FC<IMemberEnrolledProps> = ({}) => {
           </div>
         </div>
       </div>
+      <ToastContainer
+        toastStyle={{
+          color: "black",
+          fontSize: "14px",
+          fontFamily: "Red Hat Text",
+        }}
+      />
       <ModalConfirm
         modalClass={modalClassCreateConfirm}
         setOpenModal={setOpenCreateConfirm}

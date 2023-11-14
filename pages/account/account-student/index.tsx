@@ -11,6 +11,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getTopic } from "@/redux/reducer/topic/api";
 import { ITopicObject } from "@/interface/topic";
 import classNames from "classnames";
+import { useCurrentUserContext } from "@/contexts/currentUserContext";
 
 function AccountStudentPage() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -19,7 +20,7 @@ function AccountStudentPage() {
     "modal modal-bottom sm:modal-middle": true,
     "modal-open": toggle,
   });
-  const { currentUser } = useCurrentUser();
+  const { currentUser } = useCurrentUserContext();
   function splitFullName(fullName: string): [string, string, string] {
     const nameParts = fullName.split(" ");
     const lastName = nameParts[0];
@@ -30,9 +31,9 @@ function AccountStudentPage() {
   const [lastName, middleName, firstName] = splitFullName(currentUser?.name);
   const dispatch = useAppDispatch();
   const { data } = useQuery<ITopicObject>({
-    queryKey: ["topic", currentUser],
+    queryKey: ["topic", currentUser.id],
     queryFn: async () => {
-      const action = await dispatch(getTopic(currentUser));
+      const action = await dispatch(getTopic(currentUser.id));
       return action.payload;
     },
     initialData: INITIATE_TOPIC,

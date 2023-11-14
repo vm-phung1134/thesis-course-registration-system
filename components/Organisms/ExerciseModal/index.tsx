@@ -20,6 +20,7 @@ import { useQuery } from "@tanstack/react-query";
 import { FC, useState } from "react";
 import { DATA_FILTER_COURSE } from "../MainboardStatus/mock-data";
 import Image from "next/image";
+import { useCurrentUserContext } from "@/contexts/currentUserContext";
 
 export interface IExerciseModalProps {
   modalClass: string;
@@ -34,7 +35,7 @@ export const ExerciseModal: FC<IExerciseModalProps> = ({
   openModalEx,
   exercise,
 }) => {
-  const { currentUser } = useCurrentUser();
+  const { currentUser } = useCurrentUserContext();
   const dispatch = useAppDispatch();
   const { data: submit } = useQuery<ISubmitObject>({
     queryKey: [

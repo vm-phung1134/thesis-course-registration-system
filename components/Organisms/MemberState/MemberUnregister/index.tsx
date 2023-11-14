@@ -16,7 +16,7 @@ export const MemberUnregister: FC<IMemberUnregisterProps> = ({}) => {
   const dispatch = useAppDispatch();
   const { authClassroomState } = useClassroomStateContext();
   const { data: members } = useQuery<IMemberObject[]>({
-    queryKey: ["members", authClassroomState],
+    queryKey: ["members-unenrolled", authClassroomState],
     queryFn: async () => {
       const action = await dispatch(getAllMemberClassroom(authClassroomState));
       return action.payload || [];

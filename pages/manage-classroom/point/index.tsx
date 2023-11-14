@@ -10,10 +10,12 @@ import { NormalAvatar } from "@/components/Atoms";
 import { ICouncilDef } from "@/interface/schedule";
 import { getScheduleForStudent } from "@/redux/reducer/schedule-def/api";
 import Image from "next/image";
+import { useCurrentUserContext } from "@/contexts/currentUserContext";
+import { calculatorGPA, calculatorLetterPoint } from "@/utils/calculatorPoint";
 
 function PointDefTab() {
   const dispatch = useAppDispatch();
-  const { currentUser } = useCurrentUser();
+  const { currentUser } = useCurrentUserContext();
   const { data: studPoint } = useQuery<IPointDefObject>({
     queryKey: ["point-student", currentUser],
     queryFn: async () => {
@@ -29,12 +31,6 @@ function PointDefTab() {
       return action.payload || {};
     },
   });
-  const accountingPointStudef = (arr: IAssessItem[]) => {
-    return (
-      arr.reduce((total, assess) => total + assess.point, 0) /
-      studPoint?.assesses?.length
-    );
-  };
   return (
     <ClassroomTemplate title="Point thesis defense | Thesis course registration system">
       {studPoint?.id ? (
@@ -93,12 +89,16 @@ function PointDefTab() {
                 <li className="flex gap-3">
                   <span className="text-gray-500">GPA:</span>{" "}
                   <span className="font-medium text-red-600">
-                    {accountingPointStudef(studPoint?.assesses)}
+                    {calculatorGPA(studPoint?.assesses)}
                   </span>
                 </li>
                 <li className="flex gap-3">
                   <span className="text-gray-500">Letters Point:</span>
-                  <span>B+</span>
+                  <span>
+                    {calculatorLetterPoint(
+                      parseFloat(calculatorGPA(studPoint?.assesses))
+                    )}
+                  </span>
                 </li>
                 <li className="flex gap-3">
                   <span className="text-gray-500">Rating:</span>
@@ -114,21 +114,21 @@ function PointDefTab() {
             {studPoint?.assesses?.map((council, index) => (
               <div
                 key={council?.lecturer?.id}
-                className="shadow-xl overflow-hidden relative w-full border-2 rounded-xl px-5 py-4 flex flex-col justify-center"
+                className="shadow-xl overflow-hidden relative w-full rounded-xl px-5 py-4 flex flex-col justify-center"
               >
-                <div className="absolute top-3 right-1">
+                <div className="absolute top-3 right-3">
                   <NormalAvatar
                     photoSrc={council?.lecturer.photoSrc}
                     setSize="w-10"
                   />
                 </div>
-                <div className="relative flex flex-col gap-2">
+                <div className="relative flex flex-col">
                   <p className="text-base font-semibold">
-                    <span className="capitalize font-bold">
+                    <span className="capitalize font-bold text-sm">
                       {council?.lecturer?.name}
                     </span>
                   </p>
-                  <div className="text-sm flex flex-col gap-2">
+                  <div className="text-sm flex flex-col gap-1">
                     <p>{council?.lecturer?.email}</p>
                     <p>
                       <span className="text-gray-500">Grade: </span>
@@ -150,17 +150,17 @@ function PointDefTab() {
         </div>
       ) : (
         <div className="h-60 flex flex-col justify-center items-center p-5">
-        <Image
-          src="https://yi-files.s3.eu-west-1.amazonaws.com/products/794000/794104/1354385-full.jpg"
-          width="250"
-          height="250"
-          className="-hue-rotate-[38deg] saturate-[.85]"
-          alt=""
-        />
-        <p className="uppercase text-sm text-green-700">
-          Ops! Your result will be updated after report
-        </p>
-      </div>
+          <Image
+            src="https://yi-files.s3.eu-west-1.amazonaws.com/products/794000/794104/1354385-full.jpg"
+            width="250"
+            height="250"
+            className="-hue-rotate-[38deg] saturate-[.85]"
+            alt=""
+          />
+          <p className="uppercase text-sm text-green-700">
+            Ops! Your result will be updated after report
+          </p>
+        </div>
       )}
     </ClassroomTemplate>
   );

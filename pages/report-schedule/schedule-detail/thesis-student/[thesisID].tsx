@@ -7,6 +7,7 @@ import {
 import { AssessForm } from "@/components/Molecules";
 import { BREADCRUMB_MAINBOARD } from "@/components/Organisms/MainboardStatus/mock-data";
 import { MainboardTemplate } from "@/components/Templates";
+import { useCurrentUserContext } from "@/contexts/currentUserContext";
 import { INITIATE_ASSESS, INITIATE_AUTH, INITIATE_TOPIC } from "@/data";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { IAssessItem } from "@/interface/pointDef";
@@ -29,7 +30,7 @@ import { useState, useEffect } from "react";
 function ThesisDefenseStudentDetail() {
   const [loading, setLoading] = useState<boolean>(true);
   const dispatch = useAppDispatch();
-  const { currentUser } = useCurrentUser();
+  const { currentUser } = useCurrentUserContext();
   const params = useSearchParams();
   const id = params.get("thesisID") || "";
   const { data: studentScheduled } = useQuery<ICouncilDef>({
@@ -56,8 +57,8 @@ function ThesisDefenseStudentDetail() {
     queryFn: async () => {
       const action = await dispatch(
         getTopic(
-          studentScheduled?.schedule?.timeSlots[0]?.student?.infor ||
-            INITIATE_AUTH
+          studentScheduled?.schedule?.timeSlots[0]?.student?.infor?.id ||
+            INITIATE_AUTH?.id
         )
       );
       return action.payload || INITIATE_TOPIC;
@@ -84,7 +85,7 @@ function ThesisDefenseStudentDetail() {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 1000);
+    }, 1200);
   }, []);
   return (
     <>
@@ -216,12 +217,9 @@ function ThesisDefenseStudentDetail() {
                       </div>
                       <div className="flex flex-col gap-2">
                         <p className="text-gray-600">Description:</p>
-                        <p className="flex gap-2 flex-col">
+                        <p className="flex gap-2 flex-col text-justify">
                           <span className="text-gray-700">
-                            - Create a website allow user CRUD blog
-                          </span>
-                          <span className="text-gray-700">
-                            - Chatbox real time by using socket.io
+                           {topic?.description}
                           </span>
                         </p>
                       </div>

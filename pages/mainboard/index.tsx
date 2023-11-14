@@ -7,12 +7,12 @@ import {
   WaitingView,
 } from "@/components/Organisms";
 import { ROLE_ASSIGNMENT } from "@/contexts/authContext";
-import { useCurrentUser } from "@/hooks/useGetCurrentUser";
-import { BREADCRUMB_MAINBOARD } from "@/components/Organisms/MainboardStatus/mock-data";
 import { useClassroomStateContext } from "@/contexts/classroomState";
 import { useSubscribeStateContext } from "@/contexts/subscribeState";
 import { IMemberObject } from "@/interface/member";
 import { STATE_AUTH_CLASSROOM } from "@/data";
+import { useCurrentUserContext } from "@/contexts/currentUserContext";
+import { BREADCRUMB_MAINBOARD } from "@/components/Organisms/MainboardStatus/mock-data";
 
 type MenuItem = {
   id: number;
@@ -24,7 +24,7 @@ const menuItems: MenuItem[] = [
 ];
 
 function MainboardPage() {
-  const { currentUser } = useCurrentUser();
+  const { currentUser } = useCurrentUserContext();
   const { subscribeState } = useSubscribeStateContext();
   const { authClassroomState } = useClassroomStateContext();
   const [loading, setLoading] = useState<boolean>(true);
@@ -90,12 +90,28 @@ function MainboardPage() {
         <Spinner />
       ) : (
         <MainboardTemplate title="Mainboard Thesis | Thesis course registration system">
+          {checkIsField(
+            STATE_AUTH_CLASSROOM.WAITING,
+            STATE_AUTH_CLASSROOM.NO_SUB
+          ) && (
+            <>
+              <Breadcrumb dataBreadcrumb={BREADCRUMB_MAINBOARD} />
+              <div className="py-2 my-3 flex gap-2 items-center">
+                <h4 className="text-xl capitalize text-green-700 font-medium ">
+                  Register{" "}
+                  <span className="text-green-700"> for instructors</span>
+                </h4>
+                <div className="flex-grow h-[0.5px] bg-green-700"></div>
+              </div>
+            </>
+          )}
           {currentUser?.role === ROLE_ASSIGNMENT.STUDENT &&
             checkIsField(
               STATE_AUTH_CLASSROOM.WAITING,
               STATE_AUTH_CLASSROOM.NO_SUB
             ) &&
             renderMenuItems()}
+
           {/* GET UI FOR LECTURER ROLE */}
           {(currentUser?.role === ROLE_ASSIGNMENT.LECTURER ||
             currentUser?.role === ROLE_ASSIGNMENT.GUEST) && <NoSubscribeView />}

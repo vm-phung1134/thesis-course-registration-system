@@ -26,15 +26,31 @@ import { ISubmitObject } from "@/interface/submit";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { getAllSubmitStud } from "@/redux/reducer/submit/api";
 import { getExerciseWithNearestDeadline } from "@/utils/getDeadline";
+import { useCurrentUserContext } from "@/contexts/currentUserContext";
 
 function ManageClassroomTab() {
-  const { currentUser } = useCurrentUser();
-  const { exercises } = useAppSelector((state) => state.exerciseReducer);
-  const { posts } = useAppSelector((state) => state.postReducer);
+  const { currentUser } = useCurrentUserContext();
+  const { authClassroomState } = useClassroomStateContext();
   const [openModalPost, setOpenModalPost] = useState<boolean>(false);
   const [openModalEx, setOpenModalEx] = useState<boolean>(false);
   const [exRenew, setExRenew] = useState<IExerciseObject>(INITIATE_EXERCISE);
   const [postRenew, setPostRenew] = useState<IPostObject>(INITIATE_POST);
+  const { data: posts } = useQuery<IPostObject[]>({
+    queryKey: ["get-all-posts", authClassroomState],
+    queryFn: async () => {
+      const action = await dispatch(getAllPostInClass(authClassroomState));
+      return action.payload || [];
+    },
+    initialData: [],
+  });
+  const { data: exercises } = useQuery<IExerciseObject[]>({
+    queryKey: ["get-all-excercises", authClassroomState],
+    queryFn: async () => {
+      const action = await dispatch(getAllExerciseInClass(authClassroomState));
+      return action.payload || [];
+    },
+    initialData: [],
+  });
   const modalClassPost = classNames({
     "modal modal-bottom sm:modal-middle": true,
     "modal-open": openModalPost,
@@ -44,7 +60,6 @@ function ManageClassroomTab() {
     "modal-open": openModalEx,
   });
   const dispatch = useAppDispatch();
-  const { authClassroomState } = useClassroomStateContext();
   const handleOpenPostModal = (task: IPostObject) => {
     setOpenModalPost(!openModalPost);
     setPostRenew(task);
@@ -82,11 +97,6 @@ function ManageClassroomTab() {
     },
     initialData: [],
   });
-
-  useEffect(() => {
-    dispatch(getAllExerciseInClass(authClassroomState));
-    dispatch(getAllPostInClass(authClassroomState));
-  }, [authClassroomState, dispatch]);
 
   return (
     <>
@@ -174,7 +184,10 @@ function ManageClassroomTab() {
                               task={exercise}
                             />
                             <div className="px-5 py-2 flex flex-col">
-                              <ContentComment quantity={1} task={exercise} />
+                              <ContentComment
+                                quantity={1}
+                                taskId={exercise?.uid}
+                              />
                               <CommentForm task={exercise} />
                             </div>
                           </motion.div>

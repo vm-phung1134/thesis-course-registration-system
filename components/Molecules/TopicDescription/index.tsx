@@ -15,7 +15,7 @@ export const TopicDescription: FC<ITopicDescriptionProps> = ({topic}) => {
           <p>{topic?.title}</p>
         </div>
         <div className="flex flex-col gap-2">
-        <p className="text-gray-500">Number of members: <span className="text-black">{topic?.memberQuantiy}</span></p>
+        <p className="text-gray-500">Number of members: <span className="text-black">{topic?.memberEmail}</span></p>
           <p className="text-gray-500">Functional description: </p>
           <p>{topic?.description}</p>
         </div>

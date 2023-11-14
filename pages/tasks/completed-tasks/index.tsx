@@ -35,6 +35,7 @@ import { ISubmitObject } from "@/interface/submit";
 import { getAllSubmitStud, getAllSubmits } from "@/redux/reducer/submit/api";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { getExerciseWithNearestDeadline } from "@/utils/getDeadline";
+import { useCurrentUserContext } from "@/contexts/currentUserContext";
 
 function CriticalTasks() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -61,7 +62,7 @@ function CriticalTasks() {
     setExRenew(task);
   };
   const dispatch = useAppDispatch();
-  const { currentUser } = useCurrentUser();
+  const { currentUser } = useCurrentUserContext();
   const [exRenew, setExRenew] = useState<IExerciseObject>(INITIATE_EXERCISE);
   const { authClassroomState } = useClassroomStateContext();
   const { data: exercises } = useQuery<IExerciseObject[]>({

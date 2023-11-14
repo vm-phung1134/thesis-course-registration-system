@@ -1,4 +1,5 @@
 import { Button } from "@/components/Atoms";
+import { useCurrentUserContext } from "@/contexts/currentUserContext";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { IExerciseObject } from "@/interface/exercise";
 import { ISubmitObject } from "@/interface/submit";
@@ -14,7 +15,7 @@ export const CriticalTask: FC<ICriticalTaskProps> = ({
   exercise,
   submitStuds,
 }) => {
-  const { currentUser } = useCurrentUser();
+  const { currentUser } = useCurrentUserContext();
   const checkCompletedTask = (submits: ISubmitObject[]): boolean => {
     return submits?.some(
       (item) =>

@@ -14,6 +14,7 @@ import classNames from "classnames";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { useCurrentUserContext } from "@/contexts/currentUserContext";
 
 export interface ICardLecturerInClassProps {
   lecturer: IAuthObject;
@@ -35,7 +36,7 @@ export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
   });
   const { authClassroomState } = useClassroomStateContext();
   const queryClient = useQueryClient();
-  const { currentUser } = useCurrentUser();
+  const { currentUser } = useCurrentUserContext();
   const deleteMutation = useMutation(
     (postData: IAuthObject) => {
       return new Promise((resolve, reject) => {
@@ -99,7 +100,7 @@ export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
       animate={{ opacity: 1 }}
       transition={{ duration: 0.7, ease: "easeOut" }}
     >
-      <h3 className="text-sm font-medium capitalize">
+      <h3 className="text-sm font-medium capitalize tracking-wider">
         Thesis graduation - CT550
       </h3>
       <h4 className="text-[24px] font-semibold uppercase">{lecturer?.name}</h4>
@@ -129,7 +130,7 @@ export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
           )}
         </button>
       </div>
-      <ul>
+      <ul className="text-sm flex flex-col gap-1">
         <li>
           <p className="flex gap-3 items-center">
             <i className="fa-regular fa-envelope"></i>

@@ -4,13 +4,14 @@ import {
   SnipperRound,
   TitleFormField,
 } from "@/components/Atoms";
+import { useCurrentUserContext } from "@/contexts/currentUserContext";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { IAuthObject } from "@/interface/auth";
 import { updateAuth } from "@/redux/reducer/auth/api";
 import { useAppDispatch } from "@/redux/store";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Form, Formik } from "formik";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 
 export interface IInforUserFormV2Props {
   switchingForm: number;
@@ -21,8 +22,9 @@ export const InforUserFormV2: FC<IInforUserFormV2Props> = ({
   setSwitchingForm,
   switchingForm,
 }) => {
+  const [loading, setLoading] = useState<boolean>(true);
   const queryClient = useQueryClient();
-  const { currentUser, isLoading } = useCurrentUser();
+  const { currentUser } = useCurrentUserContext();
   const dispatch = useAppDispatch();
   const updateMutation = useMutation(
     (postData: IAuthObject) => {
@@ -43,6 +45,11 @@ export const InforUserFormV2: FC<IInforUserFormV2Props> = ({
       },
     }
   );
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 1200);
+  }, []);
   return (
     <Formik
       initialValues={currentUser}
@@ -89,11 +96,13 @@ export const InforUserFormV2: FC<IInforUserFormV2Props> = ({
         const { values } = formik;
         return (
           <>
-            {isLoading ? (
+            {loading ? (
               <SnipperRound />
             ) : (
               <div>
-                <h3 className="text-xs font-medium mb-3">Step {switchingForm} of 2</h3>
+                <h3 className="text-xs font-medium mb-3">
+                  Step {switchingForm} of 2
+                </h3>
                 <Form>
                   <TitleFormField
                     className="text-xl font-bold mb-5"

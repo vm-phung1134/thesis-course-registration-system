@@ -1,7 +1,6 @@
-import { Button, SnipperRound } from "@/components/Atoms";
+import { SnipperRound } from "@/components/Atoms";
 import Image from "next/image";
 import { FC, useEffect, useState } from "react";
-import { IClassroomObject } from "@/interface/classroom";
 
 export interface IEnrollSuccessProps {}
 
@@ -10,7 +9,7 @@ export const EnrollSuccess: FC<IEnrollSuccessProps> = () => {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 2000);
+    }, 1500);
   }, []);
   return (
     <>

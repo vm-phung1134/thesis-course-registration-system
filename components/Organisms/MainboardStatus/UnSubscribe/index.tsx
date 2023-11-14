@@ -41,9 +41,14 @@ export const UnSubscribeView: FC<IUnSubscribeViewProps> = ({ classroom }) => {
             <div className="flex justify-between">
               <div className="flex justify-between w-9/12">
                 <div className="w-80 relative h-fit">
-                  <h4 className="uppercase text-[50px] text-[#141E37] italic font-bold leading-snug pl-8">
+                  <motion.h4
+                    initial={{ opacity: 0, x: -200 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    className="uppercase text-[50px] text-[#141E37] italic font-bold leading-snug pl-8"
+                  >
                     Wellcome to your classroom
-                  </h4>
+                  </motion.h4>
                   <span className="absolute top-3 bottom-3 w-1 bg-[#141E37]"></span>
                   <span className="absolute top-3 -left-1 h-14 w-3 bg-[#141E37]"></span>
                 </div>
@@ -74,9 +79,22 @@ export const UnSubscribeView: FC<IUnSubscribeViewProps> = ({ classroom }) => {
               <span className="font-medium">Congratulation </span>! You have
               been added into classroom.
             </p>
-            <button className="ml-5 mt-5 py-3 px-8 bg-green-700 hover:bg-[#141E37] transform ease-linear duration-300 text-white uppercase font-medium -skew-x-[20deg]">
-              <p className="skew-x-12">Go to classroom</p>
-            </button>
+            <p className="text-sm w-96 py-2 font-thin ">
+              Remember, after a period of time the instructor may lock the
+              classroom, please consider carefully whether to continue with the
+              instructor to avoid unnecessary risks. Moreover, You can leave the
+              group during this time.
+            </p>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 2, ease: "easeOut" }}
+            >
+              <button className="ml-5 mt-5 py-3 px-8 bg-green-700 hover:bg-[#141E37] transform ease-linear duration-300 text-white uppercase font-medium -skew-x-[20deg]">
+                <p className="skew-x-12">Go to classroom</p>
+              </button>
+            </motion.div>
+
             <div className="flex justify-end absolute right-[23rem] top-[20rem] text-gray-100">
               <div className="w-[26rem]">
                 <h4 className="font-bold mb-3">

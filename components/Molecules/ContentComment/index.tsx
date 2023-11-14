@@ -10,20 +10,20 @@ import { useQuery } from "@tanstack/react-query";
 import { FC, memo } from "react";
 
 export interface IContentCommentProps {
-  task: IPostObject | IExerciseObject;
+  taskId: string;
   quantity: number;
 }
 
 export const ContentComment: FC<IContentCommentProps> = memo(
-  ({ task, quantity }) => {
+  ({ taskId, quantity }) => {
     const dispatch = useAppDispatch();
     const { data: comments } = useQuery<ICommentObject[]>({
-      queryKey: ["comments", task?.uid],
+      queryKey: ["comments", taskId],
       queryFn: async () => {
-        const action = await dispatch(getAllComments(task.uid));
-        return action.payload;
+        const action = await dispatch(getAllComments(taskId));
+        return action.payload || [];
       },
-      initialData: []
+      initialData: [],
     });
     return (
       <>

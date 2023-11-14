@@ -40,10 +40,11 @@ import { IClassroomObject } from "@/interface/classroom";
 import { getAllClassrooms } from "@/redux/reducer/classroom/api";
 import { getAllCouncilDefs } from "@/redux/reducer/council-def/api";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
+import { useCurrentUserContext } from "@/contexts/currentUserContext";
 
 function DashBoardPage(this: any) {
   const [loading, setLoading] = useState<boolean>(true);
-  const { currentUser } = useCurrentUser();
+  const { currentUser } = useCurrentUserContext();
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);

@@ -264,7 +264,7 @@ export const TestingSchedule: FC<ITestingScheduleprops> = ({}) => {
                 </label>
               </div>
             </Form>
-            <h4 className="font-medium text-green-700 my-3">The result</h4>
+            <h4 className="font-medium text-green-700 mt-5">The mock testing api result</h4>
             <div className="w-1/2">
               <div className="flex flex-col">
                 <div className="overflow-x-auto">
@@ -340,7 +340,7 @@ export const TestingSchedule: FC<ITestingScheduleprops> = ({}) => {
                                 <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
                                   {(index += 1)}
                                 </td>
-                                <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
+                                <td className="py-4 px-6 capitalize text-sm text-gray-900 whitespace-nowrap dark:text-white">
                                   {council?.name}
                                 </td>
                                 <td className="py-4 px-6  text-sm capitalize text-gray-900 whitespace-nowrap dark:text-white">

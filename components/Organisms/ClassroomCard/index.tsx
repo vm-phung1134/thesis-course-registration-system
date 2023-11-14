@@ -17,6 +17,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { NormalAvatar } from "@/components/Atoms";
 import { motion } from "framer-motion";
+import { useCurrentUserContext } from "@/contexts/currentUserContext";
 
 interface IClassroomCardProps {
   item: IClassroomObject;
@@ -56,7 +57,7 @@ export const ClassroomCard: FC<IClassroomCardProps> = ({ item, index }) => {
       },
     }
   );
-  const { currentUser } = useCurrentUser();
+  const { currentUser } = useCurrentUserContext();
   const handleSubcribeClass = () => {
     if (!addRequirementMutation.isLoading) {
       addRequirementMutation.mutate({

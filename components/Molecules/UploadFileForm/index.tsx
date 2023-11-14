@@ -12,6 +12,7 @@ import { v4 as uuidv4 } from "uuid";
 import Image from "next/image";
 import classNames from "classnames";
 import { ModalConfirm } from "..";
+import { useCurrentUserContext } from "@/contexts/currentUserContext";
 const objectId = uuidv4();
 
 interface IUploadFormProps {
@@ -22,7 +23,7 @@ interface IUploadFormProps {
 export const UploadFileForm: FC<IUploadFormProps> = ({ exercise, submit }) => {
   const fileInputRef = useRef<HTMLInputElement>(null!);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
-  const { currentUser } = useCurrentUser();
+  const { currentUser } = useCurrentUserContext();
   const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
   const handleUploadClick = () => {

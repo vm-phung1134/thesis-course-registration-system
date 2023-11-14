@@ -1,4 +1,5 @@
 import { Button, FormField, TitleFormField } from "@/components/Atoms";
+import { useCurrentUserContext } from "@/contexts/currentUserContext";
 import { INITIATE_TOPIC } from "@/data";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { ITopicObject } from "@/interface/topic";
@@ -15,7 +16,7 @@ export interface IRegistrationTopicFormProps {
 export const RegistrationTopicForm: FC<IRegistrationTopicFormProps> = ({
   topic,
 }) => {
-  const { currentUser } = useCurrentUser();
+  const { currentUser } = useCurrentUserContext();
   const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
   const updateMutation = useMutation(

@@ -5,6 +5,7 @@ import { ChangePassForm, InforUserForm } from "@/components/Molecules";
 import classNames from "classnames";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { BREADCRUMB_ACCOUNT_ADMIN } from "./mock-data";
+import { useCurrentUserContext } from "@/contexts/currentUserContext";
 
 function AccountAdminPage() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -13,11 +14,11 @@ function AccountAdminPage() {
     "modal modal-bottom sm:modal-middle": true,
     "modal-open": toggle,
   });
-  const { currentUser } = useCurrentUser();
+  const { currentUser } = useCurrentUserContext();
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 1300);
+    }, 1200);
   }, []);
   return (
     <>

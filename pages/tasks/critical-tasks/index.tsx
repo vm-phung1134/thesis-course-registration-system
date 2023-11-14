@@ -33,6 +33,7 @@ import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { getAllSubmitStud } from "@/redux/reducer/submit/api";
 import { INITIATE_EXERCISE, INITIATE_POST } from "@/data";
 import { getExerciseWithNearestDeadline } from "@/utils/getDeadline";
+import { useCurrentUserContext } from "@/contexts/currentUserContext";
 
 function CriticalTasks() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -71,7 +72,7 @@ function CriticalTasks() {
     setPostRenew(task);
   };
   const dispatch = useAppDispatch();
-  const { currentUser } = useCurrentUser();
+  const { currentUser } = useCurrentUserContext();
   const { authClassroomState } = useClassroomStateContext();
   const { data: exercises } = useQuery<IExerciseObject[]>({
     queryKey: ["exercises", authClassroomState],

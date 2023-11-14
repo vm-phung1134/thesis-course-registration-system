@@ -8,6 +8,7 @@ import {
 import { CardLecturerInClass, CountDown } from "@/components/Molecules";
 import { IClassroomObject } from "@/interface/classroom";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
+import { useCurrentUserContext } from "@/contexts/currentUserContext";
 
 export interface IClassroomFoundProps {
   children: React.ReactNode;
@@ -21,7 +22,7 @@ export const ClassroomFound: FC<IClassroomFoundProps> = ({
   openCreatePostModal,
   classroom,
 }) => {
-  const { currentUser } = useCurrentUser();
+  const { currentUser } = useCurrentUserContext();
   const [timeLeft, setTimeLeft] = useState<number>(0);
   return (
     <div className="px-5">

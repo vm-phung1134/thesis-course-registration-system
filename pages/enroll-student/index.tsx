@@ -6,7 +6,9 @@ import {
 } from "@/components/Molecules";
 import { EnrollSuccess } from "@/components/Organisms/MemberState/EnrollSuccess";
 import { MainboardTemplate } from "@/components/Templates";
+import { useCurrentUserContext } from "@/contexts/currentUserContext";
 import { INITIATE_MEMBER, INITIATE_UPLOAD_REPORT } from "@/data";
+import { useUserCookies } from "@/hooks/useCookies";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { IMemberObject } from "@/interface/member";
 import { ICouncilDef } from "@/interface/schedule";
@@ -24,19 +26,19 @@ function EnrollStudentPage() {
   const [loading, setLoading] = useState<boolean>(true);
   const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
-  const { currentUser } = useCurrentUser();
+  const [user] = useUserCookies();
   const { data: member } = useQuery<IMemberObject>({
-    queryKey: ["member", currentUser],
+    queryKey: ["member", user],
     queryFn: async () => {
-      const action = await dispatch(getMember(currentUser));
-      return action.payload || [];
+      const action = await dispatch(getMember(user));
+      return action.payload || INITIATE_MEMBER;
     },
     initialData: INITIATE_MEMBER,
   });
   const { data: studentScheduled } = useQuery<ICouncilDef>({
-    queryKey: ["studentScheduled", currentUser.id],
+    queryKey: ["studentScheduled", user.id],
     queryFn: async () => {
-      const action = await dispatch(getScheduleForStudent(currentUser.id));
+      const action = await dispatch(getScheduleForStudent(user.id));
       return action.payload || {};
     },
   });
@@ -61,13 +63,14 @@ function EnrollStudentPage() {
   );
   const handleEnrollMember = () => {
     updateMutation.mutate({ ...member, registerDefense: true });
+    console.log({ ...member, registerDefense: true });
   };
 
   // HANDLE FINAL UPLOAD
   const { data: uploadReport } = useQuery<IUploadReportObject>({
-    queryKey: ["upload-def", currentUser.id],
+    queryKey: ["upload-def", user.id],
     queryFn: async () => {
-      const action = await dispatch(getUploadReport(currentUser.id));
+      const action = await dispatch(getUploadReport(user.id));
       return action.payload || INITIATE_UPLOAD_REPORT;
     },
     initialData: INITIATE_UPLOAD_REPORT,
@@ -76,7 +79,7 @@ function EnrollStudentPage() {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 1500);
+    }, 1200);
   }, []);
   return (
     <MainboardTemplate title="Enroll & schedule | Thesis course registration system">
@@ -108,39 +111,33 @@ function EnrollStudentPage() {
                   </div>
                 </div>
               </div>
-              <div className="flex gap-5 w-full my-10">
-                <div className="flex flex-grow w-7/12 p-5 flex-col gap-2 border rounded-xl">
+              <div className="flex gap-4 w-full my-10">
+                <div className="flex flex-grow w-10/12 text-sm p-5 flex-col gap-2 border rounded-xl">
                   <h5 className="text-lg text-green-700 font-bold capitalize tracking-wider">
                     The thesis committee
                   </h5>
                   <div className="grid grid-cols-3 gap-3">
                     {studentScheduled?.council?.map((lecturer, index) => (
                       <div key={lecturer?.id}>
-                        <div className="">
-                          <p className="text-gray-500">{`Examinator ${(index += 1)}`}</p>
-                          <div className="flex items-center bg-slate-50 shadow-lg rounded-lg p-3 gap-3 my-2">
-                            <NormalAvatar
-                              setSize="w-10"
-                              photoSrc={lecturer?.photoSrc}
-                            />
-                            <div className="flex flex-col">
-                              <p className="font-medium capitalize">
-                                {lecturer?.name}
-                              </p>
-                              <p className="text-sm">
-                                {lecturer?.email}
-                              </p>
-                              <p className="text-sm">
-                                {lecturer?.major}
-                              </p>
-                            </div>
+                        <p className="text-gray-500">{`Examinator ${(index += 1)}`}</p>
+                        <div className="flex items-center bg-slate-50 shadow-lg rounded-lg p-3 gap-3 my-2">
+                          <NormalAvatar
+                            setSize="w-10"
+                            photoSrc={lecturer?.photoSrc}
+                          />
+                          <div className="flex flex-col">
+                            <p className="font-medium capitalize">
+                              {lecturer?.name}
+                            </p>
+                            <p className="text-sm">{lecturer?.email}</p>
+                            <p className="text-sm">{lecturer?.major}</p>
                           </div>
                         </div>
                       </div>
                     ))}
                   </div>
                 </div>
-                <div className="flex flex-grow p-5 flex-col gap-2 bg-slate-50 rounded-xl">
+                <div className="flex flex-grow p-5 flex-col gap-2 border rounded-xl w-fit">
                   <h5 className="text-lg text-green-700 font-bold capitalize tracking-wider">
                     Your schedule thesis defense
                   </h5>
@@ -148,7 +145,7 @@ function EnrollStudentPage() {
                     Noticed: Please arrive at the room 10 minutes in advance to
                     prepare!!!
                   </p>
-                  <ul className="capitalize flex flex-col gap-2">
+                  <ul className="capitalize flex flex-col gap-2 text-sm">
                     <li>
                       <p className="flex gap-3">
                         <span className="text-gray-500">Date:</span>

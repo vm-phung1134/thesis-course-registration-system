@@ -95,7 +95,7 @@ const getScheduleForLecturer = createAsyncThunk(
   "schedule/getScheduleForLecturer",
   async (id: string) => {
     const response = await axios.get(
-      `http://localhost:5000/api/schedule-report/lecturer-schedule/GV5`,
+      `http://localhost:5000/api/schedule-report/lecturer-schedule/${id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

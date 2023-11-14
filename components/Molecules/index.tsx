@@ -19,7 +19,6 @@ export * from "./CardMember";
 export * from "./TopicDescription";
 export * from "./PersonalInfor";
 export * from "./InforUserFormV2";
-export * from "./CreateClassroomForm";
 export * from "./CardRequireMember";
 export * from "./Pagination";
 export * from "./UploadFileForm";

@@ -4,6 +4,7 @@ import {
   SidebarStudentView,
 } from "@/components/Organisms";
 import { ROLE_ASSIGNMENT } from "@/contexts/authContext";
+import { useCurrentUserContext } from "@/contexts/currentUserContext";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import Head from "next/head";
 import { FC } from "react";
@@ -14,7 +15,7 @@ export interface IMainboardProps {
 }
 
 export const MainboardTemplate: FC<IMainboardProps> = ({ children, title }) => {
-  const { currentUser } = useCurrentUser();
+  const { currentUser } = useCurrentUserContext();
   return (
     <>
       <Head>

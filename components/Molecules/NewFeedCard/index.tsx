@@ -1,11 +1,10 @@
-import { Avatar, NormalAvatar } from "@/components/Atoms";
+import { NormalAvatar } from "@/components/Atoms";
 import { IExerciseObject } from "@/interface/exercise";
-import { IPostObject } from "@/interface/post";
-import { convertToUnaccentedString } from "@/utils/convertString";
+import { convertDateTime } from "@/utils/covertDate";
 import { FC } from "react";
 
 export interface INewFeedCardProps {
-  task: IPostObject | IExerciseObject;
+  task: IExerciseObject;
   handleOpenTaskModal: (task: any) => void;
 }
 
@@ -39,8 +38,8 @@ export const NewFeedCard: FC<INewFeedCardProps> = ({
           <p className="font-medium text-xs text-green-700">
             {task.type === "post" ? "Notification" : "Report progress"}
           </p>
-          <div className="flex gap-3 items-center text-red-500">
-            <small>Saturday, 10/14/2023 - 11:59 PM</small>
+          <div className="flex gap-3 text-xs font-medium items-center text-red-500">
+            <p>{convertDateTime(task?.deadline)}</p>
           </div>
         </div>
       </div>

@@ -5,6 +5,7 @@ import { checkStateSubscribe } from "@/redux/reducer/auth/api";
 import { useAppDispatch } from "@/redux/store";
 import { useQuery } from "@tanstack/react-query";
 import React, { createContext, useContext } from "react";
+import { useCurrentUserContext } from "./currentUserContext";
 
 interface ISubscribeStateContext {
   subscribeState: any; // IMemberObject or {status: ""}
@@ -23,7 +24,7 @@ export const useSubscribeStateContext = () => useContext(SubscribeStateContext);
 export const SubscribeStateContextProvider: React.FC<SubscribeStateProps> = ({
   children,
 }) => {
-  const { currentUser } = useCurrentUser();
+  const { currentUser } = useCurrentUserContext();
   const dispatch = useAppDispatch();
   const { data: subscribeState } = useQuery<
     IMemberObject[] | { status: string }

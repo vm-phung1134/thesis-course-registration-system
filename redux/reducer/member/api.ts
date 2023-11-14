@@ -38,17 +38,23 @@ const getAllMemberClassroom = createAsyncThunk(
 );
 
 // GET ONE MEMBER
-const getMember = createAsyncThunk("member/getMember", async (id: string) => {
-  const response = await axios.get(`http://localhost:5000/api/member/${id}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  if (response.status === 200) {
-    return response.data;
+const getMember = createAsyncThunk(
+  "member/getMember",
+  async (postData: IAuthObject) => {
+    const response = await axios.get(
+      `http://localhost:5000/api/member/${postData.id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    if (response.status === 200) {
+      return response.data;
+    }
+    throw new Error("Failed to get one classroom");
   }
-  throw new Error("Failed to get one classroom");
-});
+);
 
 // ADD NEW MEMBER
 const createMember = createAsyncThunk(

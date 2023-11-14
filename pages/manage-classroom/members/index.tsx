@@ -31,17 +31,9 @@ function MemberTab() {
       value: "",
     }
   );
-  const [openModalMemberDetail, setOpenModalMemberDetail] =
-    useState<boolean>(false);
-  const modalClass = classNames({
-    "modal modal-bottom sm:modal-middle": true,
-    "modal-open": openModalMemberDetail,
-  });
-
   // HANDLE API MEMBER ARRAY
   const dispatch = useAppDispatch();
   const { authClassroomState } = useClassroomStateContext();
-  const { topic } = useAppSelector((state) => state.topicReducer);
   const { data: members } = useQuery<IMemberObject[]>({
     queryKey: ["members", authClassroomState],
     queryFn: async () => {
@@ -50,9 +42,6 @@ function MemberTab() {
     },
     initialData: [],
   });
-  const handleGetTopicMember = (member: IMemberObject) => {
-    dispatch(getTopic(member?.member));
-  };
   return (
     <ClassroomTemplate title="Members | Thesis course registration system">
       <>
@@ -88,23 +77,9 @@ function MemberTab() {
         </div>
         <div className="grid grid-cols-3 gap-5 mt-5">
           {members?.map((member) => {
-            return (
-              <CardMember
-                handleGetTopicMember={handleGetTopicMember}
-                setOpenMemberModal={setOpenModalMemberDetail}
-                openMemberModal={openModalMemberDetail}
-                key={member.id}
-                member={member}
-              />
-            );
+            return <CardMember key={member.id} member={member} index={0} />;
           })}
         </div>
-        <InforMemberModal
-          topic={topic}
-          modalClass={modalClass}
-          setOpenMemberModal={setOpenModalMemberDetail}
-          openMemberModal={openModalMemberDetail}
-        />
       </>
     </ClassroomTemplate>
   );

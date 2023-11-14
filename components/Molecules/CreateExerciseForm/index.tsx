@@ -5,6 +5,8 @@ import {
   SelectInForm,
   TitleFormField,
 } from "@/components/Atoms";
+import { useClassroomStateContext } from "@/contexts/classroomState";
+import { useCurrentUserContext } from "@/contexts/currentUserContext";
 import { INITIATE_CATEGORY, INITIATE_EXERCISE } from "@/data";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { useSelectStage } from "@/hooks/useSelectStage";
@@ -42,9 +44,9 @@ export const CreateExerciseForm: FC<ICreateExerciseFormProps> = ({
   const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
   const initialValues: IExerciseObject = INITIATE_EXERCISE;
-  const { currentUser } = useCurrentUser();
+  const { currentUser } = useCurrentUserContext();
   const fileInputRef = useRef<HTMLInputElement>(null);
-
+  const { authClassroomState } = useClassroomStateContext();
   // HANDLE SELECT STAGE REPORT
   const { selectedStage, setSelectedStage, reportStages } = useSelectStage();
   // HANDLE FILE
@@ -75,7 +77,10 @@ export const CreateExerciseForm: FC<ICreateExerciseFormProps> = ({
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["exercises"]);
+        queryClient.invalidateQueries([
+          "get-all-exercises",
+          authClassroomState,
+        ]);
       },
     }
   );
@@ -105,7 +110,7 @@ export const CreateExerciseForm: FC<ICreateExerciseFormProps> = ({
           setSelectedFiles([]);
           setSelectedStage(INITIATE_CATEGORY);
           setSubmitting(false);
-          setToggleForm(!toggleForm)
+          setToggleForm(!toggleForm);
         }, 400);
       }}
     >

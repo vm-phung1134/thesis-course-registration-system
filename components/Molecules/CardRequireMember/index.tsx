@@ -86,14 +86,13 @@ export const CardRequireMember: FC<ICardRequireMemberProps> = ({
   };
   // GET TOPIC FOR EACH USER
   const { data: topic_fetch } = useQuery<ITopicObject>({
-    queryKey: ["topic", topicRenew],
+    queryKey: ["topic", require?.member?.id],
     queryFn: async () => {
-      const action = await dispatch(getTopic(topicRenew));
+      const action = await dispatch(getTopic(require?.member?.id));
       return action.payload || {};
     },
     initialData: INITIATE_TOPIC,
   });
-  console.log(topic_fetch)
   return (
     <>
       <motion.div

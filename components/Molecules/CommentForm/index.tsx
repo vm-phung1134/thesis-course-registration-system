@@ -10,6 +10,7 @@ import { useAppDispatch } from "@/redux/store";
 import { INITIATE_COMMENT, TYPE_ACTION_NOTIFICATION } from "@/data";
 import { IAuthObject } from "@/interface/auth";
 import { useSocket } from "@/contexts/useSocketContext";
+import { useCurrentUserContext } from "@/contexts/currentUserContext";
 
 export interface ICommentFormProps {
   task: IPostObject | IExerciseObject;
@@ -20,7 +21,7 @@ export const CommentForm: FC<ICommentFormProps> = ({ task }) => {
   const dispatch = useAppDispatch();
   const { socket } = useSocket();
   const queryClient = useQueryClient();
-  const { currentUser } = useCurrentUser();
+  const { currentUser } = useCurrentUserContext();
   const addMutation = useMutation(
     (postData: ICommentObject) => {
       return new Promise((resolve, reject) => {

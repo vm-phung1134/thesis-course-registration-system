@@ -28,6 +28,7 @@ import {
   DATA_FILTER_COURSE,
   DATA_FILTER_TOPICS,
 } from "../mock-data";
+import { useCurrentUserContext } from "@/contexts/currentUserContext";
 
 export interface IWaitingViewProps {
   classroom?: IClassroomObject;
@@ -37,7 +38,7 @@ export const WaitingView: FC<IWaitingViewProps> = ({ classroom }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
-  const { currentUser } = useCurrentUser();
+  const { currentUser } = useCurrentUserContext();
   const { subscribeState } = useSubscribeStateContext();
   const deleteMutation = useMutation(
     (postData: IAuthObject) => {

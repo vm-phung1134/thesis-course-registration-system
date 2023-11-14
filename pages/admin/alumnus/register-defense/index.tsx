@@ -23,12 +23,13 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { useTableSearch } from "@/hooks/useTableSearch";
+import { useCurrentUserContext } from "@/contexts/currentUserContext";
 
 function RegisterDefensePageAdmin() {
   const [loading, setLoading] = useState<boolean>(true);
   const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
-  const { currentUser } = useCurrentUser();
+  const { currentUser } = useCurrentUserContext();
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages] = useState<number>(10);
   const [openModalStudefDetail, setOpenModalStudefDetail] =
@@ -58,7 +59,7 @@ function RegisterDefensePageAdmin() {
   const { filteredData: stuf_filteredData, handleSearch: stuf_handleSearch } =
   useTableSearch(studentDef);
   const handleGetTopicMember = (studef: IStudentDefObject) => {
-    dispatch(getTopic(studef?.infor));
+    dispatch(getTopic(studef?.infor?.id));
     setOpenModalStudefDetail(!openModalStudefDetail);
   };
   useEffect(() => {

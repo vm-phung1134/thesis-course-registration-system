@@ -8,10 +8,12 @@ import { FilterScheduledForm } from "@/components/Molecules";
 import { AnimatePresence, motion } from "framer-motion";
 import useCheckedBox from "@/hooks/useCheckedBox";
 import { useTableSearch } from "@/hooks/useTableSearch";
+import { useCurrentUserContext } from "@/contexts/currentUserContext";
+import { calculatorGPA, calculatorLetterPoint } from "@/utils/calculatorPoint";
 
 function EvaluationTab() {
   const dispatch = useAppDispatch();
-  const { currentUser } = useCurrentUser();
+  const { currentUser } = useCurrentUserContext();
   const { data: studPoints } = useQuery<IPointDefObject[]>({
     queryKey: ["point-students", currentUser],
     queryFn: async () => {
@@ -28,16 +30,6 @@ function EvaluationTab() {
   } = useCheckedBox<any>(studPoints);
   const { filteredData: point_filteredData, handleSearch: point_handleSearch } =
     useTableSearch(studPoints);
-
-  const calculatorGPA = (arr: IAssessItem[]) => {
-    return (
-      arr?.reduce(
-        (accumulator, currentValue) => accumulator + currentValue?.point,
-        0
-      ) / 3
-    ).toFixed(1);
-  };
-
   return (
     <ClassroomTemplate title="Point thesis defense | Thesis course registration system">
       <div className="flex justify-between items-center">
@@ -169,7 +161,9 @@ function EvaluationTab() {
                             {calculatorGPA(point?.assesses)}
                           </td>
                           <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
-                            B+
+                            {calculatorLetterPoint(
+                              parseFloat(calculatorGPA(point?.assesses))
+                            )}
                           </td>
                           <td className="py-4 px-6 text-sm text-right whitespace-nowrap">
                             <button className="text-blue-600 dark:text-blue-500">

@@ -80,42 +80,48 @@ function ScheduleDetail() {
                   </ul>
                   <div className="bg-green-700 h-[0.5px] w-full my-3"></div>
                   <div className="flex gap-3 flex-col-reverse tracking-wider">
-                    {councilInSchedule?.council?.map((council) => (
-                      <div
-                        key={council?.id}
-                        className="shadow-lg overflow-hidden relative w-full rounded-xl px-5 py-4 flex flex-col justify-center"
-                      >
-                        <div className="top-0 -left-10 bottom-0 bg-white absolute w-full h-full -skew-x-[30deg]"></div>
-                        <div className="absolute bottom-0 right-0">
-                          <NormalAvatar
-                            photoSrc={council?.photoSrc}
-                            setSize="w-10"
-                          />
-                        </div>
-                        <div className="relative">
-                          <p className="text-sm font-semibold">
-                            <span className="capitalize font-bold">
-                              {council.name}{" "}
-                              <span className="text-red-500">
-                                {council.id ===
-                                  councilInSchedule?.schedule?.timeSlots[0]
-                                    ?.student?.instructor?.id && "- Instructor"}
+                    {councilInSchedule?.council
+                      ?.slice()
+                      .reverse()
+                      .map((council) => (
+                        <div
+                          key={council?.id}
+                          className="shadow-lg overflow-hidden relative w-full rounded-xl px-5 py-4 flex flex-col justify-center"
+                        >
+                          <div className="top-0 -left-10 bottom-0 bg-white absolute w-full h-full -skew-x-[30deg]"></div>
+                          <div className="absolute bottom-0 right-2">
+                            <NormalAvatar
+                              photoSrc={council?.photoSrc}
+                              setSize="w-10"
+                            />
+                          </div>
+                          <div className="relative flex flex-col gap-1">
+                            <p className="text-sm font-semibold">
+                              <span className="capitalize font-bold">
+                                {council.name}{" "}
+                                <span className="text-red-500">
+                                  {council.id ===
+                                    councilInSchedule?.schedule?.timeSlots[0]
+                                      ?.student?.instructor?.id &&
+                                    "- Instructor"}
+                                </span>
                               </span>
-                            </span>
-                          </p>
-                          <div className="text-sm">
-                            <p>
-                              <span className="text-gray-500">Email: </span>
-                              {council?.email}
                             </p>
-                            <p>
-                              <span className="text-gray-500">Department: </span>
-                              {council?.major}
-                            </p>
+                            <div className="text-sm">
+                              <p>
+                                <span className="text-gray-500">Email: </span>
+                                {council?.email}
+                              </p>
+                              <p>
+                                <span className="text-gray-500">
+                                  Department:{" "}
+                                </span>
+                                {council?.major}
+                              </p>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    ))}
+                      ))}
                   </div>
                 </div>
               </div>
@@ -157,9 +163,7 @@ function ScheduleDetail() {
                             </div>
                           </th>
                           <th className="px-5 py-4 whitespace-nowrap">
-                            <div className="font-medium text-center">
-                              Time
-                            </div>
+                            <div className="font-medium text-center">Time</div>
                           </th>
                           <th className="px-5 py-4 whitespace-nowrap">
                             <div className="font-medium text-end">Actions</div>
@@ -234,9 +238,7 @@ function ScheduleDetail() {
                             </div>
                           </th>
                           <th className="px-3 py-4 whitespace-nowrap">
-                            <div className="font-medium text-center">
-                              Time
-                            </div>
+                            <div className="font-medium text-center">Time</div>
                           </th>
                           <th className="px-5 py-4 whitespace-nowrap">
                             <div className="font-medium text-end">Actions</div>

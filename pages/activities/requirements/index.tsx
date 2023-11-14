@@ -26,9 +26,10 @@ import {
   DATA_FILTER_TOPICS,
 } from "@/components/Organisms/MainboardStatus/mock-data";
 import { useTableSearch } from "@/hooks/useTableSearch";
+import { useCurrentUserContext } from "@/contexts/currentUserContext";
 
 function RequirementPage() {
-  const { currentUser } = useCurrentUser();
+  const { currentUser } = useCurrentUserContext();
   const [filterCourse, setFilterCourse] = useState<
     IOptionItem | ICategoryObject
   >({

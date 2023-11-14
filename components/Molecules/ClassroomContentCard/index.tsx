@@ -11,6 +11,7 @@ import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 import { useAppDispatch } from "@/redux/store";
 import { getAllMemberClassroom } from "@/redux/reducer/member/api";
+import { useCurrentUserContext } from "@/contexts/currentUserContext";
 
 interface IClassroomContentCardProps {
   item: IClassroomObject;
@@ -27,7 +28,7 @@ export const ClassroomContentCard: FC<IClassroomContentCardProps> = ({
 }) => {
   const dispatch = useAppDispatch();
   const { subscribeState } = useSubscribeStateContext();
-  const { currentUser } = useCurrentUser();
+  const { currentUser } = useCurrentUserContext();
   const checkStatusWaiting = (classroom: IClassroomObject) => {
     if (Array.isArray(subscribeState)) {
       return subscribeState.some(

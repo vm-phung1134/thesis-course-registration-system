@@ -10,6 +10,7 @@ import { SearchProvider } from "@/contexts/useSearchContext";
 import { ClassroomStateContextProvider } from "@/contexts/classroomState";
 import { SubscribeStateContextProvider } from "@/contexts/subscribeState";
 import { SocketProvider } from "@/contexts/useSocketContext";
+import { CurrentUserContextProvider } from "@/contexts/currentUserContext";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [queryClient] = React.useState(() => new QueryClient());
@@ -19,13 +20,15 @@ function MyApp({ Component, pageProps }: AppProps) {
         <AuthProvider>
           <LanguageProvider>
             <SocketProvider>
-              <SubscribeStateContextProvider>
-                <ClassroomStateContextProvider>
-                  <SearchProvider>
-                    <Component {...pageProps} />
-                  </SearchProvider>
-                </ClassroomStateContextProvider>
-              </SubscribeStateContextProvider>
+              <CurrentUserContextProvider>
+                <SubscribeStateContextProvider>
+                  <ClassroomStateContextProvider>
+                    <SearchProvider>
+                      <Component {...pageProps} />
+                    </SearchProvider>
+                  </ClassroomStateContextProvider>
+                </SubscribeStateContextProvider>
+              </CurrentUserContextProvider>
             </SocketProvider>
           </LanguageProvider>
         </AuthProvider>

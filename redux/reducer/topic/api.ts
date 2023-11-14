@@ -40,9 +40,9 @@ const getAllTopics = createAsyncThunk("topic/getAllTopics", async () => {
 // GET ONE TOPIC
 const getTopic = createAsyncThunk(
   "topic/getTopic",
-  async (postData: IAuthObject) => {
+  async (id: string) => {
     const response = await axios.get(
-      `http://localhost:5000/api/topic/${postData.id}`,
+      `http://localhost:5000/api/topic/${id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

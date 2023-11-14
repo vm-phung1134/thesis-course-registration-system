@@ -3,6 +3,7 @@ import { Avatar, Breadcrumb, Button, SnipperRound } from "@/components/Atoms";
 import { AdminTemplate } from "@/components/Templates";
 import {
   FilterScheduledForm,
+  ManualTestingSchedule,
   ScheduleForm,
   SettingSchedule,
   TestingSchedule,
@@ -23,8 +24,9 @@ function DashboardPage() {
   const menuItems: MenuItem[] = [
     { id: 1, label: "Schedule Time" },
     { id: 2, label: "Settings" },
-    { id: 3, label: "Testing" },
-    { id: 4, label: "Calender" },
+    { id: 3, label: "Manual Testing" },
+    { id: 4, label: "Mock Testing" },
+    { id: 5, label: "Calender" },
   ];
   const [loading, setLoading] = useState<boolean>(true);
   const [createScheduled, setCreateScheduled] = useState<any>({});
@@ -33,7 +35,7 @@ function DashboardPage() {
     queryKey: ["schedule-def"],
     queryFn: async () => {
       const action = await dispatch(getScheduleDef());
-      return action.payload || {};
+      return action.payload || null;
     },
     initialData: null,
   });
@@ -50,7 +52,7 @@ function DashboardPage() {
   return (
     <>
       <AdminTemplate title="Schedule time thesis defense | Thesis course registration system">
-        {loading ? (
+        {loading && scheduled == null ? (
           <SnipperRound />
         ) : (
           <>
@@ -88,7 +90,8 @@ function DashboardPage() {
                 />
               )}
               {selectedItem.id === 2 && <SettingSchedule />}
-              {selectedItem.id === 3 && <TestingSchedule />}
+              {selectedItem.id === 3 && <ManualTestingSchedule />}
+              {selectedItem.id === 4 && <TestingSchedule />}
             </div>
           </>
         )}

@@ -6,6 +6,7 @@ import {
   TitleFormField,
 } from "@/components/Atoms";
 import { useClassroomStateContext } from "@/contexts/classroomState";
+import { useCurrentUserContext } from "@/contexts/currentUserContext";
 import { INITIATE_CATEGORY, INITIATE_POST } from "@/data";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { useSelectStage } from "@/hooks/useSelectStage";
@@ -42,7 +43,7 @@ export const CreatePostForm: FC<ICreatePostFormProps> = ({
   const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
   const initialValues: IPostObject = INITIATE_POST;
-  const { currentUser } = useCurrentUser();
+  const { currentUser } = useCurrentUserContext();
   const fileInputRef = useRef<HTMLInputElement>(null!);
   const { authClassroomState } = useClassroomStateContext();
   // HANDLE SELECT STAGE REPORT
@@ -79,7 +80,7 @@ export const CreatePostForm: FC<ICreatePostFormProps> = ({
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["posts"]);
+        queryClient.invalidateQueries(["get-all-posts", authClassroomState]);
       },
     }
   );
@@ -105,15 +106,6 @@ export const CreatePostForm: FC<ICreatePostFormProps> = ({
             attachments: selectedFiles,
             lecturer: currentUser,
           });
-          // console.log({
-          //   ...values,
-          //   type: "post",
-          //   uid: objectId,
-          //   classroom: classroom,
-          //   category: selectedStage,
-          //   attachments: selectedFiles,
-          //   lecturer: currentUser,
-          // })
           resetForm();
           setToggleForm(!toggleForm)
           resetSelectedFiles();

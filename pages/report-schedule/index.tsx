@@ -12,11 +12,12 @@ import Link from "next/link";
 import React from "react";
 import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { useCurrentUserContext } from "@/contexts/currentUserContext";
 
 function ScheduleThesisDefensePage() {
   const [loading, setLoading] = useState<boolean>(true);
   const dispatch = useAppDispatch();
-  const { currentUser } = useCurrentUser();
+  const { currentUser } = useCurrentUserContext();
   const { data: scheduleForLecturer } = useQuery<ICouncilDef[]>({
     queryKey: ["schedule-lecturer", currentUser.id],
     queryFn: async () => {
@@ -112,7 +113,7 @@ function ScheduleThesisDefensePage() {
                       {council_filteredData?.map((schedule, index) => (
                         <React.Fragment key={index}>
                           {schedule?.council
-                            .filter((item) => item?.id === "GV5")
+                            .filter((item) => item?.id === currentUser.id)
                             .map((council) => (
                               <motion.tr
                                 layout
@@ -122,40 +123,40 @@ function ScheduleThesisDefensePage() {
                                 key={council.id}
                               >
                                 <td className="px-5 py-3 whitespace-nowrap">
-                                  <div className="text-left">
+                                  <p className="text-left">
                                     {council?.email}
-                                  </div>
+                                  </p>
                                 </td>
                                 <td className="px-5 py-3 whitespace-nowrap">
-                                  <div className="text-left">Instructor</div>
+                                  <p className="text-left">Instructor</p>
                                 </td>
                                 <td className="px-5 py-3 whitespace-nowrap">
-                                  <div className="text-left">
+                                  <p className="text-left">
                                     {
                                       schedule?.schedule?.timeSlots[0]?.timeSlot
                                         ?.date
                                     }
-                                  </div>
+                                  </p>
                                 </td>
                                 <td className="px-5 py-3 whitespace-nowrap">
-                                  <div className="text-center">
+                                  <p className="text-center">
                                     {schedule?.schedule?.room?.name}
-                                  </div>
+                                  </p>
                                 </td>
                                 <td className="px-5 py-3 whitespace-nowrap">
-                                  <div className="text-center">
+                                  <p className="text-center">
                                     {
                                       schedule?.schedule?.timeSlots?.filter(
                                         (item) => item?.student?.id !== ""
                                       ).length
                                     }{" "}
                                     / {schedule?.schedule?.timeSlots?.length}
-                                  </div>
+                                  </p>
                                 </td>
                                 <td className="px-5 py-3 whitespace-nowrap">
-                                  <div className="text-center">
+                                  <p className="text-center">
                                     7:00 - 17:30
-                                  </div>
+                                  </p>
                                 </td>
                                 <td className="px-5 py-3 whitespace-nowrap">
                                   <div className="justify-end flex gap-3">

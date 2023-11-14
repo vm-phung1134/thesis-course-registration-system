@@ -7,3 +7,4 @@ export * from "./ChangePasswordForm";
 export * from "./TesingSchedule";
 export * from "./EditAccountForm"
 export * from "./AccountForm"
+export * from "./ManualTesting"
