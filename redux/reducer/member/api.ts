@@ -5,9 +5,11 @@ import { IMemberObject } from "@/interface/member";
 import { IClassroomObject } from "@/interface/classroom";
 import { IAuthObject } from "@/interface/auth";
 
+const apiURL = `http://qthuy2k1.shop/api/member`;
+
 // GET ALL MEMBERS
 const getAllMembers = createAsyncThunk("member/getAllMembers", async () => {
-  const response = await axios.get("http://localhost:5000/api/member", {
+  const response = await axios.get(`${apiURL}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -22,16 +24,13 @@ const getAllMembers = createAsyncThunk("member/getAllMembers", async () => {
 const getAllMemberClassroom = createAsyncThunk(
   "member/getAllMemberClassroom",
   async (postData: IClassroomObject | null) => {
-    const response = await axios.get(
-      `http://localhost:5000/api/member/class/${postData?.id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.get(`${apiURL}/class/${postData?.id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
-      return response.data;
+      return response.data.members;
     }
     throw new Error("Failed to get all members in classroom");
   }
@@ -41,16 +40,13 @@ const getAllMemberClassroom = createAsyncThunk(
 const getMember = createAsyncThunk(
   "member/getMember",
   async (postData: IAuthObject) => {
-    const response = await axios.get(
-      `http://localhost:5000/api/member/${postData.id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.get(`${apiURL}/${postData.id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
-      return response.data;
+      return response.data.member;
     }
     throw new Error("Failed to get one classroom");
   }
@@ -61,8 +57,8 @@ const createMember = createAsyncThunk(
   "member/createMember",
   async (postData: Omit<IMemberObject, "id">) => {
     const response = await axios.post(
-      "http://localhost:5000/api/member",
-      postData,
+      `${apiURL}`,
+      { "member": postData },
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -80,14 +76,11 @@ const createMember = createAsyncThunk(
 const deleteMember = createAsyncThunk(
   "member/deleteMember",
   async (postData: IMemberObject) => {
-    const response = await axios.delete(
-      `http://localhost:5000/api/member/${postData?.id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.delete(`${apiURL}/${postData?.id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
       return response.data;
     }
@@ -99,8 +92,8 @@ const updateMember = createAsyncThunk(
   "member/updateMember",
   async (postData: IMemberObject) => {
     const response = await axios.put(
-      `http://localhost:5000/api/member/${postData.id}`,
-      postData,
+      `${apiURL}/${postData.id}`,
+      { "member": postData },
       {
         headers: {
           Authorization: `Bearer ${token}`,

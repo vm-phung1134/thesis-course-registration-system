@@ -5,18 +5,17 @@ import { ISubmitObject } from "@/interface/submit";
 import { IExerciseObject } from "@/interface/exercise";
 import { IAuthObject } from "@/interface/auth";
 
+const apiURL = `http://qthuy2k1.shop/api/submit`;
+
 // GET ALL SUBMITS
 const getAllSubmits = createAsyncThunk(
   "submit/getAllSubmit",
   async (postData: IExerciseObject) => {
-    const response = await axios.get(
-      `http://localhost:5000/api/submit/ex/${postData.uid}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.get(`${apiURL}/ex/${postData.uid}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
       return response.data;
     }
@@ -29,7 +28,7 @@ const getSubmit = createAsyncThunk(
   "submit/getSubmit",
   async (submitData: any) => {
     const response = await axios.get(
-      `http://localhost:5000/api/submit/${submitData.exerciseId}&${submitData.studentId}`,
+      `${apiURL}/${submitData.exerciseId}&${submitData.studentId}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -58,16 +57,12 @@ const createSubmit = createAsyncThunk(
       }
     }
 
-    const response = await axios.post(
-      "http://localhost:5000/api/submit/",
-      formData,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const response = await axios.post(`${apiURL}`, formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      },
+    });
 
     if (response.status === 200) {
       return response.data;
@@ -81,15 +76,11 @@ const createSubmit = createAsyncThunk(
 const updateSubmit = createAsyncThunk(
   "submit/updateSubmit",
   async (submitData: ISubmitObject) => {
-    const response = await axios.put(
-      `http://localhost:5000/api/submit/${submitData.id}`,
-      submitData,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.put(`${apiURL}/${submitData.id}`, submitData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
       return response.data;
     }
@@ -101,14 +92,11 @@ const updateSubmit = createAsyncThunk(
 const getAllSubmitStud = createAsyncThunk(
   "submit/getAllSubmitStud",
   async (postData: IAuthObject) => {
-    const response = await axios.get(
-      `http://localhost:5000/api/submit/student/${postData.id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.get(`${apiURL}/student/${postData.id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
       return response.data;
     }
@@ -120,14 +108,11 @@ const getAllSubmitStud = createAsyncThunk(
 const deleteSubmit = createAsyncThunk(
   "submit/deleteSubmit",
   async (submitData: ISubmitObject) => {
-    const response = await axios.delete(
-      `http://localhost:5000/api/submit/${submitData.id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.delete(`${apiURL}/${submitData.id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
       return response.data;
     }

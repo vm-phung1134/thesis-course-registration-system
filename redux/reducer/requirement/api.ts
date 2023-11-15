@@ -2,20 +2,21 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { token } from "../auth/type";
 import { IMemberObject } from "@/interface/member";
-import { IClassroomObject } from "@/interface/classroom";
 import { IAuthObject } from "@/interface/auth";
+
+const apiURL = `http://qthuy2k1.shop/api/classrooom-waiting-list`;
 
 // GET ALL REQUIREMENTS
 const getAllRequirements = createAsyncThunk(
   "requirement/getAllRequirements",
   async () => {
-    const response = await axios.get("http://localhost:5000/api/requirement", {
+    const response = await axios.get(`${apiURL}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
     if (response.status === 200) {
-      return response.data;
+      return response.data.waitingLists;
     }
     throw new Error("Failed to get all requirements");
   }
@@ -25,18 +26,15 @@ const getAllRequirements = createAsyncThunk(
 const getAllRequirementClassroom = createAsyncThunk(
   "member/getAllMemberClassroom",
   async (postData: IAuthObject) => {
-    const response = await axios.get(
-      `http://localhost:5000/api/requirement/class/${postData.id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.get(`${apiURL}/class/${postData.id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
-      return response.data;
+      return response.data.waitingListInLass;
     }
-    throw new Error("Failed to get all members in classroom");
+    throw new Error("Failed to get all requirements in classroom");
   }
 );
 
@@ -45,15 +43,11 @@ const createRequirement = createAsyncThunk(
   "requirement/createRequirement",
   async (postData: Omit<IMemberObject, "id">, { rejectWithValue }) => {
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/requirement",
-        postData,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axios.post(`${apiURL}`, {"waitingList": postData}, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       if (response.status === 200) {
         return response.data;
@@ -69,18 +63,15 @@ const createRequirement = createAsyncThunk(
 const deleteRequirement = createAsyncThunk(
   "requirement/deleteRequirement",
   async (postData: IMemberObject) => {
-    const response = await axios.delete(
-      `http://localhost:5000/api/requirement/${postData?.id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.delete(`${apiURL}/${postData?.id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
       return response.data;
     }
-    throw new Error("Failed to delete blog post");
+    throw new Error("Failed to delete requirement");
   }
 );
 

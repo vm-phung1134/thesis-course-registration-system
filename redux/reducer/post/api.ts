@@ -4,15 +4,17 @@ import { token } from "./type";
 import { IPostObject } from "@/interface/post";
 import { IClassroomObject } from "@/interface/classroom";
 
+const apiURL = `http://qthuy2k1.shop/api/post`;
+
 // GET ALL POSTS
 const getAllPosts = createAsyncThunk("post/getAllPost", async () => {
-  const response = await axios.get(`http://localhost:5000/api/post`, {
+  const response = await axios.get(`${apiURL}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
   if (response.status === 200) {
-    return response.data;
+    return response.data.posts;
   }
   throw new Error("Failed to get all post");
 });
@@ -21,16 +23,13 @@ const getAllPosts = createAsyncThunk("post/getAllPost", async () => {
 const getPost = createAsyncThunk(
   "post/getPost",
   async (postData: IPostObject) => {
-    const response = await axios.get(
-      `http://localhost:5000/api/post/${postData.id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.get(`${apiURL}/${postData.id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
-      return response.data;
+      return response.data.post;
     }
     throw new Error("Failed to get one post");
   }
@@ -40,16 +39,13 @@ const getPost = createAsyncThunk(
 const getAllPostInClass = createAsyncThunk(
   "post/getAllPostInClass",
   async (postData: IClassroomObject | null) => {
-    const response = await axios.get(
-      `http://localhost:5000/api/post/class/${postData?.id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.get(`${apiURL}/class/${postData?.id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
-      return response.data;
+      return response.data.postInClass;
     }
     throw new Error("Failed to get all posts");
   }
@@ -60,7 +56,7 @@ const getAllPostInReportStage = createAsyncThunk(
   "post/getAllPostInReportStage",
   async (postData: any) => {
     const response = await axios.get(
-      `http://localhost:5000/api/post/stage/${postData.classroomId}&${postData.categoryId}`,
+      `${apiURL}/stage/${postData.classroomId}&${postData.categoryId}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -68,7 +64,7 @@ const getAllPostInReportStage = createAsyncThunk(
       }
     );
     if (response.status === 200) {
-      return response.data;
+      return response.data.postInStage;
     }
     throw new Error("Failed to get all posts");
   }
@@ -92,16 +88,12 @@ const createPost = createAsyncThunk(
       }
     }
 
-    const response = await axios.post(
-      "http://localhost:5000/api/post/",
-      formData,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const response = await axios.post(`${apiURL}`, formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      },
+    });
 
     if (response.status === 200) {
       return response.data;
@@ -115,15 +107,11 @@ const createPost = createAsyncThunk(
 const updatePost = createAsyncThunk(
   "post/updatePost",
   async (postData: IPostObject) => {
-    const response = await axios.put(
-      `http://localhost:5000/api/post/${postData.id}`,
-      postData,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.put(`${apiURL}/${postData.id}`, {"post": postData}, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
       return response.data;
     }
@@ -135,14 +123,11 @@ const updatePost = createAsyncThunk(
 const deletePost = createAsyncThunk(
   "post/deletePost",
   async (postData: IPostObject) => {
-    const response = await axios.delete(
-      `http://localhost:5000/api/post/${postData.id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.delete(`${apiURL}/${postData.id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
       return response.data;
     }

@@ -1,19 +1,20 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { token } from "./type";
-import { ICategoryObject } from "@/interface/category";
+
+const apiURL = `http://qthuy2k1.shop/api/reporting-stage`;
 
 // GET ALL REPORT STAGES
 const getAllReportStage = createAsyncThunk(
   "report-stage/getAllReportStage",
   async () => {
-    const response = await axios.get("http://localhost:5000/api/report-stage", {
+    const response = await axios.get(`${apiURL}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
     if (response.status === 200) {
-      return response.data;
+      return response.data.categorys;
     }
     throw new Error("Failed to get all report stage");
   }
@@ -24,7 +25,7 @@ const getReportStage = createAsyncThunk(
   "report-stage/getReportStage",
   async (id: string) => {
     const response = await axios.get(
-      `http://localhost:5000/api/report-stage/${id}`,
+      `${apiURL}/${id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -32,7 +33,7 @@ const getReportStage = createAsyncThunk(
       }
     );
     if (response.status === 200) {
-      return response.data;
+      return response.data.category;
     }
     throw new Error("Failed to get one report stage");
   }

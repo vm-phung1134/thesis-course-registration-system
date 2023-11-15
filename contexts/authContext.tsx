@@ -54,7 +54,6 @@ export const useAuthContext = () => {
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const queryClient = useQueryClient();
   const [, setUserCookies] = useUserCookies();
   const [message, setMessage] = useState<string>("");
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -71,11 +70,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             reject(error);
           });
       });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["accounts"]);
-      },
     }
   );
   const signInWithGoogle = () => {
@@ -92,6 +86,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             photoSrc: result.user.photoURL || "",
             email: result.user.email,
             role: roleAssignment(result.user.email || ""),
+            major: "CNTT",
+            class: "unknow",
+            phone: "0909090909",
           };
           await addMutation.mutate(authObject);
           const token = await result.user.getIdToken();

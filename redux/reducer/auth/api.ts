@@ -3,20 +3,19 @@ import axios from "axios";
 import { token } from "./type";
 import { IAuthObject } from "@/interface/auth";
 
+const apiURL = `http://qthuy2k1.shop/api/auth`;
+
 // GET ONE AUTH
 const getOneAuth = createAsyncThunk(
   "auth/getOneAuth",
   async (postData: IAuthObject) => {
-    const response = await axios.get(
-      `http://localhost:5000/api/auth/${postData.id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.get(`${apiURL}/${postData.id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
-      return response.data;
+      return response.data.user;
     }
     throw new Error("Failed to get one auth");
   }
@@ -24,13 +23,13 @@ const getOneAuth = createAsyncThunk(
 
 // GET ALL AUTHS
 const getAllAuths = createAsyncThunk("authors/getAllAuths", async () => {
-  const response = await axios.get(`http://localhost:5000/api/auth`, {
+  const response = await axios.get(`${apiURL}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
   if (response.status === 200) {
-    return response.data;
+    return response.data.users;
   }
   throw new Error("Failed to get all auths");
 });
@@ -39,16 +38,13 @@ const getAllAuths = createAsyncThunk("authors/getAllAuths", async () => {
 const getAllLecturers = createAsyncThunk(
   "authors/getAllLecturers",
   async () => {
-    const response = await axios.get(
-      `http://localhost:5000/api/auth/lecturer`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.get(`${apiURL}/lecturer`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
-      return response.data;
+      return response.data.lecturers;
     }
     throw new Error("Failed to get all lecturers");
   }
@@ -59,8 +55,8 @@ const loginAuth = createAsyncThunk(
   "auth/loginAuth",
   async (postData: IAuthObject) => {
     const response = await axios.post(
-      "http://localhost:5000/api/auth",
-      postData,
+      `${apiURL}`,
+      { user: postData },
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -79,8 +75,8 @@ const updateAuth = createAsyncThunk(
   "auth/updateAuth",
   async (postData: IAuthObject) => {
     const response = await axios.put(
-      `http://localhost:5000/api/auth/${postData.id}`,
-      postData,
+      `${apiURL}/${postData.id}`,
+      { user: postData },
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -99,7 +95,7 @@ const checkStateSubscribe = createAsyncThunk(
   "auth/checkStateSubscribe",
   async (postData: IAuthObject) => {
     const response = await axios.get(
-      `http://localhost:5000/api/auth/check-subscribe/${postData.id}`,
+      `${apiURL}/check-subscribe/${postData.id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -112,33 +108,12 @@ const checkStateSubscribe = createAsyncThunk(
     throw new Error("Failed to check state subcribe");
   }
 );
-
-// CHECK STATE CLASSROOM PAGE
-const checkAuthRoleForClassroomState = createAsyncThunk(
-  "auth/checkAuthRoleForClassroomState",
-  async (postData: IAuthObject) => {
-    const response = await axios.post(
-      `http://localhost:5000/api/auth/check-authorClassroomState`,
-      postData,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    if (response.status === 200) {
-      return response.data;
-    }
-    throw new Error("Failed to check state classroom");
-  }
-);
-
 // UNSUBSCRIBE STATE
 const unsubscribeState = createAsyncThunk(
   "auth/unsubscribeState",
   async (postData: IAuthObject) => {
     const response = await axios.delete(
-      `http://localhost:5000/api/auth/un-subscribe/${postData.id}`,
+      `${apiURL}/un-subscribe/${postData.id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -155,14 +130,11 @@ const unsubscribeState = createAsyncThunk(
 const deleteAuth = createAsyncThunk(
   "auth/deleteAuth",
   async (postData: IAuthObject) => {
-    const response = await axios.delete(
-      `http://localhost:5000/api/auth/${postData.id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.delete(`${apiURL}/${postData.id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
       return response.data;
     }
@@ -178,6 +150,5 @@ export {
   updateAuth,
   getAllLecturers,
   checkStateSubscribe,
-  checkAuthRoleForClassroomState,
-  deleteAuth
+  deleteAuth,
 };

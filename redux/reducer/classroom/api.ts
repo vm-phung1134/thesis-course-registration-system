@@ -4,17 +4,19 @@ import { token } from "./type";
 import { IClassroomObject } from "@/interface/classroom";
 import { IAuthObject } from "@/interface/auth";
 
+const apiURL = `http://qthuy2k1.shop/api/classroom`;
+
 // GET ALL CLASSROOM
 const getAllClassrooms = createAsyncThunk(
   "member/getAllClassrooms",
   async () => {
-    const response = await axios.get("http://localhost:5000/api/classroom", {
+    const response = await axios.get(`${apiURL}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
     if (response.status === 200) {
-      return response.data;
+      return response.data.classrooms;
     }
     throw new Error("Failed to get all members");
   }
@@ -24,16 +26,13 @@ const getAllClassrooms = createAsyncThunk(
 const getClassroom = createAsyncThunk(
   "classroom/getClassroom",
   async (postData: IAuthObject) => {
-    const response = await axios.get(
-      `http://localhost:5000/api/classroom/${postData.id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.get(`${apiURL}/${postData.id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
-      return response.data;
+      return response.data.classroom;
     }
     throw new Error("Failed to get one classroom");
   }
@@ -44,8 +43,8 @@ const createClassroom = createAsyncThunk(
   "classroom/createClassroom",
   async (postData: Omit<IClassroomObject, "id">) => {
     const response = await axios.post(
-      "http://localhost:5000/api/classroom",
-      postData,
+      `${apiURL}`,
+      { "classroom": postData },
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -64,8 +63,8 @@ const updateClassroom = createAsyncThunk(
   "classroom/updateClassroom",
   async (postData: IClassroomObject) => {
     const response = await axios.put(
-      `http://localhost:5000/api/classroom/${postData.id}`,
-      postData,
+      `${apiURL}/${postData.id}`,
+      { "classroom": postData },
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -73,7 +72,7 @@ const updateClassroom = createAsyncThunk(
       }
     );
     if (response.status === 200) {
-      return response.data;
+      return response.data.classroom;
     }
     throw new Error("Failed to update auth");
   }
@@ -82,14 +81,11 @@ const updateClassroom = createAsyncThunk(
 const deleteClassroom = createAsyncThunk(
   "classroom/deleteClassroom",
   async (postData: IClassroomObject) => {
-    const response = await axios.delete(
-      `http://localhost:5000/api/classroom/${postData.id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.delete(`${apiURL}/${postData.id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
       return response.data;
     }

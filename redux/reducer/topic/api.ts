@@ -2,15 +2,16 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { token } from "./type";
 import axios from "axios";
 import { ITopicObject } from "@/interface/topic";
-import { IAuthObject } from "@/interface/auth";
+
+const apiURL = `http://qthuy2k1.shop/api/topic`;
 
 // CREATE NEW TOPIC
 const createTopic = createAsyncThunk(
   "topic/createTopic",
   async (postData: ITopicObject) => {
     const response = await axios.post(
-      "http://localhost:5000/api/topic",
-      postData,
+      `${apiURL}`,
+      { "topic": postData },
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -26,43 +27,37 @@ const createTopic = createAsyncThunk(
 
 // GET ALL TOPICS
 const getAllTopics = createAsyncThunk("topic/getAllTopics", async () => {
-  const response = await axios.get("http://localhost:5000/api/topic", {
+  const response = await axios.get(`${apiURL}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
   if (response.status === 200) {
-    return response.data;
+    return response.data.topics;
   }
   throw new Error("Failed to get all Topics");
 });
 
 // GET ONE TOPIC
-const getTopic = createAsyncThunk(
-  "topic/getTopic",
-  async (id: string) => {
-    const response = await axios.get(
-      `http://localhost:5000/api/topic/${id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    if (response.status === 200) {
-      return response.data;
-    }
-    throw new Error("Failed to get one topic");
+const getTopic = createAsyncThunk("topic/getTopic", async (id: string) => {
+  const response = await axios.get(`${apiURL}/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (response.status === 200) {
+    return response.data.topic;
   }
-);
+  throw new Error("Failed to get one topic");
+});
 
 // UPDATE TOPIC
 const updateTopic = createAsyncThunk(
   "topic/updateTopic",
   async (postData: ITopicObject) => {
     const response = await axios.put(
-      `http://localhost:5000/api/topic/${postData.id}`,
-      postData,
+      `${apiURL}/${postData.id}`,
+      { "topic": postData },
       {
         headers: {
           Authorization: `Bearer ${token}`,
