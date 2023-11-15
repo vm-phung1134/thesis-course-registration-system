@@ -107,7 +107,7 @@ function ManageClassroomTab() {
               {exercises.length > 0 ? (
                 <CriticalTask
                   submitStuds={submitStuds}
-                  exercise={getExerciseWithNearestDeadline(exercises)}
+                  exercise={getExerciseWithNearestDeadline(exercises) || exercises[0]}
                 />
               ) : (
                 <div className="h-52 flex gap-5 flex-col justify-center items-center p-5 border rounded-xl">

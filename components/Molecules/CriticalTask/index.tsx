@@ -46,7 +46,9 @@ export const CriticalTask: FC<ICriticalTaskProps> = ({
           with the orange background color using...
         </p>
         <div className="flex justify-end mt-3">
-          <button className="bg-green-700 text-white px-5 font-medium text-xs py-1 rounded-sm">View Detail</button>
+          <button className="bg-green-700 text-white px-5 font-medium text-xs py-1 rounded-sm">
+            View Detail
+          </button>
         </div>
       </div>
     </div>

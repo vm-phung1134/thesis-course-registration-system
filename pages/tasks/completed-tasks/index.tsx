@@ -170,7 +170,7 @@ function CriticalTasks() {
                 {exercises.length > 0 ? (
                   <CriticalTask
                     submitStuds={submitStuds}
-                    exercise={getExerciseWithNearestDeadline(exercises)}
+                    exercise={getExerciseWithNearestDeadline(exercises) || exercises[0]}
                   />
                 ) : (
                   <>
