@@ -6,6 +6,10 @@ import { IExerciseObject } from "@/interface/exercise";
 import { IMemberObject } from "@/interface/member";
 import { IAssessItem, IPointDefObject } from "@/interface/pointDef";
 import { IPostObject } from "@/interface/post";
+import {
+  IPrivateComment,
+  IPrivateCommentItem,
+} from "@/interface/privateComment";
 import { IRoomDefObject } from "@/interface/room";
 import { IStudentDefObject } from "@/interface/studef";
 import { ISubmitObject } from "@/interface/submit";
@@ -88,6 +92,17 @@ export const INITIATE_COMMENT: ICommentObject = {
   user: INITIATE_AUTH,
   content: "",
   postId: "",
+};
+
+export const INITIATE_PRIVATE_COMMENT_ITEM: IPrivateCommentItem = {
+  user: INITIATE_AUTH,
+  id: "",
+  content: "",
+};
+
+export const INITIATE_PRIVATE_COMMENT: IPrivateComment = {
+  userId: "",
+  comments: [],
 };
 
 export const INITIATE_SUBMIT: ISubmitObject = {
