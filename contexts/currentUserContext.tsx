@@ -5,6 +5,7 @@ import { getOneAuth } from "@/redux/reducer/auth/api";
 import { IAuthObject } from "@/interface/auth";
 import Cookies from "js-cookie";
 import { INITIATE_AUTH } from "@/data";
+import { useQuery } from "@tanstack/react-query";
 
 interface CurrentUserContextType {
   currentUser: IAuthObject;
@@ -26,11 +27,14 @@ export const CurrentUserContextProvider: React.FC<CurrentUserProps> = ({
   const dispatch = useAppDispatch();
   const userJson = Cookies.get("user");
   const user: IAuthObject = userJson ? JSON.parse(userJson) : null;
-  const { auth: currentUser } = useAppSelector((state) => state.authReducer);
-
-  useEffect(() => {
-    dispatch(getOneAuth(user));
-  }, []);
+  const { data: currentUser } = useQuery<IAuthObject>({
+    queryKey: ["auth", user],
+    queryFn: async () => {
+      const action = await dispatch(getOneAuth(user));
+      return action.payload || INITIATE_AUTH;
+    },
+    initialData: INITIATE_AUTH,
+  });
 
   const currentUserValue: CurrentUserContextType = {
     currentUser,

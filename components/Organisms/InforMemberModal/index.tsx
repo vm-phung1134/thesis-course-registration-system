@@ -17,7 +17,7 @@ export const InforMemberModal: FC<IInforMemberModalProps> = ({
   topic,
 }) => {
   return (
-    <dialog id="my_modal_5" className={modalClass}>
+    <dialog id="modal_require_students" className={modalClass}>
       <div className="w-6/12 bg-white py-5 px-8 h-fit shadow-2xl rounded-2xl">
         <div>
           <h4 className="font-bold text-xl capitalize">Requirement information</h4>

@@ -140,7 +140,7 @@ export const PersonalInformation: FC<IPersonalInformationProps> = () => {
                 </div>
               </ul>
             </div>
-            <dialog id="my_modal_4" className={modalClass}>
+            <dialog id="modal_infor_student_form" className={modalClass}>
               <div className="w-5/12 bg-white p-5 h-fit shadow-2xl">
                 <InforUserForm
                   values={values}

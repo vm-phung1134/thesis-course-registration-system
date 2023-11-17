@@ -157,7 +157,7 @@ function AccountLecturerPage() {
               </h4>
               <ChangePassForm />
             </div>
-            <dialog id="my_modal_lecturer" className={modalClass}>
+            <dialog id="modal_infor_instructor" className={modalClass}>
               <div className="w-5/12 bg-white p-5 h-fit shadow-2xl rounded-xl">
                 <InforUserForm
                   values={currentUser}

@@ -27,7 +27,7 @@ export const ModalConfirm: FC<IModalConfirmProp> = ({
   status,
 }) => {
   return (
-    <dialog id="my_modal_1" className={modalClass}>
+    <dialog id="modal_confirm_infor" className={modalClass}>
       <form method="dialog" className="bg-white p-7 shadow-lg w-4/12 rounded-2xl">
         <h3 className="font-bold text-2xl">{title}</h3>
         <p className="py-4 font-medium">{message}</p>

@@ -5,8 +5,6 @@ import { useAppDispatch } from "@/redux/store";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Form, Formik } from "formik";
 import { FC } from "react";
-import useToastifyMessage from "@/hooks/useToastify";
-
 export interface IInforUserFormProps {
   setToggle: React.Dispatch<React.SetStateAction<boolean>>;
   toggle: boolean;
@@ -22,6 +20,7 @@ export const InforUserForm: FC<IInforUserFormProps> = ({
   const dispatch = useAppDispatch();
   const updateMutation = useMutation(
     (postData: IAuthObject) => {
+      console.log(postData);
       return new Promise((resolve, reject) => {
         dispatch(updateAuth(postData))
           .unwrap()
@@ -35,13 +34,10 @@ export const InforUserForm: FC<IInforUserFormProps> = ({
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["auth", "lectures"]);
+        queryClient.invalidateQueries(["auth"]);
       },
     }
   );
-
-  useToastifyMessage(updateMutation, "Lecturer's information has been updated");
-
   return (
     <Formik
       initialValues={values}
@@ -49,7 +45,8 @@ export const InforUserForm: FC<IInforUserFormProps> = ({
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
           updateMutation.mutate(values);
-        }, 400);
+          setToggle(!toggle);
+        }, 500);
       }}
     >
       {(formik) => {
@@ -113,8 +110,6 @@ export const InforUserForm: FC<IInforUserFormProps> = ({
                 />
                 <Button
                   type="submit"
-                  setToggle={setToggle}
-                  toggle={toggle}
                   title="Update Information"
                   className="bg-green-700 rounded-xl hover:bg-green-600 text-white px-8"
                 />

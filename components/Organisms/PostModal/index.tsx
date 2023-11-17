@@ -24,7 +24,7 @@ export const PostModal: FC<IPostModalProps> = ({
   post,
 }) => {
   return (
-    <dialog id="my_modal_2" className={modalClass}>
+    <dialog id="modal_post_form" className={modalClass}>
       <div className="w-5/12 bg-white p-3 h-fit shadow-2xl rounded-xl">
         <div className="h-full px-3">
           <div className="border-b pb-5">

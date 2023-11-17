@@ -545,7 +545,7 @@ export const CreateClassroomTab: FC<ICreateClassroomTab> = ({}) => {
         </div>
       </div>
       {/* Open modal form to create all list account to classroom */}
-      <dialog id="modal_admin_1" className={modalClassCreateClassroom}>
+      <dialog id="modal_admin_create_classroom" className={modalClassCreateClassroom}>
         <div className="w-5/12 bg-white h-fit shadow-2xl p-5 rounded-xl">
           <h4 className="text-xl font-bold mb-5 capitalize">
             Create classroom form

@@ -1,15 +1,9 @@
 import { Button, NormalAvatar, SnipperRound } from "@/components/Atoms";
-import {
-  InforUserFormV2,
-  UploadFileForm,
-  UploadFinalFileForm,
-} from "@/components/Molecules";
+import { InforUserFormV2, UploadFinalFileForm } from "@/components/Molecules";
 import { EnrollSuccess } from "@/components/Organisms/MemberState/EnrollSuccess";
 import { MainboardTemplate } from "@/components/Templates";
-import { useCurrentUserContext } from "@/contexts/currentUserContext";
 import { INITIATE_MEMBER, INITIATE_UPLOAD_REPORT } from "@/data";
 import { useUserCookies } from "@/hooks/useCookies";
-import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { IMemberObject } from "@/interface/member";
 import { ICouncilDef } from "@/interface/schedule";
 import { IUploadReportObject } from "@/interface/upload";
@@ -63,7 +57,6 @@ function EnrollStudentPage() {
   );
   const handleEnrollMember = () => {
     updateMutation.mutate({ ...member, registerDefense: true });
-    console.log({ ...member, registerDefense: true });
   };
 
   // HANDLE FINAL UPLOAD
@@ -225,7 +218,7 @@ function EnrollStudentPage() {
                         />
                       ) : (
                         <>
-                          <h3 className="text-xs font-medium mb-3">
+                          <h3 className="text-xs font-medium mb-3 text-green-700">
                             Step {switchingForm} of 2
                           </h3>
                           <div className="h-[50vh] flex flex-col gap-5 items-center justify-center">

@@ -3,14 +3,13 @@ import { EmptySpace, FilterScheduledForm } from "@/components/Molecules";
 import { ICategoryObject } from "@/interface/category";
 import { IOptionItem } from "@/interface/filter";
 import { FC, useState, useEffect } from "react";
-import { BREADCRUMB_MAINBOARD, DATA_FILTER_COURSE, DATA_FILTER_TOPICS } from "../mock-data";
+import { DATA_FILTER_COURSE, DATA_FILTER_TOPICS } from "../mock-data";
 import { ClassroomCard } from "../..";
 import { useAppDispatch } from "@/redux/store";
 import { useQuery } from "@tanstack/react-query";
 import { IClassroomObject } from "@/interface/classroom";
 import { getAllClassrooms } from "@/redux/reducer/classroom/api";
 import { useTableSearch } from "@/hooks/useTableSearch";
-import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 
 export interface INoSubscribeViewProps {}
 

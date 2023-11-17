@@ -31,7 +31,7 @@ export const ClassroomDetailModal: FC<IClassroomDetailModalProps> = ({
     initialData: [],
   });
   return (
-    <dialog id="my_modal_7" className={modalClass}>
+    <dialog id="modal_instructor_infor" className={modalClass}>
       <div className="w-6/12 bg-white p-5 h-fit shadow-2xl rounded-xl">
         <h4 className="font-bold text-xl capitalize">Instructor information</h4>
         <div className="grid grid-cols-12 gap-2 mt-3 text-sm">

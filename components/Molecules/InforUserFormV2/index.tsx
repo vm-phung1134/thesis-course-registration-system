@@ -97,10 +97,12 @@ export const InforUserFormV2: FC<IInforUserFormV2Props> = ({
         return (
           <>
             {loading ? (
-              <SnipperRound />
+              <div className="h-[30rem]">
+                <SnipperRound />
+              </div>
             ) : (
               <div>
-                <h3 className="text-xs font-medium mb-3">
+                <h3 className="text-xs font-medium mb-3 text-green-700">
                   Step {switchingForm} of 2
                 </h3>
                 <Form>
@@ -112,6 +114,7 @@ export const InforUserFormV2: FC<IInforUserFormV2Props> = ({
                     placeholder="Ex: Nguyen Van Anh"
                     type="text"
                     label="Full name"
+                    className="rounded-xl bg-slate-100 border-none"
                     nameField="name"
                     value={values?.name}
                   />
@@ -119,6 +122,7 @@ export const InforUserFormV2: FC<IInforUserFormV2Props> = ({
                     type="text"
                     placeholder="Ex: nvan@ctu.edu.vn"
                     label="Email address"
+                    className="rounded-xl bg-slate-100 border-none"
                     nameField="email"
                     value={values?.email}
                   />
@@ -128,12 +132,14 @@ export const InforUserFormV2: FC<IInforUserFormV2Props> = ({
                       type="text"
                       label="Phone number"
                       nameField="phone"
+                      className="rounded-xl bg-slate-100 border-none"
                       value={values?.phone || ""}
                     />
                     <FormField
                       placeholder="Ex: IT colleage"
                       type="text"
                       label="School"
+                      className="rounded-xl bg-slate-100 border-none"
                       nameField="class"
                       value={values?.class || ""}
                     />
@@ -143,6 +149,7 @@ export const InforUserFormV2: FC<IInforUserFormV2Props> = ({
                     type="text"
                     label="Major"
                     nameField="major"
+                    className="rounded-xl bg-slate-100 border-none"
                     value={values?.major || ""}
                   />
                   <div className="flex justify-end items-center">

@@ -5,13 +5,14 @@ import { BREADCRUMB_ACCOUNT_STUDENT } from "./mock-data";
 import { InforUserForm, RegistrationTopicForm } from "@/components/Molecules";
 import { PersonalInformation } from "@/components/Organisms";
 import { INITIATE_TOPIC } from "@/data";
-import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { useAppDispatch } from "@/redux/store";
 import { useQuery } from "@tanstack/react-query";
 import { getTopic } from "@/redux/reducer/topic/api";
 import { ITopicObject } from "@/interface/topic";
 import classNames from "classnames";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 function AccountStudentPage() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -138,7 +139,7 @@ function AccountStudentPage() {
                 </section>
               </div>
             </div>
-            <dialog id="my_modal_student" className={modalClass}>
+            <dialog id="modal_update_info_student" className={modalClass}>
               <div className="w-5/12 bg-white p-5 h-fit shadow-2xl rounded-xl">
                 <InforUserForm
                   values={currentUser}

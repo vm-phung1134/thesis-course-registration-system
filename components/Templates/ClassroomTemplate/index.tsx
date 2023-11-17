@@ -92,7 +92,7 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
             )}
           </div>
           {/* POST / EXERCISE */}
-          <dialog id="my_modal_3" className={modalClassPost}>
+          <dialog id="modal_switch_post_exercise" className={modalClassPost}>
             <div className="w-5/12 bg-white p-5 h-fit shadow-2xl rounded-xl">
               {selected === DATA_LIST_OPTIONS[0] ? (
                 <CreateExerciseForm

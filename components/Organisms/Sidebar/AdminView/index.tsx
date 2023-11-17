@@ -1,10 +1,11 @@
+/* eslint-disable react/display-name */
 import { LogoApp } from "@/components/Molecules";
 import Link from "next/link";
-import { FC } from "react";
+import { FC, memo } from "react";
 
 export interface ISidebarAdminViewProps {}
 
-export const SidebarAdminView: FC<ISidebarAdminViewProps> = ({}) => {
+export const SidebarAdminView: FC<ISidebarAdminViewProps> = memo(({}) => {
   return (
     <div className="fixed top-0 left-0 bottom-0">
       <div className="flex justify-center">
@@ -231,4 +232,4 @@ export const SidebarAdminView: FC<ISidebarAdminViewProps> = ({}) => {
       </div>
     </div>
   );
-};
+});

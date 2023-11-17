@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { Avatar, NormalAvatar } from "@/components/Atoms";
+import { Avatar, Button, NormalAvatar } from "@/components/Atoms";
 import DarkModeToggle from "@/components/Atoms/ToggleDarkMode";
 import {
   CommentForm,
@@ -28,6 +28,7 @@ import Image from "next/image";
 import { FC, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useClassroomStateContext } from "@/contexts/classroomState";
+import Link from "next/link";
 
 export interface INavbarProps {}
 export const Navbar: FC<INavbarProps> = () => {
@@ -211,6 +212,37 @@ export const Navbar: FC<INavbarProps> = () => {
                     </div>
                     <div className="mt-auto fixed bottom-3 left-2 right-2">
                       <PrivateCommentForm />
+                    </div>
+                  </div>
+                </div>
+              )}
+              {!authClassroomState && (
+                <div className="drawer-side z-10">
+                  <label
+                    htmlFor="my-drawer-message"
+                    aria-label="close sidebar"
+                    className="drawer-overlay"
+                  ></label>
+                  <div className="menu p-4 w-[28rem] relative h-screen bg-base-100 text-base-content">
+                    <h4 className="font-bold text-2xl text-green-700 mb-1">
+                      Private chat
+                    </h4>
+                    <div className="h-96 flex gap-5 flex-col justify-center items-center p-5">
+                      <Image
+                        src="https://cdn-icons-gif.flaticon.com/8121/8121267.gif"
+                        width="50"
+                        height="50"
+                        className="-hue-rotate-[38deg] saturate-[.85]"
+                        alt=""
+                      />
+                      <p className="font-medium text-center text-lg">
+                        Ops! You must instructor accepted into classroom to use
+                        this featurer
+                      </p>
+                      <Button
+                        className="bg-green-700 text-white"
+                        title="Go to mainboard"
+                      />
                     </div>
                   </div>
                 </div>
