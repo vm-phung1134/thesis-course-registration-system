@@ -54,22 +54,30 @@ export const useAuthContext = () => {
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const queryClient = useQueryClient();
   const [, setUserCookies] = useUserCookies();
   const [message, setMessage] = useState<string>("");
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
-  const addMutation = useMutation((postData: IAuthObject) => {
-    return new Promise((resolve, reject) => {
-      dispatch(loginAuth(postData))
-        .unwrap()
-        .then((data) => {
-          resolve(data);
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    });
-  });
+  const addMutation = useMutation(
+    (postData: IAuthObject) => {
+      return new Promise((resolve, reject) => {
+        dispatch(loginAuth(postData))
+          .unwrap()
+          .then((data) => {
+            resolve(data);
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      });
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["auth"]);
+      },
+    }
+  );
   const signInWithGoogle = () => {
     signInWithPopup(auth, provider)
       .then(async (result) => {

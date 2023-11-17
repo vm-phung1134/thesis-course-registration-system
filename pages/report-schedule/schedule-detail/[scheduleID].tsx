@@ -44,7 +44,7 @@ function ScheduleDetail() {
             <div className="grid grid-cols-12 gap-5 mt-5">
               <div className="col-span-4">
                 <div className="p-5 bg-slate-50 shadow-lg rounded-xl">
-                  <div className="text-sm my-1 flex gap-2 items-center">
+                  <div onClick={() => history.back()} className="text-sm my-1 flex gap-2 items-center cursor-pointer">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
@@ -63,7 +63,7 @@ function ScheduleDetail() {
                     The Crown Prosecution Service
                   </h4>
                   <p className="normal-case text-gray-400 text-xs italic">
-                    Date of foundation of the council 14/11/2023
+                    Date of foundation of the council <span className="text-red-600 font-medium">{councilInSchedule?.schedule.timeSlots[0].timeSlot.date}</span>
                   </p>
                   <div className="bg-green-700 h-[1px] w-full my-3"></div>
                   <ul className="text-sm flex flex-col gap-2">

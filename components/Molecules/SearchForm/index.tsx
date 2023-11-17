@@ -13,11 +13,10 @@ export const SearchForm: FC<ISearchFormProps> = ({}) => {
       initialValues={{ search: "" }}
       enableReinitialize
       validate={(values) => {}}
-      onSubmit={(values, { setSubmitting, resetForm }) => {
+      onSubmit={(values, { setSubmitting}) => {
         setTimeout(() => {
           setSearchValue(values.search);
           router.push("/search");
-          resetForm();
           setSubmitting(false);
         }, 400);
       }}

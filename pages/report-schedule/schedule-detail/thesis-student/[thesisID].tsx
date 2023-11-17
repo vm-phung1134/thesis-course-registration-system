@@ -98,7 +98,7 @@ function ThesisDefenseStudentDetail() {
             <div className="grid grid-cols-12 gap-5 text-sm">
               <div className="col-span-7 mt-5 flex gap-5 flex-col tracking-wider">
                 <div className="p-5 bg-gray-100 rounded-xl">
-                  <div className="text-sm my-1 flex gap-2 items-center">
+                  <div onClick={() => history.back()} className="text-sm my-1 flex gap-2 items-center cursor-pointer">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
