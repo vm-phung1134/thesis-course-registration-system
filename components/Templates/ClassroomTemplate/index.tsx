@@ -48,13 +48,12 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
 
   // HANDLE API
   const { currentUser } = useCurrentUserContext();
-  const [user] = useUserCookies();
   const [loading, setLoading] = useState<boolean>(true);
   const { authClassroomState } = useClassroomStateContext();
   useEffect(() => {
     const timeOutLoading = setTimeout(() => {
       setLoading(false);
-    }, 1300);
+    }, 1200);
     return () => clearTimeout(timeOutLoading);
   }, []);
   return (
@@ -80,6 +79,7 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
               <>
                 {(authClassroomState !== null) && (
                   <ClassroomFound
+                  
                     classroom={authClassroomState || INITIATE_CLASSROOM}
                     setCreatePostModal={setCreatePostModal}
                     openCreatePostModal={openCreatePostModal}

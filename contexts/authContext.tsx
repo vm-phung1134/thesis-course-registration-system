@@ -54,30 +54,22 @@ export const useAuthContext = () => {
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const queryClient = useQueryClient();
   const [, setUserCookies] = useUserCookies();
   const [message, setMessage] = useState<string>("");
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
-  const addMutation = useMutation(
-    (postData: IAuthObject) => {
-      return new Promise((resolve, reject) => {
-        dispatch(loginAuth(postData))
-          .unwrap()
-          .then((data) => {
-            resolve(data);
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["accounts"]);
-      },
-    }
-  );
+  const addMutation = useMutation((postData: IAuthObject) => {
+    return new Promise((resolve, reject) => {
+      dispatch(loginAuth(postData))
+        .unwrap()
+        .then((data) => {
+          resolve(data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  });
   const signInWithGoogle = () => {
     signInWithPopup(auth, provider)
       .then(async (result) => {
@@ -92,6 +84,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             photoSrc: result.user.photoURL || "",
             email: result.user.email,
             role: roleAssignment(result.user.email || ""),
+            class: "",
+            major: "",
+            phone: "",
           };
           await addMutation.mutate(authObject);
           const token = await result.user.getIdToken();

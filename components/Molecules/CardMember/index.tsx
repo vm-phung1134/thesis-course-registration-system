@@ -54,12 +54,12 @@ export const CardMember: FC<ICardMemberClassProps> = ({ member, index }) => {
               <p className="uppercase font-medium">{member?.member.name}</p>
               <p className="uppercase"> - {member?.member.class}</p>
             </div>
-            <p>{member?.member.major}</p>
+            <p>{member?.member.major || "Computer Science"}</p>
           </div>
         </div>
         <div className="py-1">
           <p className="text-[15px] py-2 truncate">
-            Topic: {topic_fetch?.title}
+            Topic: {topic_fetch?.title || "Not update information"}
           </p>
           <div className="flex justify-between items-center">
             <div className="flex gap-3 pt-2">

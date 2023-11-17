@@ -15,13 +15,16 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
+import { useUserCookies } from "@/hooks/useCookies";
 
 export interface ICardLecturerInClassProps {
   lecturer: IAuthObject;
+  setLoading?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
   lecturer,
+  setLoading,
 }) => {
   const dispatch = useAppDispatch();
   const [openLockClass, setOpenLockClass] = useState<boolean>(false);
@@ -37,6 +40,7 @@ export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
   const { authClassroomState } = useClassroomStateContext();
   const queryClient = useQueryClient();
   const { currentUser } = useCurrentUserContext();
+  const [user] = useUserCookies();
   const deleteMutation = useMutation(
     (postData: IAuthObject) => {
       return new Promise((resolve, reject) => {
@@ -44,6 +48,7 @@ export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
           .unwrap()
           .then((data) => {
             resolve(data);
+            location.reload();
           })
           .catch((error) => {
             reject(error);
@@ -52,7 +57,7 @@ export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["member", currentUser]);
+        queryClient.invalidateQueries(["member-classroom", user]);
       },
     }
   );

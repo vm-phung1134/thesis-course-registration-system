@@ -44,7 +44,7 @@ export const ClassroomStateContextProvider: React.FC<ClassroomStateProps> = ({
   });
 
   const { data: member } = useQuery<IMemberObject | null>({
-    queryKey: ["member", user],
+    queryKey: ["member-classroom", user],
     queryFn: async () => {
       if (user) {
         const action = await dispatch(getMember(user));

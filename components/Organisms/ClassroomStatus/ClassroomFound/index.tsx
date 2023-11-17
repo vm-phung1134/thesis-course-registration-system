@@ -15,12 +15,14 @@ export interface IClassroomFoundProps {
   setCreatePostModal: React.Dispatch<React.SetStateAction<boolean>>;
   openCreatePostModal: boolean;
   classroom: IClassroomObject;
+  setLoading?:  React.Dispatch<React.SetStateAction<boolean>>
 }
 export const ClassroomFound: FC<IClassroomFoundProps> = ({
   children,
   setCreatePostModal,
   openCreatePostModal,
   classroom,
+  setLoading
 }) => {
   const { currentUser } = useCurrentUserContext();
   const [timeLeft, setTimeLeft] = useState<number>(0);
@@ -28,7 +30,7 @@ export const ClassroomFound: FC<IClassroomFoundProps> = ({
     <div className="px-5">
       <div className="grid grid-cols-12 gap-4 my-3">
         <div className="col-span-4 p-5 border rounded-xl">
-          <CardLecturerInClass lecturer={classroom?.lecturer} />
+          <CardLecturerInClass setLoading={setLoading} lecturer={classroom?.lecturer} />
         </div>
         <div className="bg-gray-800 col-span-8 h-fit w-full text-white rounded-xl">
           <div className="p-5">
