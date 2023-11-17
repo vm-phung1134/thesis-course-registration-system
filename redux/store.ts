@@ -19,6 +19,7 @@ import councilDefSlice from "./reducer/council-def";
 import scheduleDefSlice from "./reducer/schedule-def";
 import uploadReportSlice from "./reducer/upload-def";
 import privateCommentSlice from "./reducer/private-comment";
+import unavaiableDateSlice from "./reducer/unavailable-date";
 
 const rootReducer = combineReducers({
   authReducer: authSlice,
@@ -36,7 +37,8 @@ const rootReducer = combineReducers({
   councilDefReducer: councilDefSlice,
   scheduleDefReducer: scheduleDefSlice,
   uploadReportReducer: uploadReportSlice,
-  privateCommentReducer: privateCommentSlice
+  privateCommentReducer: privateCommentSlice,
+  unavaiableDateReducer: unavaiableDateSlice,
 });
 
 const store = configureStore({

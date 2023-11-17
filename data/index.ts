@@ -14,6 +14,7 @@ import { IRoomDefObject } from "@/interface/room";
 import { IStudentDefObject } from "@/interface/studef";
 import { ISubmitObject } from "@/interface/submit";
 import { ITopicObject } from "@/interface/topic";
+import { IUnavailableDate, IUnavaiableItem } from "@/interface/unavaiableDate";
 import { IUploadReportObject } from "@/interface/upload";
 
 export const INITIATE_AUTH: IAuthObject = {
@@ -103,6 +104,7 @@ export const INITIATE_PRIVATE_COMMENT_ITEM: IPrivateCommentItem = {
 export const INITIATE_PRIVATE_COMMENT: IPrivateComment = {
   userId: "",
   comments: [],
+  lecturerId: "",
 };
 
 export const INITIATE_SUBMIT: ISubmitObject = {
@@ -119,7 +121,8 @@ export const INITIATE_STUDENT_DEF: IStudentDefObject = {
   instructor: INITIATE_AUTH,
 };
 
-export const INITIATE_ROOM_DEF: Omit<IRoomDefObject, "id"> = {
+export const INITIATE_ROOM_DEF: IRoomDefObject = {
+  id: "",
   name: "",
   type: "",
   school: "",
@@ -152,6 +155,17 @@ export const INITIATE_ASSESS: Omit<IAssessItem, "id"> = {
   lecturer: INITIATE_AUTH,
   point: 0,
   comment: "",
+};
+
+export const INITIATE_UNAVAIABLE_SCHEDULE_ITEM: IUnavaiableItem = {
+  id: "",
+  date: "",
+  reason: "",
+};
+
+export const INITIATE_UNAVAIABLE_SCHEDULE: IUnavailableDate = {
+  lecturer: INITIATE_AUTH,
+  schedules: [],
 };
 
 export enum STATE_AUTH_CLASSROOM {
