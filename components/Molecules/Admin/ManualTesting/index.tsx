@@ -40,55 +40,30 @@ export const ManualTestingSchedule: FC<IManualTestingScheduleprops> = ({}) => {
   );
   const createMockDataScheduleArrange = async (
     teacherCount: IAuthObject[],
-    studentCount: number,
-    isRandom: boolean
+    studentCount: number
   ) => {
     await dispatch(deleteAllStudentDef());
-    if (isRandom) {
-      let remainingStudents = studentCount;
-      for (let i = 0; i < teacherCount.length; i++) {
-        const randomStudentCount =
-          Math.floor(
-            Math.random() * (remainingStudents / teacherCount.length)
-          ) +
-          remainingStudents / teacherCount.length;
-        remainingStudents -= randomStudentCount;
-        for (let j = 1; j < randomStudentCount + 1; j++) {
-          addStudefMutation.mutate({
-            infor: {
-              name: `Student ${j}`,
-              photoSrc:
-                "https://images.pexels.com/photos/445109/pexels-photo-445109.jpeg?auto=compress&cs=tinysrgb&w=600",
-              email: `user${j}b191000${j}.student.ctu.edu.vn`,
-              phone: "0999999999",
-              class: `DI19V7A${j}`,
-              major: "IT1",
-              role: "student",
-              id: `SV${j}GV${i}`,
-            },
-            instructor: teacherCount[i],
-          } as IStudentDefObject);
-        }
-      }
-    } else {
-      const studentPerTeacher = Math.floor(studentCount / teacherCount.length);
-      for (let i = 0; i < teacherCount.length; i++) {
-        for (let j = 1; j < studentPerTeacher + 1; j++) {
-          addStudefMutation.mutate({
-            infor: {
-              name: `Student ${j}`,
-              photoSrc:
-                "https://images.pexels.com/photos/445109/pexels-photo-445109.jpeg?auto=compress&cs=tinysrgb&w=600",
-              email: `user${j}b191000${j}.student.ctu.edu.vn`,
-              phone: "0999999999",
-              class: `DI19V7A${j}`,
-              major: "IT1",
-              role: "student",
-              id: `SV${j}GV${i}`,
-            },
-            instructor: teacherCount[i],
-          } as IStudentDefObject);
-        }
+
+    let remainingStudents = studentCount;
+    for (let i = 0; i < teacherCount.length; i++) {
+      const randomStudentCount =
+        Math.floor(Math.random() * (remainingStudents / teacherCount.length)) + 20;
+      remainingStudents -= randomStudentCount;
+      for (let j = 1; j < randomStudentCount + 1; j++) {
+        addStudefMutation.mutate({
+          infor: {
+            name: `Student ${j}`,
+            photoSrc:
+              "https://images.pexels.com/photos/445109/pexels-photo-445109.jpeg?auto=compress&cs=tinysrgb&w=600",
+            email: `user${j}b191000${j}.student.ctu.edu.vn`,
+            phone: "0999999999",
+            class: `DI19V7A${j}`,
+            major: "IT1",
+            role: "student",
+            id: `SV${j}GV${i}`,
+          },
+          instructor: teacherCount[i],
+        } as IStudentDefObject);
       }
     }
   };
@@ -120,11 +95,7 @@ export const ManualTestingSchedule: FC<IManualTestingScheduleprops> = ({}) => {
       }}
       onSubmit={(values) => {
         setTimeout(() => {
-          createMockDataScheduleArrange(
-            council_defs,
-            values.quantityStudef,
-            isChecked
-          );
+          createMockDataScheduleArrange(council_defs, values.quantityStudef);
         }, 400);
       }}
     >

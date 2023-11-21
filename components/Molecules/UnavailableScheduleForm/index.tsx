@@ -71,7 +71,7 @@ export const UnavailableForm: FC<IUnavailableFormProps> = ({}) => {
                 label="Reason"
                 nameField="reason"
                 placeholder="Ex: I have a work schedule ..."
-                className="rounded-xl bg-slate-100 border-none capitalize"
+                className="rounded-xl bg-slate-100 border-none"
                 value={values.reason}
               />
               <div className="flex justify-end items-center">

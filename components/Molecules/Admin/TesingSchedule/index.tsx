@@ -38,7 +38,8 @@ export const TestingSchedule: FC<ITestingScheduleprops> = ({}) => {
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["stud-defs", "council-defs"]);
+        queryClient.invalidateQueries(["stud-defs"]);
+        queryClient.invalidateQueries(["council-defs"]);
       },
     }
   );
@@ -57,7 +58,8 @@ export const TestingSchedule: FC<ITestingScheduleprops> = ({}) => {
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["stud-defs", "council-defs"]);
+        queryClient.invalidateQueries(["stud-defs"]);
+        queryClient.invalidateQueries(["council-defs"]);
       },
     }
   );

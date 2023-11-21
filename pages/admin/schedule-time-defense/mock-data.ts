@@ -19,7 +19,7 @@ export const BREADCRUMB_SCHEDULE_DEDTAIL: IBreadcrumbItem[] = [
   {
     id: "4",
     href: "/9530624b-de7f-4cf1-8bdd-98466b7d0abd",
-    title: "Council 1",
+    title: "Detail of council",
   },
 ];
 

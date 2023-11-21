@@ -2,9 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Avatar, Breadcrumb, Button, SnipperRound } from "@/components/Atoms";
 import { AdminTemplate } from "@/components/Templates";
 import {
-  FilterScheduledForm,
   ManualTestingSchedule,
-  ScheduleForm,
   SettingSchedule,
   TestingSchedule,
 } from "@/components/Molecules";
@@ -12,7 +10,6 @@ import { useAppDispatch } from "@/redux/store";
 import { getScheduleDef } from "@/redux/reducer/schedule-def/api";
 import { IThesisDef } from "@/interface/schedule";
 import { useQuery } from "@tanstack/react-query";
-import Link from "next/link";
 import { BREADCRUMB_SCHEDULE } from "./mock-data";
 import { ScheduleTime } from "@/components/Organisms";
 

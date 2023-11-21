@@ -24,7 +24,6 @@ export const ScheduleTime: FC<IScheduleTimeProps> = ({
     filteredData: schedule_filteredData,
     handleSearch: schedule_handleSearch,
   } = useTableSearch(scheduled?.thesis as any);
-  let studentCount = 0;
   return (
     <>
       <div className="w-full mt-5 px-3">
@@ -111,7 +110,7 @@ export const ScheduleTime: FC<IScheduleTimeProps> = ({
                     No.
                   </th>
                   <th className="px-5 py-4 whitespace-nowrap">
-                    <div className="font-medium text-left">Name council</div>
+                    <div className="font-medium text-left">Council</div>
                   </th>
                   <th className="px-5 py-4 whitespace-nowrap">
                     <div className="font-medium text-left">Room</div>
@@ -120,17 +119,17 @@ export const ScheduleTime: FC<IScheduleTimeProps> = ({
                     <div className="font-medium text-left">Date</div>
                   </th>
                   <th className="px-5 py-4 whitespace-nowrap">
+                    <div className="font-medium text-left">Session</div>
+                  </th>
+                  <th className="px-5 py-4 whitespace-nowrap">
                     <div className="font-medium text-center">
-                      Q. member council
+                      Q. members
                     </div>
                   </th>
                   <th className="px-5 py-4 whitespace-nowrap">
                     <div className="font-medium text-center">
-                      Q. student defense
+                      Q. students
                     </div>
-                  </th>
-                  <th className="px-5 py-4 whitespace-nowrap">
-                    <div className="font-medium text-center">Create at</div>
                   </th>
                   <th className="px-5 py-4 whitespace-nowrap">
                     <div className="font-medium text-end">Actions</div>
@@ -153,7 +152,13 @@ export const ScheduleTime: FC<IScheduleTimeProps> = ({
                           </td>
                           <td className="px-5 py-4 whitespace-nowrap">
                             <div className="text-left">
-                              Council {`${(index)}`}
+                              <ul>
+                                {scheduled?.council?.map((council: any) => {
+                                  return (
+                                    <li className="capitalize" key={council.id}>{council.name}</li>
+                                  );
+                                })}
+                              </ul>
                             </div>
                           </td>
                           <td className="px-5 py-4 whitespace-nowrap">
@@ -163,7 +168,18 @@ export const ScheduleTime: FC<IScheduleTimeProps> = ({
                           </td>
                           <td className="px-5 py-4 whitespace-nowrap">
                             <div className="text-left">
-                              {scheduled?.schedule?.timeSlots[0]?.timeSlot?.date}
+                              {
+                                scheduled?.schedule?.timeSlots[0]?.timeSlot
+                                  ?.date
+                              }
+                            </div>
+                          </td>
+                          <td className="px-5 py-4 whitespace-nowrap">
+                            <div className="text-left">
+                              {
+                                scheduled?.schedule?.timeSlots[0]?.timeSlot
+                                  ?.shift
+                              }
                             </div>
                           </td>
                           <td className="px-5 py-4 whitespace-nowrap">
@@ -181,16 +197,11 @@ export const ScheduleTime: FC<IScheduleTimeProps> = ({
                             </div>
                           </td>
                           <td className="px-5 py-4 whitespace-nowrap">
-                            <div className="text-center">
-                              Thurday, 27-12-2023
-                            </div>
-                          </td>
-                          <td className="px-5 py-4 whitespace-nowrap">
                             <div className="justify-end flex gap-3">
                               <Link
                                 href={`/admin/schedule-time-defense/${scheduled?.id}`}
                               >
-                                <button className="text-blue-500">View</button>
+                                <button className="text-blue-500">Detail</button>
                               </Link>
                             </div>
                           </td>
