@@ -30,10 +30,8 @@ function MainboardPage() {
   const [loading, setLoading] = useState<boolean>(true);
   const [selectedItem, setSelectedItem] = useState<MenuItem>(menuItems[0]);
   const checkIsField = (state_1: string, state_2: string) => {
-    if (Array.isArray(subscribeState)) {
-      return subscribeState.some(
-        (obj: IMemberObject) => obj.status === state_1
-      );
+    if (Array.isArray(subscribeState.member)) {
+      return subscribeState.status === state_1;
     } else if (!Array.isArray(subscribeState)) {
       if (subscribeState.status === state_2) {
         return true;
@@ -47,7 +45,6 @@ function MainboardPage() {
       setLoading(false);
     }, 1200);
   }, []);
-
   const handleClick = (item: MenuItem) => {
     setSelectedItem(item);
   };
@@ -83,7 +80,6 @@ function MainboardPage() {
       </ul>
     );
   };
-
   return (
     <>
       {loading ? (

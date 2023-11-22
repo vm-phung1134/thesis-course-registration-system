@@ -99,13 +99,6 @@ export const WaitingView: FC<IWaitingViewProps> = ({ classroom }) => {
         <SnipperRound />
       ) : (
         <>
-          <Breadcrumb dataBreadcrumb={BREADCRUMB_MAINBOARD} />
-          <div className="py-2 my-3 flex gap-2 items-center">
-            <h4 className="text-xl capitalize text-green-700 font-medium ">
-              Register <span className="text-green-700"> for instructors</span>
-            </h4>
-            <div className="flex-grow h-[0.5px] bg-green-700"></div>
-          </div>
           <div className="flex justify-between items-center">
             <div className="mt-3 flex gap-3 w-1/3">
               <div className="flex-grow">
@@ -128,17 +121,11 @@ export const WaitingView: FC<IWaitingViewProps> = ({ classroom }) => {
             <FilterScheduledForm holderText="Searching classroom ..." />
           </div>
           <div className="flex flex-wrap gap-5 mt-5">
-            {(subscribeState.length > 0 ? subscribeState : []).map(
-              (item: IMemberObject) => {
-                return (
-                  <ClassroomCard
-                    key={item.id}
-                    item={item.classroom}
-                    index={0}
-                  />
-                );
-              }
-            )}
+            {subscribeState?.member.map((item: IMemberObject) => {
+              return (
+                <ClassroomCard key={item.id} item={item.classroom} index={0} />
+              );
+            })}
           </div>
           <ModalConfirm
             modalClass={modalClassConfirm}
