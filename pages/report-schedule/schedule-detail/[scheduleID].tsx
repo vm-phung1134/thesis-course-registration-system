@@ -44,7 +44,7 @@ function ScheduleDetail() {
             <div className="grid grid-cols-12 gap-5 mt-5">
               <div className="col-span-4">
                 <div className="p-5 bg-slate-50 shadow-lg rounded-xl">
-                  <div className="text-sm my-1 flex gap-2 items-center">
+                  <div onClick={() => history.back()} className="text-sm my-1 flex gap-2 items-center cursor-pointer">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
@@ -63,7 +63,7 @@ function ScheduleDetail() {
                     The Crown Prosecution Service
                   </h4>
                   <p className="normal-case text-gray-400 text-xs italic">
-                    Date of foundation of the council 14/11/2023
+                    Date of foundation of the council <span className="text-red-600 font-medium">{councilInSchedule?.schedule.timeSlots[0].timeSlot.date}</span>
                   </p>
                   <div className="bg-green-700 h-[1px] w-full my-3"></div>
                   <ul className="text-sm flex flex-col gap-2">
@@ -172,11 +172,8 @@ function ScheduleDetail() {
                       </thead>
                       <tbody className="text-sm divide-y divide-gray-100">
                         <AnimatePresence>
-                          {councilInSchedule?.schedule?.timeSlots
-                            ?.filter(
-                              (item) => item?.timeSlot?.shift === "Morning"
-                            )
-                            .map((student, index) => (
+                          {councilInSchedule?.schedule?.timeSlots?.map(
+                            (student, index) => (
                               <motion.tr
                                 layout
                                 initial={{ opacity: 0 }}
@@ -217,78 +214,8 @@ function ScheduleDetail() {
                                   </div>
                                 </td>
                               </motion.tr>
-                            ))}
-                        </AnimatePresence>
-                      </tbody>
-                    </table>
-                  </div>
-                  <div className="overflow-x-auto my-5 rounded-2xl shadow-lg">
-                    <table className="table-auto w-full border">
-                      <thead className="text-sm font-medium capitalize text-gray-200 bg-green-700">
-                        <tr>
-                          <th className="pl-5 py-4 whitespace-nowrap">
-                            <div className="font-medium text-left">No.</div>
-                          </th>
-                          <th className="px-5 py-4 whitespace-nowrap">
-                            <div className="font-medium text-left">Email</div>
-                          </th>
-                          <th className="px-5 py-4 whitespace-nowrap">
-                            <div className="font-medium text-left">
-                              ID Student
-                            </div>
-                          </th>
-                          <th className="px-3 py-4 whitespace-nowrap">
-                            <div className="font-medium text-center">Time</div>
-                          </th>
-                          <th className="px-5 py-4 whitespace-nowrap">
-                            <div className="font-medium text-end">Actions</div>
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody className="text-sm divide-y divide-gray-100">
-                        <AnimatePresence>
-                          {councilInSchedule?.schedule?.timeSlots
-                            .filter(
-                              (item) =>
-                                item?.timeSlot?.shift === "Afternoon" &&
-                                item?.student?.id !== ""
                             )
-                            .map((student, index) => (
-                              <motion.tr
-                                key={student?.student?.id}
-                                className="border-b"
-                              >
-                                <td className="pl-5 py-4 whitespace-nowrap">
-                                  {(index += 1)}
-                                </td>
-                                <td className="px-5 py-4 whitespace-nowrap">
-                                  <div className="text-left">
-                                    {student?.student?.infor?.email}
-                                  </div>
-                                </td>
-                                <td className="px-5 py-4 whitespace-nowrap">
-                                  <div className="text-left">
-                                    {student?.student?.infor?.name}
-                                  </div>
-                                </td>
-                                <td className="px-3 py-4 whitespace-nowrap">
-                                  <div className="text-center">
-                                    {student?.timeSlot?.time}
-                                  </div>
-                                </td>
-                                <td className="px-5 py-4 whitespace-nowrap">
-                                  <div className="justify-end flex gap-3">
-                                    <Link
-                                      href={`/report-schedule/schedule-detail/thesis-student/${student?.student?.infor?.id}`}
-                                    >
-                                      <button className="text-sky-700">
-                                        Join
-                                      </button>
-                                    </Link>
-                                  </div>
-                                </td>
-                              </motion.tr>
-                            ))}
+                          )}
                         </AnimatePresence>
                       </tbody>
                     </table>

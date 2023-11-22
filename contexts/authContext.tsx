@@ -99,6 +99,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             ? router.push("/admin/dashboard")
             : router.push("/mainboard");
           Cookies.set("token", token);
+          Cookies.set("uid", result.user.uid);
         } else {
           logout();
           setMessage("Your email must be from CTU organization");
@@ -116,6 +117,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         user.getIdToken().then((token) => {
           Cookies.set("token", token);
         });
+        Cookies.set("uid", user.uid);
         const authObject: IAuthObject = {
           id: user.uid,
           name: user.displayName || "",
@@ -172,6 +174,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const checkUserLoginState = () => {
     const token = Cookies.get("token");
+    const uid = Cookies.get("uid");
     if (!token && !isAuthenticated) {
       logout();
       router.push("/");
