@@ -136,8 +136,8 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
   const { signUpWithEmailPassword } = useAuthContext();
   const handleCreateAccountLecturer = () => {
     checkedLecturers.forEach((lecturer: IAuthObject) => {
-      const { email, password } = lecturer;
-      signUpWithEmailPassword(email, password || "nopassword", lecturer);
+      const { email, hashedPassword } = lecturer;
+      signUpWithEmailPassword(email, hashedPassword || "nopassword", lecturer);
     });
   };
   // Open modal
@@ -497,7 +497,7 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
                               {account?.email}
                             </td>
                             <td className="py-4 px-6 text-sm text-gray-900 whitespace-nowrap dark:text-white">
-                              {account?.password}
+                              {account?.hashedPassword?.slice(0, 10)}
                             </td>
                             <td className="py-4 px-6 text-sm text-right whitespace-nowrap">
                               <a

@@ -8,3 +8,10 @@ export interface IMemberObject {
   registerDefense: boolean;
   status?: string;
 }
+
+export interface IMemberObjectInput {
+  classroomID: string;
+  memberID: string;
+  registerDefense: boolean;
+  status?: string;
+}

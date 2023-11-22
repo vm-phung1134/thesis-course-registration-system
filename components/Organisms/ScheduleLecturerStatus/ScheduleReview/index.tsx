@@ -13,7 +13,6 @@ import React, { FC, useState } from "react";
 export interface IScheduleReviewProp {}
 
 export const ScheduleReview: FC<IScheduleReviewProp> = () => {
-  const [loading, setLoading] = useState<boolean>(true);
   const dispatch = useAppDispatch();
   const { currentUser } = useCurrentUserContext();
   const { data: scheduleForLecturer } = useQuery<ICouncilDef[]>({

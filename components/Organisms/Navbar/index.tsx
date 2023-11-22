@@ -4,7 +4,6 @@ import DarkModeToggle from "@/components/Atoms/ToggleDarkMode";
 import { SearchForm } from "@/components/Molecules";
 import { useAuthContext } from "@/contexts/authContext";
 import { useLanguageContext } from "@/contexts/languageContext";
-import { useSocket } from "@/contexts/useSocketContext";
 import { TYPE_ACTION_NOTIFICATION } from "@/data";
 import { useUserCookies } from "@/hooks/useCookies";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
@@ -16,8 +15,7 @@ export interface INavbarProps {}
 
 export const Navbar: FC<INavbarProps> = () => {
   const { logout, checkUserLoginState } = useAuthContext();
-  const { currentUser, user } = useCurrentUser();
-  const { allNotifications } = useSocket();
+  const { currentUser } = useCurrentUser();
   const { handleChangeLanguage, localeValue } = useLanguageContext();
   useEffect(() => {
     checkUserLoginState();
@@ -109,7 +107,7 @@ export const Navbar: FC<INavbarProps> = () => {
                   <h4 className="font-bold text-2xl mb-5 text-green-700">
                     Your Notifications
                   </h4>
-                  {allNotifications.length > 0 ? (
+                  {/* {allNotifications.length > 0 ? (
                     <div>
                       {allNotifications.map((notify, index) => {
                         return (
@@ -124,7 +122,7 @@ export const Navbar: FC<INavbarProps> = () => {
                     </div>
                   ) : (
                     <p className="text-gray-300 py-5">{`Sorry, You don't have any message`}</p>
-                  )}
+                  )} */}
                   <div className="flex justify-end mt-5">
                     <button className="btn border-none normal-case bg-transparent btn-xs hover:bg-transparent">
                       See all
@@ -139,10 +137,10 @@ export const Navbar: FC<INavbarProps> = () => {
           <div tabIndex={0} className="flex gap-3 items-center cursor-pointer">
             <div className="flex flex-col text-[15px] font-normal items-end">
               <p className="font-medium text-sm capitalize">
-                {currentUser?.name || user?.name}
+                {currentUser?.name}
               </p>
               <p className="text-green-800 text-sm capitalize">
-                Pov: {currentUser?.role || user?.role}
+                Pov: {currentUser?.role}
               </p>
             </div>
             <div className="w-11 h-10 flex-shrink-0 mr-2 sm:mr-3">
@@ -152,7 +150,7 @@ export const Navbar: FC<INavbarProps> = () => {
                     width={100}
                     height={100}
                     alt=""
-                    src={currentUser?.photoSrc || user?.photoSrc}
+                    src={currentUser?.photoSrc}
                   />
                 </div>
               </div>

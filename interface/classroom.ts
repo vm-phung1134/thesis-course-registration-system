@@ -14,3 +14,12 @@ export interface IClassroomObject {
   status: string;
   topic?: ITopicKeyObject[];
 }
+
+export interface IClassroomObjectInput {
+  id: string;
+  lecturerID: string;
+  classCourse: string;
+  quantityStudent: number;
+  status: string;
+  topic?: ITopicKeyObject[];
+}

@@ -7,7 +7,7 @@ import {
   ClassroomDetailModal,
 } from "@/components/Molecules";
 import { createRequirement } from "@/redux/reducer/requirement/api";
-import { IMemberObject } from "@/interface/member";
+import { IMemberObject, IMemberObjectInput } from "@/interface/member";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAppDispatch } from "@/redux/store";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
@@ -35,7 +35,7 @@ export const ClassroomCard: FC<IClassroomCardProps> = ({ item, index }) => {
   const queryClient = useQueryClient();
   const dispatch = useAppDispatch();
   const addRequirementMutation = useMutation(
-    (postData: Omit<IMemberObject, "id">) => {
+    (postData: IMemberObjectInput) => {
       return dispatch(createRequirement(postData))
         .unwrap()
         .then((data) => {
@@ -61,8 +61,8 @@ export const ClassroomCard: FC<IClassroomCardProps> = ({ item, index }) => {
   const handleSubcribeClass = () => {
     if (!addRequirementMutation.isLoading) {
       addRequirementMutation.mutate({
-        classroom: item,
-        member: currentUser,
+        classroomID: item.id,
+        memberID: currentUser.id,
         registerDefense: false,
       });
     }

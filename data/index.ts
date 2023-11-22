@@ -1,6 +1,6 @@
 import { IAuthObject } from "@/interface/auth";
 import { ICategoryObject } from "@/interface/category";
-import { IClassroomObject } from "@/interface/classroom";
+import { IClassroomObject, IClassroomObjectInput } from "@/interface/classroom";
 import { ICommentObject } from "@/interface/comment";
 import { IExerciseObject } from "@/interface/exercise";
 import { IMemberObject } from "@/interface/member";
@@ -34,6 +34,14 @@ export const INITIATE_CLASSROOM: IClassroomObject = {
   id: "",
   classCourse: "",
   lecturer: INITIATE_AUTH,
+  quantityStudent: 15,
+  status: "UN_LOCK",
+};
+
+export const INITIATE_CLASSROOM_INPUT: IClassroomObjectInput = {
+  id: "",
+  classCourse: "",
+  lecturerID: INITIATE_AUTH.id,
   quantityStudent: 15,
   status: "UN_LOCK",
 };

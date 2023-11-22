@@ -7,6 +7,6 @@ export interface IAuthObject {
   phone?: string;
   major?: string;
   class?: string;
-  password?: string;
+  hashedPassword?: string;
   socketId?: string;
 }

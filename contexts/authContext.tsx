@@ -54,6 +54,7 @@ export const useAuthContext = () => {
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const queryClient = useQueryClient();
   const [, setUserCookies] = useUserCookies();
   const [message, setMessage] = useState<string>("");
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -70,6 +71,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             reject(error);
           });
       });
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["auth"]);
+      },
     }
   );
   const signInWithGoogle = () => {
@@ -86,9 +92,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             photoSrc: result.user.photoURL || "",
             email: result.user.email,
             role: roleAssignment(result.user.email || ""),
-            major: "CNTT",
-            class: "unknow",
-            phone: "0909090909",
+            class: "",
+            major: "",
+            phone: "",
           };
           await addMutation.mutate(authObject);
           const token = await result.user.getIdToken();
@@ -99,7 +105,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             ? router.push("/admin/dashboard")
             : router.push("/mainboard");
           Cookies.set("token", token);
-          Cookies.set("uid", result.user.uid);
         } else {
           logout();
           setMessage("Your email must be from CTU organization");
@@ -117,7 +122,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         user.getIdToken().then((token) => {
           Cookies.set("token", token);
         });
-        Cookies.set("uid", user.uid);
         const authObject: IAuthObject = {
           id: user.uid,
           name: user.displayName || "",
@@ -174,7 +178,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const checkUserLoginState = () => {
     const token = Cookies.get("token");
-    const uid = Cookies.get("uid");
     if (!token && !isAuthenticated) {
       logout();
       router.push("/");

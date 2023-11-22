@@ -4,7 +4,7 @@ import { Button, FormField } from "@/components/Atoms";
 import { INITIATE_CLASSROOM } from "@/data";
 import { useAppDispatch } from "@/redux/store";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { IClassroomObject } from "@/interface/classroom";
+import { IClassroomObject, IClassroomObjectInput } from "@/interface/classroom";
 import { createClassroom } from "@/redux/reducer/classroom/api";
 import { IAuthObject } from "@/interface/auth";
 import useToastifyMessage from "@/hooks/useToastify";
@@ -23,7 +23,7 @@ export const ACreateClassroomForm: FC<IACreateClassroomFormProps> = ({
   const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
   const addMutation = useMutation(
-    (postData: Omit<IClassroomObject, "id">) => {
+    (postData: Omit<IClassroomObjectInput, "id">) => {
       return new Promise((resolve, reject) => {
         dispatch(createClassroom(postData))
           .unwrap()
@@ -55,7 +55,7 @@ export const ACreateClassroomForm: FC<IACreateClassroomFormProps> = ({
         setTimeout(() => {
           listAccount.forEach(async (account: IAuthObject) => {
             await addMutation.mutate({
-              lecturer: account,
+              lecturerID: account.id,
               quantityStudent: values.quantityStudent,
               classCourse: values.classCourse,
               status: "UN_LOCK",

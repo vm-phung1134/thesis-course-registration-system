@@ -1,10 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { token } from "../auth/type";
-import { IMemberObject } from "@/interface/member";
+import { IMemberObject, IMemberObjectInput } from "@/interface/member";
 import { IAuthObject } from "@/interface/auth";
 
-const apiURL = `http://qthuy2k1.shop/api/classrooom-waiting-list`;
+const apiURL = `http://qthuy2k1.shop/api/requirement`;
 
 // GET ALL REQUIREMENTS
 const getAllRequirements = createAsyncThunk(
@@ -41,13 +41,18 @@ const getAllRequirementClassroom = createAsyncThunk(
 // CREATE NEW REQUIREMENT
 const createRequirement = createAsyncThunk(
   "requirement/createRequirement",
-  async (postData: Omit<IMemberObject, "id">, { rejectWithValue }) => {
+  async (postData: IMemberObjectInput, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${apiURL}`, {"waitingList": postData}, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      console.log({ waitingList: postData });
+      const response = await axios.post(
+        `${apiURL}`,
+        { waitingList: postData },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       if (response.status === 200) {
         return response.data;

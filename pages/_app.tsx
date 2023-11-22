@@ -9,7 +9,6 @@ import React from "react";
 import { SearchProvider } from "@/contexts/useSearchContext";
 import { ClassroomStateContextProvider } from "@/contexts/classroomState";
 import { SubscribeStateContextProvider } from "@/contexts/subscribeState";
-import { SocketProvider } from "@/contexts/useSocketContext";
 import { CurrentUserContextProvider } from "@/contexts/currentUserContext";
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -19,7 +18,6 @@ function MyApp({ Component, pageProps }: AppProps) {
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
           <LanguageProvider>
-            <SocketProvider>
               <CurrentUserContextProvider>
                 <SubscribeStateContextProvider>
                   <ClassroomStateContextProvider>
@@ -29,7 +27,6 @@ function MyApp({ Component, pageProps }: AppProps) {
                   </ClassroomStateContextProvider>
                 </SubscribeStateContextProvider>
               </CurrentUserContextProvider>
-            </SocketProvider>
           </LanguageProvider>
         </AuthProvider>
       </QueryClientProvider>
