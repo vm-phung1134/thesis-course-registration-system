@@ -9,6 +9,7 @@ import { getMember } from "@/redux/reducer/member/api";
 import { useAppDispatch } from "@/redux/store";
 import { useQuery } from "@tanstack/react-query";
 import React, { createContext, useContext, useEffect, useState } from "react";
+import Cookies from "js-cookie";
 import { useCurrentUserContext } from "./currentUserContext";
 
 interface IClassroomStateContext {
@@ -29,28 +30,25 @@ export const ClassroomStateContextProvider: React.FC<ClassroomStateProps> = ({
   children,
 }) => {
   const dispatch = useAppDispatch();
-  const [user] = useUserCookies();
-
+  const uid = Cookies.get("uid");
+  console.log(uid);
   const { data: classroom } = useQuery<IClassroomObject | null>({
-    queryKey: ["classroom", user],
+    queryKey: ["classroom", uid],
     queryFn: async () => {
-      if (user) {
-        const action = await dispatch(getClassroom(user));
+      if (uid) {
+        const action = await dispatch(getClassroom(uid));
         return action.payload || null;
       }
-      return null;
     },
     initialData: null,
   });
-
   const { data: member } = useQuery<IMemberObject | null>({
-    queryKey: ["member-classroom", user],
+    queryKey: ["member-classroom", uid],
     queryFn: async () => {
-      if (user) {
-        const action = await dispatch(getMember(user));
+      if (uid) {
+        const action = await dispatch(getMember(uid));
         return action.payload || null;
       }
-      return null;
     },
     initialData: null,
   });

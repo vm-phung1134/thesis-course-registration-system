@@ -60,10 +60,10 @@ export const ScheduleReview: FC<IScheduleReviewProp> = () => {
               <thead className="text-sm font-medium capitalize text-gray-200 bg-green-700">
                 <tr>
                   <th className="px-5 py-4 whitespace-nowrap">
-                    <div className="font-medium text-left">Email</div>
+                    <div className="font-medium text-left">Council</div>
                   </th>
                   <th className="px-5 py-4 whitespace-nowrap">
-                    <div className="font-medium text-left">Role council</div>
+                    <div className="font-medium text-left">Instructor</div>
                   </th>
                   <th className="px-5 py-4 whitespace-nowrap">
                     <div className="font-medium text-left">Date</div>
@@ -72,14 +72,10 @@ export const ScheduleReview: FC<IScheduleReviewProp> = () => {
                     <div className="font-medium text-center">Room</div>
                   </th>
                   <th className="px-5 py-4 whitespace-nowrap">
-                    <div className="font-medium text-center">
-                      Quantity student
-                    </div>
+                    <div className="font-medium text-center">Q. student</div>
                   </th>
                   <th className="px-5 py-4 whitespace-nowrap">
-                    <div className="font-medium text-center">
-                      {`Time ( 24 hours )`}
-                    </div>
+                    <div className="font-medium text-center">Session</div>
                   </th>
                   <th className="px-5 py-4 whitespace-nowrap">
                     <div className="font-medium text-end">Actions</div>
@@ -101,10 +97,30 @@ export const ScheduleReview: FC<IScheduleReviewProp> = () => {
                             key={council.id}
                           >
                             <td className="px-5 py-3 whitespace-nowrap">
-                              <p className="text-left">{council?.email}</p>
+                              <div className="text-left">
+                                <ul>
+                                  {council_filteredData[index].council.map(
+                                    (council: any) => {
+                                      return (
+                                        <li
+                                          className="capitalize"
+                                          key={council.id}
+                                        >
+                                          {council.name}
+                                        </li>
+                                      );
+                                    }
+                                  )}
+                                </ul>
+                              </div>
                             </td>
                             <td className="px-5 py-3 whitespace-nowrap">
-                              <p className="text-left">Instructor</p>
+                              <p className="text-left capitalize">
+                                {
+                                  council_filteredData[index].schedule
+                                    .timeSlots[0].student.instructor.name
+                                }
+                              </p>
                             </td>
                             <td className="px-5 py-3 whitespace-nowrap">
                               <p className="text-left">
@@ -130,7 +146,12 @@ export const ScheduleReview: FC<IScheduleReviewProp> = () => {
                               </p>
                             </td>
                             <td className="px-5 py-3 whitespace-nowrap">
-                              <p className="text-center">7:00 - 17:30</p>
+                              <p className="text-center">
+                                {
+                                  council_filteredData[index].schedule
+                                    .timeSlots[0].timeSlot.shift
+                                }
+                              </p>
                             </td>
                             <td className="px-5 py-3 whitespace-nowrap">
                               <div className="justify-end flex gap-3">
