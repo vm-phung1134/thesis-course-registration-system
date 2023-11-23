@@ -46,7 +46,7 @@ function PointDefTab() {
                   <li>
                     <p className="text-gray-500">Date defense</p>
                     <p>
-                      {studentScheduled?.schedule?.timeSlots[0]?.timeSlot?.date}
+                      {studentScheduled?.schedule?.timeSlots[0]?.timeSlot?.date} Monday, 12/12/2023
                     </p>
                   </li>
                   <li>
@@ -55,12 +55,12 @@ function PointDefTab() {
                   </li>
                   <li>
                     <p className="text-gray-500">Room</p>
-                    <p>{studentScheduled?.schedule?.room.name}</p>
+                    <p>{studentScheduled?.schedule?.room.name} DI/217</p>
                   </li>
                   <li>
                     <p className="text-gray-500">Time</p>
                     <p>
-                      {studentScheduled?.schedule?.timeSlots[0]?.timeSlot?.time}
+                      {studentScheduled?.schedule?.timeSlots[0]?.timeSlot?.time} 13:30 PM 
                     </p>
                   </li>
                 </ul>
@@ -78,7 +78,7 @@ function PointDefTab() {
                   </li>
                   <li>
                     <p className="text-gray-500">Major</p>
-                    <p>{currentUser?.major}</p>
+                    <p>{currentUser?.major} IT1</p>
                   </li>
                 </ul>
               </div>

@@ -158,7 +158,7 @@ export const CreateClassroomTab: FC<ICreateClassroomTab> = ({}) => {
   const { classroom } = useAppSelector((state) => state.classroomReducer);
   const handleUpdateClassroomForm = (lecturer: IAuthObject) => {
     setOpenModalEditClassForm(!openModalEditClassForm);
-    dispatch(getClassroom(lecturer));
+    dispatch(getClassroom(lecturer?.id));
   };
 
   useToastifyMessage(deleteMutation, "Classroom was successfully deleted");
@@ -353,7 +353,9 @@ export const CreateClassroomTab: FC<ICreateClassroomTab> = ({}) => {
         <div className="flex justify-between items-center my-2">
           <div className="mb-3">
             <h4 className="font-medium">Classrooms</h4>
-            <p className="text-sm text-slate-500">Total {classrooms?.length} classrooms</p>
+            <p className="text-sm text-slate-500">
+              Total {classrooms?.length} classrooms
+            </p>
           </div>
           <div className="flex gap-3">
             <IconButton
@@ -545,7 +547,10 @@ export const CreateClassroomTab: FC<ICreateClassroomTab> = ({}) => {
         </div>
       </div>
       {/* Open modal form to create all list account to classroom */}
-      <dialog id="modal_admin_create_classroom" className={modalClassCreateClassroom}>
+      <dialog
+        id="modal_admin_create_classroom"
+        className={modalClassCreateClassroom}
+      >
         <div className="w-5/12 bg-white h-fit shadow-2xl p-5 rounded-xl">
           <h4 className="text-xl font-bold mb-5 capitalize">
             Create classroom form

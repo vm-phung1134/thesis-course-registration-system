@@ -4,12 +4,31 @@ import { UndateParams, token } from "./type";
 import { IAuthObject } from "@/interface/auth";
 import { IUnavailableDate } from "@/interface/unavaiableDate";
 
-// GET ALL COMMENTS
+// GET ALL INVALID DATE OF INSTRUCTOR
 const getAllUnavaiableDates = createAsyncThunk(
   "unavailable-date/getAllUnavaiableDates",
   async (postData: IAuthObject) => {
     const response = await axios.get(
       `http://localhost:5000/api/unavailable-date/${postData.id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    if (response.status === 200) {
+      return response.data;
+    }
+    throw new Error("Failed to get all unavailable-dates");
+  }
+);
+
+// GET ALL INVALID DATE
+const getAllUnavaiableDate = createAsyncThunk(
+  "unavailable-date/getAllUnavaiableDate",
+  async () => {
+    const response = await axios.get(
+      `http://localhost:5000/api/unavailable-date`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -60,4 +79,9 @@ const deleteUnavaiableDate = createAsyncThunk(
   }
 );
 
-export { getAllUnavaiableDates, createUnavaiableDate, deleteUnavaiableDate };
+export {
+  getAllUnavaiableDates,
+  createUnavaiableDate,
+  deleteUnavaiableDate,
+  getAllUnavaiableDate,
+};
