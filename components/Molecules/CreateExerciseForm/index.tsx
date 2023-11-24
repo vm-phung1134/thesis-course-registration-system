@@ -21,7 +21,6 @@ import { Form, Formik } from "formik";
 import Image from "next/image";
 import { FC, useState, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
-const objectId = uuidv4();
 
 export interface ICreateExerciseFormProps {
   setToggleForm: React.Dispatch<React.SetStateAction<boolean>>;
@@ -96,6 +95,7 @@ export const CreateExerciseForm: FC<ICreateExerciseFormProps> = ({
         return errors;
       }}
       onSubmit={(values, { setSubmitting, resetForm }) => {
+        let objectId = uuidv4();
         setTimeout(() => {
           addMutation.mutate({
             ...values,

@@ -24,7 +24,7 @@ function EnrollStudentPage() {
   const { data: member } = useQuery<IMemberObject>({
     queryKey: ["member", user],
     queryFn: async () => {
-      const action = await dispatch(getMember(user));
+      const action = await dispatch(getMember(user.id));
       return action.payload || INITIATE_MEMBER;
     },
     initialData: INITIATE_MEMBER,

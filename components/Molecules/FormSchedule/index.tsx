@@ -71,9 +71,9 @@ export const ScheduleForm: FC<IScheduleFormProps> = ({
     if (wks <= 0) {
       return 0;
     } else {
-      const convertDate = wks * 6;
+      const convertDate = wks * 7;
       const dateDefense = studef / convertDate;
-      return Math.ceil(dateDefense / 12);
+      return Math.ceil(dateDefense / 14);
     }
   };
 

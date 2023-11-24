@@ -107,7 +107,7 @@ function ManageClassroomTab() {
               {exercises.length > 0 ? (
                 <CriticalTask
                   submitStuds={submitStuds}
-                  exercise={getExerciseWithNearestDeadline(exercises) || exercises[0]}
+                  exercise={getExerciseWithNearestDeadline(exercises)}
                 />
               ) : (
                 <div className="h-52 flex gap-5 flex-col justify-center items-center p-5 border rounded-xl">
@@ -170,7 +170,7 @@ function ManageClassroomTab() {
                 <>
                   {exercises.length > 0 && (
                     <div className="flex flex-col gap-3">
-                      {exercises?.map((exercise, index) => {
+                      {exercises?.slice().reverse().map((exercise, index) => {
                         return (
                           <motion.div
                             initial={{ opacity: 0 }}
