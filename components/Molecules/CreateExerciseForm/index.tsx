@@ -7,12 +7,16 @@ import {
 } from "@/components/Atoms";
 import { useClassroomStateContext } from "@/contexts/classroomState";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
-import { INITIATE_CATEGORY, INITIATE_EXERCISE } from "@/data";
+import {
+  INITIATE_CATEGORY,
+  INITIATE_EXERCISE,
+  INITIATE_EXERCISE_INPUT,
+} from "@/data";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { useSelectStage } from "@/hooks/useSelectStage";
 import { ICategoryObject } from "@/interface/category";
 import { IClassroomObject } from "@/interface/classroom";
-import { IExerciseObject } from "@/interface/exercise";
+import { IExerciseObject, IExerciseObjectInput } from "@/interface/exercise";
 import { IOptionItem } from "@/interface/filter";
 import { createExercise } from "@/redux/reducer/exercise/api";
 import { useAppDispatch } from "@/redux/store";
@@ -43,7 +47,7 @@ export const CreateExerciseForm: FC<ICreateExerciseFormProps> = ({
 }) => {
   const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
-  const initialValues: IExerciseObject = INITIATE_EXERCISE;
+  const initialValues: IExerciseObjectInput = INITIATE_EXERCISE_INPUT;
   const { currentUser } = useCurrentUserContext();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { authClassroomState } = useClassroomStateContext();
@@ -63,7 +67,7 @@ export const CreateExerciseForm: FC<ICreateExerciseFormProps> = ({
     }
   };
   const addMutation = useMutation(
-    (postData: IExerciseObject) => {
+    (postData: IExerciseObjectInput) => {
       return new Promise((resolve, reject) => {
         dispatch(createExercise(postData))
           .unwrap()
@@ -98,13 +102,23 @@ export const CreateExerciseForm: FC<ICreateExerciseFormProps> = ({
       onSubmit={(values, { setSubmitting, resetForm }) => {
         setTimeout(() => {
           addMutation.mutate({
-            ...values,
-            type: "exercise",
-            uid: objectId,
-            classroom: classroom,
-            category: selectedStage,
+            title: values.title,
+            description: values.description,
+            deadline: values.deadline,
+            classroomID: classroom.id,
+            categoryID: selectedStage.id || "",
             attachments: selectedFiles,
-            lecturer: currentUser,
+            lecturerID: currentUser.id,
+
+          });
+          console.log({
+            title: values.title,
+            description: values.description,
+            deadline: values.deadline,
+            classroomID: classroom.id,
+            categoryID: selectedStage.id || "",
+            attachments: selectedFiles,
+            lecturerID: currentUser.id,
           });
           resetForm();
           setSelectedFiles([]);

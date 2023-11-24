@@ -3,13 +3,11 @@ import { Field, Form, Formik } from "formik";
 import { ICommentObject } from "@/interface/comment";
 import { IPostObject } from "@/interface/post";
 import { IExerciseObject } from "@/interface/exercise";
-import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createComment } from "@/redux/reducer/comment/api";
 import { useAppDispatch } from "@/redux/store";
-import { INITIATE_COMMENT, TYPE_ACTION_NOTIFICATION } from "@/data";
+import { INITIATE_COMMENT } from "@/data";
 import { IAuthObject } from "@/interface/auth";
-import { useSocket } from "@/contexts/useSocketContext";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
 
 export interface ICommentFormProps {
@@ -19,7 +17,6 @@ export interface ICommentFormProps {
 export const CommentForm: FC<ICommentFormProps> = ({ task }) => {
   const initialValues = INITIATE_COMMENT;
   const dispatch = useAppDispatch();
-  const { socket } = useSocket();
   const queryClient = useQueryClient();
   const { currentUser } = useCurrentUserContext();
   const addMutation = useMutation(
@@ -41,15 +38,6 @@ export const CommentForm: FC<ICommentFormProps> = ({ task }) => {
       },
     }
   );
-  const handleNotification = (receiver: IAuthObject, type: string) => {
-    if (socket) {
-      socket?.emit("sendNotification", {
-        senderUser: currentUser,
-        receiverAuthor: { ...receiver, socketId: socket.id },
-        type,
-      });
-    }
-  };
   return (
     <Formik
       initialValues={initialValues}
@@ -64,10 +52,6 @@ export const CommentForm: FC<ICommentFormProps> = ({ task }) => {
             postId: task.uid,
             user: currentUser,
           });
-          // handleNotification(
-          //   currentUser,
-          //   TYPE_ACTION_NOTIFICATION.COMMENT_POST
-          // );
           resetForm();
         }, 400);
       }}

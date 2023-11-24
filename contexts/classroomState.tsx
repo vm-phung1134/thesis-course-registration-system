@@ -27,7 +27,6 @@ export const ClassroomStateContextProvider: React.FC<ClassroomStateProps> = ({
 }) => {
   const dispatch = useAppDispatch();
   const [user] = useUserCookies();
-
   const { data: classroom } = useQuery<IClassroomObject | null>({
     queryKey: ["classroom", user],
     queryFn: async () => {
@@ -39,7 +38,6 @@ export const ClassroomStateContextProvider: React.FC<ClassroomStateProps> = ({
     },
     initialData: null,
   });
-
   const { data: member } = useQuery<IMemberObject | null>({
     queryKey: ["member-classroom", user],
     queryFn: async () => {

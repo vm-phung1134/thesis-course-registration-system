@@ -64,6 +64,7 @@ export const ClassroomCard: FC<IClassroomCardProps> = ({ item, index }) => {
         classroomID: item.id,
         memberID: currentUser.id,
         registerDefense: false,
+        status: "",
       });
     }
   };

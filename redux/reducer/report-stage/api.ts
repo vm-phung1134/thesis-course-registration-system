@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { token } from "./type";
 
-const apiURL = `http://qthuy2k1.shop/api/reporting-stage`;
+const apiURL = `http://qthuy2k1.shop/api/report-stage`;
 
 // GET ALL REPORT STAGES
 const getAllReportStage = createAsyncThunk(

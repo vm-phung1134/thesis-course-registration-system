@@ -26,10 +26,9 @@ import {
   DATA_FILTER_TOPICS,
 } from "@/components/Organisms/MainboardStatus/mock-data";
 import { useTableSearch } from "@/hooks/useTableSearch";
-import { useCurrentUserContext } from "@/contexts/currentUserContext";
 
 function RequirementPage() {
-  const { currentUser } = useCurrentUserContext();
+  const { authClassroomState } = useClassroomStateContext();
   const [filterCourse, setFilterCourse] = useState<
     IOptionItem | ICategoryObject
   >({
@@ -46,14 +45,15 @@ function RequirementPage() {
   // HANDLE CALL API
   const dispatch = useAppDispatch();
   const { data: requirements } = useQuery<IMemberObject[]>({
-    queryKey: ["requirements", currentUser],
+    queryKey: ["requirements", authClassroomState?.id],
     queryFn: async () => {
-      const action = await dispatch(getAllRequirementClassroom(currentUser));
+      const action = await dispatch(
+        getAllRequirementClassroom(authClassroomState?.id || "")
+      );
       return action.payload || [];
     },
     initialData: [],
   });
-
   const {
     filteredData: require_filteredData,
     handleSearch: require_handleSearch,

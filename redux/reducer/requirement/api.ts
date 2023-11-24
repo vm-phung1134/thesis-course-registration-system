@@ -3,14 +3,15 @@ import axios from "axios";
 import { token } from "../auth/type";
 import { IMemberObject, IMemberObjectInput } from "@/interface/member";
 import { IAuthObject } from "@/interface/auth";
+import { IClassroomObjectInput } from "@/interface/classroom";
 
 const apiURL = `http://qthuy2k1.shop/api/requirement`;
 
 // GET ALL REQUIREMENTS
 const getAllRequirements = createAsyncThunk(
   "requirement/getAllRequirements",
-  async () => {
-    const response = await axios.get(`${apiURL}`, {
+  async (id: string) => {
+    const response = await axios.get(`${apiURL}/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -22,17 +23,17 @@ const getAllRequirements = createAsyncThunk(
   }
 );
 
-// GET ALL MEMBER BY CLASSROOM ID
+// GET ALL REQUIREMENT OF LECTURER BY CLASSROOM ID
 const getAllRequirementClassroom = createAsyncThunk(
-  "member/getAllMemberClassroom",
-  async (postData: IAuthObject) => {
-    const response = await axios.get(`${apiURL}/class/${postData.id}`, {
+  "requirement/getAllRequirementClassroom",
+  async (id: string) => {
+    const response = await axios.get(`${apiURL}/class/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
     if (response.status === 200) {
-      return response.data.waitingListInLass;
+      return response.data.waitingLists;
     }
     throw new Error("Failed to get all requirements in classroom");
   }
@@ -43,7 +44,6 @@ const createRequirement = createAsyncThunk(
   "requirement/createRequirement",
   async (postData: IMemberObjectInput, { rejectWithValue }) => {
     try {
-      console.log({ waitingList: postData });
       const response = await axios.post(
         `${apiURL}`,
         { waitingList: postData },
@@ -53,7 +53,6 @@ const createRequirement = createAsyncThunk(
           },
         }
       );
-
       if (response.status === 200) {
         return response.data;
       }

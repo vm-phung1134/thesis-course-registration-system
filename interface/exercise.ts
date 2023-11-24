@@ -15,3 +15,14 @@ export interface IExerciseObject {
   type: string;
   attachments?: (any | IGeneralLinkAttachment | File)[];
 }
+
+export interface IExerciseObjectInput {
+  id?: string;
+  title: string;
+  classroomID: string;
+  categoryID: string;
+  lecturerID: string;
+  description: string;
+  deadline: string;
+  attachments?: (any | IGeneralLinkAttachment | File)[];
+}

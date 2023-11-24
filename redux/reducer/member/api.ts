@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { token } from "../auth/type";
-import { IMemberObject } from "@/interface/member";
+import { IMemberObject, IMemberObjectInput } from "@/interface/member";
 import { IClassroomObject } from "@/interface/classroom";
 import { IAuthObject } from "@/interface/auth";
 
@@ -58,7 +58,7 @@ const getMember = createAsyncThunk(
 // ADD NEW MEMBER
 const createMember = createAsyncThunk(
   "member/createMember",
-  async (postData: Omit<IMemberObject, "id">) => {
+  async (postData: Omit<IMemberObjectInput, "id">) => {
     const response = await axios.post(
       `${apiURL}`,
       { "member": postData },

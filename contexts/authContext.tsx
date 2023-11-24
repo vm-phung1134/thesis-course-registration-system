@@ -92,9 +92,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             photoSrc: result.user.photoURL || "",
             email: result.user.email,
             role: roleAssignment(result.user.email || ""),
-            class: "",
-            major: "",
-            phone: "",
+            class: "DI19V7AX",
+            major: "Computer Science",
+            phone: "0909090909",
           };
           await addMutation.mutate(authObject);
           const token = await result.user.getIdToken();
@@ -152,7 +152,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           name: lecturer.name,
           photoSrc: lecturer.photoSrc,
           role: lecturer.role,
-          password: password,
+          hashedPassword: password,
           phone: lecturer.phone,
           class: lecturer.class,
           major: lecturer.major,

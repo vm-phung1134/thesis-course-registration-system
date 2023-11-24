@@ -121,7 +121,7 @@ export const WaitingView: FC<IWaitingViewProps> = ({ classroom }) => {
             <FilterScheduledForm holderText="Searching classroom ..." />
           </div>
           <div className="flex flex-wrap gap-5 mt-5">
-            {subscribeState?.member.map((item: IMemberObject) => {
+            {subscribeState?.member?.map((item: IMemberObject) => {
               return (
                 <ClassroomCard key={item.id} item={item.classroom} index={0} />
               );

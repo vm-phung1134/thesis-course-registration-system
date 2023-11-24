@@ -1,5 +1,5 @@
 import { Avatar, Button } from "@/components/Atoms";
-import { IMemberObject } from "@/interface/member";
+import { IMemberObject, IMemberObjectInput } from "@/interface/member";
 import { createMember } from "@/redux/reducer/member/api";
 import { deleteRequirement } from "@/redux/reducer/requirement/api";
 import { getTopic } from "@/redux/reducer/topic/api";
@@ -39,7 +39,7 @@ export const CardRequireMember: FC<ICardRequireMemberProps> = ({
   };
   // HANDLE ADD TO CLASS
   const addMutation = useMutation(
-    (postData: Omit<IMemberObject, "id">) => {
+    (postData: Omit<IMemberObjectInput, "id">) => {
       return new Promise((resolve, reject) => {
         dispatch(createMember(postData))
           .unwrap()
@@ -79,10 +79,11 @@ export const CardRequireMember: FC<ICardRequireMemberProps> = ({
   const handleAcceptClass = () => {
     addMutation.mutate({
       registerDefense: false,
-      member: require.member,
-      classroom: require.classroom,
+      memberID: require.member.id,
+      classroomID: require.classroom.id,
     });
-    deleteMutation.mutate(require);
+
+    // deleteMutation.mutate(require);
   };
   // GET TOPIC FOR EACH USER
   const { data: topic_fetch } = useQuery<ITopicObject>({

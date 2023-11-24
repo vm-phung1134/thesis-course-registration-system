@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { token } from "./type";
-import { IExerciseObject } from "@/interface/exercise";
+import { IExerciseObject, IExerciseObjectInput } from "@/interface/exercise";
 import { IClassroomObject } from "@/interface/classroom";
 
 const apiURL = `http://qthuy2k1.shop/api/exercises`;
@@ -41,20 +41,18 @@ const getExercise = createAsyncThunk(
 // CREATE EXERCISE
 const createExercise = createAsyncThunk(
   "exercise/createExercise",
-  async (postData: IExerciseObject) => {
+  async (postData: IExerciseObjectInput) => {
     const formData = new FormData();
-    formData.append("uid", postData.uid);
     formData.append("title", postData.title);
-    formData.append("category", JSON.stringify(postData.category));
-    formData.append("classroom", JSON.stringify(postData.classroom));
-    formData.append("lecturer", JSON.stringify(postData.lecturer));
+    formData.append("categoryID", postData.categoryID);
+    formData.append("classroomID", postData.classroomID);
+    formData.append("lecturerID", postData.lecturerID);
     formData.append("description", postData.description);
-    formData.append("type", postData.type);
     formData.append("deadline", postData.deadline);
 
     if (postData.attachments) {
       for (let i = 0; i < postData.attachments.length; i++) {
-        formData.append("attachment", postData.attachments[i]);
+        formData.append("attachments", postData.attachments[i]);
       }
     }
     const response = await axios.post(`${apiURL}`, formData, {
@@ -76,11 +74,15 @@ const createExercise = createAsyncThunk(
 const updateExercise = createAsyncThunk(
   "exercise/updateExercise",
   async (postData: IExerciseObject) => {
-    const response = await axios.put(`${apiURL}/${postData.id}`, {"exercise": postData}, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axios.put(
+      `${apiURL}/${postData.id}`,
+      { exercise: postData },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     if (response.status === 200) {
       return response.data;
     }

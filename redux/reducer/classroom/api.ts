@@ -26,7 +26,7 @@ const getAllClassrooms = createAsyncThunk(
 const getClassroom = createAsyncThunk(
   "classroom/getClassroom",
   async (postData: IAuthObject) => {
-    const response = await axios.get(`${apiURL}/${postData.id}`, {
+    const response = await axios.get(`${apiURL}/auth/${postData.id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

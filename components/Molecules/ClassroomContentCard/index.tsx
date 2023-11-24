@@ -4,7 +4,7 @@ import { Button, ItemUserInfor, NormalAvatar } from "@/components/Atoms";
 import { IClassroomObject } from "@/interface/classroom";
 import { useSubscribeStateContext } from "@/contexts/subscribeState";
 import { IMemberObject } from "@/interface/member";
-import { STATE_LECTURER_CLASSROOM } from "@/data";
+import { STATE_AUTH_CLASSROOM, STATE_LECTURER_CLASSROOM } from "@/data";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { ROLE_ASSIGNMENT } from "@/contexts/authContext";
 import Image from "next/image";
@@ -30,8 +30,8 @@ export const ClassroomContentCard: FC<IClassroomContentCardProps> = ({
   const { subscribeState } = useSubscribeStateContext();
   const { currentUser } = useCurrentUserContext();
   const checkStatusWaiting = (classroom: IClassroomObject) => {
-    if (Array.isArray(subscribeState)) {
-      return subscribeState.some(
+    if (subscribeState.status === STATE_AUTH_CLASSROOM.WAITING) {
+      return subscribeState.member.some(
         (item: IMemberObject) => item.classroom.id === classroom.id
       );
     }

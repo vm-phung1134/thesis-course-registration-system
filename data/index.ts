@@ -2,7 +2,7 @@ import { IAuthObject } from "@/interface/auth";
 import { ICategoryObject } from "@/interface/category";
 import { IClassroomObject, IClassroomObjectInput } from "@/interface/classroom";
 import { ICommentObject } from "@/interface/comment";
-import { IExerciseObject } from "@/interface/exercise";
+import { IExerciseObject, IExerciseObjectInput } from "@/interface/exercise";
 import { IMemberObject } from "@/interface/member";
 import { IAssessItem, IPointDefObject } from "@/interface/pointDef";
 import { IPostObject } from "@/interface/post";
@@ -73,6 +73,15 @@ export const INITIATE_EXERCISE: IExerciseObject = {
   description: "",
   deadline: "",
   type: "",
+};
+
+export const INITIATE_EXERCISE_INPUT: IExerciseObjectInput = {
+  title: "",
+  classroomID: "",
+  categoryID: "",
+  lecturerID: "",
+  description: "",
+  deadline: "",
 };
 
 export const INITIATE_TOPIC: ITopicObject = {
@@ -148,7 +157,7 @@ export const INITIATE_ASSESS: Omit<IAssessItem, "id"> = {
 };
 
 export enum STATE_AUTH_CLASSROOM {
-  NO_SUB = "NO_SUBSCRIBE",
+  NO_SUB = "NOT SUBSCRIBED YET",
   WAITING = "WAITING",
   UN_SUB = "UN_SUBSCRIBE",
 }
