@@ -6,6 +6,7 @@ import { ChangePassForm, InforUserForm } from "@/components/Molecules";
 import classNames from "classnames";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
+import { ToastContainer } from "react-toastify";
 
 function AccountLecturerPage() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -34,7 +35,7 @@ function AccountLecturerPage() {
         {loading ? (
           <SnipperRound />
         ) : (
-          <div>
+          <>
             <Breadcrumb dataBreadcrumb={BREADCRUMB_ACCOUNT_LECTURER} />
             <div className="my-3 py-2 flex gap-2 items-center">
               <h4 className="text-xl capitalize text-green-700 font-medium ">
@@ -166,7 +167,14 @@ function AccountLecturerPage() {
                 />
               </div>
             </dialog>
-          </div>
+            <ToastContainer
+              toastStyle={{
+                color: "black",
+                fontSize: "14px",
+                fontFamily: "Red Hat Text",
+              }}
+            />
+          </>
         )}
       </MainboardTemplate>
     </>

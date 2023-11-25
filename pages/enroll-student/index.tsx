@@ -2,7 +2,7 @@ import { Button, NormalAvatar, SnipperRound } from "@/components/Atoms";
 import { InforUserFormV2, UploadFinalFileForm } from "@/components/Molecules";
 import { EnrollSuccess } from "@/components/Organisms/MemberState/EnrollSuccess";
 import { MainboardTemplate } from "@/components/Templates";
-import { INITIATE_MEMBER, INITIATE_UPLOAD_REPORT } from "@/data";
+import { INITIATE_MEMBER, INITIATE_UPLOAD_REPORT, roleInCouncil } from "@/data";
 import { useUserCookies } from "@/hooks/useCookies";
 import { IMemberObject } from "@/interface/member";
 import { ICouncilDef } from "@/interface/schedule";
@@ -92,12 +92,15 @@ function EnrollStudentPage() {
                   objectPosition="center"
                 />
                 <div>
-                  <h4 className="text-2xl font-bold">
-                    Here is your schedule thesis defense
-                    <span className="uppercase"> CT550/HK1-2023</span>
+                  <h4 className="uppercase text-xl text-[#141E37] italic font-bold leading-snug">
+                    You schedule for thesis defense in
+                    <span className="uppercase font-medium">
+                      {" "}
+                      CT550/HK1-2023
+                    </span>
                   </h4>
                   <div className="w-[27rem]">
-                    <h4 className="my-2 font-bold tracking-wider">
+                    <h4 className="my-2 text-xs italic font-medium tracking-wider uppercase">
                       Upload your final files
                     </h4>
                     <UploadFinalFileForm uploadReport={uploadReport} />
@@ -112,7 +115,9 @@ function EnrollStudentPage() {
                   <div className="grid grid-cols-3 gap-3">
                     {studentScheduled?.council?.map((lecturer, index) => (
                       <div key={lecturer?.id}>
-                        <p className="text-gray-500">{`Examinator ${(index += 1)}`}</p>
+                        <p className="text-gray-500 capitalize">
+                          {roleInCouncil[index++]}
+                        </p>
                         <div className="flex items-center bg-slate-50 shadow-lg rounded-lg p-3 gap-3 my-2">
                           <NormalAvatar
                             setSize="w-10"
@@ -123,7 +128,9 @@ function EnrollStudentPage() {
                               {lecturer?.name}
                             </p>
                             <p className="text-sm">{lecturer?.email}</p>
-                            <p className="text-sm">{lecturer?.major}</p>
+                            <p className="text-sm capitalize">
+                              {lecturer?.major}
+                            </p>
                           </div>
                         </div>
                       </div>

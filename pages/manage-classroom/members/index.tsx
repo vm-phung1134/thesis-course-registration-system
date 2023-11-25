@@ -46,11 +46,11 @@ function MemberTab() {
     <ClassroomTemplate title="Members | Thesis course registration system">
       <>
         <div className="flex flex-col">
-          <h4 className="text-xl py-5 text-green-700font-medium">
+          <h4 className="text-base py-5 text-green-700 font-medium">
             List students{" "}
             <span className="text-xs">{`( ${
               members.length | 0
-            }/15 Students )`}</span>
+            }/15 Members )`}</span>
           </h4>
           <div>
             <div className="flex justify-between items-center">

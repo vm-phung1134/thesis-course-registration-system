@@ -1,43 +1,27 @@
 import { Button, FormField } from "@/components/Atoms";
+import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
 import { IAuthObject } from "@/interface/auth";
 import { updateAuth } from "@/redux/reducer/auth/api";
-import { useAppDispatch } from "@/redux/store";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Form, Formik } from "formik";
 import { FC } from "react";
+
 export interface IInforUserFormProps {
   setToggle: React.Dispatch<React.SetStateAction<boolean>>;
   toggle: boolean;
   values: IAuthObject;
 }
-
 export const InforUserForm: FC<IInforUserFormProps> = ({
   setToggle,
   toggle,
   values,
 }) => {
-  const queryClient = useQueryClient();
-  const dispatch = useAppDispatch();
-  const updateMutation = useMutation(
-    (postData: IAuthObject) => {
-      console.log(postData);
-      return new Promise((resolve, reject) => {
-        dispatch(updateAuth(postData))
-          .unwrap()
-          .then((data) => {
-            resolve(data);
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["auth"]);
-      },
-    }
-  );
+  const updateMutation = useMutationQueryAPI({
+    action: updateAuth,
+    queryKeyLog: ["get-one-auth"],
+    successMsg: "Update your information successfully!",
+    errorMsg: "Fail to update your information!",
+  });
+
   return (
     <Formik
       initialValues={values}

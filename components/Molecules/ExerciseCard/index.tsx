@@ -24,7 +24,7 @@ export const ExerciseCard: FC<IExerciseProps> = ({
   return (
     <div
       onClick={() => handleOpenTaskModal(exercise)}
-      className="bg-slate-100 shadow-md flex mt-5 p-5 justify-between gap-5 text-sm cursor-pointer"
+      className="bg-slate-100 shadow-md flex mt-5 p-5 rounded-lg justify-between gap-5 text-sm cursor-pointer"
     >
       <IConTitle title={exercise.title} className="w-80 truncate font-medium">
         <svg

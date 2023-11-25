@@ -4,7 +4,7 @@ import { Button, ItemUserInfor, NormalAvatar } from "@/components/Atoms";
 import { IClassroomObject } from "@/interface/classroom";
 import { useSubscribeStateContext } from "@/contexts/subscribeState";
 import { IMemberObject } from "@/interface/member";
-import { STATE_LECTURER_CLASSROOM } from "@/data";
+import { STATE_AUTH_CLASSROOM, STATE_LECTURER_CLASSROOM } from "@/data";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { ROLE_ASSIGNMENT } from "@/contexts/authContext";
 import Image from "next/image";
@@ -135,7 +135,7 @@ export const ClassroomContentCard: FC<IClassroomContentCardProps> = ({
                       <p className="text-sm normal-case font-medium">Opening</p>
                     </button>
                   )}
-                  {currentUser.role === ROLE_ASSIGNMENT.STUDENT && (
+                  {currentUser.role === ROLE_ASSIGNMENT.STUDENT && subscribeState.status === STATE_AUTH_CLASSROOM.NO_SUB && (
                     <Button
                       id={item.id}
                       otherType="subscribe"

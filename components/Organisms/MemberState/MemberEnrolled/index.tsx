@@ -8,19 +8,18 @@ import { IStudentDefObject } from "@/interface/studef";
 import { getAllMemberClassroom } from "@/redux/reducer/member/api";
 import { createStudentDef } from "@/redux/reducer/student-def/api";
 import { useAppDispatch } from "@/redux/store";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import classNames from "classnames";
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
+import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
 
 interface IMemberEnrolledProps {}
 
 export const MemberEnrolled: FC<IMemberEnrolledProps> = ({}) => {
   const dispatch = useAppDispatch();
-  const queryClient = useQueryClient();
   const { authClassroomState } = useClassroomStateContext();
   const { data: members } = useQuery<IMemberObject[]>({
     queryKey: ["members-enrolled", authClassroomState],
@@ -40,17 +39,11 @@ export const MemberEnrolled: FC<IMemberEnrolledProps> = ({}) => {
   };
 
   // Add student to student registered list and send to admin
-  const addMutation = useMutation((postData: IStudentDefObject) => {
-    return new Promise((resolve, reject) => {
-      dispatch(createStudentDef(postData))
-        .unwrap()
-        .then((data) => {
-          resolve(data);
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    });
+  const addMutation = useMutationQueryAPI({
+    action: createStudentDef,
+    queryKeyLog: [""],
+    successMsg: "The list has been sent successfully!",
+    errorMsg: "Fail to send the list!",
   });
 
   const [openCreateConfirm, setOpenCreateConfirm] = useState<boolean>(false);
@@ -71,14 +64,6 @@ export const MemberEnrolled: FC<IMemberEnrolledProps> = ({}) => {
       } as IStudentDefObject);
     });
   };
-  useEffect(() => {
-    if (addMutation.isSuccess) {
-      toast.success("Successfully send a list of student attend thesis defense", {
-        position: toast.POSITION.BOTTOM_LEFT,
-        autoClose: 2000,
-      });
-    }
-  }, [addMutation.isSuccess]);
   return (
     <div className="px-3 my-5">
       <div className="flex justify-between">

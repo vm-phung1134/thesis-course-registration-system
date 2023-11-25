@@ -49,13 +49,10 @@ export const AssessForm: FC<IAssessFormProps> = ({
   );
   useEffect(() => {
     if (addMutation.isSuccess) {
-      toast.success(
-        "Successfully send a evaluable",
-        {
-          position: toast.POSITION.BOTTOM_LEFT,
-          autoClose: 2000,
-        }
-      );
+      toast.success("Successfully send a evaluable", {
+        position: toast.POSITION.BOTTOM_LEFT,
+        autoClose: 2000,
+      });
     }
   }, [addMutation.isSuccess]);
   return (
@@ -63,7 +60,13 @@ export const AssessForm: FC<IAssessFormProps> = ({
       enableReinitialize
       initialValues={assessStudent || INITIATE_ASSESS}
       validate={(values) => {
-        const errors = {};
+        let errors: any = {};
+        if (!values.point) {
+          errors.point = "! Point is required";
+        }
+        if (!values.comment) {
+          errors.comment = "! Assessment is required";
+        }
         return errors;
       }}
       onSubmit={(values) => {
@@ -83,7 +86,7 @@ export const AssessForm: FC<IAssessFormProps> = ({
       }}
     >
       {(formik) => {
-        const { values } = formik;
+        const { values, errors } = formik;
         return (
           <>
             <Form className="mt-5 p-5 shadow-lg rounded-2xl">
@@ -122,6 +125,7 @@ export const AssessForm: FC<IAssessFormProps> = ({
                 name="comment"
                 value={values?.comment}
               />
+              <span className="text-[13px] text-red-500">{errors.comment}</span>
             </Form>
             <ToastContainer
               toastStyle={{

@@ -190,7 +190,7 @@ export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
             authClassroomState?.status === STATE_LECTURER_CLASSROOM.UN_LOCK && (
               <button
                 onClick={handleOpenModalLeave}
-                className="ml-5 mt-5 py-2 px-5 text-xs bg-white border border-red-500 transform ease-linear duration-300 text-red-600 hover:bg-red-600 hover:text-white font-bold -skew-x-[20deg]"
+                className="ml-5 mt-5 py-2 px-5 text-xs rounded-lg bg-white border border-red-500 transform ease-linear duration-300 text-red-600 hover:bg-red-600 hover:text-white font-bold -skew-x-[20deg]"
               >
                 <p className="skew-x-12">Leave Group</p>
               </button>

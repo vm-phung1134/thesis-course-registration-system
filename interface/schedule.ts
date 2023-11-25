@@ -31,6 +31,13 @@ export interface ICouncilDef {
 }
 
 export interface IThesisDef {
+  message(
+    message: any,
+    arg1: {
+      position: import("react-toastify").ToastPosition;
+      autoClose: number;
+    }
+  ): unknown;
   id?: string;
   thesis: ICouncilDef[];
 }

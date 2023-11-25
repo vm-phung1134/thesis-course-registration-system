@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import { MainboardTemplate } from "@/components/Templates";
-import { Breadcrumb, NormalAvatar, SnipperRound, Spinner } from "@/components/Atoms";
+import { Breadcrumb, NormalAvatar, SnipperRound } from "@/components/Atoms";
 import { BREADCRUMB_ACCOUNT_STUDENT } from "./mock-data";
 import { InforUserForm, RegistrationTopicForm } from "@/components/Molecules";
-import { PersonalInformation } from "@/components/Organisms";
 import { INITIATE_TOPIC } from "@/data";
 import { useAppDispatch } from "@/redux/store";
 import { useQuery } from "@tanstack/react-query";
@@ -50,7 +49,7 @@ function AccountStudentPage() {
         {loading && data ? (
           <SnipperRound />
         ) : (
-          <div>
+          <>
             <Breadcrumb dataBreadcrumb={BREADCRUMB_ACCOUNT_STUDENT} />
             <div className="my-3 py-2 flex gap-2 items-center">
               <h4 className="text-xl capitalize text-green-700 font-medium ">
@@ -108,7 +107,9 @@ function AccountStudentPage() {
                     <ul className="grid grid-cols-2">
                       <li className="flex flex-col mt-4">
                         <p className="text-gray-500">Full Name</p>
-                        <p className="capitalize">{lastName + " " + middleName}</p>
+                        <p className="capitalize">
+                          {lastName + " " + middleName}
+                        </p>
                       </li>
                       <li className="flex flex-col mt-4">
                         <p className="text-gray-500">Student ID</p>
@@ -148,7 +149,14 @@ function AccountStudentPage() {
                 />
               </div>
             </dialog>
-          </div>
+            <ToastContainer
+              toastStyle={{
+                color: "black",
+                fontSize: "14px",
+                fontFamily: "Red Hat Text",
+              }}
+            />
+          </>
         )}
       </MainboardTemplate>
     </>

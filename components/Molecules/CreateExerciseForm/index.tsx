@@ -1,25 +1,17 @@
-import {
-  Button,
-  FormField,
-  SelectBox,
-  SelectInForm,
-  TitleFormField,
-} from "@/components/Atoms";
-import { useClassroomStateContext } from "@/contexts/classroomState";
+import { Button, FormField, SelectBox, SelectInForm } from "@/components/Atoms";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
 import { INITIATE_CATEGORY, INITIATE_EXERCISE } from "@/data";
-import { useCurrentUser } from "@/hooks/useGetCurrentUser";
+import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
 import { useSelectStage } from "@/hooks/useSelectStage";
 import { ICategoryObject } from "@/interface/category";
 import { IClassroomObject } from "@/interface/classroom";
 import { IExerciseObject } from "@/interface/exercise";
 import { IOptionItem } from "@/interface/filter";
 import { createExercise } from "@/redux/reducer/exercise/api";
-import { useAppDispatch } from "@/redux/store";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Form, Formik } from "formik";
 import Image from "next/image";
 import { FC, useState, useRef } from "react";
+import { ToastContainer } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
 
 export interface ICreateExerciseFormProps {
@@ -40,12 +32,9 @@ export const CreateExerciseForm: FC<ICreateExerciseFormProps> = ({
   options,
   classroom,
 }) => {
-  const dispatch = useAppDispatch();
-  const queryClient = useQueryClient();
   const initialValues: IExerciseObject = INITIATE_EXERCISE;
   const { currentUser } = useCurrentUserContext();
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { authClassroomState } = useClassroomStateContext();
   // HANDLE SELECT STAGE REPORT
   const { selectedStage, setSelectedStage, reportStages } = useSelectStage();
   // HANDLE FILE
@@ -61,36 +50,29 @@ export const CreateExerciseForm: FC<ICreateExerciseFormProps> = ({
       setSelectedFiles((prevFiles) => [...prevFiles, ...newFiles]);
     }
   };
-  const addMutation = useMutation(
-    (postData: IExerciseObject) => {
-      return new Promise((resolve, reject) => {
-        dispatch(createExercise(postData))
-          .unwrap()
-          .then((data) => {
-            resolve(data);
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries([
-          "get-all-exercises",
-          authClassroomState,
-        ]);
-      },
-    }
-  );
+  const addMutation = useMutationQueryAPI({
+    action: createExercise,
+    queryKeyLog: ["classroom-exercises"],
+    successMsg: "You have just added a reporting process!",
+    errorMsg: "Fail to create a reporting process!",
+  });
   return (
     <Formik
       initialValues={initialValues}
       validate={(values) => {
-        const errors = {};
+        let errors: any = {};
         if (!values.title) {
+          errors.title = "! Title is required";
+        } else if (values.title.length > 100) {
+          errors.password = "! Title less than than 100 characters";
+        } else if (!values.title.match(/^[a-zA-Z0-9\s]*$/)) {
+          errors.title =
+            "! Title The title does not contain special characters";
         }
         if (!values.description) {
+          errors.description = "! Description is required";
+        } else if (values.description.length > 10000) {
+          errors.description = "! Description less than 10000 characters";
         }
         return errors;
       }}

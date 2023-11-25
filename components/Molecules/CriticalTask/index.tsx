@@ -8,12 +8,12 @@ import { FC } from "react";
 
 export interface ICriticalTaskProps {
   exercise: IExerciseObject | null;
-  submitStuds?: ISubmitObject[];
+  submissions?: ISubmitObject[];
 }
 
 export const CriticalTask: FC<ICriticalTaskProps> = ({
   exercise,
-  submitStuds,
+  submissions,
 }) => {
   const { currentUser } = useCurrentUserContext();
   const checkCompletedTask = (submits: ISubmitObject[]): boolean => {
@@ -23,14 +23,14 @@ export const CriticalTask: FC<ICriticalTaskProps> = ({
     );
   };
   return (
-    <div className="h-fit p-5 relative overflow-hidden shadow-xl">
+    <div className="h-fit p-5 relative overflow-hidden shadow-xl rounded-xl">
       <div className="absolute top-0 bottom-0 -left-48 w-full h-full bg-slate-100 -skew-x-[30deg]"></div>
       <div className="relative">
         <div className="flex flex-col gap-2">
           <div className="justify-between flex text-sm">
             <h2 className="font-medium">{exercise?.category?.label} stage</h2>
             <p className="text-xs font-medium">
-              {checkCompletedTask(submitStuds || []) ? "Submitted" : ""}
+              {checkCompletedTask(submissions || []) ? "Submitted" : ""}
             </p>
           </div>
 
@@ -46,7 +46,7 @@ export const CriticalTask: FC<ICriticalTaskProps> = ({
           with the orange background color using...
         </p>
         <div className="flex justify-end mt-3">
-          <button className="bg-green-700 text-white px-5 font-medium text-xs py-1 rounded-sm">
+          <button className="bg-green-700 text-white px-5 font-medium text-xs py-2 rounded-md">
             View Detail
           </button>
         </div>

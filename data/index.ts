@@ -186,3 +186,4 @@ export enum TYPE_ACTION_NOTIFICATION {
   FOLLOWING = "following",
   ADD_POST = "add-post",
 }
+export const roleInCouncil = ["Chairman", "secretary", "Commissioner"];
