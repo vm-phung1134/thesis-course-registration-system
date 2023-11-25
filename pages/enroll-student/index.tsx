@@ -14,6 +14,7 @@ import { useAppDispatch } from "@/redux/store";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 
 function EnrollStudentPage() {
   const [switchingForm, setSwitchingForm] = useState<number>(1);
@@ -72,14 +73,18 @@ function EnrollStudentPage() {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 1200);
+    }, 1500);
   }, []);
   return (
     <MainboardTemplate title="Enroll & schedule | Thesis course registration system">
       {loading ? (
         <SnipperRound />
       ) : (
-        <>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+        >
           {studentScheduled?.id ? (
             <>
               <div className="flex justify-center items-center my-12 gap-5">
@@ -267,7 +272,7 @@ function EnrollStudentPage() {
               )}
             </>
           )}
-        </>
+        </motion.div>
       )}
     </MainboardTemplate>
   );

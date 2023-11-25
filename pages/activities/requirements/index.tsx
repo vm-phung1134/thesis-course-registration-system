@@ -22,6 +22,7 @@ import {
 } from "@/components/Organisms/MainboardStatus/mock-data";
 import { useTableSearch } from "@/hooks/useTableSearch";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
+import { motion } from "framer-motion";
 
 function RequirementPage() {
   const { currentUser } = useCurrentUserContext();
@@ -64,7 +65,11 @@ function RequirementPage() {
       {loading ? (
         <SnipperRound />
       ) : (
-        <div>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+        >
           <Breadcrumb dataBreadcrumb={BREADCRUMB_REQUIREMENT} />
           <div>
             <div className="my-3 py-2 flex gap-2 items-center">
@@ -130,7 +135,7 @@ function RequirementPage() {
               </div>
             )}
           </div>
-        </div>
+        </motion.div>
       )}
     </MainboardTemplate>
   );

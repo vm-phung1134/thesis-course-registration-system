@@ -28,13 +28,18 @@ export const UnSubscribeView: FC<IUnSubscribeViewProps> = ({ classroom }) => {
         >
           <div className="relative h-fit">
             <div className="absolute -top-28 bottom-0 -left-5 -right-40">
-              <div className="bg-gradient-to-t from-green-900 to-green-500">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1, ease: "easeOut" }}
+                className="bg-gradient-to-t from-green-900 to-green-500"
+              >
                 <img
                   src="https://wildrift.leagueoflegends.com/static/volt-bottom-04-56cf6b160f445315e4c6a87da5bc5f23.png"
                   alt="bg-create-class"
                   className="bg-no-repeat w-[83vw] h-[100vh] bg-cover transform rotate-180"
                 />
-              </div>
+              </motion.div>
             </div>
           </div>
           <div className="relative left-3">
@@ -61,8 +66,8 @@ export const UnSubscribeView: FC<IUnSubscribeViewProps> = ({ classroom }) => {
                     <h4 className="font-bold text-2xl uppercase">
                       {classroom?.lecturer?.name}
                     </h4>
-                    <p>The College of Information Technology</p>
-                    <p>{classroom?.lecturer?.major}</p>
+                    <p className="font-medium">The College of Information Technology</p>
+                    <p className="capitalize">{classroom?.lecturer?.major}</p>
                     <p>{classroom?.lecturer?.email}</p>
                     <div className="flex gap-3 pt-2">
                       <i className="fa-regular fa-envelope"></i>
@@ -98,11 +103,11 @@ export const UnSubscribeView: FC<IUnSubscribeViewProps> = ({ classroom }) => {
             <div className="flex justify-end absolute right-[23rem] top-[20rem] text-gray-100">
               <div className="w-[26rem]">
                 <h4 className="font-bold mb-3">
-                  Information you need to know when participating in class:
+                  The rule you need to know when joining in class:
                 </h4>
                 <div className="collapse collapse-arrow bg-transparent">
                   <input type="checkbox" name="my-accordion-2" />
-                  <div className="collapse-title text-sm font-bold ">
+                  <div className="collapse-title text-sm font-medium ">
                     Classroom rules
                   </div>
                   <div className="collapse-content">
@@ -114,7 +119,7 @@ export const UnSubscribeView: FC<IUnSubscribeViewProps> = ({ classroom }) => {
                 </div>
                 <div className="collapse collapse-arrow bg-transparent">
                   <input type="checkbox" name="my-accordion-2" />
-                  <div className="collapse-title text-sm font-bold">
+                  <div className="collapse-title text-sm font-medium ">
                     Instructions for registering points I
                   </div>
                   <div className="collapse-content">
@@ -126,7 +131,7 @@ export const UnSubscribeView: FC<IUnSubscribeViewProps> = ({ classroom }) => {
                 </div>
                 <div className="collapse collapse-arrow bg-transparent">
                   <input type="checkbox" name="my-accordion-2" />
-                  <div className="collapse-title text-sm font-bold">
+                  <div className="collapse-title text-sm font-medium ">
                     How to register for reports
                   </div>
                   <div className="collapse-content">

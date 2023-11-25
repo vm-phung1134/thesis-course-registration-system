@@ -12,7 +12,6 @@ import { Form, Formik } from "formik";
 import Image from "next/image";
 import { FC, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { ToastContainer } from "react-toastify";
 
 export interface ICreatePostFormProps {
   setToggleForm: React.Dispatch<React.SetStateAction<boolean>>;

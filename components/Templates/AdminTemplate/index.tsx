@@ -1,6 +1,7 @@
 import { Navbar, SidebarAdminView } from "@/components/Organisms";
 import Head from "next/head";
 import { FC } from "react";
+import { ToastContainer } from "react-toastify";
 
 export interface IAdminProps {
   children: React.ReactNode;
@@ -21,6 +22,13 @@ export const AdminTemplate: FC<IAdminProps> = ({ children, title }) => {
           <div className="col-span-10">
             <Navbar />
             <div className="px-5 h-full border-l">{children}</div>
+            <ToastContainer
+              toastStyle={{
+                color: "black",
+                fontSize: "14px",
+                fontFamily: "Red Hat Text",
+              }}
+            />
           </div>
         </div>
       </main>

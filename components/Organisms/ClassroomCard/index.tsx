@@ -7,12 +7,6 @@ import {
   ClassroomDetailModal,
 } from "@/components/Molecules";
 import { createRequirement } from "@/redux/reducer/requirement/api";
-import { IMemberObject } from "@/interface/member";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useAppDispatch } from "@/redux/store";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer } from "react-toastify";
 import { NormalAvatar } from "@/components/Atoms";
 import { motion } from "framer-motion";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
@@ -73,13 +67,6 @@ export const ClassroomCard: FC<IClassroomCardProps> = ({ item, index }) => {
         openModalClassroomDetail={openModalClassroomDetail}
         handleSubcribeClass={handleSubcribeClass}
         modalClass={modalClass}
-      />
-      <ToastContainer
-        toastStyle={{
-          color: "black",
-          fontSize: "14px",
-          fontFamily: "Red Hat Text",
-        }}
       />
     </>
   );

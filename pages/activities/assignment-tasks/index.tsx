@@ -12,7 +12,7 @@ import { IOptionItem } from "@/interface/filter";
 import { CriticalTask, ExerciseCard } from "@/components/Molecules";
 import { BREADCRUMB_ASSIGNMENT_TASKS, DATA_FILTER_TASKS } from "./mock-data";
 import { IExerciseObject } from "@/interface/exercise";
-import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { useAppDispatch } from "@/redux/store";
 import { useQuery } from "@tanstack/react-query";
 import { useClassroomStateContext } from "@/contexts/classroomState";
 import {
@@ -21,10 +21,9 @@ import {
 } from "@/redux/reducer/exercise/api";
 import classNames from "classnames";
 import { ExerciseModal } from "@/components/Organisms";
-import { INITIATE_CLASSROOM, INITIATE_EXERCISE } from "@/data";
+import { INITIATE_EXERCISE } from "@/data";
 import Image from "next/image";
-import { getExerciseWithNearestDeadline } from "@/utils/getDeadline";
-import { ISubmitObject } from "@/interface/submit";
+import { motion } from "framer-motion";
 
 function AssignmentTasks() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -54,11 +53,9 @@ function AssignmentTasks() {
   const dispatch = useAppDispatch();
   const { authClassroomState } = useClassroomStateContext();
   const { data: exercises } = useQuery<IExerciseObject[]>({
-    queryKey: ["exercises", authClassroomState],
+    queryKey: ["classroom-exercises", authClassroomState],
     queryFn: async () => {
-      const action = await dispatch(
-        getAllExerciseInClass(authClassroomState || INITIATE_CLASSROOM)
-      );
+      const action = await dispatch(getAllExerciseInClass(authClassroomState));
       return action.payload || [];
     },
     initialData: [],
@@ -92,7 +89,11 @@ function AssignmentTasks() {
         {loading ? (
           <SnipperRound />
         ) : (
-          <>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+          >
             <Breadcrumb dataBreadcrumb={BREADCRUMB_ASSIGNMENT_TASKS} />
             <div className="my-3 py-2 flex gap-2 items-center">
               <h4 className="text-xl capitalize text-green-700 font-medium ">
@@ -122,6 +123,7 @@ function AssignmentTasks() {
                 </div>
                 {handleCriticalEx(exercises)?.map((ex, index) => (
                   <ExerciseCard
+                    index={index}
                     handleOpenTaskModal={handleOpenExModal}
                     key={ex.id}
                     exercise={ex}
@@ -153,7 +155,7 @@ function AssignmentTasks() {
               setOpenModalEx={setOpenModalEx}
               openModalEx={openModalEx}
             />
-          </>
+          </motion.div>
         )}
       </MainboardTemplate>
     </>

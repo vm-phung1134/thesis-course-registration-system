@@ -29,11 +29,11 @@ import { IPostObject } from "@/interface/post";
 import { getAllPostInClass, getPost } from "@/redux/reducer/post/api";
 import Image from "next/image";
 import { ISubmitObject } from "@/interface/submit";
-import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { getAllSubmitStud } from "@/redux/reducer/submit/api";
 import { INITIATE_EXERCISE, INITIATE_POST } from "@/data";
 import { getExerciseWithNearestDeadline } from "@/utils/getDeadline";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
+import { motion } from "framer-motion";
 
 function CriticalTasks() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -111,8 +111,8 @@ function CriticalTasks() {
     initialData: postRenew,
   });
 
-  const { data: submitStuds } = useQuery<ISubmitObject[]>({
-    queryKey: ["submitStuds", currentUser],
+  const { data: submissions } = useQuery<ISubmitObject[]>({
+    queryKey: ["clasroom-submissions", currentUser],
     queryFn: async () => {
       const action = await dispatch(getAllSubmitStud(currentUser));
       return action.payload || [];
@@ -143,7 +143,11 @@ function CriticalTasks() {
         {loading ? (
           <SnipperRound />
         ) : (
-          <>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+          >
             <Breadcrumb dataBreadcrumb={BREADCRUMB_CRITICAL_TASKS} />
             <div className="my-3 py-2 flex gap-2 items-center">
               <h4 className="text-xl capitalize text-green-700 font-medium ">
@@ -172,7 +176,7 @@ function CriticalTasks() {
                   </div>
                 </div>
                 {exercises.length > 0 &&
-                  checkCriticalTask(exercises, submitStuds)?.map(
+                  checkCriticalTask(exercises, submissions)?.map(
                     (ex, index) => (
                       <ExerciseCard
                         handleOpenTaskModal={handleOpenExModal}
@@ -205,10 +209,11 @@ function CriticalTasks() {
                 )}
               </div>
               <div className="w-4/12">
-                {exercises.length > 0 ? (
+                {exercises.length > 0 &&
+                getExerciseWithNearestDeadline(exercises) ? (
                   <CriticalTask
-                    submitStuds={submitStuds}
-                    exercise={getExerciseWithNearestDeadline(exercises) || exercises[0]}
+                    submissions={submissions}
+                    exercise={getExerciseWithNearestDeadline(exercises)}
                   />
                 ) : (
                   <>
@@ -240,7 +245,7 @@ function CriticalTasks() {
               setOpenModalPost={setOpenModalPost}
               openModalPost={openModalPost}
             />
-          </>
+          </motion.div>
         )}
       </MainboardTemplate>
     </>

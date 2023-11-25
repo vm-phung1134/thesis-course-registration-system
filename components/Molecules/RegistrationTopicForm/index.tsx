@@ -141,13 +141,6 @@ export const RegistrationTopicForm: FC<IRegistrationTopicFormProps> = ({
                 />
               </div>
             </Form>
-            <ToastContainer
-              toastStyle={{
-                color: "black",
-                fontSize: "14px",
-                fontFamily: "Red Hat Text",
-              }}
-            />
           </>
         );
       }}

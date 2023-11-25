@@ -1,13 +1,9 @@
 import { ROLE_ASSIGNMENT } from "@/contexts/authContext";
 import { useClassroomStateContext } from "@/contexts/classroomState";
 import { INITIATE_CLASSROOM, STATE_LECTURER_CLASSROOM } from "@/data";
-import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { IAuthObject } from "@/interface/auth";
-import { IClassroomObject } from "@/interface/classroom";
 import { unsubscribeState } from "@/redux/reducer/auth/api";
 import { updateClassroom } from "@/redux/reducer/classroom/api";
-import { useAppDispatch } from "@/redux/store";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { FC, useState } from "react";
 import { ModalConfirm } from "..";
 import classNames from "classnames";
@@ -15,18 +11,15 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
-import { useUserCookies } from "@/hooks/useCookies";
+import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
 
 export interface ICardLecturerInClassProps {
   lecturer: IAuthObject;
-  setLoading?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
   lecturer,
-  setLoading,
 }) => {
-  const dispatch = useAppDispatch();
   const [openLockClass, setOpenLockClass] = useState<boolean>(false);
   const modalClassLockClass = classNames({
     "modal modal-bottom sm:modal-middle": true,
@@ -38,53 +31,24 @@ export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
     "modal-open": openLeaveClass,
   });
   const { authClassroomState } = useClassroomStateContext();
-  const queryClient = useQueryClient();
   const { currentUser } = useCurrentUserContext();
-  const [user] = useUserCookies();
-  const deleteMutation = useMutation(
-    (postData: IAuthObject) => {
-      return new Promise((resolve, reject) => {
-        dispatch(unsubscribeState(postData))
-          .unwrap()
-          .then((data) => {
-            resolve(data);
-            location.reload();
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["member-classroom", user]);
-      },
-    }
-  );
+  const deleteMutation = useMutationQueryAPI({
+    action: unsubscribeState,
+    queryKeyLog: ["clasroom-members"],
+    successMsg: "You have exited the thesis group!!!",
+    errorMsg: "Fail to exit the thesis group!!",
+  });
   const handleUnsubscribeState = () => {
     deleteMutation.mutate(currentUser);
   };
 
   // HANDLE LOCK CLASSROOM FOR LECTURER
-  const updateMutation = useMutation(
-    (postData: IClassroomObject) => {
-      return new Promise((resolve, reject) => {
-        dispatch(updateClassroom(postData))
-          .unwrap()
-          .then((data) => {
-            resolve(data);
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["classroom"]);
-      },
-    }
-  );
+  const updateMutation = useMutationQueryAPI({
+    action: updateClassroom,
+    queryKeyLog: ["get-one-classroom"],
+    successMsg: "Classroom is currently locked!!!",
+    errorMsg: "Fail to lock classroom!!",
+  });
   const handleOpenModal = () => {
     setOpenLockClass(!openLockClass);
   };

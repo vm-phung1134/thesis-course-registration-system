@@ -52,7 +52,7 @@ function ScheduleThesisDefensePage() {
           <li
             key={item.id}
             className={`px-3 py-2 tracking-wider ${
-              selectedItem?.id === item?.id ? "border-green-700 border-b-2" : ""
+              selectedItem?.id === item?.id ? "border-orange-600 border-b-2 text-orange-600" : ""
             }`}
             onClick={() => handleClick(item)}
           >
@@ -84,7 +84,11 @@ function ScheduleThesisDefensePage() {
       {loading ? (
         <SnipperRound />
       ) : (
-        <>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+        >
           <Breadcrumb dataBreadcrumb={BREADCRUMB_MAINBOARD} />
           <div className="py-2 my-3 flex gap-2 items-center">
             <h4 className="text-xl capitalize text-green-700 font-medium ">
@@ -94,7 +98,7 @@ function ScheduleThesisDefensePage() {
           </div>
           {renderMenuItems()}
           {renderScheduleView()}
-        </>
+        </motion.div>
       )}
     </MainboardTemplate>
   );

@@ -13,6 +13,7 @@ import { IMemberObject } from "@/interface/member";
 import { STATE_AUTH_CLASSROOM } from "@/data";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
 import { BREADCRUMB_MAINBOARD } from "@/components/Organisms/MainboardStatus/mock-data";
+import { motion } from "framer-motion";
 
 type MenuItem = {
   id: number;
@@ -94,7 +95,11 @@ function MainboardPage() {
             STATE_AUTH_CLASSROOM.WAITING,
             STATE_AUTH_CLASSROOM.NO_SUB
           ) && (
-            <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
+            >
               <Breadcrumb dataBreadcrumb={BREADCRUMB_MAINBOARD} />
               <div className="py-2 my-3 flex gap-2 items-center">
                 <h4 className="text-xl capitalize text-green-700 font-medium ">
@@ -103,7 +108,7 @@ function MainboardPage() {
                 </h4>
                 <div className="flex-grow h-[0.5px] bg-green-700"></div>
               </div>
-            </>
+            </motion.div>
           )}
           {currentUser?.role === ROLE_ASSIGNMENT.STUDENT &&
             checkIsField(

@@ -19,6 +19,7 @@ import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { useUserCookies } from "@/hooks/useCookies";
 import { INITIATE_CLASSROOM } from "@/data";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
+import { ToastContainer } from "react-toastify";
 
 export interface IClassroomProps {
   children: React.ReactNode;
@@ -91,6 +92,13 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
               </>
             )}
           </div>
+          <ToastContainer
+              toastStyle={{
+                color: "black",
+                fontSize: "14px",
+                fontFamily: "Red Hat Text",
+              }}
+            />
           {/* POST / EXERCISE */}
           <dialog id="modal_switch_post_exercise" className={modalClassPost}>
             <div className="w-5/12 bg-white p-5 h-fit shadow-2xl rounded-xl">

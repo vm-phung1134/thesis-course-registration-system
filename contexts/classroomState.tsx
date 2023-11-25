@@ -1,16 +1,12 @@
-import { INITIATE_CLASSROOM, INITIATE_MEMBER } from "@/data";
-import { useUserCookies } from "@/hooks/useCookies";
-import { useCurrentUser } from "@/hooks/useGetCurrentUser";
+import { INITIATE_CLASSROOM } from "@/data";
 import { IClassroomObject } from "@/interface/classroom";
 import { IMemberObject } from "@/interface/member";
-import { checkAuthRoleForClassroomState } from "@/redux/reducer/auth/api";
 import { getClassroom } from "@/redux/reducer/classroom/api";
 import { getMember } from "@/redux/reducer/member/api";
 import { useAppDispatch } from "@/redux/store";
 import { useQuery } from "@tanstack/react-query";
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext } from "react";
 import Cookies from "js-cookie";
-import { useCurrentUserContext } from "./currentUserContext";
 
 interface IClassroomStateContext {
   authClassroomState: IClassroomObject | null;
@@ -31,9 +27,8 @@ export const ClassroomStateContextProvider: React.FC<ClassroomStateProps> = ({
 }) => {
   const dispatch = useAppDispatch();
   const uid = Cookies.get("uid");
-  console.log(uid);
   const { data: classroom } = useQuery<IClassroomObject | null>({
-    queryKey: ["classroom", uid],
+    queryKey: ["get-one-classroom", uid],
     queryFn: async () => {
       if (uid) {
         const action = await dispatch(getClassroom(uid));
@@ -43,7 +38,7 @@ export const ClassroomStateContextProvider: React.FC<ClassroomStateProps> = ({
     initialData: null,
   });
   const { data: member } = useQuery<IMemberObject | null>({
-    queryKey: ["member-classroom", uid],
+    queryKey: ["get-one-member", uid],
     queryFn: async () => {
       if (uid) {
         const action = await dispatch(getMember(uid));

@@ -25,17 +25,14 @@ import {
   getExercise,
 } from "@/redux/reducer/exercise/api";
 import classNames from "classnames";
-import { ExerciseModal, PostModal } from "@/components/Organisms";
-import { getAllPostInClass, getPost } from "@/redux/reducer/post/api";
-import { IPointDefObject } from "@/interface/pointDef";
-import { IPostObject } from "@/interface/post";
+import { ExerciseModal } from "@/components/Organisms";
 import Image from "next/image";
-import { INITIATE_EXERCISE, INITIATE_SUBMIT } from "@/data";
+import { INITIATE_EXERCISE } from "@/data";
 import { ISubmitObject } from "@/interface/submit";
-import { getAllSubmitStud, getAllSubmits } from "@/redux/reducer/submit/api";
-import { useCurrentUser } from "@/hooks/useGetCurrentUser";
+import { getAllSubmitStud } from "@/redux/reducer/submit/api";
 import { getExerciseWithNearestDeadline } from "@/utils/getDeadline";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
+import { motion } from "framer-motion";
 
 function CriticalTasks() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -66,7 +63,7 @@ function CriticalTasks() {
   const [exRenew, setExRenew] = useState<IExerciseObject>(INITIATE_EXERCISE);
   const { authClassroomState } = useClassroomStateContext();
   const { data: exercises } = useQuery<IExerciseObject[]>({
-    queryKey: ["exercises", authClassroomState],
+    queryKey: ["classroom-exercises", authClassroomState],
     queryFn: async () => {
       const action = await dispatch(getAllExerciseInClass(authClassroomState));
       return action.payload || [];
@@ -75,7 +72,7 @@ function CriticalTasks() {
   });
 
   const { data: ex_fetch } = useQuery<IExerciseObject>({
-    queryKey: ["exercise", exRenew],
+    queryKey: ["get-one-exercise", exRenew],
     queryFn: async () => {
       const action = await dispatch(getExercise(exRenew));
       return action.payload || {};
@@ -83,8 +80,8 @@ function CriticalTasks() {
     initialData: exRenew,
   });
 
-  const { data: submitStuds } = useQuery<ISubmitObject[]>({
-    queryKey: ["submitStuds", currentUser],
+  const { data: submissions } = useQuery<ISubmitObject[]>({
+    queryKey: ["classroom-submissions", currentUser],
     queryFn: async () => {
       const action = await dispatch(getAllSubmitStud(currentUser));
       return action.payload || [];
@@ -114,7 +111,11 @@ function CriticalTasks() {
         {loading ? (
           <SnipperRound />
         ) : (
-          <>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+          >
             <Breadcrumb dataBreadcrumb={BREADCRUMB_COMPLETED_TASKS} />
             <div className="my-3 py-2 flex gap-2 items-center">
               <h4 className="text-xl capitalize text-green-700 font-medium ">
@@ -142,7 +143,7 @@ function CriticalTasks() {
                     />
                   </div>
                 </div>
-                {checkCompletedTask(exercises, submitStuds)?.map(
+                {checkCompletedTask(exercises, submissions)?.map(
                   (ex, index) => (
                     <ExerciseCard
                       handleOpenTaskModal={handleOpenExModal}
@@ -167,10 +168,11 @@ function CriticalTasks() {
                 )}
               </div>
               <div className="w-4/12">
-                {exercises.length > 0 ? (
+                {exercises.length > 0 &&
+                getExerciseWithNearestDeadline(exercises) ? (
                   <CriticalTask
-                    submitStuds={submitStuds}
-                    exercise={getExerciseWithNearestDeadline(exercises) || exercises[0]}
+                    submissions={submissions}
+                    exercise={getExerciseWithNearestDeadline(exercises)}
                   />
                 ) : (
                   <>
@@ -196,7 +198,7 @@ function CriticalTasks() {
               setOpenModalEx={setOpenModalEx}
               openModalEx={openModalEx}
             />
-          </>
+          </motion.div>
         )}
       </MainboardTemplate>
     </>

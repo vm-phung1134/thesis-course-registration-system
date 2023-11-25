@@ -14,14 +14,11 @@ import { IAssessItem } from "@/interface/pointDef";
 import { ICouncilDef } from "@/interface/schedule";
 import { ITopicObject } from "@/interface/topic";
 import { IUploadReportObject } from "@/interface/upload";
-import {
-  getOnePointDef,
-  getOnePointDefForLecturer,
-} from "@/redux/reducer/point-def/api";
+import { getOnePointDefForLecturer } from "@/redux/reducer/point-def/api";
 import { getScheduleForStudent } from "@/redux/reducer/schedule-def/api";
 import { getTopic } from "@/redux/reducer/topic/api";
 import { getUploadReport } from "@/redux/reducer/upload-def/api";
-import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { useAppDispatch } from "@/redux/store";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
@@ -67,7 +64,7 @@ function ThesisDefenseStudentDetail() {
 
   const { data: assessStudent } = useQuery<IAssessItem>({
     queryKey: [
-      "assess-student",
+      "get-one-point",
       studentScheduled?.schedule?.timeSlots[0]?.student?.infor.id,
       currentUser.id,
     ],
@@ -98,7 +95,10 @@ function ThesisDefenseStudentDetail() {
             <div className="grid grid-cols-12 gap-5 text-sm">
               <div className="col-span-7 mt-5 flex gap-5 flex-col tracking-wider">
                 <div className="p-5 bg-gray-100 rounded-xl">
-                  <div onClick={() => history.back()} className="text-sm my-1 flex gap-2 items-center cursor-pointer">
+                  <div
+                    onClick={() => history.back()}
+                    className="text-sm my-1 flex gap-2 items-center cursor-pointer"
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
@@ -219,7 +219,7 @@ function ThesisDefenseStudentDetail() {
                         <p className="text-gray-600">Description:</p>
                         <p className="flex gap-2 flex-col text-justify">
                           <span className="text-gray-700">
-                           {topic?.description}
+                            {topic?.description}
                           </span>
                         </p>
                       </div>

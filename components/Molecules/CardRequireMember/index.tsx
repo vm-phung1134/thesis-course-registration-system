@@ -13,7 +13,6 @@ import { INITIATE_AUTH, INITIATE_TOPIC } from "@/data";
 import { IAuthObject } from "@/interface/auth";
 import { InforMemberModal } from "@/components/Organisms";
 import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
-import { ToastContainer } from "react-toastify";
 import classNames from "classnames";
 
 export interface ICardRequireMemberProps {
@@ -126,13 +125,6 @@ export const CardRequireMember: FC<ICardRequireMemberProps> = ({
         modalClass={modalClass}
         setOpenMemberModal={setOpenModalMemberDetail}
         openMemberModal={openModalMemberDetail}
-      />
-      <ToastContainer
-        toastStyle={{
-          color: "black",
-          fontSize: "14px",
-          fontFamily: "Red Hat Text",
-        }}
       />
     </>
   );

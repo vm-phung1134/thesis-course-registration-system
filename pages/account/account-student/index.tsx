@@ -12,6 +12,7 @@ import classNames from "classnames";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
+import { motion } from "framer-motion";
 
 function AccountStudentPage() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -49,7 +50,11 @@ function AccountStudentPage() {
         {loading && data ? (
           <SnipperRound />
         ) : (
-          <>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+          >
             <Breadcrumb dataBreadcrumb={BREADCRUMB_ACCOUNT_STUDENT} />
             <div className="my-3 py-2 flex gap-2 items-center">
               <h4 className="text-xl capitalize text-green-700 font-medium ">
@@ -156,7 +161,7 @@ function AccountStudentPage() {
                 fontFamily: "Red Hat Text",
               }}
             />
-          </>
+          </motion.div>
         )}
       </MainboardTemplate>
     </>

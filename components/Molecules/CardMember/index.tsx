@@ -5,10 +5,10 @@ import { IAuthObject } from "@/interface/auth";
 import { IMemberObject } from "@/interface/member";
 import { ITopicObject } from "@/interface/topic";
 import { getTopic } from "@/redux/reducer/topic/api";
-import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { useAppDispatch } from "@/redux/store";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import classNames from "classnames";
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 
 export interface ICardMemberClassProps {
   member: IMemberObject;
@@ -16,7 +16,6 @@ export interface ICardMemberClassProps {
 }
 export const CardMember: FC<ICardMemberClassProps> = ({ member, index }) => {
   const dispatch = useAppDispatch();
-  const queryClient = useQueryClient();
   const [topicRenew, setTopicRenew] = useState<IAuthObject>(INITIATE_AUTH);
   const [openModalMemberDetail, setOpenModalMemberDetail] =
     useState<boolean>(false);
@@ -30,9 +29,9 @@ export const CardMember: FC<ICardMemberClassProps> = ({ member, index }) => {
   };
   // GET TOPIC FOR EACH USER
   const { data: topic_fetch } = useQuery<ITopicObject>({
-    queryKey: ["topic", member?.member?.id],
+    queryKey: ["get-one-topic", topicRenew.id],
     queryFn: async () => {
-      const action = await dispatch(getTopic(member?.member?.id));
+      const action = await dispatch(getTopic(topicRenew.id));
       return action.payload || {};
     },
     initialData: INITIATE_TOPIC,
@@ -51,10 +50,10 @@ export const CardMember: FC<ICardMemberClassProps> = ({ member, index }) => {
           />
           <div className="flex flex-col text-sm w-full">
             <div className="flex gap-2 items-center w-full">
-              <p className="uppercase font-medium">{member?.member.name}</p>
-              <p className="uppercase"> - {member?.member.class}</p>
+              <p className="uppercase font-medium">{member?.member?.name}</p>
+              <p className="uppercase"> - {member?.member?.class}</p>
             </div>
-            <p>{member?.member.major || "Computer Science"}</p>
+            <p>{member?.member?.major || "Computer Science"}</p>
           </div>
         </div>
         <div className="py-1">
@@ -67,8 +66,8 @@ export const CardMember: FC<ICardMemberClassProps> = ({ member, index }) => {
               <i className="fa-regular fa-message"></i>
             </div>
             <Button
-              setToggle={setOpenModalMemberDetail}
-              toggle={openModalMemberDetail}
+              type="button"
+              handleActions={() => handleShowModalMember(member)}
               title="View detail"
               className="text-sm bg-green-700 btn-sm text-white border-none hover:bg-green-600 px-5 hover:border-none"
             />
