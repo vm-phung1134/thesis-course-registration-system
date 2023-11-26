@@ -17,12 +17,12 @@ export const ContentCommentModal: FC<IContentCommentModalProps> = memo(
   ({ task, quantity }) => {
     const dispatch = useAppDispatch();
     const { data: comments } = useQuery<ICommentObject[]>({
-      queryKey: ["comments-modal", task.uid],
+      queryKey: ["task-modal-comments", task.id],
       queryFn: async () => {
-        const action = await dispatch(getAllComments(task.uid));
+        const action = await dispatch(getAllComments(task?.id || ""));
         return action.payload || [];
       },
-      initialData: []
+      initialData: [],
     });
     return (
       <>

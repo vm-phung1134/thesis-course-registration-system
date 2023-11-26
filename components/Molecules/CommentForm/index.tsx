@@ -1,14 +1,11 @@
 import { FC } from "react";
 import { Field, Form, Formik } from "formik";
-import { ICommentObject } from "@/interface/comment";
 import { IPostObject } from "@/interface/post";
 import { IExerciseObject } from "@/interface/exercise";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createComment } from "@/redux/reducer/comment/api";
-import { useAppDispatch } from "@/redux/store";
 import { INITIATE_COMMENT } from "@/data";
-import { IAuthObject } from "@/interface/auth";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
+import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
+import { createComment } from "@/redux/reducer/comment/api";
 
 export interface ICommentFormProps {
   task: IPostObject | IExerciseObject;
@@ -16,28 +13,13 @@ export interface ICommentFormProps {
 
 export const CommentForm: FC<ICommentFormProps> = ({ task }) => {
   const initialValues = INITIATE_COMMENT;
-  const dispatch = useAppDispatch();
-  const queryClient = useQueryClient();
   const { currentUser } = useCurrentUserContext();
-  const addMutation = useMutation(
-    (postData: ICommentObject) => {
-      return new Promise((resolve, reject) => {
-        dispatch(createComment(postData))
-          .unwrap()
-          .then((data) => {
-            resolve(data);
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["comments"]);
-      },
-    }
-  );
+  const addMutation = useMutationQueryAPI({
+    action: createComment,
+    queryKeyLog: ["task-comments"],
+    successMsg: "You just commented a comment to the post!",
+    errorMsg: "Fail to send the comment!",
+  });
   return (
     <Formik
       initialValues={initialValues}
@@ -48,11 +30,12 @@ export const CommentForm: FC<ICommentFormProps> = ({ task }) => {
       onSubmit={(values, { setSubmitting, resetForm }) => {
         setTimeout(() => {
           addMutation.mutate({
-            ...values,
-            postId: task.uid,
-            user: currentUser,
+            userID: currentUser.id,
+            exerciseID: task.id,
+            content: values.content,
           });
           resetForm();
+          setSubmitting(false);
         }, 400);
       }}
     >

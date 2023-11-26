@@ -1,9 +1,6 @@
 /* eslint-disable react/display-name */
 import { NormalAvatar } from "@/components/Atoms";
-import { INITIATE_COMMENT } from "@/data";
 import { ICommentObject } from "@/interface/comment";
-import { IExerciseObject } from "@/interface/exercise";
-import { IPostObject } from "@/interface/post";
 import { getAllComments } from "@/redux/reducer/comment/api";
 import { useAppDispatch } from "@/redux/store";
 import { useQuery } from "@tanstack/react-query";
@@ -18,7 +15,7 @@ export const ContentComment: FC<IContentCommentProps> = memo(
   ({ taskId, quantity }) => {
     const dispatch = useAppDispatch();
     const { data: comments } = useQuery<ICommentObject[]>({
-      queryKey: ["comments", taskId],
+      queryKey: ["task-comments", taskId],
       queryFn: async () => {
         const action = await dispatch(getAllComments(taskId));
         return action.payload || [];

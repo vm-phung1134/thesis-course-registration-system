@@ -1,9 +1,12 @@
 import { IAuthObject } from "./auth";
 
 export interface IGeneralLinkAttachment {
-  id: string;
-  name: string;
-  src: string;
+  id: string,
+  fileURL: string,
+  author: IAuthObject,
+  mimeType: string,
+  thumbnail: string,
+  fileName: string,
 }
 
 export interface ISubmitObject {

@@ -4,7 +4,7 @@ import { token } from "./type";
 import { IExerciseObject, IExerciseObjectInput } from "@/interface/exercise";
 import { IClassroomObject } from "@/interface/classroom";
 
-const apiURL = `http://qthuy2k1.shop/api/exercises`;
+const apiURL = `http://qthuy2k1.shop/api/exercise`;
 
 // GET ALL EXERCISES
 const getAllExercises = createAsyncThunk(
@@ -46,7 +46,7 @@ const createExercise = createAsyncThunk(
     formData.append("title", postData.title);
     formData.append("categoryID", postData.categoryID);
     formData.append("classroomID", postData.classroomID);
-    formData.append("lecturerID", postData.lecturerID);
+    formData.append("authorID", postData.authorID);
     formData.append("description", postData.description);
     formData.append("deadline", postData.deadline);
 
@@ -55,17 +55,20 @@ const createExercise = createAsyncThunk(
         formData.append("attachments", postData.attachments[i]);
       }
     }
-    const response = await axios.post(`${apiURL}`, formData, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    const response = await axios.post(
+      `http://qthuy2k1.shop/upload/exercise`,
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
 
     if (response.status === 200) {
       return response.data;
     }
-
     throw new Error("Failed to create exercise");
   }
 );
@@ -106,22 +109,6 @@ const deleteExercise = createAsyncThunk(
   }
 );
 
-// GET ALL EXERCISE FOLLOW CLASS
-const getAllExerciseInClass = createAsyncThunk(
-  "exercise/getAllExerciseInClass",
-  async (postData: IClassroomObject | null) => {
-    const response = await axios.get(`${apiURL}/class/${postData?.id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    if (response.status === 200) {
-      return response.data.exerciseInClass;
-    }
-    throw new Error("Failed to get all exercises");
-  }
-);
-
 // GET ALL EXERCISE FOLLOW REPORT STAGE
 const getAllExerciseInReportStage = createAsyncThunk(
   "exercise/getAllExerciseInReportStage",
@@ -146,6 +133,5 @@ export {
   createExercise,
   updateExercise,
   deleteExercise,
-  getAllExerciseInReportStage,
-  getAllExerciseInClass,
+  getAllExerciseInReportStage
 };

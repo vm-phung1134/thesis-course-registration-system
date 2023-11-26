@@ -1,31 +1,17 @@
-import {
-  Button,
-  FormField,
-  SelectBox,
-  SelectInForm,
-  TitleFormField,
-} from "@/components/Atoms";
+import { Button, FormField, SelectBox, SelectInForm } from "@/components/Atoms";
 import { useClassroomStateContext } from "@/contexts/classroomState";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
-import {
-  INITIATE_CATEGORY,
-  INITIATE_EXERCISE,
-  INITIATE_EXERCISE_INPUT,
-} from "@/data";
-import { useCurrentUser } from "@/hooks/useGetCurrentUser";
+import { INITIATE_CATEGORY, INITIATE_EXERCISE_INPUT } from "@/data";
+import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
 import { useSelectStage } from "@/hooks/useSelectStage";
 import { ICategoryObject } from "@/interface/category";
 import { IClassroomObject } from "@/interface/classroom";
-import { IExerciseObject, IExerciseObjectInput } from "@/interface/exercise";
+import { IExerciseObjectInput } from "@/interface/exercise";
 import { IOptionItem } from "@/interface/filter";
 import { createExercise } from "@/redux/reducer/exercise/api";
-import { useAppDispatch } from "@/redux/store";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Form, Formik } from "formik";
 import Image from "next/image";
 import { FC, useState, useRef } from "react";
-import { v4 as uuidv4 } from "uuid";
-const objectId = uuidv4();
 
 export interface ICreateExerciseFormProps {
   setToggleForm: React.Dispatch<React.SetStateAction<boolean>>;
@@ -45,12 +31,9 @@ export const CreateExerciseForm: FC<ICreateExerciseFormProps> = ({
   options,
   classroom,
 }) => {
-  const dispatch = useAppDispatch();
-  const queryClient = useQueryClient();
   const initialValues: IExerciseObjectInput = INITIATE_EXERCISE_INPUT;
   const { currentUser } = useCurrentUserContext();
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { authClassroomState } = useClassroomStateContext();
   // HANDLE SELECT STAGE REPORT
   const { selectedStage, setSelectedStage, reportStages } = useSelectStage();
   // HANDLE FILE
@@ -66,28 +49,12 @@ export const CreateExerciseForm: FC<ICreateExerciseFormProps> = ({
       setSelectedFiles((prevFiles) => [...prevFiles, ...newFiles]);
     }
   };
-  const addMutation = useMutation(
-    (postData: IExerciseObjectInput) => {
-      return new Promise((resolve, reject) => {
-        dispatch(createExercise(postData))
-          .unwrap()
-          .then((data) => {
-            resolve(data);
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries([
-          "get-all-exercises",
-          authClassroomState,
-        ]);
-      },
-    }
-  );
+  const addMutation = useMutationQueryAPI({
+    action: createExercise,
+    queryKeyLog: ["classroom-exercises"],
+    successMsg: "You have just added a reporting process!",
+    errorMsg: "Fail to create a reporting process!",
+  });
   return (
     <Formik
       initialValues={initialValues}
@@ -106,19 +73,9 @@ export const CreateExerciseForm: FC<ICreateExerciseFormProps> = ({
             description: values.description,
             deadline: values.deadline,
             classroomID: classroom.id,
-            categoryID: selectedStage.id || "",
+            categoryID: selectedStage.id || "1",
             attachments: selectedFiles,
-            lecturerID: currentUser.id,
-
-          });
-          console.log({
-            title: values.title,
-            description: values.description,
-            deadline: values.deadline,
-            classroomID: classroom.id,
-            categoryID: selectedStage.id || "",
-            attachments: selectedFiles,
-            lecturerID: currentUser.id,
+            authorID: currentUser.id,
           });
           resetForm();
           setSelectedFiles([]);
@@ -162,7 +119,7 @@ export const CreateExerciseForm: FC<ICreateExerciseFormProps> = ({
                 />
               </div>
               <FormField
-                type="date"
+                type="datetime-local"
                 label="Set Deadline"
                 className="rounded-xl bg-slate-100 border-none"
                 nameField="deadline"

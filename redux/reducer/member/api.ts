@@ -41,7 +41,7 @@ const getMember = createAsyncThunk(
   "member/getMember",
   async (postData: IAuthObject) => {
     const response = await axios.get(
-      `${apiURL}/${postData.id}`,
+      `${apiURL}/auth/${postData.id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

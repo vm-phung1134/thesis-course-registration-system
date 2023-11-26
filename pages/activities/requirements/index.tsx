@@ -9,16 +9,11 @@ import {
 import { MainboardTemplate } from "@/components/Templates";
 import { BREADCRUMB_REQUIREMENT } from "./mock-data";
 import { CardRequireMember, FilterScheduledForm } from "@/components/Molecules";
-import { InforMemberModal } from "@/components/Organisms";
 import { IMemberObject } from "@/interface/member";
 import { getAllRequirementClassroom } from "@/redux/reducer/requirement/api";
-import { useAppDispatch, useAppSelector } from "@/redux/store";
-import { getTopic } from "@/redux/reducer/topic/api";
-import classNames from "classnames";
+import { useAppDispatch } from "@/redux/store";
 import Image from "next/image";
 import Link from "next/link";
-import { useClassroomStateContext } from "@/contexts/classroomState";
-import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { ICategoryObject } from "@/interface/category";
 import { IOptionItem } from "@/interface/filter";
 import {
@@ -26,9 +21,11 @@ import {
   DATA_FILTER_TOPICS,
 } from "@/components/Organisms/MainboardStatus/mock-data";
 import { useTableSearch } from "@/hooks/useTableSearch";
+import { useCurrentUserContext } from "@/contexts/currentUserContext";
+import { motion } from "framer-motion";
 
 function RequirementPage() {
-  const { authClassroomState } = useClassroomStateContext();
+  const { currentUser } = useCurrentUserContext();
   const [filterCourse, setFilterCourse] = useState<
     IOptionItem | ICategoryObject
   >({
@@ -45,15 +42,14 @@ function RequirementPage() {
   // HANDLE CALL API
   const dispatch = useAppDispatch();
   const { data: requirements } = useQuery<IMemberObject[]>({
-    queryKey: ["requirements", authClassroomState?.id],
+    queryKey: ["classroom-requirements", currentUser],
     queryFn: async () => {
-      const action = await dispatch(
-        getAllRequirementClassroom(authClassroomState?.id || "")
-      );
+      const action = await dispatch(getAllRequirementClassroom(currentUser.id));
       return action.payload || [];
     },
     initialData: [],
   });
+
   const {
     filteredData: require_filteredData,
     handleSearch: require_handleSearch,
@@ -69,7 +65,11 @@ function RequirementPage() {
       {loading ? (
         <SnipperRound />
       ) : (
-        <div>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+        >
           <Breadcrumb dataBreadcrumb={BREADCRUMB_REQUIREMENT} />
           <div>
             <div className="my-3 py-2 flex gap-2 items-center">
@@ -135,7 +135,7 @@ function RequirementPage() {
               </div>
             )}
           </div>
-        </div>
+        </motion.div>
       )}
     </MainboardTemplate>
   );

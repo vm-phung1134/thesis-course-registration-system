@@ -1,15 +1,9 @@
 import { Button, NormalAvatar, SnipperRound } from "@/components/Atoms";
-import {
-  InforUserFormV2,
-  UploadFileForm,
-  UploadFinalFileForm,
-} from "@/components/Molecules";
+import { InforUserFormV2, UploadFinalFileForm } from "@/components/Molecules";
 import { EnrollSuccess } from "@/components/Organisms/MemberState/EnrollSuccess";
 import { MainboardTemplate } from "@/components/Templates";
-import { useCurrentUserContext } from "@/contexts/currentUserContext";
-import { INITIATE_MEMBER, INITIATE_UPLOAD_REPORT } from "@/data";
+import { INITIATE_MEMBER, INITIATE_UPLOAD_REPORT, roleInCouncil } from "@/data";
 import { useUserCookies } from "@/hooks/useCookies";
-import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { IMemberObject } from "@/interface/member";
 import { ICouncilDef } from "@/interface/schedule";
 import { IUploadReportObject } from "@/interface/upload";
@@ -20,6 +14,7 @@ import { useAppDispatch } from "@/redux/store";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 
 function EnrollStudentPage() {
   const [switchingForm, setSwitchingForm] = useState<number>(1);
@@ -63,7 +58,6 @@ function EnrollStudentPage() {
   );
   const handleEnrollMember = () => {
     updateMutation.mutate({ ...member, registerDefense: true });
-    console.log({ ...member, registerDefense: true });
   };
 
   // HANDLE FINAL UPLOAD
@@ -79,14 +73,18 @@ function EnrollStudentPage() {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 1200);
+    }, 1500);
   }, []);
   return (
     <MainboardTemplate title="Enroll & schedule | Thesis course registration system">
       {loading ? (
         <SnipperRound />
       ) : (
-        <>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+        >
           {studentScheduled?.id ? (
             <>
               <div className="flex justify-center items-center my-12 gap-5">
@@ -99,12 +97,15 @@ function EnrollStudentPage() {
                   objectPosition="center"
                 />
                 <div>
-                  <h4 className="text-2xl font-bold">
-                    Here is your schedule thesis defense
-                    <span className="uppercase"> CT550/HK1-2023</span>
+                  <h4 className="uppercase text-xl text-[#141E37] italic font-bold leading-snug">
+                    You schedule for thesis defense in
+                    <span className="uppercase font-medium">
+                      {" "}
+                      CT550/HK1-2023
+                    </span>
                   </h4>
                   <div className="w-[27rem]">
-                    <h4 className="my-2 font-bold tracking-wider">
+                    <h4 className="my-2 text-xs italic font-medium tracking-wider uppercase">
                       Upload your final files
                     </h4>
                     <UploadFinalFileForm uploadReport={uploadReport} />
@@ -119,7 +120,9 @@ function EnrollStudentPage() {
                   <div className="grid grid-cols-3 gap-3">
                     {studentScheduled?.council?.map((lecturer, index) => (
                       <div key={lecturer?.id}>
-                        <p className="text-gray-500">{`Examinator ${(index += 1)}`}</p>
+                        <p className="text-gray-500 capitalize">
+                          {roleInCouncil[index++]}
+                        </p>
                         <div className="flex items-center bg-slate-50 shadow-lg rounded-lg p-3 gap-3 my-2">
                           <NormalAvatar
                             setSize="w-10"
@@ -130,7 +133,9 @@ function EnrollStudentPage() {
                               {lecturer?.name}
                             </p>
                             <p className="text-sm">{lecturer?.email}</p>
-                            <p className="text-sm">{lecturer?.major}</p>
+                            <p className="text-sm capitalize">
+                              {lecturer?.major}
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -225,7 +230,7 @@ function EnrollStudentPage() {
                         />
                       ) : (
                         <>
-                          <h3 className="text-xs font-medium mb-3">
+                          <h3 className="text-xs font-medium mb-3 text-green-700">
                             Step {switchingForm} of 2
                           </h3>
                           <div className="h-[50vh] flex flex-col gap-5 items-center justify-center">
@@ -267,7 +272,7 @@ function EnrollStudentPage() {
               )}
             </>
           )}
-        </>
+        </motion.div>
       )}
     </MainboardTemplate>
   );

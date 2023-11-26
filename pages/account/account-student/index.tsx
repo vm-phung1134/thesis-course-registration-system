@@ -1,17 +1,18 @@
 import { useState, useEffect } from "react";
 import { MainboardTemplate } from "@/components/Templates";
-import { Breadcrumb, NormalAvatar, SnipperRound, Spinner } from "@/components/Atoms";
+import { Breadcrumb, NormalAvatar, SnipperRound } from "@/components/Atoms";
 import { BREADCRUMB_ACCOUNT_STUDENT } from "./mock-data";
 import { InforUserForm, RegistrationTopicForm } from "@/components/Molecules";
-import { PersonalInformation } from "@/components/Organisms";
 import { INITIATE_TOPIC } from "@/data";
-import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { useAppDispatch } from "@/redux/store";
 import { useQuery } from "@tanstack/react-query";
 import { getTopic } from "@/redux/reducer/topic/api";
 import { ITopicObject } from "@/interface/topic";
 import classNames from "classnames";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
+import { motion } from "framer-motion";
 
 function AccountStudentPage() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -49,7 +50,11 @@ function AccountStudentPage() {
         {loading && data ? (
           <SnipperRound />
         ) : (
-          <div>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+          >
             <Breadcrumb dataBreadcrumb={BREADCRUMB_ACCOUNT_STUDENT} />
             <div className="my-3 py-2 flex gap-2 items-center">
               <h4 className="text-xl capitalize text-green-700 font-medium ">
@@ -107,7 +112,9 @@ function AccountStudentPage() {
                     <ul className="grid grid-cols-2">
                       <li className="flex flex-col mt-4">
                         <p className="text-gray-500">Full Name</p>
-                        <p className="capitalize">{lastName + " " + middleName}</p>
+                        <p className="capitalize">
+                          {lastName + " " + middleName}
+                        </p>
                       </li>
                       <li className="flex flex-col mt-4">
                         <p className="text-gray-500">Student ID</p>
@@ -138,7 +145,7 @@ function AccountStudentPage() {
                 </section>
               </div>
             </div>
-            <dialog id="my_modal_student" className={modalClass}>
+            <dialog id="modal_update_info_student" className={modalClass}>
               <div className="w-5/12 bg-white p-5 h-fit shadow-2xl rounded-xl">
                 <InforUserForm
                   values={currentUser}
@@ -147,7 +154,14 @@ function AccountStudentPage() {
                 />
               </div>
             </dialog>
-          </div>
+            <ToastContainer
+              toastStyle={{
+                color: "black",
+                fontSize: "14px",
+                fontFamily: "Red Hat Text",
+              }}
+            />
+          </motion.div>
         )}
       </MainboardTemplate>
     </>

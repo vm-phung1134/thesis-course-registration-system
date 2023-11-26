@@ -8,18 +8,18 @@ import { FC } from "react";
 
 export interface ICriticalTaskProps {
   exercise: IExerciseObject | null;
-  submitStuds?: ISubmitObject[];
+  submission?: ISubmitObject[];
 }
 
 export const CriticalTask: FC<ICriticalTaskProps> = ({
   exercise,
-  submitStuds,
+  submission,
 }) => {
   const { currentUser } = useCurrentUserContext();
   const checkCompletedTask = (submits: ISubmitObject[]): boolean => {
     return submits?.some(
       (item) =>
-        item.exerciseId === exercise?.uid && currentUser.id === item.student.id
+        item.exerciseId === exercise?.id && currentUser.id === item.student.id
     );
   };
   return (
@@ -30,13 +30,14 @@ export const CriticalTask: FC<ICriticalTaskProps> = ({
           <div className="justify-between flex text-sm">
             <h2 className="font-medium">{exercise?.category?.label} stage</h2>
             <p className="text-xs font-medium">
-              {checkCompletedTask(submitStuds || []) ? "Submitted" : ""}
+              {checkCompletedTask(submission || []) ? "Submitted" : ""}
             </p>
           </div>
-
-          <p className="text-red-600 font-medium text-sm mb-2">
-            Deadline {convertDateTime(exercise?.deadline || "")}
-          </p>
+          {exercise?.deadline && (
+            <p className="text-red-600 font-medium text-sm mb-2">
+              Deadline {convertDateTime(exercise?.deadline)}
+            </p>
+          )}
         </div>
         <h1 className="font-bold capitalize mb-2 text-[#141E37]">
           {exercise?.title}

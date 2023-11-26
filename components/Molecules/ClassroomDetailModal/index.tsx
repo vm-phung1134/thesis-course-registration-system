@@ -23,7 +23,7 @@ export const ClassroomDetailModal: FC<IClassroomDetailModalProps> = ({
 }) => {
   const dispatch = useAppDispatch();
   const { data: members } = useQuery<IMemberObject[]>({
-    queryKey: ["members-in-classroom", item],
+    queryKey: ["classroom-members", item],
     queryFn: async () => {
       const action = await dispatch(getAllMemberClassroom(item));
       return action.payload || [];

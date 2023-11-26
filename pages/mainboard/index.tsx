@@ -30,7 +30,9 @@ function MainboardPage() {
   const [loading, setLoading] = useState<boolean>(true);
   const [selectedItem, setSelectedItem] = useState<MenuItem>(menuItems[0]);
   const checkIsField = (state_1: string, state_2: string) => {
-    if (subscribeState.status === state_1 || state_2) {
+    if (subscribeState.status === state_1) {
+      return true;
+    } else if (subscribeState.status === state_2) {
       return true;
     }
     return false;
@@ -104,8 +106,9 @@ function MainboardPage() {
             renderMenuItems()}
 
           {/* GET UI FOR LECTURER ROLE */}
-          {(currentUser?.role === ROLE_ASSIGNMENT.LECTURER ||
-            currentUser?.role === ROLE_ASSIGNMENT.GUEST) && <NoSubscribeView />}
+          {currentUser?.role === ROLE_ASSIGNMENT.LECTURER && (
+            <NoSubscribeView />
+          )}
           {/* GET UI FOR STUDENT ROLE */}
           {currentUser?.role === ROLE_ASSIGNMENT.STUDENT && renderStudentView()}
         </MainboardTemplate>

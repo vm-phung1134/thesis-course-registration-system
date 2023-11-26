@@ -5,7 +5,6 @@ import { IGeneralLinkAttachment } from "./submit";
 
 export interface IPostObject {
   id?: string;
-  uid: string;
   title: string;
   type: string;
   category: ICategoryObject;

@@ -13,7 +13,14 @@ export function getExerciseWithNearestDeadline(
 
   for (let i = 0; i < exercises.length; i++) {
     const currentExercise = exercises[i];
-    const currentDeadline = new Date(currentExercise.deadline).getTime();
+    const currentDeadline = new Date(
+      currentExercise.deadline.year,
+      currentExercise.deadline.month - 1,
+      currentExercise.deadline.day,
+      currentExercise.deadline.hours,
+      currentExercise.deadline.minutes,
+      currentExercise.deadline.seconds
+    ).getTime();
 
     if (
       currentDeadline >= currentDate &&

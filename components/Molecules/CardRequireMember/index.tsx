@@ -1,17 +1,18 @@
 import { Avatar, Button } from "@/components/Atoms";
-import { IMemberObject, IMemberObjectInput } from "@/interface/member";
+import { IMemberObject } from "@/interface/member";
 import { createMember } from "@/redux/reducer/member/api";
 import { deleteRequirement } from "@/redux/reducer/requirement/api";
 import { getTopic } from "@/redux/reducer/topic/api";
-import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { useAppDispatch } from "@/redux/store";
 import { convertToUnaccentedString } from "@/utils/convertString";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { FC, useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { FC, useState } from "react";
 import { motion } from "framer-motion";
 import { ITopicObject } from "@/interface/topic";
 import { INITIATE_AUTH, INITIATE_TOPIC } from "@/data";
 import { IAuthObject } from "@/interface/auth";
 import { InforMemberModal } from "@/components/Organisms";
+import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
 import classNames from "classnames";
 
 export interface ICardRequireMemberProps {
@@ -23,7 +24,6 @@ export const CardRequireMember: FC<ICardRequireMemberProps> = ({
   index,
 }) => {
   const dispatch = useAppDispatch();
-  const queryClient = useQueryClient();
   const [topicRenew, setTopicRenew] = useState<IAuthObject>(INITIATE_AUTH);
   // HANDLE GET TOPIC BECAUSE IN TOPIC HAVE MEMBER AND TOPIC
 
@@ -38,58 +38,31 @@ export const CardRequireMember: FC<ICardRequireMemberProps> = ({
     setTopicRenew(require?.member);
   };
   // HANDLE ADD TO CLASS
-  const addMutation = useMutation(
-    (postData: Omit<IMemberObjectInput, "id">) => {
-      return new Promise((resolve, reject) => {
-        dispatch(createMember(postData))
-          .unwrap()
-          .then((data) => {
-            resolve(data);
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["requirements"]);
-      },
-    }
-  );
-  const deleteMutation = useMutation(
-    (postData: IMemberObject) => {
-      return new Promise((resolve, reject) => {
-        dispatch(deleteRequirement(postData))
-          .unwrap()
-          .then((data) => {
-            resolve(data);
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["requirements"]);
-      },
-    }
-  );
+  const addMutation = useMutationQueryAPI({
+    action: createMember,
+    queryKeyLog: ["classroom-requirements"],
+    successMsg: "You just add a student to your classroom!",
+    errorMsg: "Fail to add a student!",
+  });
+  const deleteMutation = useMutationQueryAPI({
+    action: deleteRequirement,
+    queryKeyLog: ["classroom-requirements"],
+    successMsg: "You refused a student to your classroom!",
+    errorMsg: "Fail to refuse a require!",
+  });
   const handleAcceptClass = () => {
     addMutation.mutate({
       registerDefense: false,
-      memberID: require.member.id,
-      classroomID: require.classroom.id,
+      member: require.member,
+      classroom: require.classroom,
     });
-
-    // deleteMutation.mutate(require);
+    deleteMutation.mutate(require);
   };
   // GET TOPIC FOR EACH USER
   const { data: topic_fetch } = useQuery<ITopicObject>({
-    queryKey: ["topic", require?.member?.id],
+    queryKey: ["get-one-topic", topicRenew],
     queryFn: async () => {
-      const action = await dispatch(getTopic(require?.member?.id));
+      const action = await dispatch(getTopic(topicRenew.id));
       return action.payload || {};
     },
     initialData: INITIATE_TOPIC,

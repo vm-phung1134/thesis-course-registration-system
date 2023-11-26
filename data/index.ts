@@ -47,7 +47,6 @@ export const INITIATE_CLASSROOM_INPUT: IClassroomObjectInput = {
 };
 
 export const INITIATE_POST: IPostObject = {
-  uid: "",
   type: "",
   title: "",
   category: {
@@ -62,7 +61,6 @@ export const INITIATE_POST: IPostObject = {
 
 export const INITIATE_EXERCISE: IExerciseObject = {
   title: "",
-  uid: "",
   classroom: INITIATE_CLASSROOM,
   category: {
     label: "",
@@ -79,7 +77,7 @@ export const INITIATE_EXERCISE_INPUT: IExerciseObjectInput = {
   title: "",
   classroomID: "",
   categoryID: "",
-  lecturerID: "",
+  authorID: "",
   description: "",
   deadline: "",
 };
@@ -159,7 +157,7 @@ export const INITIATE_ASSESS: Omit<IAssessItem, "id"> = {
 export enum STATE_AUTH_CLASSROOM {
   NO_SUB = "NOT SUBSCRIBED YET",
   WAITING = "WAITING",
-  UN_SUB = "UN_SUBSCRIBE",
+  UN_SUB = "SUBSCRIBED",
 }
 
 export enum STATE_LECTURER_CLASSROOM {
@@ -175,3 +173,5 @@ export enum TYPE_ACTION_NOTIFICATION {
   FOLLOWING = "following",
   ADD_POST = "add-post",
 }
+
+export const roleInCouncil = ["Chairman", "secretary", "Commissioner"];

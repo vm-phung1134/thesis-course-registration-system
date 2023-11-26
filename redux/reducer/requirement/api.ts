@@ -2,8 +2,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { token } from "../auth/type";
 import { IMemberObject, IMemberObjectInput } from "@/interface/member";
-import { IAuthObject } from "@/interface/auth";
-import { IClassroomObjectInput } from "@/interface/classroom";
 
 const apiURL = `http://qthuy2k1.shop/api/requirement`;
 

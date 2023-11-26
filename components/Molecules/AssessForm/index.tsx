@@ -1,20 +1,13 @@
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import { Field, Form, Formik } from "formik";
 import { Button, FormField, NormalAvatar } from "@/components/Atoms";
 import { INITIATE_ASSESS, INITIATE_AUTH } from "@/data";
-import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { IStudentDefObject } from "@/interface/studef";
 import { v4 as uuidv4 } from "uuid";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useAppDispatch } from "@/redux/store";
-import { IAssessItem, IPointDefObject } from "@/interface/pointDef";
+import { IAssessItem } from "@/interface/pointDef";
 import { createPointDef } from "@/redux/reducer/point-def/api";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer } from "react-toastify";
-
-const objectId = uuidv4();
+import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
 
 export interface IAssessFormProps {
   student?: IStudentDefObject;
@@ -26,47 +19,28 @@ export const AssessForm: FC<IAssessFormProps> = ({
   assessStudent,
 }) => {
   const { currentUser } = useCurrentUserContext();
-  const dispatch = useAppDispatch();
-  const queryClient = useQueryClient();
-  const addMutation = useMutation(
-    (postData: IPointDefObject) => {
-      return new Promise((resolve, reject) => {
-        dispatch(createPointDef(postData))
-          .unwrap()
-          .then((data) => {
-            resolve(data);
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["point-def"]);
-      },
-    }
-  );
-  useEffect(() => {
-    if (addMutation.isSuccess) {
-      toast.success(
-        "Successfully send a evaluable",
-        {
-          position: toast.POSITION.BOTTOM_LEFT,
-          autoClose: 2000,
-        }
-      );
-    }
-  }, [addMutation.isSuccess]);
+  const addMutation = useMutationQueryAPI({
+    action: createPointDef,
+    queryKeyLog: ["get-one-point"],
+    successMsg: "You have performed an assessment for this student!!!",
+    errorMsg: "Fail to performed an assessment",
+  });
   return (
     <Formik
       enableReinitialize
       initialValues={assessStudent || INITIATE_ASSESS}
       validate={(values) => {
-        const errors = {};
+        let errors: any = {};
+        if (!values.point) {
+          errors.point = "! Point is required";
+        }
+        if (!values.comment) {
+          errors.comment = "! Assessment is required";
+        }
         return errors;
       }}
       onSubmit={(values) => {
+        let objectId = uuidv4();
         setTimeout(() => {
           addMutation.mutate({
             student: student?.infor || INITIATE_AUTH,
@@ -83,7 +57,7 @@ export const AssessForm: FC<IAssessFormProps> = ({
       }}
     >
       {(formik) => {
-        const { values } = formik;
+        const { values, errors } = formik;
         return (
           <>
             <Form className="mt-5 p-5 shadow-lg rounded-2xl">
@@ -122,14 +96,8 @@ export const AssessForm: FC<IAssessFormProps> = ({
                 name="comment"
                 value={values?.comment}
               />
+              <span className="text-[13px] text-red-500">{errors.comment}</span>
             </Form>
-            <ToastContainer
-              toastStyle={{
-                color: "black",
-                fontSize: "14px",
-                fontFamily: "Red Hat Text",
-              }}
-            />
           </>
         );
       }}

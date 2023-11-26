@@ -6,6 +6,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Form, Formik } from "formik";
 import { FC } from "react";
 import useToastifyMessage from "@/hooks/useToastify";
+import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
 
 export interface IInforUserFormProps {
   setToggle: React.Dispatch<React.SetStateAction<boolean>>;
@@ -18,30 +19,12 @@ export const InforUserForm: FC<IInforUserFormProps> = ({
   toggle,
   values,
 }) => {
-  const queryClient = useQueryClient();
-  const dispatch = useAppDispatch();
-  const updateMutation = useMutation(
-    (postData: IAuthObject) => {
-      return new Promise((resolve, reject) => {
-        dispatch(updateAuth(postData))
-          .unwrap()
-          .then((data) => {
-            resolve(data);
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["auth", "lectures"]);
-      },
-    }
-  );
-
-  useToastifyMessage(updateMutation, "Lecturer's information has been updated");
-
+  const updateMutation = useMutationQueryAPI({
+    action: updateAuth,
+    queryKeyLog: ["get-one-auth"],
+    successMsg: "Your information has been updated!!!",
+    errorMsg: "Fail to update your information!!!",
+  });
   return (
     <Formik
       initialValues={values}

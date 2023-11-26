@@ -9,16 +9,13 @@ const apiURL = `http://qthuy2k1.shop/api/comment`;
 const getAllComments = createAsyncThunk(
   "comment/getAllComments",
   async (id: string) => {
-    const response = await axios.get(
-      `${apiURL}/${id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.get(`http://qthuy2k1.shop/api/exercise/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
-      return response.data.comment;
+      return response.data.comments;
     }
     throw new Error("Failed to get all comments");
   }
@@ -29,7 +26,7 @@ const createComment = createAsyncThunk(
   async (postData: ICommentObject) => {
     const response = await axios.post(
       `${apiURL}`,
-      {"comment": postData},
+      { comment: postData },
       {
         headers: {
           Authorization: `Bearer ${token}`,

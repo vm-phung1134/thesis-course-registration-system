@@ -8,6 +8,7 @@ import { useCurrentUserContext } from "@/contexts/currentUserContext";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import Head from "next/head";
 import { FC } from "react";
+import { ToastContainer } from "react-toastify";
 
 export interface IMainboardProps {
   children: React.ReactNode;
@@ -34,6 +35,13 @@ export const MainboardTemplate: FC<IMainboardProps> = ({ children, title }) => {
           <div className="col-span-10">
             <Navbar />
             <div className="px-5 h-full">{children}</div>
+            <ToastContainer
+              toastStyle={{
+                color: "black",
+                fontSize: "14px",
+                fontFamily: "Red Hat Text",
+              }}
+            />
           </div>
         </div>
       </main>

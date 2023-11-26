@@ -1,19 +1,28 @@
 import { IAuthObject } from "./auth";
 import { ICategoryObject } from "./category";
-import { IClassroomObject } from "./classroom";
 import { IGeneralLinkAttachment } from "./submit";
+
+export interface IDateTime {
+  year: number;
+  month: number;
+  day: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+  nanos: number;
+}
 
 export interface IExerciseObject {
   id?: string;
-  uid: string;
   title: string;
-  classroom: IClassroomObject;
+  classroomID: string;
   category: ICategoryObject;
-  lecturer: IAuthObject;
+  author: IAuthObject;
   description: string;
-  deadline: string;
-  type: string;
-  attachments?: (any | IGeneralLinkAttachment | File)[];
+  deadline: IDateTime;
+  attachments?: IGeneralLinkAttachment[] | any[];
+  createAt?: string;
+  updateAt?: string;
 }
 
 export interface IExerciseObjectInput {
@@ -21,8 +30,8 @@ export interface IExerciseObjectInput {
   title: string;
   classroomID: string;
   categoryID: string;
-  lecturerID: string;
+  authorID: string;
   description: string;
   deadline: string;
-  attachments?: (any | IGeneralLinkAttachment | File)[];
+  attachments?: IGeneralLinkAttachment[] | any[];
 }

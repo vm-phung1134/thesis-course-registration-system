@@ -6,27 +6,24 @@ import {
 } from "@/components/Molecules";
 import { ClassroomTemplate } from "@/components/Templates";
 import classNames from "classnames";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ExerciseModal, PostModal } from "@/components/Organisms";
 import { useQuery } from "@tanstack/react-query";
 import { IPostObject } from "@/interface/post";
 import { getAllPostInClass, getPost } from "@/redux/reducer/post/api";
-import { useAppDispatch, useAppSelector } from "@/redux/store";
-import {
-  getAllExerciseInClass,
-  getExercise,
-} from "@/redux/reducer/exercise/api";
+import { useAppDispatch } from "@/redux/store";
+import { getExercise } from "@/redux/reducer/exercise/api";
 import { IExerciseObject } from "@/interface/exercise";
 import { useClassroomStateContext } from "@/contexts/classroomState";
 import Image from "next/image";
 import { Button } from "@/components/Atoms";
-import { INITIATE_EXERCISE, INITIATE_POST } from "@/data";
+import { INITIATE_CLASSROOM, INITIATE_EXERCISE, INITIATE_POST } from "@/data";
 import { motion } from "framer-motion";
 import { ISubmitObject } from "@/interface/submit";
-import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { getAllSubmitStud } from "@/redux/reducer/submit/api";
 import { getExerciseWithNearestDeadline } from "@/utils/getDeadline";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
+import { getAllExerciseInClass } from "@/redux/reducer/classroom/api";
 
 function ManageClassroomTab() {
   const { currentUser } = useCurrentUserContext();
@@ -36,7 +33,7 @@ function ManageClassroomTab() {
   const [exRenew, setExRenew] = useState<IExerciseObject>(INITIATE_EXERCISE);
   const [postRenew, setPostRenew] = useState<IPostObject>(INITIATE_POST);
   const { data: posts } = useQuery<IPostObject[]>({
-    queryKey: ["get-all-posts", authClassroomState],
+    queryKey: ["classroom-posts", authClassroomState],
     queryFn: async () => {
       const action = await dispatch(getAllPostInClass(authClassroomState));
       return action.payload || [];
@@ -44,9 +41,11 @@ function ManageClassroomTab() {
     initialData: [],
   });
   const { data: exercises } = useQuery<IExerciseObject[]>({
-    queryKey: ["get-all-excercises", authClassroomState],
+    queryKey: ["classroom-exercises", authClassroomState],
     queryFn: async () => {
-      const action = await dispatch(getAllExerciseInClass(authClassroomState));
+      const action = await dispatch(
+        getAllExerciseInClass(authClassroomState || INITIATE_CLASSROOM)
+      );
       return action.payload || [];
     },
     initialData: [],
@@ -72,7 +71,7 @@ function ManageClassroomTab() {
 
   // HANDLE POST
   const { data: post_fetch } = useQuery<IPostObject>({
-    queryKey: ["post", postRenew],
+    queryKey: ["get-one-post", postRenew],
     queryFn: async () => {
       const action = await dispatch(getPost(postRenew));
       return action.payload || {};
@@ -82,32 +81,32 @@ function ManageClassroomTab() {
 
   // HANDLE EXERCISE
   const { data: ex_fetch } = useQuery<IExerciseObject>({
-    queryKey: ["exercise", exRenew],
+    queryKey: ["get-one-exercise", exRenew],
     queryFn: async () => {
       const action = await dispatch(getExercise(exRenew));
       return action.payload || {};
     },
     initialData: exRenew,
   });
-  const { data: submitStuds } = useQuery<ISubmitObject[]>({
-    queryKey: ["submitStuds", currentUser],
+  const { data: submission } = useQuery<ISubmitObject[]>({
+    queryKey: ["submission", currentUser],
     queryFn: async () => {
       const action = await dispatch(getAllSubmitStud(currentUser));
       return action.payload || [];
     },
     initialData: [],
   });
-
   return (
     <>
       <ClassroomTemplate title="Manage Class | Thesis course registration system">
         <div className="grid grid-cols-12 gap-4 min-h-[80vh] max-h-fit">
           <div className="col-span-4">
             <div className="flex flex-col gap-3">
-              {exercises.length > 0 ? (
+              {exercises.length > 0 &&
+              getExerciseWithNearestDeadline(exercises) ? (
                 <CriticalTask
-                  submitStuds={submitStuds}
-                  exercise={getExerciseWithNearestDeadline(exercises) || exercises[0]}
+                  submission={submission}
+                  exercise={getExerciseWithNearestDeadline(exercises)}
                 />
               ) : (
                 <div className="h-52 flex gap-5 flex-col justify-center items-center p-5 border rounded-xl">
@@ -186,7 +185,7 @@ function ManageClassroomTab() {
                             <div className="px-5 py-2 flex flex-col">
                               <ContentComment
                                 quantity={1}
-                                taskId={exercise?.uid}
+                                taskId={exercise?.id || ""}
                               />
                               <CommentForm task={exercise} />
                             </div>

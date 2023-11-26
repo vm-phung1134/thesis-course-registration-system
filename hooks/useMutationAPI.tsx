@@ -1,32 +1,43 @@
-import { useMutation } from "@tanstack/react-query";
+import { useAppDispatch } from "@/redux/store";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-type ActionFunction = (data: any) => Promise<any>;
-interface CustomMutationResult {
-  mutate: ActionFunction | any;
-  isLoading: boolean;
-  error: any;
-}
-
-const useCustomMutation = (action: ActionFunction): CustomMutationResult => {
-  const handleMutation = (data: unknown) => {
-    return new Promise((resolve, reject) => {
-      action(data)
-        .then((result) => {
-          resolve(result);
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    });
-  };
-
-  const mutation = useMutation(handleMutation);
-
-  return {
-    mutate: mutation.mutate,
-    isLoading: mutation.isLoading,
-    error: mutation.error,
-  };
+type MutationParams = {
+  action: any;
+  queryKeyLog: string[];
+  successMsg?: string;
+  errorMsg?: string;
 };
 
-export default useCustomMutation;
+export const useMutationQueryAPI = (params: MutationParams) => {
+  const dispatch = useAppDispatch();
+  const queryClient = useQueryClient();
+  return useMutation(
+    (postData: any) => {
+      return new Promise<void>((resolve, reject) => {
+        dispatch(params.action(postData))
+          .unwrap()
+          .then(() => {
+            toast.success(params.successMsg, {
+              position: toast.POSITION.BOTTOM_LEFT,
+              autoClose: 3000,
+            });
+            resolve();
+          })
+          .catch(() => {
+            toast.error(params.errorMsg, {
+              position: toast.POSITION.BOTTOM_LEFT,
+              autoClose: 3000,
+            });
+            reject();
+          });
+      });
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(params.queryKeyLog);
+      },
+    }
+  );
+};

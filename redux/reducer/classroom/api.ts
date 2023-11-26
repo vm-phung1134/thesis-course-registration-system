@@ -38,6 +38,22 @@ const getClassroom = createAsyncThunk(
   }
 );
 
+// GET ALL EXERCISES IN CLASSROOM
+const getAllExerciseInClass = createAsyncThunk(
+  "classroom/getAllExerciseInClass",
+  async (postData: IClassroomObject) => {
+    const response = await axios.get(`${apiURL}/${postData.id}/exercise`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (response.status === 200) {
+      return response.data.exercises;
+    }
+    throw new Error("Failed to get one classroom");
+  }
+);
+
 // CREATE CLASSROOM
 const createClassroom = createAsyncThunk(
   "classroom/createClassroom",
@@ -99,4 +115,5 @@ export {
   createClassroom,
   updateClassroom,
   deleteClassroom,
+  getAllExerciseInClass,
 };

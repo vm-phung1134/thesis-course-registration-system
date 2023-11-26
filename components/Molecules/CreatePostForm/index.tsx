@@ -1,27 +1,18 @@
-import {
-  Button,
-  FormField,
-  SelectBox,
-  SelectInForm,
-  TitleFormField,
-} from "@/components/Atoms";
-import { useClassroomStateContext } from "@/contexts/classroomState";
+import { Button, FormField, SelectBox, SelectInForm } from "@/components/Atoms";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
 import { INITIATE_CATEGORY, INITIATE_POST } from "@/data";
-import { useCurrentUser } from "@/hooks/useGetCurrentUser";
+import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
 import { useSelectStage } from "@/hooks/useSelectStage";
 import { ICategoryObject } from "@/interface/category";
 import { IClassroomObject } from "@/interface/classroom";
 import { IOptionItem } from "@/interface/filter";
 import { IPostObject } from "@/interface/post";
 import { createPost } from "@/redux/reducer/post/api";
-import { useAppDispatch } from "@/redux/store";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Form, Formik } from "formik";
 import Image from "next/image";
 import { FC, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-const objectId = uuidv4();
+
 export interface ICreatePostFormProps {
   setToggleForm: React.Dispatch<React.SetStateAction<boolean>>;
   toggleForm: boolean;
@@ -40,12 +31,9 @@ export const CreatePostForm: FC<ICreatePostFormProps> = ({
   options,
   classroom,
 }) => {
-  const dispatch = useAppDispatch();
-  const queryClient = useQueryClient();
   const initialValues: IPostObject = INITIATE_POST;
   const { currentUser } = useCurrentUserContext();
   const fileInputRef = useRef<HTMLInputElement>(null!);
-  const { authClassroomState } = useClassroomStateContext();
   // HANDLE SELECT STAGE REPORT
   const { selectedStage, setSelectedStage, reportStages } = useSelectStage();
   // HANDLE FILE
@@ -65,25 +53,12 @@ export const CreatePostForm: FC<ICreatePostFormProps> = ({
     setSelectedFiles([]);
     fileInputRef.current.value = "";
   };
-  const addMutation = useMutation(
-    (postData: IPostObject) => {
-      return new Promise((resolve, reject) => {
-        dispatch(createPost(postData))
-          .unwrap()
-          .then((data) => {
-            resolve(data);
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["get-all-posts", authClassroomState]);
-      },
-    }
-  );
+  const addMutation = useMutationQueryAPI({
+    action: createPost,
+    queryKeyLog: ["classroom-posts"],
+    successMsg: "You have just added a announcement!",
+    errorMsg: "Fail to create a announcement",
+  });
   return (
     <Formik
       initialValues={initialValues}
@@ -97,6 +72,7 @@ export const CreatePostForm: FC<ICreatePostFormProps> = ({
       }}
       onSubmit={(values, { setSubmitting, resetForm }) => {
         setTimeout(() => {
+          let objectId = uuidv4();
           addMutation.mutate({
             ...values,
             type: "post",
@@ -107,7 +83,7 @@ export const CreatePostForm: FC<ICreatePostFormProps> = ({
             lecturer: currentUser,
           });
           resetForm();
-          setToggleForm(!toggleForm)
+          setToggleForm(!toggleForm);
           resetSelectedFiles();
           setSelectedStage(INITIATE_CATEGORY);
           setSubmitting(false);

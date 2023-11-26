@@ -28,7 +28,7 @@ export const CurrentUserContextProvider: React.FC<CurrentUserProps> = ({
   const userJson = Cookies.get("user");
   const user: IAuthObject = userJson ? JSON.parse(userJson) : null;
   const { data: currentUser } = useQuery<IAuthObject>({
-    queryKey: ["auth", user],
+    queryKey: ["get-one-auth", user],
     queryFn: async () => {
       const action = await dispatch(getOneAuth(user));
       return action.payload || INITIATE_AUTH;
