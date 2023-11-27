@@ -11,60 +11,48 @@ import { getMember, updateMember } from "@/redux/reducer/member/api";
 import { getScheduleForStudent } from "@/redux/reducer/schedule-def/api";
 import { getUploadReport } from "@/redux/reducer/upload-def/api";
 import { useAppDispatch } from "@/redux/store";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
+import { useCurrentUserContext } from "@/contexts/currentUserContext";
 
 function EnrollStudentPage() {
   const [switchingForm, setSwitchingForm] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(true);
   const dispatch = useAppDispatch();
-  const queryClient = useQueryClient();
-  const [user] = useUserCookies();
+  const { currentUser } = useCurrentUserContext();
   const { data: member } = useQuery<IMemberObject>({
-    queryKey: ["member", user],
+    queryKey: ["get-one-member", currentUser],
     queryFn: async () => {
-      const action = await dispatch(getMember(user.id));
+      const action = await dispatch(getMember(currentUser.id));
       return action.payload || INITIATE_MEMBER;
     },
     initialData: INITIATE_MEMBER,
   });
   const { data: studentScheduled } = useQuery<ICouncilDef>({
-    queryKey: ["studentScheduled", user.id],
+    queryKey: ["studentScheduled", currentUser.id],
     queryFn: async () => {
-      const action = await dispatch(getScheduleForStudent(user.id));
+      const action = await dispatch(getScheduleForStudent(currentUser.id));
       return action.payload || {};
     },
   });
-  const updateMutation = useMutation(
-    (postData: IMemberObject) => {
-      return new Promise((resolve, reject) => {
-        dispatch(updateMember(postData))
-          .unwrap()
-          .then((data) => {
-            resolve(data);
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["member"]);
-      },
-    }
-  );
+  const updateMutation = useMutationQueryAPI({
+    action: updateMember,
+    queryKeyLog: ["get-one-member"],
+    successMsg: "You have successfully registered!",
+    errorMsg: "Fail to register thesis defense!",
+  });
   const handleEnrollMember = () => {
     updateMutation.mutate({ ...member, registerDefense: true });
   };
 
   // HANDLE FINAL UPLOAD
   const { data: uploadReport } = useQuery<IUploadReportObject>({
-    queryKey: ["upload-def", user.id],
+    queryKey: ["upload-def", currentUser.id],
     queryFn: async () => {
-      const action = await dispatch(getUploadReport(user.id));
+      const action = await dispatch(getUploadReport(currentUser.id));
       return action.payload || INITIATE_UPLOAD_REPORT;
     },
     initialData: INITIATE_UPLOAD_REPORT,

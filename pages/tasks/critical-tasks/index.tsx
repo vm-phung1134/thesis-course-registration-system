@@ -182,6 +182,7 @@ function CriticalTasks() {
                         handleOpenTaskModal={handleOpenExModal}
                         key={ex.id}
                         exercise={ex}
+                        index={index}
                       />
                     )
                   )}

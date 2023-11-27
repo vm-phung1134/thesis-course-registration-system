@@ -6,6 +6,7 @@ import {
 } from "@/components/Atoms";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
+import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
 import { IAuthObject } from "@/interface/auth";
 import { updateAuth } from "@/redux/reducer/auth/api";
 import { useAppDispatch } from "@/redux/store";
@@ -23,28 +24,11 @@ export const InforUserFormV2: FC<IInforUserFormV2Props> = ({
   switchingForm,
 }) => {
   const [loading, setLoading] = useState<boolean>(true);
-  const queryClient = useQueryClient();
   const { currentUser } = useCurrentUserContext();
-  const dispatch = useAppDispatch();
-  const updateMutation = useMutation(
-    (postData: IAuthObject) => {
-      return new Promise((resolve, reject) => {
-        dispatch(updateAuth(postData))
-          .unwrap()
-          .then((data) => {
-            resolve(data);
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["auth", currentUser]);
-      },
-    }
-  );
+  const updateMutation = useMutationQueryAPI({
+    action: updateAuth,
+    queryKeyLog: ["get-one-auth"],
+  });
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);

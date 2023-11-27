@@ -4,7 +4,11 @@ import type { AppProps } from "next/app";
 import { Provider } from "react-redux";
 import { AuthProvider } from "@/contexts/authContext";
 import { LanguageProvider } from "@/contexts/languageContext";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import {
+  QueryClient,
+  QueryClientProvider,
+  Hydrate,
+} from "@tanstack/react-query";
 import React from "react";
 import { SearchProvider } from "@/contexts/useSearchContext";
 import { ClassroomStateContextProvider } from "@/contexts/classroomState";
@@ -17,21 +21,23 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
-        <AuthProvider>
-          <LanguageProvider>
-            <SocketProvider>
-              <CurrentUserContextProvider>
-                <SubscribeStateContextProvider>
-                  <ClassroomStateContextProvider>
-                    <SearchProvider>
-                      <Component {...pageProps} />
-                    </SearchProvider>
-                  </ClassroomStateContextProvider>
-                </SubscribeStateContextProvider>
-              </CurrentUserContextProvider>
-            </SocketProvider>
-          </LanguageProvider>
-        </AuthProvider>
+        <Hydrate state={pageProps.dehydrateState}>
+          <AuthProvider>
+            <LanguageProvider>
+              <SocketProvider>
+                <CurrentUserContextProvider>
+                  <SubscribeStateContextProvider>
+                    <ClassroomStateContextProvider>
+                      <SearchProvider>
+                        <Component {...pageProps} />
+                      </SearchProvider>
+                    </ClassroomStateContextProvider>
+                  </SubscribeStateContextProvider>
+                </CurrentUserContextProvider>
+              </SocketProvider>
+            </LanguageProvider>
+          </AuthProvider>
+        </Hydrate>
       </QueryClientProvider>
     </Provider>
   );

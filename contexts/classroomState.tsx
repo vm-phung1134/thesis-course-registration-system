@@ -5,7 +5,7 @@ import { getClassroom } from "@/redux/reducer/classroom/api";
 import { getMember } from "@/redux/reducer/member/api";
 import { useAppDispatch } from "@/redux/store";
 import { useQuery } from "@tanstack/react-query";
-import React, { createContext, useContext } from "react";
+import React, { createContext, useContext, useEffect } from "react";
 import Cookies from "js-cookie";
 
 interface IClassroomStateContext {
@@ -27,7 +27,8 @@ export const ClassroomStateContextProvider: React.FC<ClassroomStateProps> = ({
 }) => {
   const dispatch = useAppDispatch();
   const uid = Cookies.get("uid");
-  const { data: classroom } = useQuery<IClassroomObject | null>({
+
+  const classroomQuery = useQuery<IClassroomObject | null>({
     queryKey: ["get-one-classroom", uid],
     queryFn: async () => {
       if (uid) {
@@ -37,7 +38,8 @@ export const ClassroomStateContextProvider: React.FC<ClassroomStateProps> = ({
     },
     initialData: null,
   });
-  const { data: member } = useQuery<IMemberObject | null>({
+
+  const memberQuery = useQuery<IMemberObject | null>({
     queryKey: ["get-one-member", uid],
     queryFn: async () => {
       if (uid) {
@@ -48,10 +50,16 @@ export const ClassroomStateContextProvider: React.FC<ClassroomStateProps> = ({
     initialData: null,
   });
 
+  useEffect(() => {
+    // Prefetch the data for classroom and member
+    classroomQuery.refetch();
+    memberQuery.refetch();
+  }, [classroomQuery, classroomQuery.refetch, memberQuery, memberQuery.refetch]);
+
   return (
     <ClassroomStateContext.Provider
       value={{
-        authClassroomState: member ? member.classroom : classroom,
+        authClassroomState: memberQuery.data ? memberQuery.data.classroom : classroomQuery.data,
       }}
     >
       {children}

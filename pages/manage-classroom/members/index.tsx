@@ -5,13 +5,10 @@ import { ICategoryObject } from "@/interface/category";
 import { IOptionItem } from "@/interface/filter";
 import { useState } from "react";
 import { CardMember } from "@/components/Molecules";
-import classNames from "classnames";
-import { InforMemberModal } from "@/components/Organisms";
 import { useQuery } from "@tanstack/react-query";
 import { IMemberObject } from "@/interface/member";
 import { getAllMemberClassroom } from "@/redux/reducer/member/api";
-import { useAppDispatch, useAppSelector } from "@/redux/store";
-import { getTopic } from "@/redux/reducer/topic/api";
+import { useAppDispatch } from "@/redux/store";
 import { useClassroomStateContext } from "@/contexts/classroomState";
 import {
   DATA_FILTER_COURSE,

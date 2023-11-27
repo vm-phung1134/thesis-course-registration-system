@@ -6,7 +6,7 @@ import { IMemberObject } from "@/interface/member";
 import { ITopicObject } from "@/interface/topic";
 import { getTopic } from "@/redux/reducer/topic/api";
 import { useAppDispatch } from "@/redux/store";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import classNames from "classnames";
 import { FC, useState } from "react";
 
@@ -23,7 +23,7 @@ export const CardMember: FC<ICardMemberClassProps> = ({ member, index }) => {
     "modal modal-bottom sm:modal-middle": true,
     "modal-open": openModalMemberDetail,
   });
-  const handleShowModalMember = (member: IMemberObject) => {
+  const handleShowModalMember = () => {
     setOpenModalMemberDetail(!openModalMemberDetail);
     setTopicRenew(member?.member);
   };
@@ -32,7 +32,7 @@ export const CardMember: FC<ICardMemberClassProps> = ({ member, index }) => {
     queryKey: ["get-one-topic", topicRenew.id],
     queryFn: async () => {
       const action = await dispatch(getTopic(topicRenew.id));
-      return action.payload || {};
+      return action.payload || INITIATE_TOPIC;
     },
     initialData: INITIATE_TOPIC,
   });
@@ -66,8 +66,8 @@ export const CardMember: FC<ICardMemberClassProps> = ({ member, index }) => {
               <i className="fa-regular fa-message"></i>
             </div>
             <Button
-              type="button"
-              handleActions={() => handleShowModalMember(member)}
+              otherType="subscribe"
+              handleActions={handleShowModalMember}
               title="View detail"
               className="text-sm bg-green-700 btn-sm text-white border-none hover:bg-green-600 px-5 hover:border-none"
             />

@@ -15,6 +15,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { loginAuth } from "@/redux/reducer/auth/api";
 import { useAppDispatch } from "@/redux/store";
 import { useUserCookies } from "@/hooks/useCookies";
+import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
 
 interface AuthContextType {
   message: string;
@@ -53,31 +54,13 @@ export const useAuthContext = () => {
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const router = useRouter();
-  const dispatch = useAppDispatch();
-  const queryClient = useQueryClient();
   const [, setUserCookies] = useUserCookies();
   const [message, setMessage] = useState<string>("");
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-
-  const addMutation = useMutation(
-    (postData: IAuthObject) => {
-      return new Promise((resolve, reject) => {
-        dispatch(loginAuth(postData))
-          .unwrap()
-          .then((data) => {
-            resolve(data);
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["auth"]);
-      },
-    }
-  );
+  const addMutation = useMutationQueryAPI({
+    action: loginAuth,
+    queryKeyLog: [""],
+  });
   const signInWithGoogle = () => {
     signInWithPopup(auth, provider)
       .then(async (result) => {
@@ -181,7 +164,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const checkUserLoginState = () => {
     const token = Cookies.get("token");
     const uid = Cookies.get("uid");
-    if (!token && !isAuthenticated) {
+    if (!token && !isAuthenticated && !uid) {
       logout();
       router.push("/");
     }

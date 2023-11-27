@@ -11,6 +11,7 @@ import { INITIATE_COMMENT, TYPE_ACTION_NOTIFICATION } from "@/data";
 import { IAuthObject } from "@/interface/auth";
 import { useSocket } from "@/contexts/useSocketContext";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
+import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
 
 export interface ICommentFormProps {
   task: IPostObject | IExerciseObject;
@@ -18,38 +19,13 @@ export interface ICommentFormProps {
 
 export const CommentForm: FC<ICommentFormProps> = ({ task }) => {
   const initialValues = INITIATE_COMMENT;
-  const dispatch = useAppDispatch();
-  const { socket } = useSocket();
-  const queryClient = useQueryClient();
   const { currentUser } = useCurrentUserContext();
-  const addMutation = useMutation(
-    (postData: ICommentObject) => {
-      return new Promise((resolve, reject) => {
-        dispatch(createComment(postData))
-          .unwrap()
-          .then((data) => {
-            resolve(data);
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["comments"]);
-      },
-    }
-  );
-  const handleNotification = (receiver: IAuthObject, type: string) => {
-    if (socket) {
-      socket?.emit("sendNotification", {
-        senderUser: currentUser,
-        receiverAuthor: { ...receiver, socketId: socket.id },
-        type,
-      });
-    }
-  };
+  const addMutation = useMutationQueryAPI({
+    action: createComment,
+    queryKeyLog: ["comments", "comments-modal"],
+    successMsg: "You just added a comment!",
+    errorMsg: "Fail to send the comment!",
+  });
   return (
     <Formik
       initialValues={initialValues}
@@ -64,10 +40,6 @@ export const CommentForm: FC<ICommentFormProps> = ({ task }) => {
             postId: task.uid,
             user: currentUser,
           });
-          // handleNotification(
-          //   currentUser,
-          //   TYPE_ACTION_NOTIFICATION.COMMENT_POST
-          // );
           resetForm();
         }, 400);
       }}
