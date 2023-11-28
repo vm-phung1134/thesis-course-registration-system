@@ -44,25 +44,19 @@ export const CardRequireMember: FC<ICardRequireMemberProps> = ({
     successMsg: "You just add a student to your classroom!",
     errorMsg: "Fail to add a student!",
   });
-  const deleteMutation = useMutationQueryAPI({
-    action: deleteRequirement,
-    queryKeyLog: ["classroom-requirements"],
-    successMsg: "You refused a student to your classroom!",
-    errorMsg: "Fail to refuse a require!",
-  });
   const handleAcceptClass = () => {
     addMutation.mutate({
       registerDefense: false,
-      member: require.member,
-      classroom: require.classroom,
+      memberID: require.member.id,
+      status: "",
+      classroomID: require.classroom.id,
     });
-    deleteMutation.mutate(require);
   };
   // GET TOPIC FOR EACH USER
   const { data: topic_fetch } = useQuery<ITopicObject>({
     queryKey: ["get-one-topic", topicRenew],
     queryFn: async () => {
-      const action = await dispatch(getTopic(topicRenew.id));
+      const action = await dispatch(getTopic(topicRenew));
       return action.payload || {};
     },
     initialData: INITIATE_TOPIC,

@@ -8,7 +8,7 @@ export interface ICommentObject {
   exercise: IExerciseObject;
 }
 
-export interface ICommentObject {
+export interface ICommentObjectInput {
   id?: string;
   userID: string;
   content: string;

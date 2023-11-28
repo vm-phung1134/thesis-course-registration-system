@@ -17,16 +17,11 @@ import {
 } from "@/components/Molecules";
 import classNames from "classnames";
 import { IExerciseObject } from "@/interface/exercise";
-import {
-  getAllExerciseInClass,
-  getExercise,
-} from "@/redux/reducer/exercise/api";
 import { useAppDispatch } from "@/redux/store";
 import { useClassroomStateContext } from "@/contexts/classroomState";
 import { useQuery } from "@tanstack/react-query";
 import { ExerciseModal, PostModal } from "@/components/Organisms";
 import { IPostObject } from "@/interface/post";
-import { getAllPostInClass, getPost } from "@/redux/reducer/post/api";
 import Image from "next/image";
 import { ISubmitObject } from "@/interface/submit";
 import { getAllSubmitStud } from "@/redux/reducer/submit/api";
@@ -34,6 +29,10 @@ import { INITIATE_EXERCISE, INITIATE_POST } from "@/data";
 import { getExerciseWithNearestDeadline } from "@/utils/getDeadline";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
 import { motion } from "framer-motion";
+import {
+  getAllExerciseInClass,
+  getAllPostInClass,
+} from "@/redux/reducer/classroom/api";
 
 function CriticalTasks() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -77,38 +76,24 @@ function CriticalTasks() {
   const { data: exercises } = useQuery<IExerciseObject[]>({
     queryKey: ["exercises", authClassroomState],
     queryFn: async () => {
-      const action = await dispatch(getAllExerciseInClass(authClassroomState));
-      return action.payload || [];
+      if (authClassroomState) {
+        const action = await dispatch(
+          getAllExerciseInClass(authClassroomState)
+        );
+        return action.payload || [];
+      }
     },
     initialData: [],
   });
-  // HANDLE EXERCISE
-  const { data: ex_fetch } = useQuery<IExerciseObject>({
-    queryKey: ["exercise", exRenew],
-    queryFn: async () => {
-      const action = await dispatch(getExercise(exRenew));
-      return action.payload || {};
-    },
-    initialData: exRenew,
-  });
-
   const { data: posts } = useQuery<IExerciseObject[]>({
     queryKey: ["posts", authClassroomState],
     queryFn: async () => {
-      const action = await dispatch(getAllPostInClass(authClassroomState));
-      return action.payload || [];
+      if (authClassroomState) {
+        const action = await dispatch(getAllPostInClass(authClassroomState));
+        return action.payload || [];
+      }
     },
     initialData: [],
-  });
-
-  // HANDLE POST
-  const { data: post_fetch } = useQuery<IPostObject>({
-    queryKey: ["post", postRenew],
-    queryFn: async () => {
-      const action = await dispatch(getPost(postRenew));
-      return action.payload || {};
-    },
-    initialData: postRenew,
   });
 
   const { data: submission } = useQuery<ISubmitObject[]>({
@@ -127,8 +112,7 @@ function CriticalTasks() {
     return ex?.filter(
       (item) =>
         !submits.some(
-          (sub) =>
-            sub.exerciseId === item.id && sub.student.id === currentUser.id
+          (sub) => sub.exerciseID === item.id && sub.userID === currentUser.id
         )
     );
   };
@@ -234,13 +218,13 @@ function CriticalTasks() {
             </div>
             <ExerciseModal
               modalClass={modalClassEx}
-              exercise={ex_fetch}
+              exercise={exRenew}
               setOpenModalEx={setOpenModalEx}
               openModalEx={openModalEx}
             />
             <PostModal
               modalClass={modalClassPost}
-              post={post_fetch}
+              post={postRenew}
               setOpenModalPost={setOpenModalPost}
               openModalPost={openModalPost}
             />

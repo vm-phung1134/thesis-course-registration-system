@@ -41,7 +41,7 @@ function EnrollTab() {
               key={item.id}
               className={`px-3 py-2 ${
                 selectedItem.id === item.id
-                  ? "border-green-700 border-b-2 font-medium"
+                  ? "border-green-700 text-green-700 border-b-2 font-medium"
                   : ""
               }`}
               onClick={() => handleClick(item)}

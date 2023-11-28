@@ -1,3 +1,5 @@
+import { ITopicObject } from "./topic";
+
 export interface IAuthObject {
   id: string;
   name: string;
@@ -9,4 +11,5 @@ export interface IAuthObject {
   class?: string;
   hashedPassword?: string;
   socketId?: string;
+  topic?: ITopicObject;
 }

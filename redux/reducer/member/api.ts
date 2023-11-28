@@ -40,14 +40,11 @@ const getAllMemberClassroom = createAsyncThunk(
 const getMember = createAsyncThunk(
   "member/getMember",
   async (postData: IAuthObject) => {
-    const response = await axios.get(
-      `${apiURL}/auth/${postData.id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.get(`${apiURL}/auth/${postData.id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
       return response.data.member;
     }
@@ -61,7 +58,7 @@ const createMember = createAsyncThunk(
   async (postData: Omit<IMemberObjectInput, "id">) => {
     const response = await axios.post(
       `${apiURL}`,
-      { "member": postData },
+      { member: postData },
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -96,7 +93,7 @@ const updateMember = createAsyncThunk(
   async (postData: IMemberObject) => {
     const response = await axios.put(
       `${apiURL}/${postData.id}`,
-      { "member": postData },
+      { member: postData },
       {
         headers: {
           Authorization: `Bearer ${token}`,

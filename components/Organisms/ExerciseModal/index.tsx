@@ -1,20 +1,17 @@
-import { Button, SelectBox } from "@/components/Atoms";
+import { SelectBox } from "@/components/Atoms";
 import {
   CardStudentShort,
   CommentForm,
-  ContentComment,
   ContentCommentModal,
   UploadFileForm,
 } from "@/components/Molecules";
 import { ROLE_ASSIGNMENT } from "@/contexts/authContext";
-import { INITIATE_SUBMIT } from "@/data";
-import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { ICategoryObject } from "@/interface/category";
 import { IExerciseObject } from "@/interface/exercise";
 import { IOptionItem } from "@/interface/filter";
 import { ISubmitObject } from "@/interface/submit";
 import { getAllSubmits, getSubmit } from "@/redux/reducer/submit/api";
-import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { useAppDispatch } from "@/redux/store";
 import { convertToUnaccentedString } from "@/utils/convertString";
 import { useQuery } from "@tanstack/react-query";
 import { FC, useState } from "react";
@@ -38,20 +35,19 @@ export const ExerciseModal: FC<IExerciseModalProps> = ({
 }) => {
   const { currentUser } = useCurrentUserContext();
   const dispatch = useAppDispatch();
-  const { data: submit } = useQuery<ISubmitObject>({
+  const { data: submit } = useQuery<ISubmitObject[]>({
     queryKey: [
       "submit-exercise",
-      { exerciseId: exercise.id, studentId: currentUser.id },
+      { exerciseID: exercise.id, studentID: currentUser.id },
     ],
     queryFn: async () => {
       const action = await dispatch(
-        getSubmit({ exerciseId: exercise.id, studentId: currentUser.id })
+        getSubmit({ exerciseID: exercise.id, studentID: currentUser.id })
       );
-      return action.payload || {};
+      return action.payload || [];
     },
-    initialData: INITIATE_SUBMIT,
+    initialData: [],
   });
-
   return (
     <dialog id="my_modal_exercise" className={modalClass}>
       <div className="w-8/12 bg-white py-5 px-3 h-fit shadow-2xl rounded-xl">
@@ -125,10 +121,7 @@ export const ExerciseModal: FC<IExerciseModalProps> = ({
             </div>
             <div className="py-5 flex flex-col gap-3">
               <CommentForm task={exercise} />
-              <ContentCommentModal
-                quantity={5}
-                task={exercise}
-              />
+              <ContentCommentModal quantity={5} task={exercise} />
             </div>
           </div>
           <div className="col-span-4 px-3">
@@ -164,8 +157,8 @@ const ReportStatusLecturerView: FC<IReportStatusLecturerViewProps> = ({
     DATA_FILTER_COURSE[0]
   );
   const dispatch = useAppDispatch();
-  const { data: submited, isLoading } = useQuery<ISubmitObject[]>({
-    queryKey: ["submits", exercise],
+  const { data: submission } = useQuery<ISubmitObject[]>({
+    queryKey: ["classroom-submissions", exercise],
     queryFn: async () => {
       const action = await dispatch(getAllSubmits(exercise));
       return action.payload || [];
@@ -179,7 +172,7 @@ const ReportStatusLecturerView: FC<IReportStatusLecturerViewProps> = ({
         <div className="bg-green-700 transform rotate-45 absolute -top-[5.8rem] -left-36 bottom-0 h-[150px] w-full"></div>
         <p className="flex relative flex-col items-center flex-grow py-2 text-white">
           <span className="text-sm">Submitted</span>
-          <span className="text-xl font-medium">{submited.length || 0}</span>
+          <span className="text-xl font-medium">{submission.length || 0}</span>
         </p>
         <p className="flex flex-col items-center flex-grow py-2">
           <span className="text-sm">Assignment</span>
@@ -194,7 +187,7 @@ const ReportStatusLecturerView: FC<IReportStatusLecturerViewProps> = ({
         />
       </div>
       <div className="flex flex-wrap gap-2 overflow-y-scroll">
-        {submited?.map((submit) => {
+        {submission?.map((submit) => {
           return <CardStudentShort key={submit.id} submit={submit} />;
         })}
       </div>
@@ -204,7 +197,7 @@ const ReportStatusLecturerView: FC<IReportStatusLecturerViewProps> = ({
 
 interface IReportStatusStudentViewProps {
   exercise: IExerciseObject;
-  submit: ISubmitObject;
+  submit: ISubmitObject[];
 }
 
 export const ReportStatusStudentView: FC<IReportStatusStudentViewProps> = ({
@@ -217,7 +210,7 @@ export const ReportStatusStudentView: FC<IReportStatusStudentViewProps> = ({
         <div className="flex justify-between mb-5">
           <h4 className="text-sm text-black font-medium">Report on stage</h4>
           <p className="text-xs text-red-600 font-medium capitalize">
-            {submit.status || "Lack"}
+            {submit.length > 0 ? "Submitted" : "Lack"}
           </p>
         </div>
         <UploadFileForm submit={submit} exercise={exercise} />

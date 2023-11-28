@@ -50,7 +50,23 @@ const getAllExerciseInClass = createAsyncThunk(
     if (response.status === 200) {
       return response.data.exercises;
     }
-    throw new Error("Failed to get one classroom");
+    throw new Error("Failed to get all exercises");
+  }
+);
+
+// GET ALL EXERCISES IN CLASSROOM
+const getAllPostInClass = createAsyncThunk(
+  "classroom/getAllPostInClass",
+  async (postData: IClassroomObject) => {
+    const response = await axios.get(`${apiURL}/${postData.id}/post`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (response.status === 200) {
+      return response.data.posts;
+    }
+    throw new Error("Failed to get all posts");
   }
 );
 
@@ -116,4 +132,5 @@ export {
   updateClassroom,
   deleteClassroom,
   getAllExerciseInClass,
+  getAllPostInClass
 };

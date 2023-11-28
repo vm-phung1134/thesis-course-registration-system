@@ -15,12 +15,13 @@ import { AnimatePresence, motion } from "framer-motion";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
+import { convertDateTimeFromString } from "@/utils/covertDate";
+import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
 
 interface IMemberEnrolledProps {}
 
 export const MemberEnrolled: FC<IMemberEnrolledProps> = ({}) => {
   const dispatch = useAppDispatch();
-  const queryClient = useQueryClient();
   const { authClassroomState } = useClassroomStateContext();
   const { data: members } = useQuery<IMemberObject[]>({
     queryKey: ["members-enrolled", authClassroomState],
@@ -40,17 +41,11 @@ export const MemberEnrolled: FC<IMemberEnrolledProps> = ({}) => {
   };
 
   // Add student to student registered list and send to admin
-  const addMutation = useMutation((postData: IStudentDefObject) => {
-    return new Promise((resolve, reject) => {
-      dispatch(createStudentDef(postData))
-        .unwrap()
-        .then((data) => {
-          resolve(data);
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    });
+  const addMutation = useMutationQueryAPI({
+    action: createStudentDef,
+    queryKeyLog: [""],
+    successMsg: "Successfully send a list of student attend thesis defense!",
+    errorMsg: "Fail to send list of student!",
   });
 
   const [openCreateConfirm, setOpenCreateConfirm] = useState<boolean>(false);
@@ -71,14 +66,6 @@ export const MemberEnrolled: FC<IMemberEnrolledProps> = ({}) => {
       } as IStudentDefObject);
     });
   };
-  useEffect(() => {
-    if (addMutation.isSuccess) {
-      toast.success("Successfully send a list of student attend thesis defense", {
-        position: toast.POSITION.BOTTOM_LEFT,
-        autoClose: 2000,
-      });
-    }
-  }, [addMutation.isSuccess]);
   return (
     <div className="px-3 my-5">
       <div className="flex justify-between">
@@ -210,7 +197,7 @@ export const MemberEnrolled: FC<IMemberEnrolledProps> = ({}) => {
                               {member?.member?.email}
                             </td>
                             <td className="py-4 px-6 text-sm capitalize text-gray-900 whitespace-nowrap dark:text-white">
-                              10/13/2023
+                              {convertDateTimeFromString("")}
                             </td>
                             <td className="py-4 px-6 text-sm capitalize text-gray-900 whitespace-nowrap dark:text-white">
                               {member?.registerDefense

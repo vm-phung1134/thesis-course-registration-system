@@ -2,30 +2,24 @@ import React, { FC, useRef, useState } from "react";
 import { Form, Formik } from "formik";
 import { Button } from "@/components/Atoms";
 import { INITIATE_SUBMIT } from "@/data";
-import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { IExerciseObject } from "@/interface/exercise";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ISubmitObject } from "@/interface/submit";
 import { createSubmit, deleteSubmit } from "@/redux/reducer/submit/api";
-import { useAppDispatch } from "@/redux/store";
-import { v4 as uuidv4 } from "uuid";
 import Image from "next/image";
 import classNames from "classnames";
 import { ModalConfirm } from "..";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
-const objectId = uuidv4();
+import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
 
 interface IUploadFormProps {
   exercise: IExerciseObject;
-  submit: ISubmitObject;
+  submit: ISubmitObject[];
 }
 
 export const UploadFileForm: FC<IUploadFormProps> = ({ exercise, submit }) => {
   const fileInputRef = useRef<HTMLInputElement>(null!);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const { currentUser } = useCurrentUserContext();
-  const dispatch = useAppDispatch();
-  const queryClient = useQueryClient();
   const handleUploadClick = () => {
     fileInputRef.current?.click();
   };
@@ -40,44 +34,29 @@ export const UploadFileForm: FC<IUploadFormProps> = ({ exercise, submit }) => {
       setSelectedFiles((prevFiles) => [...prevFiles, ...newFiles]);
     }
   };
-
-  const addMutation = useMutation(
-    (postData: ISubmitObject) => {
-      return new Promise((resolve, reject) => {
-        dispatch(createSubmit(postData))
-          .unwrap()
-          .then((data) => {
-            resolve(data);
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["submit-exercise"]);
-      },
-    }
-  );
+  const addMutation = useMutationQueryAPI({
+    action: createSubmit,
+    queryKeyLog: ["submit-exercise"],
+    successMsg: "You successfully submitted your assignment!",
+    errorMsg: "Fail to send the assignment!",
+  });
   const [openDelSubmitted, setOpenDelSubmitted] = useState<boolean>(false);
   const modalClassDelSubmitted = classNames({
     "modal modal-bottom sm:modal-middle": true,
     "modal-open": openDelSubmitted,
   });
-  const deleteMutation = useMutation(
-    (postData: ISubmitObject) => {
-      return dispatch(deleteSubmit(postData));
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["submit-exercise"]);
-      },
-    }
-  );
+  const deleteMutation = useMutationQueryAPI({
+    action: deleteSubmit,
+    queryKeyLog: ["submit-exercise"],
+    successMsg: "Your cancellation request is verified!",
+    errorMsg: "Fail to send the cancellation request!",
+  });
 
   const handleUnsubmitted = () => {
-    deleteMutation.mutate(submit);
+    deleteMutation.mutate(submit[0]);
+  };
+  const handleCancelSubmission = () => {
+    setOpenDelSubmitted(!openDelSubmitted);
   };
   return (
     <>
@@ -90,10 +69,9 @@ export const UploadFileForm: FC<IUploadFormProps> = ({ exercise, submit }) => {
         onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {
             addMutation.mutate({
-              exerciseId: exercise.uid,
-              student: currentUser,
+              exerciseID: exercise.id,
+              authorID: currentUser.id,
               attachments: selectedFiles,
-              uid: objectId,
               status: "submited",
             });
           }, 400);
@@ -103,30 +81,41 @@ export const UploadFileForm: FC<IUploadFormProps> = ({ exercise, submit }) => {
           <Form>
             <div className="w-full h-fit border rounded-xl border-dashed py-5 mb-5 relative">
               <div className="flex gap-3 flex-col h-full w-full items-center justify-center">
-                {submit.status !== "" ? (
+                {submit.length > 0 ? (
                   // GET FILE HAS BEEN SUBMITED
                   <div className="w-full">
-                    <ul className="text-sm w-full flex flex-col gap-2 mb-10 font-medium px-2">
-                      {submit?.attachments?.map((file) => (
-                        <div
-                          key={file.id}
-                          className="flex gap-3 text-blue-700 font-medium rounded-md items-center px-3 py-2 bg-slate-200 shadow-md"
-                        >
-                          <Image
-                            width={20}
-                            height={20}
-                            src={
-                              "https://cdn-icons-png.flaticon.com/128/4725/4725970.png"
-                            }
-                            alt="icon-file-pdf"
-                          />
-                          <a
-                            className="text-[13px] truncate"
-                            target="_blank"
-                            href={file.src}
-                          >
-                            {file.name}
-                          </a>
+                    <ul className="text-sm w-full mb-10 font-medium px-2">
+                      {submit?.map((sub) => (
+                        <div key={sub.id} className="flex flex-col gap-2">
+                          {sub?.attachments?.map((file, index) => (
+                            <div
+                              key={file.id}
+                              className="flex gap-3 text-blue-700 font-medium rounded-md items-center px-3 py-2 bg-slate-100 shadow-md"
+                            >
+                              <Image
+                                width={20}
+                                height={20}
+                                src={
+                                  file?.thumbnail ||
+                                  "https://cdn-icons-png.flaticon.com/128/9496/9496432.png"
+                                }
+                                alt="icon-file-pdf"
+                              />
+                              <div className="truncate">
+                                <a
+                                  className="text-[13px]"
+                                  target="_blank"
+                                  key={index}
+                                  href={file?.fileURL}
+                                >
+                                  {file?.fileName}
+                                </a>
+                                <p className="text-xs font-thin">
+                                  {file.mimeType}
+                                </p>
+                              </div>
+                            </div>
+                          ))}
                         </div>
                       ))}
                     </ul>
@@ -181,6 +170,7 @@ export const UploadFileForm: FC<IUploadFormProps> = ({ exercise, submit }) => {
                 <div className="w-full flex justify-end cursor-pointer">
                   {selectedFiles.length > 0 && (
                     <button
+                      type="button"
                       className="text-sm px-5 rounded-lg flex gap-3 "
                       onClick={handleUploadClick}
                     >
@@ -200,7 +190,7 @@ export const UploadFileForm: FC<IUploadFormProps> = ({ exercise, submit }) => {
                 </div>
               </div>
             </div>
-            {submit.status !== "" ? (
+            {submit.length > 0 ? (
               <>
                 {deleteMutation.isLoading ? (
                   <Button
@@ -212,8 +202,7 @@ export const UploadFileForm: FC<IUploadFormProps> = ({ exercise, submit }) => {
                   <Button
                     type="button"
                     otherType="subscribe"
-                    toggle={openDelSubmitted}
-                    setToggle={setOpenDelSubmitted}
+                    handleActions={handleCancelSubmission}
                     className="rounded-lg hover:bg-green-600 w-full normal-case bg-green-700 text-white"
                     title="Cancel submit"
                   />

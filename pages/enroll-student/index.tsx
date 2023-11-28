@@ -1,5 +1,9 @@
 import { Button, NormalAvatar, SnipperRound } from "@/components/Atoms";
-import { InforUserFormV2, UploadFinalFileForm } from "@/components/Molecules";
+import {
+  InforUserFormV2,
+  RegistrationTopicFormV2,
+  UploadFinalFileForm,
+} from "@/components/Molecules";
 import { EnrollSuccess } from "@/components/Organisms/MemberState/EnrollSuccess";
 import { MainboardTemplate } from "@/components/Templates";
 import { INITIATE_MEMBER, INITIATE_UPLOAD_REPORT, roleInCouncil } from "@/data";
@@ -15,56 +19,50 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
+import { useCurrentUserContext } from "@/contexts/currentUserContext";
 
 function EnrollStudentPage() {
   const [switchingForm, setSwitchingForm] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(true);
   const dispatch = useAppDispatch();
-  const queryClient = useQueryClient();
-  const [user] = useUserCookies();
+  const { currentUser } = useCurrentUserContext();
   const { data: member } = useQuery<IMemberObject>({
-    queryKey: ["member", user],
+    queryKey: ["get-one-member", currentUser],
     queryFn: async () => {
-      const action = await dispatch(getMember(user));
+      const action = await dispatch(getMember(currentUser));
       return action.payload || INITIATE_MEMBER;
     },
     initialData: INITIATE_MEMBER,
   });
   const { data: studentScheduled } = useQuery<ICouncilDef>({
-    queryKey: ["studentScheduled", user.id],
+    queryKey: ["studentScheduled", currentUser.id],
     queryFn: async () => {
-      const action = await dispatch(getScheduleForStudent(user.id));
+      const action = await dispatch(getScheduleForStudent(currentUser.id));
       return action.payload || {};
     },
   });
-  const updateMutation = useMutation(
-    (postData: IMemberObject) => {
-      return new Promise((resolve, reject) => {
-        dispatch(updateMember(postData))
-          .unwrap()
-          .then((data) => {
-            resolve(data);
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["member"]);
-      },
-    }
-  );
+  const updateMutation = useMutationQueryAPI({
+    action: updateMember,
+    queryKeyLog: ["get-one-member"],
+    successMsg: "Enrollment reported successful!",
+    errorMsg: "Fail to register thesis defense!",
+  });
   const handleEnrollMember = () => {
-    updateMutation.mutate({ ...member, registerDefense: true });
+    updateMutation.mutate({
+      id: member.id,
+      registerDefense: true,
+      memberID: member.member.id,
+      status: "",
+      classroomID: member.classroom.id,
+    });
   };
 
   // HANDLE FINAL UPLOAD
   const { data: uploadReport } = useQuery<IUploadReportObject>({
-    queryKey: ["upload-def", user.id],
+    queryKey: ["upload-def", currentUser.id],
     queryFn: async () => {
-      const action = await dispatch(getUploadReport(user.id));
+      const action = await dispatch(getUploadReport(currentUser.id));
       return action.payload || INITIATE_UPLOAD_REPORT;
     },
     initialData: INITIATE_UPLOAD_REPORT,
@@ -84,6 +82,7 @@ function EnrollStudentPage() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.7, ease: "easeOut" }}
+          className="h-full"
         >
           {studentScheduled?.id ? (
             <>
@@ -223,15 +222,22 @@ function EnrollStudentPage() {
                   </div>
                   <div className="flex h-fit items-center">
                     <div className="p-5 w-[70%] mt-5 shadow-xl rounded-xl">
-                      {switchingForm === 1 ? (
+                      {switchingForm === 1 && (
                         <InforUserFormV2
                           setSwitchingForm={setSwitchingForm}
                           switchingForm={switchingForm}
                         />
-                      ) : (
-                        <>
+                      )}
+                      {switchingForm === 2 && (
+                        <RegistrationTopicFormV2
+                          setSwitchingForm={setSwitchingForm}
+                          switchingForm={switchingForm}
+                        />
+                      )}
+                      {switchingForm === 3 && (
+                        <div>
                           <h3 className="text-xs font-medium mb-3 text-green-700">
-                            Step {switchingForm} of 2
+                            Step {switchingForm} of 3
                           </h3>
                           <div className="h-[50vh] flex flex-col gap-5 items-center justify-center">
                             <h3 className="uppercase text-green-700 font-bold">
@@ -264,7 +270,7 @@ function EnrollStudentPage() {
                               />
                             </div>
                           </div>
-                        </>
+                        </div>
                       )}
                     </div>
                   </div>

@@ -1,15 +1,20 @@
 import { IAuthObject } from "@/interface/auth";
 import { ICategoryObject } from "@/interface/category";
 import { IClassroomObject, IClassroomObjectInput } from "@/interface/classroom";
-import { ICommentObject } from "@/interface/comment";
+import { ICommentObject, ICommentObjectInput } from "@/interface/comment";
 import { IExerciseObject, IExerciseObjectInput } from "@/interface/exercise";
 import { IMemberObject } from "@/interface/member";
 import { IAssessItem, IPointDefObject } from "@/interface/pointDef";
 import { IPostObject } from "@/interface/post";
+import {
+  IPrivateComment,
+  IPrivateCommentItem,
+} from "@/interface/privateComment";
 import { IRoomDefObject } from "@/interface/room";
 import { IStudentDefObject } from "@/interface/studef";
 import { ISubmitObject } from "@/interface/submit";
 import { ITopicObject } from "@/interface/topic";
+import { IUnavaiableItem, IUnavailableDate } from "@/interface/unavailableDate";
 import { IUploadReportObject } from "@/interface/upload";
 
 export const INITIATE_AUTH: IAuthObject = {
@@ -22,7 +27,15 @@ export const INITIATE_AUTH: IAuthObject = {
   role: "",
   id: "",
 };
-
+export const INITIATE_DATETIME = {
+  year: 0,
+  month: 0,
+  day: 0,
+  hours: 0,
+  minutes: 0,
+  seconds: 0,
+  nanos: 0,
+};
 export const INITIATE_CATEGORY: ICategoryObject = {
   id: "",
   label: "",
@@ -47,30 +60,28 @@ export const INITIATE_CLASSROOM_INPUT: IClassroomObjectInput = {
 };
 
 export const INITIATE_POST: IPostObject = {
-  type: "",
   title: "",
   category: {
     label: "",
     description: "",
     value: "",
   },
-  lecturer: INITIATE_AUTH,
+  author: INITIATE_AUTH,
   description: "",
-  classroom: INITIATE_CLASSROOM,
+  classroomID: "",
 };
 
 export const INITIATE_EXERCISE: IExerciseObject = {
   title: "",
-  classroom: INITIATE_CLASSROOM,
+  classroomID: "",
   category: {
     label: "",
     description: "",
     value: "",
   },
-  lecturer: INITIATE_AUTH,
+  author: INITIATE_AUTH,
   description: "",
-  deadline: "",
-  type: "",
+  deadline: INITIATE_DATETIME,
 };
 
 export const INITIATE_EXERCISE_INPUT: IExerciseObjectInput = {
@@ -83,10 +94,9 @@ export const INITIATE_EXERCISE_INPUT: IExerciseObjectInput = {
 };
 
 export const INITIATE_TOPIC: ITopicObject = {
-  id: "",
   title: "",
   typeTopic: "",
-  memberQuantiy: 0,
+  memberQuantity: 0,
   student: INITIATE_AUTH,
   memberEmail: "",
   description: "",
@@ -99,18 +109,46 @@ export const INITIATE_MEMBER: IMemberObject = {
   id: "",
 };
 
-export const INITIATE_COMMENT: ICommentObject = {
+export const INITIATE_COMMENT: ICommentObjectInput = {
+  userID: "",
+  content: "",
+  exerciseID: "",
+};
+
+export const INITIATE_PRIVATE_COMMENT: IPrivateComment = {
+  userId: "",
+  comments: [],
+  lecturerId: "",
+};
+
+export const INITIATE_PRIVATE_COMMENT_ITEM: IPrivateCommentItem = {
+  user: INITIATE_AUTH,
+  id: "",
+  content: "",
+};
+
+export const INITIATE_COMMENT_INPUT: ICommentObject = {
   user: INITIATE_AUTH,
   content: "",
-  postId: "",
+  exercise: INITIATE_EXERCISE,
 };
 
 export const INITIATE_SUBMIT: ISubmitObject = {
-  exerciseId: "",
-  student: INITIATE_AUTH,
+  exerciseID: "",
+  userID: "",
   attachments: [],
   status: "",
-  uid: "",
+};
+
+export const INITIATE_UNAVAIABLE_SCHEDULE_ITEM: IUnavaiableItem = {
+  id: "",
+  date: "",
+  reason: "",
+};
+
+export const INITIATE_UNAVAIABLE_SCHEDULE: IUnavailableDate = {
+  lecturer: INITIATE_AUTH,
+  schedules: [],
 };
 
 export const INITIATE_STUDENT_DEF: IStudentDefObject = {

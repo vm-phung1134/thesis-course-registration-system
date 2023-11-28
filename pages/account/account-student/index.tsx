@@ -31,11 +31,11 @@ function AccountStudentPage() {
   }
   const [lastName, middleName, firstName] = splitFullName(currentUser?.name);
   const dispatch = useAppDispatch();
-  const { data } = useQuery<ITopicObject>({
-    queryKey: ["topic", currentUser.id],
+  const { data: topic } = useQuery<ITopicObject>({
+    queryKey: ["get-one-topic", currentUser],
     queryFn: async () => {
-      const action = await dispatch(getTopic(currentUser.id));
-      return action.payload;
+      const action = await dispatch(getTopic(currentUser));
+      return action.payload || INITIATE_TOPIC;
     },
     initialData: INITIATE_TOPIC,
   });
@@ -47,7 +47,7 @@ function AccountStudentPage() {
   return (
     <>
       <MainboardTemplate title="Account & Registration topics | Thesis course registration system">
-        {loading && data ? (
+        {loading ? (
           <SnipperRound />
         ) : (
           <motion.div
@@ -65,7 +65,7 @@ function AccountStudentPage() {
             <div className="my-5">
               <div className="grid grid-cols-2 gap-10">
                 <section className="shadow-lg p-5 rounded-xl border">
-                  <RegistrationTopicForm topic={data} />
+                  <RegistrationTopicForm topic={topic} />
                 </section>
                 <section>
                   <div className="flex items-center justify-between border rounded-xl">

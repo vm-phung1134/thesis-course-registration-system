@@ -1,17 +1,18 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { token } from "./type";
 import axios from "axios";
-import { ITopicObject } from "@/interface/topic";
+import { ITopicObjectInput } from "@/interface/topic";
+import { IAuthObject } from "@/interface/auth";
 
 const apiURL = `http://qthuy2k1.shop/api/topic`;
 
 // CREATE NEW TOPIC
 const createTopic = createAsyncThunk(
   "topic/createTopic",
-  async (postData: ITopicObject) => {
+  async (postData: ITopicObjectInput) => {
     const response = await axios.post(
       `${apiURL}`,
-      { "topic": postData },
+      { topic: postData },
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -39,25 +40,28 @@ const getAllTopics = createAsyncThunk("topic/getAllTopics", async () => {
 });
 
 // GET ONE TOPIC
-const getTopic = createAsyncThunk("topic/getTopic", async (id: string) => {
-  const response = await axios.get(`${apiURL}/${id}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  if (response.status === 200) {
-    return response.data.topic;
+const getTopic = createAsyncThunk(
+  "topic/getTopic",
+  async (postData: IAuthObject) => {
+    const response = await axios.get(`${apiURL}/${postData.id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (response.status === 200) {
+      return response.data.topic;
+    }
+    throw new Error("Failed to get one topic");
   }
-  throw new Error("Failed to get one topic");
-});
+);
 
 // UPDATE TOPIC
 const updateTopic = createAsyncThunk(
   "topic/updateTopic",
-  async (postData: ITopicObject) => {
+  async (postData: ITopicObjectInput) => {
     const response = await axios.put(
       `${apiURL}/${postData.id}`,
-      { "topic": postData },
+      { topic: postData },
       {
         headers: {
           Authorization: `Bearer ${token}`,

@@ -45,6 +45,7 @@ function MainboardPage() {
   const handleClick = (item: MenuItem) => {
     setSelectedItem(item);
   };
+  console.log(subscribeState)
   const renderStudentView = () => {
     if (authClassroomState && authClassroomState?.classCourse !== "") {
       return <UnSubscribeView classroom={authClassroomState} />;

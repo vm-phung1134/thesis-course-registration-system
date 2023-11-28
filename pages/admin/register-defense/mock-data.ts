@@ -1,6 +1,6 @@
 import { IBreadcrumbItem } from "@/components/Atoms";
 
-export const BREADCRUMB_TOPIC_RESEARCH_ADMIN: IBreadcrumbItem[] = [
+export const BREADCRUMB_REGISTER_DEFENSE_ADMIN: IBreadcrumbItem[] = [
   {
     id: "1",
     href: "/",
@@ -18,7 +18,7 @@ export const BREADCRUMB_TOPIC_RESEARCH_ADMIN: IBreadcrumbItem[] = [
   },
   {
     id: "4",
-    href: "/admin/alumnus/topic-research",
-    title: "Topic research",
+    href: "/admin/alumnus/register-defense",
+    title: "List student register defense",
   },
 ];

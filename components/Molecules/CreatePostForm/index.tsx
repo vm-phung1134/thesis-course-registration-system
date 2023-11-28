@@ -11,7 +11,6 @@ import { createPost } from "@/redux/reducer/post/api";
 import { Form, Formik } from "formik";
 import Image from "next/image";
 import { FC, useRef, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 
 export interface ICreatePostFormProps {
   setToggleForm: React.Dispatch<React.SetStateAction<boolean>>;
@@ -72,15 +71,13 @@ export const CreatePostForm: FC<ICreatePostFormProps> = ({
       }}
       onSubmit={(values, { setSubmitting, resetForm }) => {
         setTimeout(() => {
-          let objectId = uuidv4();
           addMutation.mutate({
-            ...values,
-            type: "post",
-            uid: objectId,
-            classroom: classroom,
-            category: selectedStage,
+            title: values.title,
+            description: values.description,
+            classroomID: classroom.id,
+            categoryID: selectedStage.id || "1",
             attachments: selectedFiles,
-            lecturer: currentUser,
+            authorID: currentUser.id,
           });
           resetForm();
           setToggleForm(!toggleForm);

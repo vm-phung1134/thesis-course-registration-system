@@ -10,20 +10,23 @@ import { useState } from "react";
 import { ExerciseModal, PostModal } from "@/components/Organisms";
 import { useQuery } from "@tanstack/react-query";
 import { IPostObject } from "@/interface/post";
-import { getAllPostInClass, getPost } from "@/redux/reducer/post/api";
+import { getPost } from "@/redux/reducer/post/api";
 import { useAppDispatch } from "@/redux/store";
 import { getExercise } from "@/redux/reducer/exercise/api";
 import { IExerciseObject } from "@/interface/exercise";
 import { useClassroomStateContext } from "@/contexts/classroomState";
 import Image from "next/image";
 import { Button } from "@/components/Atoms";
-import { INITIATE_CLASSROOM, INITIATE_EXERCISE, INITIATE_POST } from "@/data";
+import { INITIATE_EXERCISE, INITIATE_POST } from "@/data";
 import { motion } from "framer-motion";
 import { ISubmitObject } from "@/interface/submit";
 import { getAllSubmitStud } from "@/redux/reducer/submit/api";
 import { getExerciseWithNearestDeadline } from "@/utils/getDeadline";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
-import { getAllExerciseInClass } from "@/redux/reducer/classroom/api";
+import {
+  getAllExerciseInClass,
+  getAllPostInClass,
+} from "@/redux/reducer/classroom/api";
 
 function ManageClassroomTab() {
   const { currentUser } = useCurrentUserContext();
@@ -35,18 +38,24 @@ function ManageClassroomTab() {
   const { data: posts } = useQuery<IPostObject[]>({
     queryKey: ["classroom-posts", authClassroomState],
     queryFn: async () => {
-      const action = await dispatch(getAllPostInClass(authClassroomState));
-      return action.payload || [];
+      if (authClassroomState) {
+        const action = await dispatch(getAllPostInClass(authClassroomState));
+        return action.payload || [];
+      }
+      return []
     },
     initialData: [],
   });
   const { data: exercises } = useQuery<IExerciseObject[]>({
     queryKey: ["classroom-exercises", authClassroomState],
     queryFn: async () => {
-      const action = await dispatch(
-        getAllExerciseInClass(authClassroomState || INITIATE_CLASSROOM)
-      );
-      return action.payload || [];
+      if (authClassroomState) {
+        const action = await dispatch(
+          getAllExerciseInClass(authClassroomState)
+        );
+        return action.payload || [];
+      }
+      return []
     },
     initialData: [],
   });
@@ -68,26 +77,6 @@ function ManageClassroomTab() {
     setOpenModalEx(!openModalEx);
     setExRenew(task);
   };
-
-  // HANDLE POST
-  const { data: post_fetch } = useQuery<IPostObject>({
-    queryKey: ["get-one-post", postRenew],
-    queryFn: async () => {
-      const action = await dispatch(getPost(postRenew));
-      return action.payload || {};
-    },
-    initialData: postRenew,
-  });
-
-  // HANDLE EXERCISE
-  const { data: ex_fetch } = useQuery<IExerciseObject>({
-    queryKey: ["get-one-exercise", exRenew],
-    queryFn: async () => {
-      const action = await dispatch(getExercise(exRenew));
-      return action.payload || {};
-    },
-    initialData: exRenew,
-  });
   const { data: submission } = useQuery<ISubmitObject[]>({
     queryKey: ["submission", currentUser],
     queryFn: async () => {
@@ -124,7 +113,7 @@ function ManageClassroomTab() {
               )}
               <h4 className="text-sm capitalize font-bold">announcements</h4>
               {posts.length > 0 && (
-                <div className="border rounded-xl flex flex-col gap-3">
+                <div className="flex flex-col gap-3">
                   {posts?.map((post, index) => {
                     return (
                       <motion.div
@@ -132,12 +121,12 @@ function ManageClassroomTab() {
                         animate={{ opacity: 1 }}
                         transition={{ duration: 1, delay: index * 0.5 }}
                         key={post.id}
-                        className="text-xs"
+                        className="text-xs border rounded-xl"
                       >
                         <div className="p-3 flex flex-col gap-2">
                           <div>
                             <p className="capitalize font-bold text-green-700">
-                              {post?.lecturer?.name}{" "}
+                              {post?.author?.name}{" "}
                               <span className="normal-case font-normal text-black">
                                 has post an announcement !!!
                               </span>
@@ -214,13 +203,13 @@ function ManageClassroomTab() {
         </div>
         <PostModal
           modalClass={modalClassPost}
-          post={post_fetch}
+          post={postRenew}
           setOpenModalPost={setOpenModalPost}
           openModalPost={openModalPost}
         />
         <ExerciseModal
           modalClass={modalClassEx}
-          exercise={ex_fetch}
+          exercise={exRenew}
           setOpenModalEx={setOpenModalEx}
           openModalEx={openModalEx}
         />

@@ -1,15 +1,25 @@
 import { IAuthObject } from "./auth";
 import { ICategoryObject } from "./category";
-import { IClassroomObject } from "./classroom";
 import { IGeneralLinkAttachment } from "./submit";
 
 export interface IPostObject {
   id?: string;
   title: string;
-  type: string;
+  classroomID: string;
   category: ICategoryObject;
-  classroom: IClassroomObject;
-  lecturer: IAuthObject;
+  author: IAuthObject;
   description: string;
-  attachments?: (any | IGeneralLinkAttachment | File)[];
+  attachments?: IGeneralLinkAttachment[] | any[];
+  createAt?: string;
+  updateAt?: string;
+}
+
+export interface IPostObjectInput {
+  id?: string;
+  title: string;
+  classroomID: string;
+  categoryID: string;
+  authorID: string;
+  description: string;
+  attachments?: IGeneralLinkAttachment[] | any[];
 }

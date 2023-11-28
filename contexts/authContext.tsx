@@ -1,20 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-
 import React, { createContext, useContext, useState } from "react";
 import {
   signInWithPopup,
   signOut,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  fetchSignInMethodsForEmail,
 } from "firebase/auth";
 import { auth, provider } from "../config/firebase-config";
 import Cookies from "js-cookie";
 import { IAuthObject } from "@/interface/auth";
 import { useRouter } from "next/router";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { loginAuth } from "@/redux/reducer/auth/api";
-import { useAppDispatch } from "@/redux/store";
 import { useUserCookies } from "@/hooks/useCookies";
+import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
+import { v4 as uuidv4 } from "uuid";
 
 interface AuthContextType {
   message: string;
@@ -53,31 +53,15 @@ export const useAuthContext = () => {
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const router = useRouter();
-  const dispatch = useAppDispatch();
-  const queryClient = useQueryClient();
   const [, setUserCookies] = useUserCookies();
   const [message, setMessage] = useState<string>("");
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-
-  const addMutation = useMutation(
-    (postData: IAuthObject) => {
-      return new Promise((resolve, reject) => {
-        dispatch(loginAuth(postData))
-          .unwrap()
-          .then((data) => {
-            resolve(data);
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["auth"]);
-      },
-    }
-  );
+  const addMutation = useMutationQueryAPI({
+    action: loginAuth,
+    queryKeyLog: ["admin-accounts"],
+    successMsg: "Added user successfully!",
+    errorMsg: "Fail to add user!",
+  });
   const signInWithGoogle = () => {
     signInWithPopup(auth, provider)
       .then(async (result) => {
@@ -138,16 +122,17 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       });
   };
 
-  const signUpWithEmailPassword = (
+  const signUpWithEmailPassword = async (
     email: string,
     password: string,
     lecturer: IAuthObject
   ) => {
-    createUserWithEmailAndPassword(auth, email, password)
-      .then(async (userCredential) => {
-        const user = userCredential.user;
+    try {
+      let objectId = uuidv4();
+      const signInMethods = await fetchSignInMethodsForEmail(auth, email);
+      if (signInMethods.length > 0) {
         await addMutation.mutate({
-          id: user.uid,
+          id: objectId,
           email: email,
           name: lecturer.name,
           photoSrc: lecturer.photoSrc,
@@ -157,10 +142,28 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           class: lecturer.class,
           major: lecturer.major,
         });
-      })
-      .catch((error) => {
-        console.error("Errors:", error);
+        return;
+      }
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+      await addMutation.mutate({
+        id: user.uid,
+        email: email,
+        name: lecturer.name,
+        photoSrc: lecturer.photoSrc,
+        role: lecturer.role,
+        hashedPassword: password,
+        phone: lecturer.phone,
+        class: lecturer.class,
+        major: lecturer.major,
       });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const logout = () => {

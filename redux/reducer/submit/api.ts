@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { token } from "./type";
-import { ISubmitObject } from "@/interface/submit";
+import { ISubmitObject, ISubmitObjectInput } from "@/interface/submit";
 import { IExerciseObject } from "@/interface/exercise";
 import { IAuthObject } from "@/interface/auth";
 
@@ -11,13 +11,13 @@ const apiURL = `http://qthuy2k1.shop/api/submit`;
 const getAllSubmits = createAsyncThunk(
   "submit/getAllSubmit",
   async (postData: IExerciseObject) => {
-    const response = await axios.get(`${apiURL}/ex/${postData.uid}`, {
+    const response = await axios.get(`${apiURL}/ex/${postData.id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
     if (response.status === 200) {
-      return response.data;
+      return response.data.submissions;
     }
     throw new Error("Failed to get all submit");
   }
@@ -28,7 +28,7 @@ const getSubmit = createAsyncThunk(
   "submit/getSubmit",
   async (submitData: any) => {
     const response = await axios.get(
-      `${apiURL}/${submitData.exerciseId}&${submitData.studentId}`,
+      `http://qthuy2k1.shop/api/exercise/${submitData.exerciseID}/submit/${submitData.studentID}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -36,7 +36,7 @@ const getSubmit = createAsyncThunk(
       }
     );
     if (response.status === 200) {
-      return response.data;
+      return response.data.submissions;
     }
     throw new Error("Failed to get one submit");
   }
@@ -45,26 +45,29 @@ const getSubmit = createAsyncThunk(
 // CREATE SUBMIT
 const createSubmit = createAsyncThunk(
   "submit/createSubmit",
-  async (submitData: ISubmitObject) => {
+  async (submitData: ISubmitObjectInput) => {
     const formData = new FormData();
     formData.append("status", submitData.status);
-    formData.append("student", JSON.stringify(submitData.student));
-    formData.append("exerciseId", submitData.exerciseId);
-    formData.append("uid", submitData.uid);
+    formData.append("authorID", submitData.authorID);
+    formData.append("exerciseID", submitData.exerciseID);
     if (submitData.attachments) {
       for (let i = 0; i < submitData.attachments.length; i++) {
-        formData.append("attachment", submitData.attachments[i]);
+        formData.append("attachments", submitData.attachments[i]);
       }
     }
 
-    const response = await axios.post(`${apiURL}`, formData, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    const response = await axios.post(
+      `http://qthuy2k1.shop/upload/submit`,
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
 
-    if (response.status === 200) {
+    if (response.status === 201) {
       return response.data;
     }
 

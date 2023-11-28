@@ -23,7 +23,7 @@ export const ExerciseCard: FC<IExerciseProps> = ({
       onClick={() => handleOpenTaskModal(exercise)}
       className="bg-slate-100 shadow-md flex mt-5 p-5 rounded-lg justify-between gap-5 text-sm cursor-pointer"
     >
-      <IConTitle title={exercise.title} className="w-80 truncate font-medium">
+      <IConTitle title={exercise.title} className="truncate font-medium">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-5 w-5"
@@ -56,7 +56,7 @@ export const ExerciseCard: FC<IExerciseProps> = ({
         </svg>
       </IConTitle>
       <IConTitle
-        className="textRed-600 font-normal text-red-600"
+        className="textRed-600 text-red-600 text-xs font-medium"
         title={convertDateTime(exercise?.deadline)}
       >
         <svg

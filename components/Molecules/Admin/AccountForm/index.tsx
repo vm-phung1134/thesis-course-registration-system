@@ -5,6 +5,7 @@ import { Form, Formik } from "formik";
 import { FC, useState } from "react";
 import { INITIATE_AUTH } from "@/data";
 import { ROLE_ASSIGNMENT } from "@/contexts/authContext";
+import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
 
 export interface IAccountFormProps {
   setToggle: React.Dispatch<React.SetStateAction<boolean>>;
@@ -17,7 +18,6 @@ export const AccountForm: FC<IAccountFormProps> = ({
   toggle,
   lecturer,
 }) => {
-  const queryClient = useQueryClient();
   const [isChecked, setIsChecked] = useState(false);
   const mockDataAccount = (newAccount: IAuthObject) => {
     return fetch(
@@ -35,16 +35,12 @@ export const AccountForm: FC<IAccountFormProps> = ({
     });
   };
 
-  const addMutation = useMutation(
-    (postData: IAuthObject) => {
-      return mockDataAccount(postData);
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["mock-lecturer-list"]);
-      },
-    }
-  );
+  const addMutation = useMutationQueryAPI({
+    action: mockDataAccount,
+    queryKeyLog: ["mock-lecturer-list"],
+    successMsg: "Delete user successfully!",
+    errorMsg: "Fail to delete user!",
+  });
 
   return (
     <Formik

@@ -5,6 +5,7 @@ import { Form, Formik } from "formik";
 import { FC, useState } from "react";
 import { INITIATE_AUTH } from "@/data";
 import { ROLE_ASSIGNMENT } from "@/contexts/authContext";
+import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
 
 export interface IEditAccountFormProps {
   setToggle: React.Dispatch<React.SetStateAction<boolean>>;
@@ -17,8 +18,9 @@ export const EditAccountForm: FC<IEditAccountFormProps> = ({
   toggle,
   lecturer,
 }) => {
-  const queryClient = useQueryClient();
-  const [isChecked, setIsChecked] = useState<boolean>(() => lecturer?.role === ROLE_ASSIGNMENT.LECTURER);
+  const [isChecked, setIsChecked] = useState<boolean>(
+    () => lecturer?.role === ROLE_ASSIGNMENT.LECTURER
+  );
   const updateMockLecturer = (lecturer: IAuthObject) => {
     return fetch(
       `https://6548626ddd8ebcd4ab22d6a1.mockapi.io/api/cit-user/cit_lectuters/${lecturer.id}`,
@@ -34,23 +36,18 @@ export const EditAccountForm: FC<IEditAccountFormProps> = ({
       throw new Error("Failed to delete user");
     });
   };
-
-  const editLecturerMutation = useMutation(
-    (postData: IAuthObject) => {
-      return updateMockLecturer(postData);
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["mock-lecturer-list"]);
-      },
-    }
-  );
+  const editLecturerMutation = useMutationQueryAPI({
+    action: updateMockLecturer,
+    queryKeyLog: ["mock-lecturer-list"],
+    successMsg: "Update user successfully!",
+    errorMsg: "Fail to update user!",
+  });
 
   return (
     <Formik
       initialValues={lecturer || INITIATE_AUTH}
       enableReinitialize
-      onSubmit={(values, { setSubmitting }) => {
+      onSubmit={(values) => {
         setTimeout(async () => {
           await editLecturerMutation.mutate({
             ...values,

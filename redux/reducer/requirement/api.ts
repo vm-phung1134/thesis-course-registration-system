@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { token } from "../auth/type";
 import { IMemberObject, IMemberObjectInput } from "@/interface/member";
+import { IClassroomObject } from "@/interface/classroom";
 
 const apiURL = `http://qthuy2k1.shop/api/requirement`;
 
@@ -24,8 +25,8 @@ const getAllRequirements = createAsyncThunk(
 // GET ALL REQUIREMENT OF LECTURER BY CLASSROOM ID
 const getAllRequirementClassroom = createAsyncThunk(
   "requirement/getAllRequirementClassroom",
-  async (id: string) => {
-    const response = await axios.get(`${apiURL}/class/${id}`, {
+  async (postData: IClassroomObject) => {
+    const response = await axios.get(`${apiURL}/class/${postData.id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

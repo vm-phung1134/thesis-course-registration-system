@@ -8,30 +8,23 @@ import {
 import useCheckedBox from "@/hooks/useCheckedBox";
 import { useTableSearch } from "@/hooks/useTableSearch";
 import { IAuthObject } from "@/interface/auth";
-import {
-  getAllLecturers,
-  getOneAuth,
-  updateAuth,
-} from "@/redux/reducer/auth/api";
+import { getAllLecturers, getOneAuth } from "@/redux/reducer/auth/api";
 import {
   createCouncilDef,
-  deleteCouncilDef,
   getAllCouncilDefs,
 } from "@/redux/reducer/council-def/api";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import classNames from "classnames";
 import { FC, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import useToastifyMessage from "@/hooks/useToastify";
-import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
+import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
 
 interface ICouncilManagementTab {}
 
 export const CouncilManagementTab: FC<ICouncilManagementTab> = ({}) => {
   const dispatch = useAppDispatch();
-  const queryClient = useQueryClient();
   // HANLE LECTURER SERVICE
   // Render list
   const { data: lecturers } = useQuery<IAuthObject[]>({
@@ -51,25 +44,12 @@ export const CouncilManagementTab: FC<ICouncilManagementTab> = ({}) => {
   const { filteredData: lec_filteredData, handleSearch: lec_handleSearch } =
     useTableSearch(lecturers);
 
-  const addMutation = useMutation(
-    (postData: IAuthObject) => {
-      return new Promise((resolve, reject) => {
-        dispatch(createCouncilDef(postData))
-          .unwrap()
-          .then((data) => {
-            resolve(data);
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["council-defs"]);
-      },
-    }
-  );
+  const addMutation = useMutationQueryAPI({
+    action: createCouncilDef,
+    queryKeyLog: ["admin-councils"],
+    successMsg: "The council just had an update!",
+    errorMsg: "Fail to add lecturer to council!",
+  });
 
   const [openModalEditAuth, setOpenModalEditAuth] = useState<boolean>(false);
   const modalClassModalEditAuth = classNames({
@@ -87,22 +67,6 @@ export const CouncilManagementTab: FC<ICouncilManagementTab> = ({}) => {
       await addMutation.mutate(lecturer);
     });
   };
-  useToastifyMessage(addMutation, "Lecturer has been added to council");
-
-  // const handleFakeDataCouncil = async () => {
-  //   await addMutation.mutate({
-  //     name: "truc anh dai",
-  //     photoSrc:
-  //       "https://images.pexels.com/photos/445109/pexels-photo-445109.jpeg?auto=compress&cs=tinysrgb&w=600",
-  //     email: "tadai@cit.ctu.edu.vn",
-  //     phone: "0123456789",
-  //     class: "IT1",
-  //     major: "CNTT",
-  //     role: "lecturer",
-  //     id: "GV9",
-  //   });
-  // };
-
   // HANLE COUNCIL SERVICE
   // Open modal confirm lock councils
   const [openModalCreate, setOpenModalCreate] = useState<boolean>(false);
@@ -112,7 +76,7 @@ export const CouncilManagementTab: FC<ICouncilManagementTab> = ({}) => {
   });
   // Render list
   const { data: councils } = useQuery<IAuthObject[]>({
-    queryKey: ["council-defs"],
+    queryKey: ["admin-councils"],
     queryFn: async () => {
       const action = await dispatch(getAllCouncilDefs());
       return action.payload || [];
@@ -130,25 +94,12 @@ export const CouncilManagementTab: FC<ICouncilManagementTab> = ({}) => {
     handleSearch: council_handleSearch,
   } = useTableSearch(councils);
 
-  const deleteMutation = useMutation(
-    (postData: IAuthObject) => {
-      return new Promise((resolve, reject) => {
-        dispatch(deleteCouncilDef(postData))
-          .unwrap()
-          .then((data) => {
-            resolve(data);
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["council-defs"]);
-      },
-    }
-  );
+  const deleteMutation = useMutationQueryAPI({
+    action: createCouncilDef,
+    queryKeyLog: ["admin-councils"],
+    successMsg: "The council just had an update!",
+    errorMsg: "Fail to delete lecturer to council!",
+  });
   const handleClearClassrooms = () => {
     checkedCouncils.forEach((council: IAuthObject) => {
       deleteMutation.mutate(council);
@@ -160,7 +111,6 @@ export const CouncilManagementTab: FC<ICouncilManagementTab> = ({}) => {
     "modal modal-bottom sm:modal-middle": true,
     "modal-open": openModalClearClass,
   });
-  useToastifyMessage(deleteMutation, "Lecturer has been deleted successfully");
   return (
     <div className="flex flex-col gap-5 mt-5">
       <div className="flex-grow">

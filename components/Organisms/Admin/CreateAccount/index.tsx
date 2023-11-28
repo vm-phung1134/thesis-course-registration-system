@@ -13,13 +13,13 @@ import { deleteAuth, getAllLecturers } from "@/redux/reducer/auth/api";
 import { useAppDispatch } from "@/redux/store";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import classNames from "classnames";
-import { FC, useState, useEffect, SetStateAction } from "react";
+import { FC, useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer } from "react-toastify";
 import { useTableSearch } from "@/hooks/useTableSearch";
 import axios from "axios";
+import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
 
 interface ICreateAccountTab {}
 
@@ -62,16 +62,12 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
       throw new Error("Failed to delete user");
     });
   };
-  const deleteLecturerMutation = useMutation(
-    (postData: IAuthObject) => {
-      return deleteMockLecturer(postData);
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["mock-lecturer-list"]);
-      },
-    }
-  );
+  const deleteLecturerMutation = useMutationQueryAPI({
+    action: deleteMockLecturer,
+    queryKeyLog: ["mock-lecturer-list"],
+    successMsg: "Delete user successfully!",
+    errorMsg: "Fail to delete user!",
+  });
   const { data: mockLecturerLists } = useQuery<IAuthObject[]>({
     queryKey: ["mock-lecturer-list"],
     queryFn: async () => {
@@ -124,7 +120,7 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
     "modal-open": openCreateAccount,
   });
   const { data: accounts } = useQuery<IAuthObject[]>({
-    queryKey: ["accounts"],
+    queryKey: ["admin-accounts"],
     queryFn: async () => {
       const action = await dispatch(getAllLecturers());
       return action.payload || [];
@@ -146,17 +142,12 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
     "modal modal-bottom sm:modal-middle": true,
     "modal-open": openDelAccount,
   });
-  const queryClient = useQueryClient();
-  const deleteMutation = useMutation(
-    (postData: IAuthObject) => {
-      return dispatch(deleteAuth(postData));
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["accounts"]);
-      },
-    }
-  );
+  const deleteMutation = useMutationQueryAPI({
+    action: deleteAuth,
+    queryKeyLog: ["admin-accounts"],
+    successMsg: "Delete user successfully!",
+    errorMsg: "Fail to delete user!",
+  });
   const {
     checkedItems: checkedAccounts,
     handleCheckAll: handleCheckAllAccount,
@@ -173,22 +164,6 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
     filteredData: account_filteredData,
     handleSearch: account_handleSearch,
   } = useTableSearch(accounts);
-
-  useEffect(() => {
-    if (deleteMutation.isSuccess) {
-      toast.success("Account was successfully deleted", {
-        position: toast.POSITION.BOTTOM_LEFT,
-        autoClose: 2000,
-      });
-    }
-    if (deleteLecturerMutation.isSuccess) {
-      toast.success("Lecturer was successfully deleted", {
-        position: toast.POSITION.BOTTOM_LEFT,
-        autoClose: 2000,
-      });
-    }
-  }, [deleteLecturerMutation.isSuccess, deleteMutation.isSuccess]);
-
   return (
     <div className="grid grid-cols-12 gap-5">
       <div className="col-span-7 mt-3">
@@ -542,13 +517,6 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
           />
         </div>
       </dialog>
-      <ToastContainer
-        toastStyle={{
-          color: "black",
-          fontSize: "14px",
-          fontFamily: "Red Hat Text",
-        }}
-      />
       <ModalConfirm
         modalClass={modalClassCreateAccount}
         setOpenModal={setOpenCreateAccount}

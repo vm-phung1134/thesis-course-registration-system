@@ -36,3 +36,5 @@ export * from "./UploadFinalFileForm";
 export * from "./PointCard";
 export * from "./ContentCommentModal";
 export * from "./EmptySpace";
+export * from "./RegistrationTopicFormV2";
+export * from "./PrivateCommentForm"

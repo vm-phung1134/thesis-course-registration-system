@@ -3,7 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { token } from "./type";
 
-const apiURL = `http://qthuy2k1.shop/api/schedule`;
+const apiURL = `http://localhost:5000/api/schedule-report`;
 
 const createScheduleDef = createAsyncThunk(
   "schedule/createScheduleDef",

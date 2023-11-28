@@ -61,11 +61,22 @@ export const RegistrationTopicForm: FC<IRegistrationTopicFormProps> = ({
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
           !topic.id
-            ? addMutation.mutate({ ...values, student: currentUser })
+            ? addMutation.mutate({
+                title: values.title,
+                typeTopic: values.typeTopic,
+                studentID: currentUser.id,
+                memberQuantity: values.memberQuantity,
+                memberEmail: values.memberEmail,
+                description: values.description,
+              })
             : updateMutation.mutate({
-                id: topic.id,
-                ...values,
-                student: currentUser,
+                id: values.id,
+                title: values.title,
+                typeTopic: values.typeTopic,
+                studentID: currentUser.id,
+                memberQuantity: values.memberQuantity,
+                memberEmail: values.memberEmail,
+                description: values.description,
               });
           setSubmitting(false);
         }, 400);
@@ -101,7 +112,7 @@ export const RegistrationTopicForm: FC<IRegistrationTopicFormProps> = ({
                 />
                 <div>
                   <CountInput
-                    valueNumber={values.memberQuantiy}
+                    valueNumber={values.memberQuantity}
                     className="h-12"
                     onChange={handleChangeQuantityMember}
                     label="QL. Member"
@@ -109,7 +120,7 @@ export const RegistrationTopicForm: FC<IRegistrationTopicFormProps> = ({
                   />
                 </div>
               </div>
-              {values.memberQuantiy > 0 && (
+              {values.memberQuantity > 0 && (
                 <FormField
                   placeholder="Ex: nameb1910xxx@student.ctu.edu.vn"
                   type="text"

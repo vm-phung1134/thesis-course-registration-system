@@ -19,11 +19,11 @@ export const CriticalTask: FC<ICriticalTaskProps> = ({
   const checkCompletedTask = (submits: ISubmitObject[]): boolean => {
     return submits?.some(
       (item) =>
-        item.exerciseId === exercise?.id && currentUser.id === item.student.id
+        item.exerciseID === exercise?.id && currentUser.id === item.userID
     );
   };
   return (
-    <div className="h-fit p-5 relative overflow-hidden shadow-xl">
+    <div className="h-fit p-5 relative overflow-hidden shadow-xl rounded-lg">
       <div className="absolute top-0 bottom-0 -left-48 w-full h-full bg-slate-100 -skew-x-[30deg]"></div>
       <div className="relative">
         <div className="flex flex-col gap-2">
@@ -47,7 +47,7 @@ export const CriticalTask: FC<ICriticalTaskProps> = ({
           with the orange background color using...
         </p>
         <div className="flex justify-end mt-3">
-          <button className="bg-green-700 text-white px-5 font-medium text-xs py-1 rounded-sm">
+          <button className="bg-green-700 text-white px-5 font-medium text-xs py-2 rounded-md">
             View Detail
           </button>
         </div>

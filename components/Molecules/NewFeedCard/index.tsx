@@ -5,7 +5,7 @@ import { FC } from "react";
 
 export interface INewFeedCardProps {
   task: IExerciseObject;
-  handleOpenTaskModal: (task: any) => void;
+  handleOpenTaskModal: (task: IExerciseObject) => void;
 }
 
 export const NewFeedCard: FC<INewFeedCardProps> = ({

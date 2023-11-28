@@ -19,14 +19,11 @@ export const convertDateTime = (dateTime: IDateTime) => {
 };
 
 export const convertDateTimeFromString = (dateTime: string) => {
-  const updatedAt = "2023-11-26T11:10:59Z";
-  const date = new Date(updatedAt);
+  const date = new Date();
   const formattedDate = date.toLocaleString("en-EN", {
     year: "numeric",
     month: "long",
     day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
   });
 
   return formattedDate;

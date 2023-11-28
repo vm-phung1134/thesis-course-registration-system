@@ -15,15 +15,14 @@ import { IExerciseObject } from "@/interface/exercise";
 import { useAppDispatch } from "@/redux/store";
 import { useQuery } from "@tanstack/react-query";
 import { useClassroomStateContext } from "@/contexts/classroomState";
-import {
-  getAllExerciseInClass,
-  getExercise,
-} from "@/redux/reducer/exercise/api";
+import { getExercise } from "@/redux/reducer/exercise/api";
 import classNames from "classnames";
 import { ExerciseModal } from "@/components/Organisms";
 import { INITIATE_EXERCISE } from "@/data";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { getAllExerciseInClass } from "@/redux/reducer/classroom/api";
+import { getExerciseWithNearestDeadline } from "@/utils/getDeadline";
 
 function AssignmentTasks() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -55,28 +54,15 @@ function AssignmentTasks() {
   const { data: exercises } = useQuery<IExerciseObject[]>({
     queryKey: ["classroom-exercises", authClassroomState],
     queryFn: async () => {
-      const action = await dispatch(getAllExerciseInClass(authClassroomState));
-      return action.payload || [];
+      if (authClassroomState) {
+        const action = await dispatch(
+          getAllExerciseInClass(authClassroomState)
+        );
+        return action.payload || [];
+      }
     },
     initialData: [],
   });
-
-  // HANDLE EXERCISE
-  const { data: ex_fetch } = useQuery<IExerciseObject>({
-    queryKey: ["exercise", exRenew],
-    queryFn: async () => {
-      const action = await dispatch(getExercise(exRenew));
-      return action.payload || {};
-    },
-    initialData: exRenew,
-  });
-
-  const handleCriticalEx = (arr: IExerciseObject[]) => {
-    return arr.sort(
-      (a, b) => new Date(b.deadline).getTime() - new Date(a.deadline).getTime()
-    );
-  };
-
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
@@ -121,7 +107,7 @@ function AssignmentTasks() {
                     />
                   </div>
                 </div>
-                {handleCriticalEx(exercises)?.map((ex, index) => (
+                {exercises.map((ex, index) => (
                   <ExerciseCard
                     index={index}
                     handleOpenTaskModal={handleOpenExModal}
@@ -132,7 +118,9 @@ function AssignmentTasks() {
               </div>
               <div className="w-4/12">
                 {exercises.length > 0 ? (
-                  <CriticalTask exercise={handleCriticalEx(exercises)[0]} />
+                  <CriticalTask
+                    exercise={getExerciseWithNearestDeadline(exercises)}
+                  />
                 ) : (
                   <div className="h-60 flex gap-5 flex-col justify-center shadow-xl items-center p-5 border rounded-xl">
                     <Image
@@ -151,7 +139,7 @@ function AssignmentTasks() {
             </div>
             <ExerciseModal
               modalClass={modalClassEx}
-              exercise={ex_fetch}
+              exercise={exRenew}
               setOpenModalEx={setOpenModalEx}
               openModalEx={openModalEx}
             />

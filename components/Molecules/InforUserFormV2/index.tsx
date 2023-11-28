@@ -5,11 +5,8 @@ import {
   TitleFormField,
 } from "@/components/Atoms";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
-import { useCurrentUser } from "@/hooks/useGetCurrentUser";
-import { IAuthObject } from "@/interface/auth";
+import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
 import { updateAuth } from "@/redux/reducer/auth/api";
-import { useAppDispatch } from "@/redux/store";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Form, Formik } from "formik";
 import { FC, useEffect, useState } from "react";
 
@@ -23,28 +20,13 @@ export const InforUserFormV2: FC<IInforUserFormV2Props> = ({
   switchingForm,
 }) => {
   const [loading, setLoading] = useState<boolean>(true);
-  const queryClient = useQueryClient();
   const { currentUser } = useCurrentUserContext();
-  const dispatch = useAppDispatch();
-  const updateMutation = useMutation(
-    (postData: IAuthObject) => {
-      return new Promise((resolve, reject) => {
-        dispatch(updateAuth(postData))
-          .unwrap()
-          .then((data) => {
-            resolve(data);
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["auth", currentUser]);
-      },
-    }
-  );
+  const updateMutation = useMutationQueryAPI({
+    action: updateAuth,
+    queryKeyLog: ["get-one-auth"],
+    successMsg: "Your information has been updated!!!",
+    errorMsg: "Fail to update your information!!!",
+  });
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
@@ -97,11 +79,13 @@ export const InforUserFormV2: FC<IInforUserFormV2Props> = ({
         return (
           <>
             {loading ? (
-              <SnipperRound />
+              <div className="h-[30rem]">
+                <SnipperRound />
+              </div>
             ) : (
               <div>
                 <h3 className="text-xs font-medium mb-3">
-                  Step {switchingForm} of 2
+                  Step {switchingForm} of 3
                 </h3>
                 <Form>
                   <TitleFormField
@@ -112,6 +96,7 @@ export const InforUserFormV2: FC<IInforUserFormV2Props> = ({
                     placeholder="Ex: Nguyen Van Anh"
                     type="text"
                     label="Full name"
+                    className="rounded-xl bg-slate-100 border-none"
                     nameField="name"
                     value={values?.name}
                   />
@@ -119,6 +104,7 @@ export const InforUserFormV2: FC<IInforUserFormV2Props> = ({
                     type="text"
                     placeholder="Ex: nvan@ctu.edu.vn"
                     label="Email address"
+                    className="rounded-xl bg-slate-100 border-none"
                     nameField="email"
                     value={values?.email}
                   />
@@ -128,12 +114,14 @@ export const InforUserFormV2: FC<IInforUserFormV2Props> = ({
                       type="text"
                       label="Phone number"
                       nameField="phone"
+                      className="rounded-xl bg-slate-100 border-none"
                       value={values?.phone || ""}
                     />
                     <FormField
                       placeholder="Ex: IT colleage"
                       type="text"
                       label="School"
+                      className="rounded-xl bg-slate-100 border-none"
                       nameField="class"
                       value={values?.class || ""}
                     />
@@ -143,6 +131,7 @@ export const InforUserFormV2: FC<IInforUserFormV2Props> = ({
                     type="text"
                     label="Major"
                     nameField="major"
+                    className="rounded-xl bg-slate-100 border-none"
                     value={values?.major || ""}
                   />
                   <div className="flex justify-end items-center">

@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { token } from "./type";
-import { IPostObject } from "@/interface/post";
+import { IPostObject, IPostObjectInput } from "@/interface/post";
 import { IClassroomObject } from "@/interface/classroom";
 
 const apiURL = `http://qthuy2k1.shop/api/post`;
@@ -35,22 +35,6 @@ const getPost = createAsyncThunk(
   }
 );
 
-// GET ALL POST FOLLOW CLASS
-const getAllPostInClass = createAsyncThunk(
-  "post/getAllPostInClass",
-  async (postData: IClassroomObject | null) => {
-    const response = await axios.get(`${apiURL}/class/${postData?.id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    if (response.status === 200) {
-      return response.data.postInClass;
-    }
-    throw new Error("Failed to get all posts");
-  }
-);
-
 // GET ALL POST FOLLOW REPORT STAGE
 const getAllPostInReportStage = createAsyncThunk(
   "post/getAllPostInReportStage",
@@ -73,29 +57,31 @@ const getAllPostInReportStage = createAsyncThunk(
 // CREATE POST
 const createPost = createAsyncThunk(
   "post/createPost",
-  async (postData: IPostObject) => {
+  async (postData: IPostObjectInput) => {
     const formData = new FormData();
-    formData.append("uid", postData.uid);
     formData.append("title", postData.title);
-    formData.append("category", JSON.stringify(postData.category));
-    formData.append("classroom", JSON.stringify(postData.classroom));
-    formData.append("lecturer", JSON.stringify(postData.lecturer));
+    formData.append("categoryID", postData.categoryID);
+    formData.append("classroomID", postData.classroomID);
+    formData.append("authorID", postData.authorID);
     formData.append("description", postData.description);
-    formData.append("type", postData.type);
+
     if (postData.attachments) {
       for (let i = 0; i < postData.attachments.length; i++) {
-        formData.append("attachment", postData.attachments[i]);
+        formData.append("attachments", postData.attachments[i]);
       }
     }
 
-    const response = await axios.post(`${apiURL}`, formData, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "multipart/form-data",
-      },
-    });
-
-    if (response.status === 200) {
+    const response = await axios.post(
+      `http://qthuy2k1.shop/upload/post`,
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    if (response.status === 201) {
       return response.data;
     }
 
@@ -107,11 +93,15 @@ const createPost = createAsyncThunk(
 const updatePost = createAsyncThunk(
   "post/updatePost",
   async (postData: IPostObject) => {
-    const response = await axios.put(`${apiURL}/${postData.id}`, {"post": postData}, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axios.put(
+      `${apiURL}/${postData.id}`,
+      { post: postData },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     if (response.status === 200) {
       return response.data;
     }
@@ -139,7 +129,6 @@ export {
   getAllPosts,
   getPost,
   getAllPostInReportStage,
-  getAllPostInClass,
   createPost,
   updatePost,
   deletePost,

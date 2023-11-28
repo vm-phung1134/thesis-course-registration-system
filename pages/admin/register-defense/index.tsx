@@ -7,11 +7,10 @@ import {
 } from "@/components/Atoms";
 import { AdminTemplate } from "@/components/Templates";
 import { useState, useEffect } from "react";
-import { BREADCRUMB_REGISTER_DEFENSE_ADMIN } from "./mock-data";
 import useCheckedBox from "@/hooks/useCheckedBox";
 import { IStudentDefObject } from "@/interface/studef";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { FilterScheduledForm, Pagination } from "@/components/Molecules";
 import { InforMemberModal } from "@/components/Organisms";
 import { getTopic } from "@/redux/reducer/topic/api";
@@ -24,11 +23,15 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { useTableSearch } from "@/hooks/useTableSearch";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
+import { BREADCRUMB_REGISTER_DEFENSE_ADMIN } from "./mock-data";
+import { ITopicObject } from "@/interface/topic";
+import { INITIATE_TOPIC } from "@/data";
 
 function RegisterDefensePageAdmin() {
   const [loading, setLoading] = useState<boolean>(true);
-  const dispatch = useAppDispatch();
-  const queryClient = useQueryClient();
+  const [topicRenew, setTopicRenew] = useState<ITopicObject | null>(
+    INITIATE_TOPIC
+  );
   const { currentUser } = useCurrentUserContext();
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages] = useState<number>(10);
@@ -45,7 +48,6 @@ function RegisterDefensePageAdmin() {
   const handleNextPage = () => {
     setCurrentPage((prevPage) => prevPage + 1);
   };
-  const { topic } = useAppSelector((state) => state.topicReducer);
   const { data: studentDef } = usePagination({
     page: currentPage,
     limit: 10,
@@ -57,10 +59,12 @@ function RegisterDefensePageAdmin() {
     handleCheckItem: handleCheckStudent,
   } = useCheckedBox<IStudentDefObject>(studentDef);
   const { filteredData: stuf_filteredData, handleSearch: stuf_handleSearch } =
-  useTableSearch(studentDef);
+    useTableSearch(studentDef);
   const handleGetTopicMember = (studef: IStudentDefObject) => {
-    dispatch(getTopic(studef?.infor?.id));
     setOpenModalStudefDetail(!openModalStudefDetail);
+    if (studef.infor.topic) {
+      setTopicRenew(studef.infor.topic);
+    }
   };
   useEffect(() => {
     setTimeout(() => {
@@ -106,7 +110,10 @@ function RegisterDefensePageAdmin() {
                 />
                 <Button title="All" className="px-5 btn-sm rounded-none" />
               </div>
-              <FilterScheduledForm handleSearch={stuf_handleSearch} holderText="Search student ..." />
+              <FilterScheduledForm
+                handleSearch={stuf_handleSearch}
+                holderText="Search student ..."
+              />
             </div>
             {/*---------------------------TABLE----------------------------- */}
             <div className="w-full mx-auto shadow-xl min-h-[70vh]">
@@ -146,19 +153,19 @@ function RegisterDefensePageAdmin() {
                               scope="col"
                               className="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-200  dark:text-green-400"
                             >
-                              Email
-                            </th>
-                            <th
-                              scope="col"
-                              className="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-200  dark:text-green-400"
-                            >
                               ID Student
                             </th>
                             <th
                               scope="col"
                               className="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-200  dark:text-green-400"
                             >
-                              Major
+                              Topic name
+                            </th>
+                            <th
+                              scope="col"
+                              className="py-3 px-6 text-sm font-medium tracking-wider text-left text-gray-200  dark:text-green-400"
+                            >
+                              Type topic
                             </th>
                             <th
                               scope="col"
@@ -176,9 +183,8 @@ function RegisterDefensePageAdmin() {
                             {stuf_filteredData?.map((stu, index) => (
                               <motion.tr
                                 layout
-                                initial={{ opacity: 0,  y:200 }}
-                                animate={{ opacity: 1, y:0 }}
-                 
+                                initial={{ opacity: 0, y: 200 }}
+                                animate={{ opacity: 1, y: 0 }}
                                 key={stu.id}
                                 className="hover:bg-gray-100  cursor-pointer dark:hover:bg-gray-700"
                               >
@@ -244,7 +250,7 @@ function RegisterDefensePageAdmin() {
             </div>
           </div>
           <InforMemberModal
-            topic={topic}
+            topic={topicRenew}
             modalClass={modalClass}
             setOpenMemberModal={setOpenModalStudefDetail}
             openMemberModal={openModalStudefDetail}

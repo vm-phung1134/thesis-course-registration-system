@@ -16,26 +16,27 @@ export interface ICardMemberClassProps {
 }
 export const CardMember: FC<ICardMemberClassProps> = ({ member, index }) => {
   const dispatch = useAppDispatch();
-  const [topicRenew, setTopicRenew] = useState<IAuthObject>(INITIATE_AUTH);
+  const [topicRenew, setTopicRenew] = useState<ITopicObject>(INITIATE_TOPIC);
   const [openModalMemberDetail, setOpenModalMemberDetail] =
     useState<boolean>(false);
   const modalClass = classNames({
     "modal modal-bottom sm:modal-middle": true,
     "modal-open": openModalMemberDetail,
   });
-  const handleShowModalMember = (member: IMemberObject) => {
-    setOpenModalMemberDetail(!openModalMemberDetail);
-    setTopicRenew(member?.member);
-  };
+
   // GET TOPIC FOR EACH USER
   const { data: topic_fetch } = useQuery<ITopicObject>({
-    queryKey: ["get-one-topic", topicRenew.id],
+    queryKey: ["get-one-topic", member.member],
     queryFn: async () => {
-      const action = await dispatch(getTopic(topicRenew.id));
+      const action = await dispatch(getTopic(member.member));
       return action.payload || {};
     },
     initialData: INITIATE_TOPIC,
   });
+  const handleShowModalMember = () => {
+    setOpenModalMemberDetail(!openModalMemberDetail);
+    setTopicRenew(topic_fetch);
+  };
   return (
     <>
       <div className="p-3 bg-slate-100 rounded-xl shadow-lg">
@@ -66,8 +67,8 @@ export const CardMember: FC<ICardMemberClassProps> = ({ member, index }) => {
               <i className="fa-regular fa-message"></i>
             </div>
             <Button
-              type="button"
-              handleActions={() => handleShowModalMember(member)}
+              otherType="subscribe"
+              handleActions={handleShowModalMember}
               title="View detail"
               className="text-sm bg-green-700 btn-sm text-white border-none hover:bg-green-600 px-5 hover:border-none"
             />
@@ -75,7 +76,7 @@ export const CardMember: FC<ICardMemberClassProps> = ({ member, index }) => {
         </div>
       </div>
       <InforMemberModal
-        topic={topic_fetch}
+        topic={topicRenew}
         modalClass={modalClass}
         setOpenMemberModal={setOpenModalMemberDetail}
         openMemberModal={openModalMemberDetail}

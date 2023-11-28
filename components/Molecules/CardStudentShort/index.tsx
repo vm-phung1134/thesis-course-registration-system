@@ -18,20 +18,20 @@ export const CardStudentShort: FC<ICardStudentShortClassProps> = ({
         <Avatar
           widthStr="w-9 h-9"
           srcImg={
-            submit?.student?.photoSrc ||
+            submit.attachments[0].author.photoSrc ||
             "https://images.pexels.com/photos/39866/entrepreneur-startup-start-up-man-39866.jpeg?auto=compress&cs=tinysrgb&w=600"
           }
         />
         <div className="cursor-pointer">
-          <p className="text-sm text-black font-medium">{submit?.student?.name}</p>
+          <p className="text-sm text-black font-medium">{submit.attachments[0].author.name}</p>
           <ul className="w-fit">
             {submit?.attachments?.map((att) => (
               <li key={att.id} className="w-fit flex flex-wrap">
                 <a
                   className="text-[13px] text-blue-600 truncate"
-                  href={att.src}
+                  href={att.fileURL}
                 >
-                  {att?.name}
+                  {att?.fileName}
                 </a>
               </li>
             ))}

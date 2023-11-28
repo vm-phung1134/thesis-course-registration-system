@@ -25,16 +25,16 @@ import { AnimatePresence, motion } from "framer-motion";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import useToastifyMessage from "@/hooks/useToastify";
+import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
 
 interface ICreateClassroomTab {}
 
 export const CreateClassroomTab: FC<ICreateClassroomTab> = ({}) => {
   const dispatch = useAppDispatch();
-  const queryClient = useQueryClient();
   // HANLE ACCOUNT SERVICE
   // Render list
   const { data: lecturers } = useQuery<IAuthObject[]>({
-    queryKey: ["lecturers"],
+    queryKey: ["admin-lecturers"],
     queryFn: async () => {
       const action = await dispatch(getAllLecturers());
       return action.payload || [];
@@ -65,7 +65,7 @@ export const CreateClassroomTab: FC<ICreateClassroomTab> = ({}) => {
   });
   // Render list
   const { data: classrooms } = useQuery<IClassroomObject[]>({
-    queryKey: ["classrooms"],
+    queryKey: ["admin-classrooms"],
     queryFn: async () => {
       const action = await dispatch(getAllClassrooms());
       return action.payload || [];
@@ -89,25 +89,12 @@ export const CreateClassroomTab: FC<ICreateClassroomTab> = ({}) => {
   };
 
   // Handle clear classrooms
-  const deleteMutation = useMutation(
-    (postData: IClassroomObject) => {
-      return new Promise((resolve, reject) => {
-        dispatch(deleteClassroom(postData))
-          .unwrap()
-          .then((data) => {
-            resolve(data);
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["classrooms"]);
-      },
-    }
-  );
+  const deleteMutation = useMutationQueryAPI({
+    action: deleteClassroom,
+    queryKeyLog: ["admin-classrooms"],
+    successMsg: "Delete classroom successfully!",
+    errorMsg: "Fail to delete classroom!",
+  });
   const [openModalClearClass, setOpenModalClearClass] =
     useState<boolean>(false);
   const modalClassModalClearClass = classNames({
@@ -120,25 +107,12 @@ export const CreateClassroomTab: FC<ICreateClassroomTab> = ({}) => {
     });
   };
 
-  const updateMutation = useMutation(
-    (postData: IClassroomObject) => {
-      return new Promise((resolve, reject) => {
-        dispatch(updateClassroom(postData))
-          .unwrap()
-          .then((data) => {
-            resolve(data);
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["classrooms"]);
-      },
-    }
-  );
+  const updateMutation = useMutationQueryAPI({
+    action: updateClassroom,
+    queryKeyLog: ["admin-classrooms"],
+    successMsg: "Classrooms status switched to lock!",
+    errorMsg: "Fail to update classroom!",
+  });
   const handleLockClassrooms = () => {
     checkedClassrooms.forEach(async (classroom: IClassroomObject) => {
       await updateMutation.mutate({
@@ -160,9 +134,6 @@ export const CreateClassroomTab: FC<ICreateClassroomTab> = ({}) => {
     setOpenModalEditClassForm(!openModalEditClassForm);
     dispatch(getClassroom(lecturer));
   };
-
-  useToastifyMessage(deleteMutation, "Classroom was successfully deleted");
-  useToastifyMessage(updateMutation, "Classrooms status switched to lock");
 
   return (
     <div className="flex flex-col gap-5 mt-5">
@@ -353,7 +324,9 @@ export const CreateClassroomTab: FC<ICreateClassroomTab> = ({}) => {
         <div className="flex justify-between items-center my-2">
           <div className="mb-3">
             <h4 className="font-medium">Classrooms</h4>
-            <p className="text-sm text-slate-500">Total {classrooms?.length} classrooms</p>
+            <p className="text-sm text-slate-500">
+              Total {classrooms?.length} classrooms
+            </p>
           </div>
           <div className="flex gap-3">
             <IconButton

@@ -2,7 +2,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { token } from "./type";
 import { IExerciseObject, IExerciseObjectInput } from "@/interface/exercise";
-import { IClassroomObject } from "@/interface/classroom";
 
 const apiURL = `http://qthuy2k1.shop/api/exercise`;
 
@@ -66,7 +65,7 @@ const createExercise = createAsyncThunk(
       }
     );
 
-    if (response.status === 200) {
+    if (response.status === 201) {
       return response.data;
     }
     throw new Error("Failed to create exercise");
@@ -133,5 +132,5 @@ export {
   createExercise,
   updateExercise,
   deleteExercise,
-  getAllExerciseInReportStage
+  getAllExerciseInReportStage,
 };
