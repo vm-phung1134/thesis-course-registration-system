@@ -116,9 +116,9 @@ export const INITIATE_COMMENT: ICommentObjectInput = {
 };
 
 export const INITIATE_PRIVATE_COMMENT: IPrivateComment = {
-  userId: "",
+  user: INITIATE_AUTH,
   comments: [],
-  lecturerId: "",
+  lecturer: INITIATE_AUTH,
 };
 
 export const INITIATE_PRIVATE_COMMENT_ITEM: IPrivateCommentItem = {

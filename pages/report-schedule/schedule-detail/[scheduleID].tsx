@@ -15,6 +15,7 @@ import { ICouncilDef } from "@/interface/schedule";
 import { getOneCouncilInScheduleLecturer } from "@/redux/reducer/schedule-def/api";
 import { FilterScheduledForm } from "@/components/Molecules";
 import { AnimatePresence, motion } from "framer-motion";
+import { roleInCouncil } from "@/data";
 
 function ScheduleDetail() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -31,7 +32,7 @@ function ScheduleDetail() {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 1000);
+    }, 1200);
   }, []);
   return (
     <>
@@ -39,12 +40,19 @@ function ScheduleDetail() {
         {loading ? (
           <SnipperRound />
         ) : (
-          <>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+          >
             <Breadcrumb dataBreadcrumb={BREADCRUMB_MAINBOARD} />
             <div className="grid grid-cols-12 gap-5 mt-5">
               <div className="col-span-4">
                 <div className="p-5 bg-slate-50 shadow-lg rounded-xl">
-                  <div onClick={() => history.back()} className="text-sm my-1 flex gap-2 items-center cursor-pointer">
+                  <div
+                    onClick={() => history.back()}
+                    className="text-sm my-1 flex gap-2 items-center cursor-pointer"
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
@@ -59,31 +67,33 @@ function ScheduleDetail() {
                     </svg>{" "}
                     <p> Back to schedule</p>
                   </div>
-                  <h4 className="text-green-700 my-5 font-bold text-xl">
-                    The Crown Prosecution Service
+                  <h4 className="text-green-700 my-3 font-bold text-xl">
+                    Graduate thesis committee
                   </h4>
-                  <p className="normal-case text-gray-400 text-xs italic">
-                    Date of foundation of the council <span className="text-red-600 font-medium">{councilInSchedule?.schedule.timeSlots[0].timeSlot.date}</span>
+                  <p className="normal-case font-medium text-sm my-2">
+                   Instructor{" "}
+                    <span className="text-red-600 font-medium capitalize">
+                      {
+                        councilInSchedule?.schedule?.timeSlots[0]?.student
+                          ?.instructor?.name
+                      }
+                    </span>
                   </p>
-                  <div className="bg-green-700 h-[1px] w-full my-3"></div>
-                  <ul className="text-sm flex flex-col gap-2">
-                    <li className="flex gap-2">
-                      <p>Chairman of the Council: </p>
-                      <p className="capitalize font-medium">Nguyen Vo Danh</p>
-                    </li>
-                    <li className="flex gap-2">
-                      <p>The clerk to the council: </p>
-                      <p className="capitalize font-medium">
-                        Tran Thi le trang
-                      </p>
-                    </li>
-                  </ul>
+                  <p className="normal-case text-gray-400 text-xs italic">
+                    Date of foundation of the council{" "}
+                    <span className="text-red-600 font-medium">
+                      {
+                        councilInSchedule?.schedule?.timeSlots[0]?.timeSlot
+                          ?.date
+                      }
+                    </span>
+                  </p>
                   <div className="bg-green-700 h-[0.5px] w-full my-3"></div>
                   <div className="flex gap-3 flex-col-reverse tracking-wider">
                     {councilInSchedule?.council
                       ?.slice()
                       .reverse()
-                      .map((council) => (
+                      .map((council, index) => (
                         <div
                           key={council?.id}
                           className="shadow-lg overflow-hidden relative w-full rounded-xl px-5 py-4 flex flex-col justify-center"
@@ -98,16 +108,18 @@ function ScheduleDetail() {
                           <div className="relative flex flex-col gap-1">
                             <p className="text-sm font-semibold">
                               <span className="capitalize font-bold">
-                                {council.name}{" "}
-                                <span className="text-red-500">
-                                  {council.id ===
-                                    councilInSchedule?.schedule?.timeSlots[0]
-                                      ?.student?.instructor?.id &&
-                                    "- Instructor"}
-                                </span>
+                                {council.name}
                               </span>
                             </p>
                             <div className="text-sm">
+                              <p>
+                                <span className="text-gray-500">
+                                  Role in council:{" "}
+                                </span>
+                                <span className="font-medium">
+                                  {roleInCouncil[index]}
+                                </span>
+                              </p>
                               <p>
                                 <span className="text-gray-500">Email: </span>
                                 {council?.email}
@@ -223,7 +235,7 @@ function ScheduleDetail() {
                 </div>
               </div>
             </div>
-          </>
+          </motion.div>
         )}
       </MainboardTemplate>
     </>

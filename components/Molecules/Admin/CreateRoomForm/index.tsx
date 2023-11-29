@@ -9,34 +9,17 @@ import { createRoomDef } from "@/redux/reducer/room-def/api";
 import { ModalConfirm } from "../..";
 import classNames from "classnames";
 import useToastifyMessage from "@/hooks/useToastify";
+import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
 
 export interface ICreateRoomFormProps {}
 
 export const CreateRoomForm: FC<ICreateRoomFormProps> = ({}) => {
-  const dispatch = useAppDispatch();
-  const queryClient = useQueryClient();
-  const addMutation = useMutation(
-    (postData: Omit<IRoomDefObject, "id">) => {
-      return new Promise((resolve, reject) => {
-        dispatch(createRoomDef(postData))
-          .unwrap()
-          .then((data) => {
-            resolve(data);
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["room-defs"]);
-      },
-    }
-  );
-
-  useToastifyMessage(addMutation, "Create room defense was successfully");
-
+  const addMutation = useMutationQueryAPI({
+    action: createRoomDef,
+    queryKeyLog: ["admin-room-def"],
+    successMsg: "Create room defense successfully!",
+    errorMsg: "Fail to create room defense!",
+  });
   return (
     <Formik
       initialValues={INITIATE_ROOM_DEF}
@@ -47,7 +30,7 @@ export const CreateRoomForm: FC<ICreateRoomFormProps> = ({}) => {
       onSubmit={(values, { setSubmitting, resetForm }) => {
         setTimeout(() => {
           addMutation.mutate(values);
-          resetForm()
+          resetForm();
         }, 400);
       }}
     >

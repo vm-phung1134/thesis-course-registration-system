@@ -22,6 +22,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import useToastifyMessage from "@/hooks/useToastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
+import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
 
 interface ICreateRoomTab {}
 
@@ -58,25 +59,10 @@ export const CreateRoomTab: FC<ICreateRoomTab> = ({}) => {
     setOpenEditRoom(!openEditRoom);
     await dispatch(getOneRoomDef(room));
   };
-  const deleteMutation = useMutation(
-    (postData: IRoomDefObject) => {
-      return new Promise((resolve, reject) => {
-        dispatch(deleteRoomDef(postData))
-          .unwrap()
-          .then((data) => {
-            resolve(data);
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["room-defs"]);
-      },
-    }
-  );
+  const deleteMutation = useMutationQueryAPI({
+    action: deleteRoomDef,
+    queryKeyLog: ["admin-room-def"],
+  });
   const handleClearRoom = () => {
     checkedRooms.forEach((room: IRoomDefObject) => {
       deleteMutation.mutate(room);
@@ -87,7 +73,7 @@ export const CreateRoomTab: FC<ICreateRoomTab> = ({}) => {
     "modal modal-bottom sm:modal-middle": true,
     "modal-open": openModalClearRoom,
   });
-  useToastifyMessage(deleteMutation, "Room has been deleted successfully");
+  useToastifyMessage(deleteMutation, "Room has been deleted successfully!", "Fail to delete room defense!");
   return (
     <div className="grid grid-cols-12 gap-5">
       <div className="col-span-5 p-5 mt-5 border shadow-md">

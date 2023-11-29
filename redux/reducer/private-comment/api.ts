@@ -45,6 +45,7 @@ const getAllPrivateCommentForLecturer = createAsyncThunk(
 const createPrivateComment = createAsyncThunk(
   "private-comment/createPrivateComment",
   async (postData: IPrivateComment) => {
+    console.log(postData)
     const response = await axios.post(
       `http://localhost:5000/api/private-comment/`,
       postData,

@@ -2,11 +2,8 @@ import { Button } from "@/components/Atoms";
 import { FilterScheduledForm, ScheduleForm } from "@/components/Molecules";
 import { IThesisDef } from "@/interface/schedule";
 import Link from "next/link";
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import useToastifyMessage from "@/hooks/useToastify";
-import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer } from "react-toastify";
 import { useTableSearch } from "@/hooks/useTableSearch";
 
 export interface IScheduleTimeProps {

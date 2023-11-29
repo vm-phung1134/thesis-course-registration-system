@@ -5,7 +5,7 @@ import {
   signOut,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
-  fetchSignInMethodsForEmail,
+  deleteUser,
 } from "firebase/auth";
 import { auth, provider } from "../config/firebase-config";
 import Cookies from "js-cookie";
@@ -14,7 +14,6 @@ import { useRouter } from "next/router";
 import { loginAuth } from "@/redux/reducer/auth/api";
 import { useUserCookies } from "@/hooks/useCookies";
 import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
-import { v4 as uuidv4 } from "uuid";
 
 interface AuthContextType {
   message: string;
@@ -59,9 +58,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const addMutation = useMutationQueryAPI({
     action: loginAuth,
     queryKeyLog: ["admin-accounts"],
-    successMsg: "Added user successfully!",
-    errorMsg: "Fail to add user!",
   });
+
+  // useToastifyMessage(addMutation, "Adding the user successfully!", "Fail to add new user!");
+
   const signInWithGoogle = () => {
     signInWithPopup(auth, provider)
       .then(async (result) => {
@@ -128,22 +128,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     lecturer: IAuthObject
   ) => {
     try {
-      let objectId = uuidv4();
-      const signInMethods = await fetchSignInMethodsForEmail(auth, email);
-      if (signInMethods.length > 0) {
-        await addMutation.mutate({
-          id: objectId,
-          email: email,
-          name: lecturer.name,
-          photoSrc: lecturer.photoSrc,
-          role: lecturer.role,
-          hashedPassword: password,
-          phone: lecturer.phone,
-          class: lecturer.class,
-          major: lecturer.major,
-        });
-        return;
-      }
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,

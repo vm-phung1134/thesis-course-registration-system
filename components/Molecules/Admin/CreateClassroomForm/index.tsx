@@ -2,12 +2,10 @@ import { FC } from "react";
 import { Form, Formik } from "formik";
 import { Button, FormField } from "@/components/Atoms";
 import { INITIATE_CLASSROOM } from "@/data";
-import { useAppDispatch } from "@/redux/store";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { IClassroomObject, IClassroomObjectInput } from "@/interface/classroom";
 import { createClassroom } from "@/redux/reducer/classroom/api";
 import { IAuthObject } from "@/interface/auth";
 import useToastifyMessage from "@/hooks/useToastify";
+import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
 
 export interface IACreateClassroomFormProps {
   listAccount: IAuthObject[];
@@ -20,29 +18,12 @@ export const ACreateClassroomForm: FC<IACreateClassroomFormProps> = ({
   setOpenModal,
   openModal,
 }) => {
-  const dispatch = useAppDispatch();
-  const queryClient = useQueryClient();
-  const addMutation = useMutation(
-    (postData: Omit<IClassroomObjectInput, "id">) => {
-      return new Promise((resolve, reject) => {
-        dispatch(createClassroom(postData))
-          .unwrap()
-          .then((data) => {
-            resolve(data);
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["classrooms"]);
-      },
-    }
-  );
+  const addMutation = useMutationQueryAPI({
+    action : createClassroom,
+    queryKeyLog: ["admin-classrooms"]
+  })
 
-  useToastifyMessage(addMutation, "Generating the classroom successfully");
+  useToastifyMessage(addMutation, "Generating the classroom successfully!", "Fail to generate classroom!");
 
   return (
     <Formik

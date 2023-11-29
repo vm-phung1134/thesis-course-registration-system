@@ -32,7 +32,7 @@ function DashboardPage() {
   const [createScheduled, setCreateScheduled] = useState<any>({});
   const dispatch = useAppDispatch();
   const { data: scheduled } = useQuery<IThesisDef | null>({
-    queryKey: ["schedule-def"],
+    queryKey: ["admin-schedule-def"],
     queryFn: async () => {
       const action = await dispatch(getScheduleDef());
       return action.payload || null;

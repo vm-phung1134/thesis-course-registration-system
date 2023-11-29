@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 /* eslint-disable @next/next/no-img-element */
 import { Avatar, Button, NormalAvatar } from "@/components/Atoms";
 import DarkModeToggle from "@/components/Atoms/ToggleDarkMode";
@@ -24,13 +25,13 @@ import {
 import { useAppDispatch } from "@/redux/store";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
-import { FC, useEffect, useState } from "react";
+import { FC, memo, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useClassroomStateContext } from "@/contexts/classroomState";
 import Link from "next/link";
 
 export interface INavbarProps {}
-export const Navbar: FC<INavbarProps> = () => {
+export const Navbar: FC<INavbarProps> = memo(() => {
   const dispatch = useAppDispatch();
   const { logout, checkUserLoginState } = useAuthContext();
   const { currentUser } = useCurrentUser();
@@ -54,12 +55,7 @@ export const Navbar: FC<INavbarProps> = () => {
     },
     initialData: [],
   });
-  const getInfoStudentMessage = (
-    arr: IPrivateCommentItem[],
-    totalArr: IPrivateComment
-  ) => {
-    return arr.find((item) => item.user.id === totalArr.userId)?.user;
-  };
+  console.log(lecturerComments)
   const [selectedItem, setSelectedItem] = useState<IPrivateComment | null>(
     null
   );
@@ -254,12 +250,14 @@ export const Navbar: FC<INavbarProps> = () => {
                     className="drawer-overlay"
                   ></label>
                   <div className="menu p-4 w-[28rem] relative h-screen bg-base-100 text-base-content">
-                    <h4 className="font-bold text-2xl mb-5 text-green-700">
-                      Chats{" "}
-                      <span className="text-base text-black font-normal">{`(${lecturerComments.length} Message)`}</span>
-                    </h4>
+                    <div className="mb-5">
+                      <h4 className="font-bold text-2xl text-green-700">
+                        Classroom Chats
+                      </h4>
+                      <span className="text-sm text-black font-thin">{`( You have received a new notification )`}</span>
+                    </div>
                     <FilterScheduledForm holderText="Search message" />
-                    {lecturerComments.map((comment, index) => {
+                    {lecturerComments?.map((comment, index) => {
                       return (
                         <motion.div
                           initial={{ opacity: 0 }}
@@ -271,21 +269,13 @@ export const Navbar: FC<INavbarProps> = () => {
                         >
                           <div className="flex gap-3">
                             <NormalAvatar
-                              photoSrc={
-                                getInfoStudentMessage(comment.comments, comment)
-                                  ?.photoSrc || ""
-                              }
+                              photoSrc={comment?.user?.photoSrc}
                               setSize="w-10"
                             />
                             <div className="flex flex-col">
                               <div className="flex gap-3 items-center">
                                 <p className="font-medium">
-                                  {
-                                    getInfoStudentMessage(
-                                      comment.comments,
-                                      comment
-                                    )?.name
-                                  }
+                                  {comment?.user?.name}
                                 </p>
                                 <time className="text-[10px] opacity-50">
                                   12:45
@@ -300,6 +290,7 @@ export const Navbar: FC<INavbarProps> = () => {
                   </div>
                 </div>
               )}
+              {/* DETAIL MESSAGE OF STUDENT FOR LECTURER */}
               {currentUser.role === ROLE_ASSIGNMENT.LECTURER &&
                 selectedItem && (
                   <motion.div
@@ -332,21 +323,11 @@ export const Navbar: FC<INavbarProps> = () => {
                         <div className="flex gap-3">
                           <NormalAvatar
                             setSize="w-10"
-                            photoSrc={
-                              getInfoStudentMessage(
-                                selectedItem.comments,
-                                selectedItem
-                              )?.photoSrc || ""
-                            }
+                            photoSrc={selectedItem?.user?.photoSrc}
                           />
                           <div>
                             <h4 className="font-medium">
-                              {
-                                getInfoStudentMessage(
-                                  selectedItem.comments,
-                                  selectedItem
-                                )?.name
-                              }
+                              {selectedItem?.user?.name}
                             </h4>
                             <p className="text-xs">Active 36m ago</p>
                           </div>
@@ -366,12 +347,12 @@ export const Navbar: FC<INavbarProps> = () => {
                         {selectedItem.comments.map((cmt) => {
                           return (
                             <div key={cmt.id} className="overflow-y-scroll">
-                              {selectedItem.userId === cmt.user.id && (
+                              {selectedItem.user.id === cmt.user.id && (
                                 <div className="chat chat-start">
                                   <div className="chat-image avatar">
                                     <NormalAvatar
                                       setSize="w-8"
-                                      photoSrc={cmt.user.photoSrc}
+                                      photoSrc={cmt?.user?.photoSrc}
                                     />
                                   </div>
                                   <div className="chat-bubble chat-bubble-success">
@@ -387,7 +368,7 @@ export const Navbar: FC<INavbarProps> = () => {
                                   <div className="chat-image avatar">
                                     <NormalAvatar
                                       setSize="w-8"
-                                      photoSrc={cmt.user.photoSrc}
+                                      photoSrc={cmt?.user?.photoSrc}
                                     />
                                   </div>
                                   <div className="chat-bubble">
@@ -403,7 +384,7 @@ export const Navbar: FC<INavbarProps> = () => {
                         })}
                       </div>
                       <div className="mt-auto fixed bottom-3 left-2 right-2">
-                        <PrivateCommentForm userId={selectedItem.userId} />
+                        <PrivateCommentForm user={selectedItem.user} />
                       </div>
                     </div>
                   </motion.div>
@@ -523,7 +504,7 @@ export const Navbar: FC<INavbarProps> = () => {
       </div>
     </div>
   );
-};
+});
 
 // const NotificationItem = ({ notify }: { notify: INotification }) => {
 //   let action: string;

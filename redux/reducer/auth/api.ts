@@ -108,24 +108,6 @@ const checkStateSubscribe = createAsyncThunk(
     throw new Error("Failed to check state subcribe");
   }
 );
-// UNSUBSCRIBE STATE
-const unsubscribeState = createAsyncThunk(
-  "auth/unsubscribeState",
-  async (postData: IAuthObject) => {
-    const response = await axios.delete(
-      `${apiURL}/un-subscribe/${postData.id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    if (response.status === 200) {
-      return response.data;
-    }
-    throw new Error("Failed to check state subcribe");
-  }
-);
 
 const deleteAuth = createAsyncThunk(
   "auth/deleteAuth",
@@ -144,7 +126,6 @@ const deleteAuth = createAsyncThunk(
 
 export {
   getAllAuths,
-  unsubscribeState,
   getOneAuth,
   loginAuth,
   updateAuth,

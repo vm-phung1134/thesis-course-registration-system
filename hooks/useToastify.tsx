@@ -4,7 +4,8 @@ import { toast } from "react-toastify";
 
 const useToastify = (
   mutation: any,
-  successMessage: string
+  successMessage: string,
+  errorMessage?: string
 ) => {
   useEffect(() => {
     if (mutation.isSuccess) {
@@ -13,7 +14,13 @@ const useToastify = (
         autoClose: 2000,
       });
     }
-  }, [mutation.isSuccess, successMessage]);
+    if (mutation.isError) {
+      toast.error(errorMessage, {
+        position: toast.POSITION.BOTTOM_LEFT,
+        autoClose: 2000,
+      });
+    }
+  }, [mutation.isSuccess, successMessage, errorMessage, mutation.isError]);
 };
 
 export default useToastify;

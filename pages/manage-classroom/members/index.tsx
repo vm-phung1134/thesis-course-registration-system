@@ -32,7 +32,7 @@ function MemberTab() {
   const dispatch = useAppDispatch();
   const { authClassroomState } = useClassroomStateContext();
   const { data: members } = useQuery<IMemberObject[]>({
-    queryKey: ["members", authClassroomState],
+    queryKey: ["classroom-members", authClassroomState],
     queryFn: async () => {
       const action = await dispatch(getAllMemberClassroom(authClassroomState));
       return action.payload || [];

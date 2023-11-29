@@ -12,6 +12,7 @@ import { getAllRoomDefs } from "@/redux/reducer/room-def/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
+import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
 export interface IScheduleFormProps {
   setCreateScheduled: any;
   createScheduled: React.Dispatch<any>;
@@ -24,7 +25,7 @@ export const ScheduleForm: FC<IScheduleFormProps> = ({
   const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
   const { data: council_def } = useQuery<IAuthObject[]>({
-    queryKey: ["council_def"],
+    queryKey: ["get-council-def"],
     queryFn: async () => {
       const action = await dispatch(getAllCouncilDefs());
       return action.payload || [];
@@ -32,7 +33,7 @@ export const ScheduleForm: FC<IScheduleFormProps> = ({
     initialData: [],
   });
   const { data: student_def } = useQuery<IAuthObject[]>({
-    queryKey: ["student_def"],
+    queryKey: ["get-student-def"],
     queryFn: async () => {
       const action = await dispatch(getAllStudentDefs());
       return action.payload || [];
@@ -40,37 +41,19 @@ export const ScheduleForm: FC<IScheduleFormProps> = ({
     initialData: [],
   });
   const { data: room_def } = useQuery<IAuthObject[]>({
-    queryKey: ["room_def"],
+    queryKey: ["get-room-def"],
     queryFn: async () => {
       const action = await dispatch(getAllRoomDefs());
       return action.payload || [];
     },
     initialData: [],
   });
-  const addMutation = useMutation(
-    (postData: { quantityWeek: number; startDate: string }) => {
-      return new Promise((resolve, reject) => {
-        dispatch(createScheduleDef(postData))
-          .unwrap()
-          .then((data) => {
-            setCreateScheduled(data);
-            toast.success(data.message, {
-              position: toast.POSITION.BOTTOM_LEFT,
-              autoClose: 3000,
-            });
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["schedule-def"]);
-      },
-    }
-  );
-
+  const addMutation = useMutationQueryAPI({
+    action: createScheduleDef,
+    queryKeyLog: ["admin-schedule-def"],
+    successMsg: "Generating schedule thesis defense successfully!",
+    errorMsg: "Fail to generate schedule defense!",
+  });
   // Function handle number of rooms
   const handleNumberRoomDef = (wks: number, studef: number) => {
     if (wks <= 0) {

@@ -118,6 +118,7 @@ function ReportStageDetailPage() {
                 ))}
                 {exercises?.map((ex, index) => (
                   <ExerciseCard
+                    index={index}
                     handleOpenTaskModal={handleOpenExModal}
                     key={ex.id}
                     exercise={ex}

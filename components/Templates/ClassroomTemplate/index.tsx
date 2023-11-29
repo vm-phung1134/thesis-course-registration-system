@@ -35,21 +35,8 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
     "modal modal-bottom sm:modal-middle": true,
     "modal-open": openCreatePostModal,
   });
-  // useEffect(() => {
-  //   const calculateTimeLeft = () => {
-  //     const countdownDate = new Date("2023-10-01T00:00:00Z").getTime();
-  //     const now = new Date().getTime();
-  //     const difference = countdownDate - now;
-
-  //     setTimeLeft(Math.floor(difference / 1000));
-  //   };
-  //   const timer = setInterval(calculateTimeLeft, 1000);
-  //   return () => clearInterval(timer);
-  // }, []);
-
   // HANDLE API
   const { currentUser } = useCurrentUserContext();
-  const [user] = useUserCookies();
   const [loading, setLoading] = useState<boolean>(true);
   const { authClassroomState } = useClassroomStateContext();
   useEffect(() => {

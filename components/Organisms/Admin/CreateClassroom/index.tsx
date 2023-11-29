@@ -92,8 +92,6 @@ export const CreateClassroomTab: FC<ICreateClassroomTab> = ({}) => {
   const deleteMutation = useMutationQueryAPI({
     action: deleteClassroom,
     queryKeyLog: ["admin-classrooms"],
-    successMsg: "Delete classroom successfully!",
-    errorMsg: "Fail to delete classroom!",
   });
   const [openModalClearClass, setOpenModalClearClass] =
     useState<boolean>(false);
@@ -110,8 +108,6 @@ export const CreateClassroomTab: FC<ICreateClassroomTab> = ({}) => {
   const updateMutation = useMutationQueryAPI({
     action: updateClassroom,
     queryKeyLog: ["admin-classrooms"],
-    successMsg: "Classrooms status switched to lock!",
-    errorMsg: "Fail to update classroom!",
   });
   const handleLockClassrooms = () => {
     checkedClassrooms.forEach(async (classroom: IClassroomObject) => {
@@ -134,6 +130,17 @@ export const CreateClassroomTab: FC<ICreateClassroomTab> = ({}) => {
     setOpenModalEditClassForm(!openModalEditClassForm);
     dispatch(getClassroom(lecturer));
   };
+
+  useToastifyMessage(
+    deleteMutation,
+    "Delete the classroom successfully!",
+    "Fail to delete classroom!"
+  );
+  useToastifyMessage(
+    updateMutation,
+    "Update the classroom successfully!",
+    "Fail to update classroom!"
+  );
 
   return (
     <div className="flex flex-col gap-5 mt-5">

@@ -1,10 +1,11 @@
+/* eslint-disable react/display-name */
 import { LogoApp } from "@/components/Molecules";
 import Link from "next/link";
-import { FC } from "react";
+import { FC, memo } from "react";
 
 export interface ISidebarLecturerViewProps {}
 
-export const SidebarLecturerView: FC<ISidebarLecturerViewProps> = ({}) => {
+export const SidebarLecturerView: FC<ISidebarLecturerViewProps> = memo(({}) => {
   return (
     <div className="fixed top-0 left-0 bottom-0">
       <div className="flex justify-center">
@@ -205,4 +206,4 @@ export const SidebarLecturerView: FC<ISidebarLecturerViewProps> = ({}) => {
       </div>
     </div>
   );
-};
+});

@@ -107,11 +107,28 @@ const updateMember = createAsyncThunk(
   }
 );
 
+// OUT CLASSROOM STATE
+const leaveClassroom = createAsyncThunk(
+  "member/leaveClassroom",
+  async (postData: IAuthObject) => {
+    const response = await axios.delete(`${apiURL}/${postData.id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (response.status === 200) {
+      return response.data;
+    }
+    throw new Error("Failed to leave the classroom");
+  }
+);
+
 export {
   getAllMembers,
   deleteMember,
   createMember,
   getMember,
   updateMember,
+  leaveClassroom,
   getAllMemberClassroom,
 };

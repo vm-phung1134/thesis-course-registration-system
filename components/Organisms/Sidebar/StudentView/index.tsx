@@ -1,11 +1,12 @@
+/* eslint-disable react/display-name */
 import { LogoApp } from "@/components/Molecules";
 import { useLanguageContext } from "@/contexts/languageContext";
 import Link from "next/link";
-import { FC } from "react";
+import { FC, memo } from "react";
 
 export interface ISidebarStudentViewProps {}
 
-export const SidebarStudentView: FC<ISidebarStudentViewProps> = ({}) => {
+export const SidebarStudentView: FC<ISidebarStudentViewProps> = memo(({}) => {
   const { t } = useLanguageContext();
   return (
     <div className="fixed top-0 left-0 bottom-0">
@@ -231,4 +232,4 @@ export const SidebarStudentView: FC<ISidebarStudentViewProps> = ({}) => {
       </ul>
     </div>
   );
-};
+});

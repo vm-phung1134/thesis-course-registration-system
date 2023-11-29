@@ -35,7 +35,7 @@ const getScheduleDef = createAsyncThunk("schedule/getScheduleDef", async () => {
 const getOneCouncilInScheduleStudent = createAsyncThunk(
   "schedule/getOneCouncilInScheduleStudent",
   async (id: string) => {
-    const response = await axios.get(`${apiURL}student/${id}`, {
+    const response = await axios.get(`${apiURL}/student/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -50,7 +50,7 @@ const getOneCouncilInScheduleStudent = createAsyncThunk(
 const getOneCouncilInScheduleLecturer = createAsyncThunk(
   "schedule/getOneCouncilInScheduleLecturer",
   async (id: string) => {
-    const response = await axios.get(`${apiURL}lecturer/${id}`, {
+    const response = await axios.get(`${apiURL}/lecturer/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -65,7 +65,7 @@ const getOneCouncilInScheduleLecturer = createAsyncThunk(
 const getScheduleForStudent = createAsyncThunk(
   "schedule/getScheduleForStudent",
   async (id: string) => {
-    const response = await axios.get(`${apiURL}student-schedule/${id}`, {
+    const response = await axios.get(`${apiURL}/student-schedule/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -80,7 +80,7 @@ const getScheduleForStudent = createAsyncThunk(
 const getScheduleForLecturer = createAsyncThunk(
   "schedule/getScheduleForLecturer",
   async (id: string) => {
-    const response = await axios.get(`${apiURL}lecturer-schedule/${id}`, {
+    const response = await axios.get(`${apiURL}/lecturer-schedule/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

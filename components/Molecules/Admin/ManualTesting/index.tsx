@@ -2,7 +2,7 @@ import { Button, CountInput, FormField } from "@/components/Atoms";
 import { Form, Formik } from "formik";
 import { FC, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useAppDispatch } from "@/redux/store";
 import { IStudentDefObject } from "@/interface/studef";
 import {
@@ -12,88 +12,50 @@ import {
 } from "@/redux/reducer/student-def/api";
 import { IAuthObject } from "@/interface/auth";
 import { getAllCouncilDefs } from "@/redux/reducer/council-def/api";
+import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
+import useToastifyMessage from "@/hooks/useToastify";
 
 export interface IManualTestingScheduleprops {}
 
 export const ManualTestingSchedule: FC<IManualTestingScheduleprops> = ({}) => {
   const [isChecked, setIsChecked] = useState(false);
   const dispatch = useAppDispatch();
-  const queryClient = useQueryClient();
-  const addStudefMutation = useMutation(
-    (postData: IStudentDefObject) => {
-      return new Promise((resolve, reject) => {
-        dispatch(createStudentDef(postData))
-          .unwrap()
-          .then((data) => {
-            resolve(data);
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["stud-defs", "council-defs"]);
-      },
-    }
-  );
+  const addStudefMutation = useMutationQueryAPI({
+    action: createStudentDef,
+    queryKeyLog: ["admin-student-def", "admin-council-def"],
+  });
   const createMockDataScheduleArrange = async (
     teacherCount: IAuthObject[],
-    studentCount: number,
-    isRandom: boolean
+    studentCount: number
   ) => {
     await dispatch(deleteAllStudentDef());
-    if (isRandom) {
-      let remainingStudents = studentCount;
-      for (let i = 0; i < teacherCount.length; i++) {
-        const randomStudentCount =
-          Math.floor(
-            Math.random() * (remainingStudents / teacherCount.length)
-          ) +
-          remainingStudents / teacherCount.length;
-        remainingStudents -= randomStudentCount;
-        for (let j = 1; j < randomStudentCount + 1; j++) {
-          addStudefMutation.mutate({
-            infor: {
-              name: `Student ${j}`,
-              photoSrc:
-                "https://images.pexels.com/photos/445109/pexels-photo-445109.jpeg?auto=compress&cs=tinysrgb&w=600",
-              email: `user${j}b191000${j}.student.ctu.edu.vn`,
-              phone: "0999999999",
-              class: `DI19V7A${j}`,
-              major: "IT1",
-              role: "student",
-              id: `SV${j}GV${i}`,
-            },
-            instructor: teacherCount[i],
-          } as IStudentDefObject);
-        }
-      }
-    } else {
-      const studentPerTeacher = Math.floor(studentCount / teacherCount.length);
-      for (let i = 0; i < teacherCount.length; i++) {
-        for (let j = 1; j < studentPerTeacher + 1; j++) {
-          addStudefMutation.mutate({
-            infor: {
-              name: `Student ${j}`,
-              photoSrc:
-                "https://images.pexels.com/photos/445109/pexels-photo-445109.jpeg?auto=compress&cs=tinysrgb&w=600",
-              email: `user${j}b191000${j}.student.ctu.edu.vn`,
-              phone: "0999999999",
-              class: `DI19V7A${j}`,
-              major: "IT1",
-              role: "student",
-              id: `SV${j}GV${i}`,
-            },
-            instructor: teacherCount[i],
-          } as IStudentDefObject);
-        }
+
+    let remainingStudents = studentCount;
+    for (let i = 0; i < teacherCount.length; i++) {
+      const randomStudentCount =
+        Math.floor(Math.random() * (remainingStudents / teacherCount.length)) +
+        20;
+      remainingStudents -= randomStudentCount;
+      for (let j = 1; j < randomStudentCount + 1; j++) {
+        addStudefMutation.mutate({
+          infor: {
+            name: `Student ${j}`,
+            photoSrc:
+              "https://images.pexels.com/photos/445109/pexels-photo-445109.jpeg?auto=compress&cs=tinysrgb&w=600",
+            email: `user${j}b191000${j}.student.ctu.edu.vn`,
+            phone: "0999999999",
+            class: `DI19V7A${j}`,
+            major: "IT1",
+            role: "student",
+            id: `SV${j}GV${i}`,
+          },
+          instructor: teacherCount[i],
+        } as IStudentDefObject);
       }
     }
   };
   const { data: council_defs } = useQuery<IAuthObject[]>({
-    queryKey: ["council-defs"],
+    queryKey: ["admin-council-def"],
     queryFn: async () => {
       const action = await dispatch(getAllCouncilDefs());
       return action.payload || [];
@@ -101,13 +63,19 @@ export const ManualTestingSchedule: FC<IManualTestingScheduleprops> = ({}) => {
     initialData: [],
   });
   const { data: stud_defs } = useQuery<IStudentDefObject[]>({
-    queryKey: ["stud-defs"],
+    queryKey: ["admin-student-def"],
     queryFn: async () => {
       const action = await dispatch(getAllStudentDefs());
       return action.payload || [];
     },
     initialData: [],
   });
+
+  useToastifyMessage(
+    addStudefMutation,
+    "Generating mock students successfully!",
+    "Fail to Generate list student!"
+  );
   return (
     <Formik
       initialValues={{
@@ -120,11 +88,7 @@ export const ManualTestingSchedule: FC<IManualTestingScheduleprops> = ({}) => {
       }}
       onSubmit={(values) => {
         setTimeout(() => {
-          createMockDataScheduleArrange(
-            council_defs,
-            values.quantityStudef,
-            isChecked
-          );
+          createMockDataScheduleArrange(council_defs, values.quantityStudef);
         }, 400);
       }}
     >

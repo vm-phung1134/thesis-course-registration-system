@@ -20,6 +20,7 @@ import { FC, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ToastContainer } from "react-toastify";
 import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
+import useToastifyMessage from "@/hooks/useToastify";
 
 interface ICouncilManagementTab {}
 
@@ -47,8 +48,6 @@ export const CouncilManagementTab: FC<ICouncilManagementTab> = ({}) => {
   const addMutation = useMutationQueryAPI({
     action: createCouncilDef,
     queryKeyLog: ["admin-councils"],
-    successMsg: "The council just had an update!",
-    errorMsg: "Fail to add lecturer to council!",
   });
 
   const [openModalEditAuth, setOpenModalEditAuth] = useState<boolean>(false);
@@ -97,8 +96,6 @@ export const CouncilManagementTab: FC<ICouncilManagementTab> = ({}) => {
   const deleteMutation = useMutationQueryAPI({
     action: createCouncilDef,
     queryKeyLog: ["admin-councils"],
-    successMsg: "The council just had an update!",
-    errorMsg: "Fail to delete lecturer to council!",
   });
   const handleClearClassrooms = () => {
     checkedCouncils.forEach((council: IAuthObject) => {
@@ -111,6 +108,19 @@ export const CouncilManagementTab: FC<ICouncilManagementTab> = ({}) => {
     "modal modal-bottom sm:modal-middle": true,
     "modal-open": openModalClearClass,
   });
+
+  useToastifyMessage(
+    addMutation,
+    "The council just had an update!",
+    "Fail to create council!"
+  );
+
+  useToastifyMessage(
+    deleteMutation,
+    "The council just had an update!",
+    "Fail to delete council!"
+  );
+
   return (
     <div className="flex flex-col gap-5 mt-5">
       <div className="flex-grow">

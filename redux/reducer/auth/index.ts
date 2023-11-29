@@ -8,7 +8,6 @@ import {
   getAllLecturers,
   getOneAuth,
   loginAuth,
-  unsubscribeState,
   updateAuth,
 } from "./api";
 
@@ -123,20 +122,6 @@ const authSlice = createSlice({
     });
     builder.addCase(checkStateSubscribe.rejected, (state, action) => {
       state.isLoading = false;
-      state.error = action.error.message ?? "Something went wrong.";
-    });
-    //UNSUBSCRIBE STATE SUBCRIBE
-    builder.addCase(unsubscribeState.pending, (state) => {
-      state.isLoading = true;
-      state.isSuccess = false;
-    });
-    builder.addCase(unsubscribeState.fulfilled, (state, action) => {
-      state.isLoading = false;
-      state.isSuccess = true;
-    });
-    builder.addCase(unsubscribeState.rejected, (state, action) => {
-      state.isLoading = false;
-      state.isSuccess = false;
       state.error = action.error.message ?? "Something went wrong.";
     });
   },

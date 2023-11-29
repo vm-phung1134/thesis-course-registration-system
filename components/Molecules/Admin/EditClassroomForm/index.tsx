@@ -7,6 +7,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { IClassroomObject } from "@/interface/classroom";
 import { updateClassroom } from "@/redux/reducer/classroom/api";
 import useToastifyMessage from "@/hooks/useToastify";
+import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
 
 export interface IAEditClassroomFormProps {
   classroom: IClassroomObject;
@@ -19,30 +20,12 @@ export const AEditClassroomForm: FC<IAEditClassroomFormProps> = ({
   setOpenModal,
   openModal,
 }) => {
-  const dispatch = useAppDispatch();
-  const queryClient = useQueryClient();
-  const updateMutation = useMutation(
-    (postData: IClassroomObject) => {
-      return new Promise((resolve, reject) => {
-        dispatch(updateClassroom(postData))
-          .unwrap()
-          .then((data) => {
-            resolve(data);
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["classrooms"]);
-      },
-    }
-  );
-
-  useToastifyMessage(updateMutation, "Classroom was successfully updated");
-
+  const updateMutation = useMutationQueryAPI({
+    action: updateClassroom,
+    queryKeyLog: ["admin-classrooms"],
+    successMsg: "Classroom was successfully updated!",
+    errorMsg: "Fail to delete classroom!",
+  });
   return (
     <Formik
       enableReinitialize

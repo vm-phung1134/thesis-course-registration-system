@@ -1,6 +1,6 @@
 import { CodeClass, MenuClassroom, NormalAvatar } from "@/components/Atoms";
 import { ROLE_ASSIGNMENT } from "@/contexts/authContext";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import {
   DATA_MENU_CLASSROOM_LECTURER,
   DATA_MENU_CLASSROOM_STUDENT,
@@ -24,6 +24,16 @@ export const ClassroomFound: FC<IClassroomFoundProps> = ({
 }) => {
   const { currentUser } = useCurrentUserContext();
   const [timeLeft, setTimeLeft] = useState<number>(0);
+  // useEffect(() => {
+  //   const calculateTimeLeft = () => {
+  //     const countdownDate = new Date("2023-12-24T00:00:00Z").getTime();
+  //     const now = new Date().getTime();
+  //     const difference = countdownDate - now;
+  //     setTimeLeft(Math.floor(difference / 1000));
+  //   };
+  //   const timer = setInterval(calculateTimeLeft, 1000);
+  //   return () => clearInterval(timer);
+  // }, []);
   return (
     <div className="px-5">
       <div className="grid grid-cols-12 gap-4 my-3">

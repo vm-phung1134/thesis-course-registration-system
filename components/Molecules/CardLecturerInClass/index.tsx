@@ -1,8 +1,11 @@
 import { ROLE_ASSIGNMENT } from "@/contexts/authContext";
 import { useClassroomStateContext } from "@/contexts/classroomState";
-import { INITIATE_CLASSROOM, STATE_LECTURER_CLASSROOM } from "@/data";
+import {
+  INITIATE_CLASSROOM,
+  INITIATE_MEMBER,
+  STATE_LECTURER_CLASSROOM,
+} from "@/data";
 import { IAuthObject } from "@/interface/auth";
-import { unsubscribeState } from "@/redux/reducer/auth/api";
 import { updateClassroom } from "@/redux/reducer/classroom/api";
 import { FC, useState } from "react";
 import { ModalConfirm } from "..";
@@ -12,6 +15,10 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
 import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
+import { getMember, leaveClassroom } from "@/redux/reducer/member/api";
+import { useQuery } from "@tanstack/react-query";
+import { useAppDispatch } from "@/redux/store";
+import { IMemberObject } from "@/interface/member";
 
 export interface ICardLecturerInClassProps {
   lecturer: IAuthObject;
@@ -20,6 +27,7 @@ export interface ICardLecturerInClassProps {
 export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
   lecturer,
 }) => {
+  const dispatch = useAppDispatch();
   const [openLockClass, setOpenLockClass] = useState<boolean>(false);
   const modalClassLockClass = classNames({
     "modal modal-bottom sm:modal-middle": true,
@@ -33,13 +41,23 @@ export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
   const { authClassroomState } = useClassroomStateContext();
   const { currentUser } = useCurrentUserContext();
   const deleteMutation = useMutationQueryAPI({
-    action: unsubscribeState,
+    action: leaveClassroom,
     queryKeyLog: ["clasroom-members"],
     successMsg: "You have exited the thesis group!!!",
     errorMsg: "Fail to exit the thesis group!!",
   });
+  const { data: member } = useQuery<IMemberObject>({
+    queryKey: ["get-one-member", currentUser],
+    queryFn: async () => {
+      const action = await dispatch(getMember(currentUser));
+      return action.payload || INITIATE_MEMBER;
+    },
+    initialData: INITIATE_MEMBER,
+  });
   const handleUnsubscribeState = () => {
-    deleteMutation.mutate(currentUser);
+    if (member.id) {
+      deleteMutation.mutate(member.id);
+    }
   };
 
   // HANDLE LOCK CLASSROOM FOR LECTURER

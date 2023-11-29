@@ -11,15 +11,14 @@ import useCheckedBox from "@/hooks/useCheckedBox";
 import { IAuthObject } from "@/interface/auth";
 import { deleteAuth, getAllLecturers } from "@/redux/reducer/auth/api";
 import { useAppDispatch } from "@/redux/store";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import classNames from "classnames";
-import { FC, useState, useEffect } from "react";
+import { FC, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { useTableSearch } from "@/hooks/useTableSearch";
 import axios from "axios";
 import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
+import useToastifyMessage from "@/hooks/useToastify";
 
 interface ICreateAccountTab {}
 
@@ -144,9 +143,7 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
   });
   const deleteMutation = useMutationQueryAPI({
     action: deleteAuth,
-    queryKeyLog: ["admin-accounts"],
-    successMsg: "Delete user successfully!",
-    errorMsg: "Fail to delete user!",
+    queryKeyLog: ["admin-accounts"]
   });
   const {
     checkedItems: checkedAccounts,
@@ -158,12 +155,13 @@ export const CreateAccountTab: FC<ICreateAccountTab> = ({}) => {
       deleteMutation.mutate(account);
     });
   };
-
   // Use custom hook to search item in table by using useDebounce
   const {
     filteredData: account_filteredData,
     handleSearch: account_handleSearch,
   } = useTableSearch(accounts);
+
+  useToastifyMessage(deleteMutation, "Delete user successfully!", "Fail to delete user!");
   return (
     <div className="grid grid-cols-12 gap-5">
       <div className="col-span-7 mt-3">

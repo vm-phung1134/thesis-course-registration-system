@@ -10,7 +10,7 @@ const apiURL = `http://qthuy2k1.shop/api/class`;
 const getAllClassrooms = createAsyncThunk(
   "member/getAllClassrooms",
   async () => {
-    const response = await axios.get(`${apiURL}`, {
+    const response = await axios.get(`${apiURL}?limit=100`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
