@@ -27,6 +27,7 @@ import {
   getAllExerciseInClass,
   getAllPostInClass,
 } from "@/redux/reducer/classroom/api";
+import { ROLE_ASSIGNMENT } from "@/contexts/authContext";
 
 function ManageClassroomTab() {
   const { currentUser } = useCurrentUserContext();
@@ -42,7 +43,7 @@ function ManageClassroomTab() {
         const action = await dispatch(getAllPostInClass(authClassroomState));
         return action.payload || [];
       }
-      return []
+      return [];
     },
     initialData: [],
   });
@@ -55,7 +56,7 @@ function ManageClassroomTab() {
         );
         return action.payload || [];
       }
-      return []
+      return [];
     },
     initialData: [],
   });
@@ -121,9 +122,9 @@ function ManageClassroomTab() {
                         animate={{ opacity: 1 }}
                         transition={{ duration: 1, delay: index * 0.5 }}
                         key={post.id}
-                        className="text-xs border rounded-xl"
+                        className="text-xs border rounded-xl p-3 "
                       >
-                        <div className="p-3 flex flex-col gap-2">
+                        <div className=" flex flex-col gap-2">
                           <div>
                             <p className="capitalize font-bold text-green-700">
                               {post?.author?.name}{" "}
@@ -136,7 +137,31 @@ function ManageClassroomTab() {
                             </p>
                           </div>
                           <h5 className="font-medium">{post?.title}</h5>
-                          <div className="flex justify-end">
+                          <div className="flex justify-between items-end">
+                            <div className="">
+                              {currentUser?.role ===
+                                ROLE_ASSIGNMENT.LECTURER && (
+                                <div className="flex gap-1">
+                                  <button className="flex gap-2 px-2 py-1 text-xs items-center">
+                                    <svg
+                                      className="w-4 h-4"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      fill="none"
+                                      viewBox="0 0 24 24"
+                                      stroke="currentColor"
+                                    >
+                                      <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="2"
+                                        d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                                      />
+                                    </svg>
+                                    <p>Edit</p>
+                                  </button>
+                                </div>
+                              )}
+                            </div>
                             <Button
                               otherType="subscribe"
                               handleActions={() => handleOpenPostModal(post)}

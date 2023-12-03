@@ -111,9 +111,9 @@ const deleteExercise = createAsyncThunk(
 // GET ALL EXERCISE FOLLOW REPORT STAGE
 const getAllExerciseInReportStage = createAsyncThunk(
   "exercise/getAllExerciseInReportStage",
-  async (postData: any) => {
+  async (postData: { classroomId: string; categoryId: string }) => {
     const response = await axios.get(
-      `${apiURL}/stage/${postData.classroomId}&${postData.categoryId}`,
+      `http://qthuy2k1.shop/api/class/${postData.classroomId}/exercise/stage/${postData.categoryId}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -121,7 +121,7 @@ const getAllExerciseInReportStage = createAsyncThunk(
       }
     );
     if (response.status === 200) {
-      return response.data.exerciseInStage;
+      return response.data.exercises;
     }
     throw new Error("Failed to get all exercises");
   }

@@ -38,9 +38,9 @@ const getPost = createAsyncThunk(
 // GET ALL POST FOLLOW REPORT STAGE
 const getAllPostInReportStage = createAsyncThunk(
   "post/getAllPostInReportStage",
-  async (postData: any) => {
+  async (postData: { classroomId: string; categoryId: string }) => {
     const response = await axios.get(
-      `${apiURL}/stage/${postData.classroomId}&${postData.categoryId}`,
+      `http://qthuy2k1.shop/api/class/${postData.classroomId}/post/stage/${postData.categoryId}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -48,7 +48,7 @@ const getAllPostInReportStage = createAsyncThunk(
       }
     );
     if (response.status === 200) {
-      return response.data.postInStage;
+      return response.data.posts;
     }
     throw new Error("Failed to get all posts");
   }
@@ -81,7 +81,7 @@ const createPost = createAsyncThunk(
         },
       }
     );
-    if (response.status === 201) {
+    if (response.status === 200) {
       return response.data;
     }
 

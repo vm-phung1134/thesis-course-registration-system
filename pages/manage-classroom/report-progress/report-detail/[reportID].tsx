@@ -32,8 +32,8 @@ function ReportStageDetailPage() {
     queryFn: async () => {
       const action = await dispatch(
         getAllPostInReportStage({
-          classroomId: authClassroomState,
-          categoryId: id,
+          classroomId: authClassroomState?.id || "",
+          categoryId: id || "",
         })
       );
       return action.payload || [];
@@ -46,8 +46,8 @@ function ReportStageDetailPage() {
     queryFn: async () => {
       const action = await dispatch(
         getAllExerciseInReportStage({
-          classroomId: authClassroomState?.id,
-          categoryId: id,
+          classroomId: authClassroomState?.id || "",
+          categoryId: id || "",
         })
       );
       return action.payload || [];
