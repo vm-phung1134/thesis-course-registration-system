@@ -9,20 +9,17 @@ import {
 } from "@/components/Molecules";
 import { useQuery } from "@tanstack/react-query";
 import { IPostObject } from "@/interface/post";
-import { useAppDispatch, useAppSelector } from "@/redux/store";
-import { getAllPostInReportStage, getPost } from "@/redux/reducer/post/api";
+import { useAppDispatch } from "@/redux/store";
+import { getAllPostInReportStage } from "@/redux/reducer/post/api";
 import { useSearchParams } from "next/navigation";
-import {
-  getAllExerciseInReportStage,
-  getExercise,
-} from "@/redux/reducer/exercise/api";
+import { getAllExerciseInReportStage } from "@/redux/reducer/exercise/api";
 import { IExerciseObject } from "@/interface/exercise";
 import { ExerciseModal, PostModal } from "@/components/Organisms";
 import classNames from "classnames";
 import { useClassroomStateContext } from "@/contexts/classroomState";
 import { getReportStage } from "@/redux/reducer/report-stage/api";
 import { ICategoryObject } from "@/interface/category";
-import { INITIATE_CATEGORY } from "@/data";
+import { INITIATE_CATEGORY, INITIATE_EXERCISE, INITIATE_POST } from "@/data";
 
 function ReportStageDetailPage() {
   const dispatch = useAppDispatch();
@@ -31,7 +28,7 @@ function ReportStageDetailPage() {
   const { authClassroomState } = useClassroomStateContext();
   const [loading, setLoading] = useState<boolean>(true);
   const { data: posts } = useQuery<IPostObject[]>({
-    queryKey: ["posts", authClassroomState, id],
+    queryKey: ["classroom-posts", authClassroomState, id],
     queryFn: async () => {
       const action = await dispatch(
         getAllPostInReportStage({
@@ -45,7 +42,7 @@ function ReportStageDetailPage() {
   });
 
   const { data: exercises } = useQuery<IExerciseObject[]>({
-    queryKey: ["exercises", authClassroomState?.id, id],
+    queryKey: ["classroom-exercises", authClassroomState?.id, id],
     queryFn: async () => {
       const action = await dispatch(
         getAllExerciseInReportStage({
@@ -58,7 +55,7 @@ function ReportStageDetailPage() {
     initialData: [],
   });
   const { data: category } = useQuery<ICategoryObject>({
-    queryKey: ["get-category"],
+    queryKey: ["get-one-category"],
     queryFn: async () => {
       const action = await dispatch(getReportStage(id || ""));
       return action.payload || {};
@@ -66,8 +63,8 @@ function ReportStageDetailPage() {
     initialData: INITIATE_CATEGORY,
   });
   // HANLE OPEN POST/EXERCISE MODAL
-  const { post } = useAppSelector((state) => state.postReducer);
-  const { exercise } = useAppSelector((state) => state.exerciseReducer);
+  const [exRenew, setExRenew] = useState<IExerciseObject>(INITIATE_EXERCISE);
+  const [exPost, setExPost] = useState<IPostObject>(INITIATE_POST);
   const [openModalPost, setOpenModalPost] = useState<boolean>(false);
   const [openModalEx, setOpenModalEx] = useState<boolean>(false);
   const modalClassPost = classNames({
@@ -80,12 +77,12 @@ function ReportStageDetailPage() {
   });
   const handleOpenPostModal = (task: IPostObject) => {
     setOpenModalPost?.(!openModalPost);
-    dispatch(getPost(task));
+    setExPost(task);
   };
 
   const handleOpenExModal = (task: IExerciseObject) => {
     setOpenModalEx?.(!openModalEx);
-    dispatch(getExercise(task));
+    setExRenew(task);
   };
   useEffect(() => {
     setTimeout(() => {
@@ -147,13 +144,13 @@ function ReportStageDetailPage() {
         )}
         <PostModal
           modalClass={modalClassPost}
-          post={post}
+          post={exPost}
           setOpenModalPost={setOpenModalPost}
           openModalPost={openModalPost}
         />
         <ExerciseModal
           modalClass={modalClassEx}
-          exercise={exercise}
+          exercise={exRenew}
           setOpenModalEx={setOpenModalEx}
           openModalEx={openModalEx}
         />

@@ -19,6 +19,7 @@ import { getMember, leaveClassroom } from "@/redux/reducer/member/api";
 import { useQuery } from "@tanstack/react-query";
 import { useAppDispatch } from "@/redux/store";
 import { IMemberObject } from "@/interface/member";
+import { useLanguageContext } from "@/contexts/languageContext";
 
 export interface ICardLecturerInClassProps {
   lecturer: IAuthObject;
@@ -27,6 +28,7 @@ export interface ICardLecturerInClassProps {
 export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
   lecturer,
 }) => {
+  const { t } = useLanguageContext();
   const dispatch = useAppDispatch();
   const [openLockClass, setOpenLockClass] = useState<boolean>(false);
   const modalClassLockClass = classNames({
@@ -64,8 +66,8 @@ export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
   const updateMutation = useMutationQueryAPI({
     action: updateClassroom,
     queryKeyLog: ["get-one-classroom"],
-    successMsg: "Classroom is currently locked!!!",
-    errorMsg: "Fail to lock classroom!!",
+    successMsg: "Classroom state has changed!!!",
+    errorMsg: "Fail to change state the classroom!!",
   });
   const handleOpenModal = () => {
     setOpenLockClass(!openLockClass);
@@ -76,11 +78,13 @@ export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
   const handleLockClassroom = (e: React.MouseEvent<HTMLButtonElement>) => {
     const status_class: string = e.currentTarget.value;
     updateMutation.mutate({
-      ...(authClassroomState || INITIATE_CLASSROOM),
+      id: authClassroomState?.id,
+      lecturerID: authClassroomState?.lecturer.id,
+      classCourse: authClassroomState?.classCourse,
+      quantityStudent: authClassroomState?.quantityStudent,
       status: status_class,
     });
   };
-
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -88,7 +92,7 @@ export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
       transition={{ duration: 0.7, ease: "easeOut" }}
     >
       <h3 className="text-sm font-medium capitalize tracking-wider">
-        Thesis graduation - CT550
+        {t.classroom_item1}
       </h3>
       <h4 className="text-[24px] font-semibold uppercase">{lecturer?.name}</h4>
       <div className="flex justify-between items-center">
@@ -147,7 +151,7 @@ export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
                     alt="icon-message"
                     src={"https://cdn-icons-gif.flaticon.com/6569/6569164.gif"}
                   />
-                  <p className="text-xs">Locked</p>
+                  <p className="text-xs">{t.classroom_item_clock} </p>
                 </button>
               ) : (
                 <button
@@ -163,7 +167,7 @@ export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
                       "https://cdn-icons-gif.flaticon.com/10352/10352708.gif"
                     }
                   />
-                  <p className="text-xs">Opening</p>
+                  <p className="text-xs">{t.classroom_item_open}</p>
                 </button>
               )}
             </>
@@ -174,7 +178,7 @@ export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
                 onClick={handleOpenModalLeave}
                 className="ml-5 mt-5 py-2 px-5 text-xs rounded-lg bg-white border border-red-500 transform ease-linear duration-300 text-red-600 hover:bg-red-600 hover:text-white font-bold -skew-x-[20deg]"
               >
-                <p className="skew-x-12">Leave Group</p>
+                <p className="skew-x-12">{t.classroom_item_unsub}</p>
               </button>
             )}
           {currentUser?.role === ROLE_ASSIGNMENT.STUDENT &&
@@ -186,7 +190,7 @@ export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
                   alt="icon-message"
                   src={"https://cdn-icons-gif.flaticon.com/6569/6569164.gif"}
                 />
-                <p className="text-xs">Locked</p>
+                <p className="text-xs">{t.classroom_item_clock}</p>
               </button>
             )}
         </div>

@@ -3,8 +3,13 @@ import { IGeneralLinkAttachment } from "@/interface/submit";
 
 export interface IUploadReportObject {
   id?: string;
-  uid: string;
-  attachments?: (any | IGeneralLinkAttachment | File)[];
-  student: IAuthObject;
+  attachment?: IGeneralLinkAttachment | any;
+  author: IAuthObject;
+}
+
+export interface IUploadReportObjectInput {
+  id?: string;
+  attachments?: (IGeneralLinkAttachment | any)[];
+  authorID: string;
   status: string;
 }

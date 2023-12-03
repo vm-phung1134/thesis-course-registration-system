@@ -33,8 +33,10 @@ import {
   getAllExerciseInClass,
   getAllPostInClass,
 } from "@/redux/reducer/classroom/api";
+import { useLanguageContext } from "@/contexts/languageContext";
 
 function CriticalTasks() {
+  const { t } = useLanguageContext();
   const [loading, setLoading] = useState<boolean>(true);
   const [exRenew, setExRenew] = useState<IExerciseObject>(INITIATE_EXERCISE);
   const [postRenew, setPostRenew] = useState<IPostObject>(INITIATE_POST);
@@ -135,8 +137,7 @@ function CriticalTasks() {
             <Breadcrumb dataBreadcrumb={BREADCRUMB_CRITICAL_TASKS} />
             <div className="my-3 py-2 flex gap-2 items-center">
               <h4 className="text-xl capitalize text-green-700 font-medium ">
-                Critical{" "}
-                <span className="text-orange-500"> Report progress</span>
+                {t.task_item_1}
               </h4>
               <div className="flex-grow h-[0.5px] bg-green-700"></div>
             </div>

@@ -8,5 +8,49 @@
   "sideBarStudentItem7": "Critical tasks",
   "sideBarStudentItem8": "Completed tasks",
   "sideBarStudentItem9": "I point",
-  "sideBarStudentItem10": "Setting"
+  "sideBarStudentItem10": "Setting",
+  "sideBarStudentItem11": "Enroll defense",
+  "sideBarStudentItem12": "Help & support",
+
+  "navBarItem1": "Profile",
+  "navBarItem2": "Dark mode",
+  "navBarItem3": "Settings",
+  "navBarItem4": "Sign out",
+
+  "unsub_title1": "Wellcome to your classroom",
+  "unsub_title2": "The College of Information Technology",
+
+  "acc_register_title_page": "Manage personal profile",
+  "acc_register_item1": "Registration of research topics",
+  "acc_register_item2": "Name of research topic",
+  "acc_register_item3": "Type of topic",
+  "acc_register_item4": "QL. Member",
+  "acc_register_item5": "Email member",
+  "acc_register_item6": "Description",
+
+  "acc_profile_item1": "Personal Information",
+  "acc_profile_item2": "Full Name",
+  "acc_profile_item3": "ID Student",
+  "acc_profile_item4": "Email",
+  "acc_profile_item5": "Phone",
+  "acc_profile_item6": "Class",
+  "acc_profile_item7": "Major",
+
+  "classroom_item1": "Thesis Graduation - CT550",
+  "classroom_item_clock": "Clocked",
+  "classroom_item_unsub": "Leave Group",
+  "classroom_item_open": "Opening",
+  "classroom_item_menu1": "Newfeeds",
+  "classroom_item_menu2": "Report Grogress",
+  "classroom_item_menu3": "Members",
+  "classroom_item_menu4": "Point",
+  "classroom_item_countdown": "Countdown Report",
+  
+  "enroll_item_1": "Your schedule for defending your graduation thesis in",
+  "enroll_item_2": "Upload your final files",
+  "enroll_item_3": "The thesis committee",
+  "enroll_item_4": "Schedule for your thesis defense",
+
+  "task_item_1": "Report critical progress",
+  "completed_item_1": "Progress report completed"
 }

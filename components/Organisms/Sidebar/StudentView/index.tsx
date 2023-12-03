@@ -130,7 +130,9 @@ export const SidebarStudentView: FC<ISidebarStudentViewProps> = memo(({}) => {
               />
             </svg>
 
-            <span className="mx-2 text-[15px] font-medium">Enroll defense</span>
+            <span className="mx-2 text-[15px] font-medium">
+              {t.sideBarStudentItem11}
+            </span>
           </Link>
         </li>
         <li>
@@ -225,7 +227,7 @@ export const SidebarStudentView: FC<ISidebarStudentViewProps> = memo(({}) => {
               <line x1="14" y1="4" x2="10" y2="20"></line>
             </svg>
             <span className="mx-2 text-[15px] font-medium">
-              {`Helps & support`}
+              {t.sideBarStudentItem12}
             </span>
           </Link>
         </li>

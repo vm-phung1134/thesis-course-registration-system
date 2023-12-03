@@ -28,12 +28,12 @@ import Image from "next/image";
 import { FC, memo, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useClassroomStateContext } from "@/contexts/classroomState";
-import Link from "next/link";
 
 export interface INavbarProps {}
 export const Navbar: FC<INavbarProps> = memo(() => {
+  const { t } = useLanguageContext();
   const dispatch = useAppDispatch();
-  const { logout, checkUserLoginState } = useAuthContext();
+  const { logout } = useAuthContext();
   const { currentUser } = useCurrentUser();
   const { handleChangeLanguage, localeValue } = useLanguageContext();
   const { data: comments } = useQuery<IPrivateComment>({
@@ -55,16 +55,12 @@ export const Navbar: FC<INavbarProps> = memo(() => {
     },
     initialData: [],
   });
-  console.log(lecturerComments)
   const [selectedItem, setSelectedItem] = useState<IPrivateComment | null>(
     null
   );
   const handleClick = (item: IPrivateComment) => {
     setSelectedItem(item);
   };
-  useEffect(() => {
-    checkUserLoginState();
-  }, [checkUserLoginState]);
   return (
     <div className="navbar shadow-sm border-b rounded-br-[3rem] dark:border-gray-500 p-5 top-0 sticky dark:bg-black bg-white z-10">
       <div className="justify-between w-full">
@@ -480,23 +476,23 @@ export const Navbar: FC<INavbarProps> = memo(() => {
           >
             <li>
               <a className="rounded-none dark:bg-[#1f1f1f] dark:text-white dark:hover:bg-green-600">
-                Profile
+                {t.navBarItem1}
               </a>
             </li>
             <li>
               <div className="rounded-none flex justify-between dark:bg-[#000000] dark:text-white dark:hover:bg-green-600">
-                <a href="">Dark mode</a>
+                <a href="">{t.navBarItem2}</a>
                 <DarkModeToggle />
               </div>
             </li>
             <li>
               <a className="rounded-none dark:bg-[#000000] dark:text-white dark:hover:bg-green-600">
-                Setting
+                {t.navBarItem3}
               </a>
             </li>
             <li onClick={logout}>
               <a className="rounded-none dark:bg-[#000000] dark:text-white dark:hover:bg-green-600">
-                Sign out
+                {t.navBarItem4}
               </a>
             </li>
           </ul>

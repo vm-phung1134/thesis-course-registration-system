@@ -116,7 +116,7 @@ function ScheduleDetail() {
                                 <span className="text-gray-500">
                                   Role in council:{" "}
                                 </span>
-                                <span className="font-medium">
+                                <span className="font-medium capitalize">
                                   {roleInCouncil[index]}
                                 </span>
                               </p>
@@ -159,8 +159,8 @@ function ScheduleDetail() {
                   </div>
                 </div>
                 <div>
-                  <div className="overflow-x-auto rounded-2xl shadow-lg">
-                    <table className="table-auto w-full rounded-2xl shadow-lg">
+                  <div className="overflow-x-auto shadow-lg">
+                    <table className="table-auto w-full shadow-lg">
                       <thead className="text-sm font-medium capitalize text-gray-200 bg-green-700">
                         <tr>
                           <th className="pl-5 py-4 whitespace-nowrap">

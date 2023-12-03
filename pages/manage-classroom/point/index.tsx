@@ -35,8 +35,8 @@ function PointDefTab() {
     <ClassroomTemplate title="Point thesis defense | Thesis course registration system">
       {studPoint?.id ? (
         <div className="py-10">
-          <h4 className="font-bold text-xl text-green-700">
-            Result of thesis defense
+          <h4 className="font-bold text-lg text-green-700">
+            Results of the thesis defense process
           </h4>
           <div className="grid grid-cols-9 gap-5 text-sm tracking-wider my-5">
             <div className="col-span-4 py-2 px-4 bg-slate-50 rounded-xl">
@@ -107,9 +107,7 @@ function PointDefTab() {
               </ul>
             </div>
           </div>
-          <h5 className="font-medium my-3 ">
-            Evaluation from committed members
-          </h5>
+          <h5 className="font-medium my-3 ">Evaluation from board members</h5>
           <div className="grid grid-cols-3 gap-3">
             {studPoint?.assesses?.map((council, index) => (
               <div

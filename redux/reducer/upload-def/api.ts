@@ -1,21 +1,23 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { token } from "./type";
-import { IUploadReportObject } from "@/interface/upload";
+import {
+  IUploadReportObject,
+  IUploadReportObjectInput,
+} from "@/interface/upload";
 import { IAuthObject } from "@/interface/auth";
+
+const apiURL = `http://qthuy2k1.shop/api/final-file`;
 
 // GET ALL UPLOAD REPORT
 const getAllUploadReports = createAsyncThunk(
   "upload/getAllUploadReports",
   async () => {
-    const response = await axios.get(
-      `http://localhost:5000/api/upload-report`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.get(`${apiURL}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
       return response.data;
     }
@@ -26,17 +28,14 @@ const getAllUploadReports = createAsyncThunk(
 // GET ONE UPLOAD REPORT
 const getUploadReport = createAsyncThunk(
   "upload/getUploadReport",
-  async (id: string) => {
-    const response = await axios.get(
-      `http://localhost:5000/api/upload-report/${id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+  async (postData: IAuthObject) => {
+    const response = await axios.get(`${apiURL}/auth/${postData.id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
-      return response.data;
+      return response.data.finalFile;
     }
     throw new Error("Failed to get one upload");
   }
@@ -45,19 +44,18 @@ const getUploadReport = createAsyncThunk(
 // CREATE UPLOAD REPORT
 const createUploadReport = createAsyncThunk(
   "upload/createUploadReport",
-  async (postData: IUploadReportObject) => {
+  async (postData: IUploadReportObjectInput) => {
     const formData = new FormData();
-    formData.append("uid", postData.uid);
-    formData.append("student", JSON.stringify(postData.student));
+    formData.append("authorID", postData.authorID);
     formData.append("status", postData.status);
     if (postData.attachments) {
       for (let i = 0; i < postData.attachments.length; i++) {
-        formData.append("attachment", postData.attachments[i]);
+        formData.append("attachments", postData.attachments[i]);
       }
     }
 
     const response = await axios.post(
-      "http://localhost:5000/api/upload-report/",
+      `http://qthuy2k1.shop/upload/final-file`,
       formData,
       {
         headers: {
@@ -75,32 +73,12 @@ const createUploadReport = createAsyncThunk(
   }
 );
 
-// UPDATE UPLOAD REPORT
-const updateUploadReport = createAsyncThunk(
-  "upload/updateUploadReport",
-  async (postData: IUploadReportObject) => {
-    const response = await axios.put(
-      `http://localhost:5000/api/upload-report/${postData.id}`,
-      postData,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    if (response.status === 200) {
-      return response.data;
-    }
-    throw new Error("Failed to update upload");
-  }
-);
-
 // DELETE UPLOAD REPORT
 const deleteUploadReport = createAsyncThunk(
   "upload/deleteUploadReport",
-  async (postData: IUploadReportObject) => {
+  async (id: string) => {
     const response = await axios.delete(
-      `http://localhost:5000/api/upload-report/${postData.id}`,
+      `http://qthuy2k1.shop/api/attachment/${id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -118,6 +96,5 @@ export {
   getAllUploadReports,
   getUploadReport,
   createUploadReport,
-  updateUploadReport,
   deleteUploadReport,
 };

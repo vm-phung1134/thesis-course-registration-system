@@ -1,5 +1,6 @@
 import { Button, CountInput, FormField } from "@/components/Atoms";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
+import { useLanguageContext } from "@/contexts/languageContext";
 import { INITIATE_TOPIC } from "@/data";
 import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
 import { ITopicObject } from "@/interface/topic";
@@ -14,6 +15,7 @@ export interface IRegistrationTopicFormProps {
 export const RegistrationTopicForm: FC<IRegistrationTopicFormProps> = ({
   topic,
 }) => {
+  const { t } = useLanguageContext();
   const { currentUser } = useCurrentUserContext();
   const updateMutation = useMutationQueryAPI({
     action: updateTopic,
@@ -90,14 +92,12 @@ export const RegistrationTopicForm: FC<IRegistrationTopicFormProps> = ({
         return (
           <>
             <Form>
-              <h4 className="text-xl font-bold mb-5">
-                Registration of research topics
-              </h4>
+              <h4 className="text-xl font-bold mb-5">{t.acc_register_item1}</h4>
               <FormField
                 placeholder="Ex: Build a website..."
                 type="text"
                 className="rounded-xl bg-slate-100 border-none"
-                label="Name of research topic"
+                label={t.acc_register_item2}
                 nameField="title"
                 value={values?.title}
               />
@@ -105,7 +105,7 @@ export const RegistrationTopicForm: FC<IRegistrationTopicFormProps> = ({
                 <FormField
                   placeholder="Ex: Website, Mobile, AI..."
                   type="text"
-                  label="Type of topic"
+                  label={t.acc_register_item3}
                   className="rounded-xl bg-slate-100 border-none"
                   nameField="typeTopic"
                   value={values?.typeTopic}
@@ -115,7 +115,7 @@ export const RegistrationTopicForm: FC<IRegistrationTopicFormProps> = ({
                     valueNumber={values.memberQuantity}
                     className="h-12"
                     onChange={handleChangeQuantityMember}
-                    label="QL. Member"
+                    label={t.acc_register_item4}
                     limit={5}
                   />
                 </div>
@@ -124,7 +124,7 @@ export const RegistrationTopicForm: FC<IRegistrationTopicFormProps> = ({
                 <FormField
                   placeholder="Ex: nameb1910xxx@student.ctu.edu.vn"
                   type="text"
-                  label="Email member"
+                  label={t.acc_register_item5}
                   className="rounded-xl bg-slate-100 border-none"
                   nameField="memberEmail"
                   value={values?.memberEmail}
@@ -133,7 +133,7 @@ export const RegistrationTopicForm: FC<IRegistrationTopicFormProps> = ({
 
               <FormField
                 type="text"
-                label="Description"
+                label={t.acc_register_item6}
                 className="rounded-xl bg-slate-100 border-none"
                 nameField="description"
                 value={values?.description}

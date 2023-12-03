@@ -93,7 +93,7 @@ const createClassroom = createAsyncThunk(
 // UPDATE CLASSROOM
 const updateClassroom = createAsyncThunk(
   "classroom/updateClassroom",
-  async (postData: IClassroomObject) => {
+  async (postData: IClassroomObjectInput) => {
     const response = await axios.put(
       `${apiURL}/${postData.id}`,
       { classroom: postData },
@@ -132,5 +132,5 @@ export {
   updateClassroom,
   deleteClassroom,
   getAllExerciseInClass,
-  getAllPostInClass
+  getAllPostInClass,
 };

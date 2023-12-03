@@ -28,7 +28,7 @@ export const ClassroomStateContextProvider: React.FC<ClassroomStateProps> = ({
   const dispatch = useAppDispatch();
   const [user] = useUserCookies();
   const { data: classroom } = useQuery<IClassroomObject | null>({
-    queryKey: ["classroom", user],
+    queryKey: ["get-one-classroom", user],
     queryFn: async () => {
       if (user) {
         const action = await dispatch(getClassroom(user));
@@ -39,7 +39,7 @@ export const ClassroomStateContextProvider: React.FC<ClassroomStateProps> = ({
     initialData: null,
   });
   const { data: member } = useQuery<IMemberObject | null>({
-    queryKey: ["member-classroom", user],
+    queryKey: ["get-one-member", user],
     queryFn: async () => {
       if (user) {
         const action = await dispatch(getMember(user));

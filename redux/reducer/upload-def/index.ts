@@ -6,7 +6,6 @@ import {
   deleteUploadReport,
   getAllUploadReports,
   getUploadReport,
-  updateUploadReport,
 } from "./api";
 
 const initialState: UploadReportState = {
@@ -62,21 +61,6 @@ const uploadReportSlice = createSlice({
       state.isLoading = false;
       state.error = action.error.message ?? "Something went wrong.";
     });
-
-    // UPDATE EXERCISE
-    builder.addCase(updateUploadReport.pending, (state) => {
-      state.isLoading = true;
-      state.error = null;
-    });
-    builder.addCase(updateUploadReport.fulfilled, (state, action) => {
-      state.isLoading = false;
-      state.upload = action.payload;
-    });
-    builder.addCase(updateUploadReport.rejected, (state, action) => {
-      state.isLoading = false;
-      state.error = action.error.message ?? "Something went wrong.";
-    });
-
     // DELETE EXERCISE
     builder.addCase(deleteUploadReport.pending, (state) => {
       state.isLoading = true;

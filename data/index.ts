@@ -12,10 +12,13 @@ import {
 } from "@/interface/privateComment";
 import { IRoomDefObject } from "@/interface/room";
 import { IStudentDefObject } from "@/interface/studef";
-import { ISubmitObject } from "@/interface/submit";
+import { IGeneralLinkAttachment, ISubmitObject } from "@/interface/submit";
 import { ITopicObject } from "@/interface/topic";
 import { IUnavaiableItem, IUnavailableDate } from "@/interface/unavailableDate";
-import { IUploadReportObject } from "@/interface/upload";
+import {
+  IUploadReportObject,
+  IUploadReportObjectInput,
+} from "@/interface/upload";
 
 export const INITIATE_AUTH: IAuthObject = {
   name: "",
@@ -174,9 +177,22 @@ export const INITIATE_COUNCIL_DEF: IAuthObject = {
   id: "",
 };
 
+export const INITIATE_FILE: IGeneralLinkAttachment = {
+  id: "",
+  fileURL: "",
+  author: INITIATE_AUTH,
+  mimeType: "",
+  thumbnail: "",
+  fileName: ""
+}
+
 export const INITIATE_UPLOAD_REPORT: IUploadReportObject = {
-  uid: "",
-  student: INITIATE_AUTH,
+  author: INITIATE_AUTH,
+  attachment: {},
+};
+
+export const INITIATE_UPLOAD_REPORT_INPUT: IUploadReportObjectInput = {
+  authorID: "",
   status: "",
 };
 

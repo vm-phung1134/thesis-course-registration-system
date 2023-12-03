@@ -1,5 +1,7 @@
 import { Avatar, Button } from "@/components/Atoms";
 import { InforMemberModal } from "@/components/Organisms";
+import { ROLE_ASSIGNMENT } from "@/contexts/authContext";
+import { useCurrentUserContext } from "@/contexts/currentUserContext";
 import { INITIATE_AUTH, INITIATE_TOPIC } from "@/data";
 import { IAuthObject } from "@/interface/auth";
 import { IMemberObject } from "@/interface/member";
@@ -16,6 +18,7 @@ export interface ICardMemberClassProps {
 }
 export const CardMember: FC<ICardMemberClassProps> = ({ member, index }) => {
   const dispatch = useAppDispatch();
+  const { currentUser } = useCurrentUserContext();
   const [topicRenew, setTopicRenew] = useState<ITopicObject>(INITIATE_TOPIC);
   const [openModalMemberDetail, setOpenModalMemberDetail] =
     useState<boolean>(false);
@@ -37,6 +40,7 @@ export const CardMember: FC<ICardMemberClassProps> = ({ member, index }) => {
     setOpenModalMemberDetail(!openModalMemberDetail);
     setTopicRenew(topic_fetch);
   };
+  const handleKickoutMember = () => {};
   return (
     <>
       <div className="p-3 bg-slate-100 rounded-xl shadow-lg">
@@ -66,6 +70,14 @@ export const CardMember: FC<ICardMemberClassProps> = ({ member, index }) => {
               <i className="fa-regular fa-envelope"></i>
               <i className="fa-regular fa-message"></i>
             </div>
+            {currentUser.role === ROLE_ASSIGNMENT.LECTURER && (
+              <Button
+                otherType="subscribe"
+                handleActions={handleKickoutMember}
+                title="Kick out"
+                className="text-sm bg-green-700 btn-sm text-white border-none hover:bg-green-600 px-5 hover:border-none"
+              />
+            )}
             <Button
               otherType="subscribe"
               handleActions={handleShowModalMember}

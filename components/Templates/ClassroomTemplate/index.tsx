@@ -15,8 +15,6 @@ import { ICategoryObject } from "@/interface/category";
 import { IOptionItem } from "@/interface/filter";
 import { SnipperRound } from "@/components/Atoms";
 import { useClassroomStateContext } from "@/contexts/classroomState";
-import { useCurrentUser } from "@/hooks/useGetCurrentUser";
-import { useUserCookies } from "@/hooks/useCookies";
 import { INITIATE_CLASSROOM } from "@/data";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
 import { ToastContainer } from "react-toastify";

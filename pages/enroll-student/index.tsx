@@ -21,8 +21,10 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
+import { useLanguageContext } from "@/contexts/languageContext";
 
 function EnrollStudentPage() {
+  const { t } = useLanguageContext();
   const [switchingForm, setSwitchingForm] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(true);
   const dispatch = useAppDispatch();
@@ -60,9 +62,9 @@ function EnrollStudentPage() {
 
   // HANDLE FINAL UPLOAD
   const { data: uploadReport } = useQuery<IUploadReportObject>({
-    queryKey: ["upload-def", currentUser.id],
+    queryKey: ["get-one-upload", currentUser],
     queryFn: async () => {
-      const action = await dispatch(getUploadReport(currentUser.id));
+      const action = await dispatch(getUploadReport(currentUser));
       return action.payload || INITIATE_UPLOAD_REPORT;
     },
     initialData: INITIATE_UPLOAD_REPORT,
@@ -96,8 +98,8 @@ function EnrollStudentPage() {
                   objectPosition="center"
                 />
                 <div>
-                  <h4 className="uppercase text-xl text-[#141E37] italic font-bold leading-snug">
-                    You schedule for thesis defense in
+                  <h4 className="uppercase text-xl text-[#141E37] italic font-bold leading-snug w-[27rem]">
+                    {t.enroll_item_1}
                     <span className="uppercase font-medium">
                       {" "}
                       CT550/HK1-2023
@@ -105,7 +107,7 @@ function EnrollStudentPage() {
                   </h4>
                   <div className="w-[27rem]">
                     <h4 className="my-2 text-xs italic font-medium tracking-wider uppercase">
-                      Upload your final files
+                      {t.enroll_item_2}
                     </h4>
                     <UploadFinalFileForm uploadReport={uploadReport} />
                   </div>
@@ -114,7 +116,7 @@ function EnrollStudentPage() {
               <div className="flex gap-4 w-full my-10">
                 <div className="flex flex-grow w-10/12 text-sm p-5 flex-col gap-2 border rounded-xl">
                   <h5 className="text-lg text-green-700 font-bold capitalize tracking-wider">
-                    The thesis committee
+                    {t.enroll_item_3}
                   </h5>
                   <div className="grid grid-cols-3 gap-3">
                     {studentScheduled?.council?.map((lecturer, index) => (
@@ -143,10 +145,10 @@ function EnrollStudentPage() {
                 </div>
                 <div className="flex flex-grow p-5 flex-col gap-2 border rounded-xl w-fit">
                   <h5 className="text-lg text-green-700 font-bold capitalize tracking-wider">
-                    Your schedule thesis defense
+                    {t.enroll_item_4}
                   </h5>
                   <p className="font-thin text-xs italic text-orange-600">
-                    Noticed: Please arrive at the room 10 minutes in advance to
+                    Noticed: Please arrive at the room 60 minutes in advance to
                     prepare!!!
                   </p>
                   <ul className="capitalize flex flex-col gap-2 text-sm">

@@ -13,8 +13,10 @@ import { useCurrentUserContext } from "@/contexts/currentUserContext";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { motion } from "framer-motion";
+import { useLanguageContext } from "@/contexts/languageContext";
 
 function AccountStudentPage() {
+  const { t } = useLanguageContext();
   const [loading, setLoading] = useState<boolean>(true);
   const [toggle, setToggle] = useState<boolean>(false);
   const modalClass = classNames({
@@ -58,7 +60,7 @@ function AccountStudentPage() {
             <Breadcrumb dataBreadcrumb={BREADCRUMB_ACCOUNT_STUDENT} />
             <div className="my-3 py-2 flex gap-2 items-center">
               <h4 className="text-xl capitalize text-green-700 font-medium ">
-                My <span className="text-green-700"> Profile</span>
+                {t.acc_register_title_page}
               </h4>
               <div className="flex-grow h-[0.5px] bg-green-700"></div>
             </div>
@@ -107,37 +109,37 @@ function AccountStudentPage() {
                   </div>
                   <div className="flex flex-col border rounded-xl p-5 mt-3 text-sm">
                     <h4 className="font-medium capitalize text-base">
-                      Personal information
+                      {t.acc_profile_item1}
                     </h4>
                     <ul className="grid grid-cols-2">
                       <li className="flex flex-col mt-4">
-                        <p className="text-gray-500">Full Name</p>
+                        <p className="text-gray-500">{t.acc_profile_item2}</p>
                         <p className="capitalize">
                           {lastName + " " + middleName}
                         </p>
                       </li>
                       <li className="flex flex-col mt-4">
-                        <p className="text-gray-500">Student ID</p>
+                        <p className="text-gray-500">{t.acc_profile_item3}</p>
                         <p className="capitalize">{firstName}</p>
                       </li>
                     </ul>
                     <ul className="grid grid-cols-2">
                       <li className="flex flex-col mt-4">
-                        <p className="text-gray-500">Email</p>
+                        <p className="text-gray-500">{t.acc_profile_item4}</p>
                         <p>{currentUser.email}</p>
                       </li>
                       <div className="flex flex-col mt-4">
-                        <p className=" text-gray-500">Phone</p>
+                        <p className=" text-gray-500">{t.acc_profile_item5}</p>
                         <p className="capitalize">+84 {currentUser.phone}</p>
                       </div>
                     </ul>
                     <ul className="grid grid-cols-2">
                       <li className="flex flex-col mt-4">
-                        <p className="text-gray-500">Class</p>
+                        <p className="text-gray-500">{t.acc_profile_item6}</p>
                         <p>{currentUser.class}</p>
                       </li>
                       <div className="flex flex-col mt-4">
-                        <p className=" text-gray-500">Major</p>
+                        <p className=" text-gray-500">{t.acc_profile_item7}</p>
                         <p className="capitalize">{currentUser.major}</p>
                       </div>
                     </ul>

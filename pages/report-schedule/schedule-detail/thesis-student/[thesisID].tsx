@@ -8,7 +8,12 @@ import { AssessForm } from "@/components/Molecules";
 import { BREADCRUMB_MAINBOARD } from "@/components/Organisms/MainboardStatus/mock-data";
 import { MainboardTemplate } from "@/components/Templates";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
-import { INITIATE_ASSESS, INITIATE_AUTH, INITIATE_TOPIC } from "@/data";
+import {
+  INITIATE_ASSESS,
+  INITIATE_AUTH,
+  INITIATE_TOPIC,
+  INITIATE_UPLOAD_REPORT,
+} from "@/data";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { IAssessItem } from "@/interface/pointDef";
 import { ICouncilDef } from "@/interface/schedule";
@@ -42,13 +47,21 @@ function ThesisDefenseStudentDetail() {
   });
 
   const { data: uploadReport } = useQuery<IUploadReportObject>({
-    queryKey: ["upload-report", id],
+    queryKey: [
+      "get-one-upload",
+      studentScheduled?.schedule?.timeSlots[0]?.student?.infor?.id,
+    ],
     queryFn: async () => {
-      const action = await dispatch(getUploadReport(id));
-      return action.payload || {};
+      const action = await dispatch(
+        getUploadReport(
+          studentScheduled?.schedule?.timeSlots[0]?.student?.infor ||
+            INITIATE_AUTH
+        )
+      );
+      return action.payload || INITIATE_UPLOAD_REPORT;
     },
+    initialData: INITIATE_UPLOAD_REPORT,
   });
-
   const { data: topic } = useQuery<ITopicObject>({
     queryKey: [
       "topic",
@@ -57,8 +70,8 @@ function ThesisDefenseStudentDetail() {
     queryFn: async () => {
       const action = await dispatch(
         getTopic(
-          studentScheduled?.schedule?.timeSlots[0]?.student?.infor?.id ||
-            INITIATE_AUTH?.id
+          studentScheduled?.schedule?.timeSlots[0]?.student?.infor ||
+            INITIATE_AUTH
         )
       );
       return action.payload || INITIATE_TOPIC;
@@ -98,7 +111,10 @@ function ThesisDefenseStudentDetail() {
             <div className="grid grid-cols-12 gap-5 text-sm">
               <div className="col-span-7 mt-5 flex gap-5 flex-col tracking-wider">
                 <div className="p-5 bg-gray-100 rounded-xl">
-                  <div className="text-sm my-1 flex gap-2 items-center">
+                  <div
+                    onClick={() => history.back()}
+                    className="text-sm my-1 flex gap-2 items-center cursor-pointer"
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
@@ -190,28 +206,29 @@ function ThesisDefenseStudentDetail() {
                         <p className="text-gray-600">File thesis report:</p>
                         <div className="w-full">
                           <ul className="text-sm w-full flex flex-col gap-2 mb-10 font-medium px-2">
-                            {uploadReport?.attachments?.map((file) => (
-                              <div
-                                key={file?.id}
-                                className="flex gap-3 text-blue-700 font-medium rounded-md items-center px-3 py-2 bg-slate-200 shadow-md"
-                              >
-                                <Image
-                                  width={20}
-                                  height={20}
-                                  src={
-                                    "https://cdn-icons-png.flaticon.com/128/4725/4725970.png"
-                                  }
-                                  alt="icon-file-pdf"
-                                />
+                            <div className="flex gap-3 text-blue-700 font-medium rounded-md items-center px-3 py-2 bg-slate-100 shadow-md">
+                              <Image
+                                width={20}
+                                height={20}
+                                src={
+                                  uploadReport?.attachment?.thumbnail ||
+                                  "https://cdn-icons-png.flaticon.com/128/9496/9496432.png"
+                                }
+                                alt="icon-file-pdf"
+                              />
+                              <div>
                                 <a
-                                  className="text-[13px] truncate"
+                                  className="text-[13px]"
                                   target="_blank"
-                                  href={file?.src}
+                                  href={uploadReport?.attachment?.fileURL}
                                 >
-                                  {file?.name}
+                                  {uploadReport?.attachment?.name}
                                 </a>
+                                <p className="text-xs font-thin">
+                                  {uploadReport?.attachment?.type}
+                                </p>
                               </div>
-                            ))}
+                            </div>
                           </ul>
                         </div>
                       </div>
@@ -219,7 +236,7 @@ function ThesisDefenseStudentDetail() {
                         <p className="text-gray-600">Description:</p>
                         <p className="flex gap-2 flex-col text-justify">
                           <span className="text-gray-700">
-                           {topic?.description}
+                            {topic?.description}
                           </span>
                         </p>
                       </div>
