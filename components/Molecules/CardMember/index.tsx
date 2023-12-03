@@ -11,6 +11,9 @@ import { useAppDispatch } from "@/redux/store";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import classNames from "classnames";
 import { FC, useState } from "react";
+import { ModalConfirm } from "..";
+import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
+import { deleteMember, updateMember } from "@/redux/reducer/member/api";
 
 export interface ICardMemberClassProps {
   member: IMemberObject;
@@ -27,6 +30,13 @@ export const CardMember: FC<ICardMemberClassProps> = ({ member, index }) => {
     "modal-open": openModalMemberDetail,
   });
 
+  const [openModalKickoutMember, setOpenModalKickoutMember] =
+    useState<boolean>(false);
+  const modalClassKickout = classNames({
+    "modal modal-bottom sm:modal-middle": true,
+    "modal-open": openModalKickoutMember,
+  });
+
   // GET TOPIC FOR EACH USER
   const { data: topic_fetch } = useQuery<ITopicObject>({
     queryKey: ["get-one-topic", member.member],
@@ -40,10 +50,22 @@ export const CardMember: FC<ICardMemberClassProps> = ({ member, index }) => {
     setOpenModalMemberDetail(!openModalMemberDetail);
     setTopicRenew(topic_fetch);
   };
-  const handleKickoutMember = () => {};
+
+  const kickoutMutation = useMutationQueryAPI({
+    action: deleteMember,
+    queryKeyLog: ["classroom-members"],
+    successMsg: "You just kicked a student out of the room!",
+    errorMsg: "Fail to kick out this student!",
+  });
+  const handleKickoutMember = () => {
+    kickoutMutation.mutate(member);
+  };
   return (
     <>
-      <div className="p-3 bg-slate-100 rounded-xl shadow-lg">
+      <div
+        onClick={handleShowModalMember}
+        className="p-3 bg-slate-100 rounded-xl shadow-lg cursor-pointer"
+      >
         <div className="flex gap-4 items-center">
           <Avatar
             online={true}
@@ -70,23 +92,30 @@ export const CardMember: FC<ICardMemberClassProps> = ({ member, index }) => {
               <i className="fa-regular fa-envelope"></i>
               <i className="fa-regular fa-message"></i>
             </div>
-            {currentUser.role === ROLE_ASSIGNMENT.LECTURER && (
-              <Button
-                otherType="subscribe"
-                handleActions={handleKickoutMember}
-                title="Kick out"
-                className="text-sm bg-green-700 btn-sm text-white border-none hover:bg-green-600 px-5 hover:border-none"
-              />
-            )}
-            <Button
-              otherType="subscribe"
-              handleActions={handleShowModalMember}
-              title="View detail"
-              className="text-sm bg-green-700 btn-sm text-white border-none hover:bg-green-600 px-5 hover:border-none"
-            />
+            <div className="flex gap-1">
+              {currentUser.role === ROLE_ASSIGNMENT.LECTURER && (
+                <Button
+                  type="button"
+                  setToggle={setOpenModalKickoutMember}
+                  toggle={openModalKickoutMember}
+                  title="Kick out"
+                  className="text-sm btn-sm text-red-600 border-none px-3 bg-transparent hover:border-none"
+                />
+              )}
+            </div>
           </div>
         </div>
       </div>
+      <ModalConfirm
+        modalClass={modalClassKickout}
+        setOpenModal={setOpenModalKickoutMember}
+        openModal={openModalKickoutMember}
+        action={handleKickoutMember}
+        typeButton="subscribe"
+        underMessage="No Message"
+        title="Message!!!"
+        message="Do you want call on all people to press F11?"
+      />
       <InforMemberModal
         topic={topicRenew}
         modalClass={modalClass}

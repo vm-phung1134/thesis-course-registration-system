@@ -22,7 +22,7 @@ export const InforMemberModal: FC<IInforMemberModalProps> = ({
       <div className="w-6/12 bg-white py-5 px-8 h-fit shadow-2xl rounded-2xl">
         <div>
           <h4 className="font-bold text-xl capitalize">
-            Requirement information
+            Student information
           </h4>
           <div className="grid grid-cols-2 my-5">
             <PersonalInfor member={topic?.student || INITIATE_AUTH} />

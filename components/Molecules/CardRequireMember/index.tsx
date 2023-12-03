@@ -87,7 +87,8 @@ export const CardRequireMember: FC<ICardRequireMemberProps> = ({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: index * 0.2 }}
-        className="p-3 bg-slate-50 shadow-lg rounded-xl"
+        onClick={() => handleShowModalRequire(require)}
+        className="p-3 bg-slate-50 shadow-lg rounded-xl cursor-pointer"
       >
         <div className="flex gap-4 items-center">
           <Avatar
@@ -97,10 +98,7 @@ export const CardRequireMember: FC<ICardRequireMemberProps> = ({
           />
           <div className="flex flex-col text-sm">
             <div className="flex gap-3">
-              <p
-                onClick={() => handleShowModalRequire(require)}
-                className="uppercase font-medium cursor-pointer"
-              >
+              <p className="uppercase font-medium cursor-pointer">
                 {convertToUnaccentedString(require?.member?.name)}
               </p>
               <span>-</span>
