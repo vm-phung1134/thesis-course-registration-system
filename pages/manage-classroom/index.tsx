@@ -1,23 +1,27 @@
 import {
   CommentForm,
   ContentComment,
+  CreatePostForm,
   CriticalTask,
+  EditExerciseForm,
+  EditPostForm,
+  ModalConfirm,
   NewFeedCard,
 } from "@/components/Molecules";
 import { ClassroomTemplate } from "@/components/Templates";
 import classNames from "classnames";
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 import { ExerciseModal, PostModal } from "@/components/Organisms";
 import { useQuery } from "@tanstack/react-query";
 import { IPostObject } from "@/interface/post";
-import { getPost } from "@/redux/reducer/post/api";
+import { deletePost, getPost } from "@/redux/reducer/post/api";
 import { useAppDispatch } from "@/redux/store";
-import { getExercise } from "@/redux/reducer/exercise/api";
+import { deleteExercise, getExercise } from "@/redux/reducer/exercise/api";
 import { IExerciseObject } from "@/interface/exercise";
 import { useClassroomStateContext } from "@/contexts/classroomState";
 import Image from "next/image";
 import { Button } from "@/components/Atoms";
-import { INITIATE_EXERCISE, INITIATE_POST } from "@/data";
+import { INITIATE_CLASSROOM, INITIATE_EXERCISE, INITIATE_POST } from "@/data";
 import { motion } from "framer-motion";
 import { ISubmitObject } from "@/interface/submit";
 import { getAllSubmitStud } from "@/redux/reducer/submit/api";
@@ -28,6 +32,7 @@ import {
   getAllPostInClass,
 } from "@/redux/reducer/classroom/api";
 import { ROLE_ASSIGNMENT } from "@/contexts/authContext";
+import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
 
 function ManageClassroomTab() {
   const { currentUser } = useCurrentUserContext();
@@ -36,6 +41,10 @@ function ManageClassroomTab() {
   const [openModalEx, setOpenModalEx] = useState<boolean>(false);
   const [exRenew, setExRenew] = useState<IExerciseObject>(INITIATE_EXERCISE);
   const [postRenew, setPostRenew] = useState<IPostObject>(INITIATE_POST);
+  const [postEditnew, setPostEditnew] = useState<IPostObject>(INITIATE_POST);
+  const [postDelnew, setPostDelnew] = useState<IPostObject>(INITIATE_POST);
+  const [exEditnew, setExEditnew] =
+    useState<IExerciseObject>(INITIATE_EXERCISE);
   const { data: posts } = useQuery<IPostObject[]>({
     queryKey: ["classroom-posts", authClassroomState],
     queryFn: async () => {
@@ -68,15 +77,44 @@ function ManageClassroomTab() {
     "modal modal-bottom sm:modal-middle": true,
     "modal-open": openModalEx,
   });
+
+  const [openEditPostModal, setOpenEditPostModal] = useState<boolean>(false);
+  const modalClassEditPost = classNames({
+    "modal modal-bottom sm:modal-middle": true,
+    "modal-open": openEditPostModal,
+  });
+  const [openEditExModal, setOpenEditExModal] = useState<boolean>(false);
+  const modalClassEditEx = classNames({
+    "modal modal-bottom sm:modal-middle": true,
+    "modal-open": openEditExModal,
+  });
   const dispatch = useAppDispatch();
   const handleOpenPostModal = (task: IPostObject) => {
     setOpenModalPost(!openModalPost);
     setPostRenew(task);
   };
-
   const handleOpenExModal = (task: IExerciseObject) => {
     setOpenModalEx(!openModalEx);
     setExRenew(task);
+  };
+  const handleOpenModalEditPost = (post: IPostObject) => {
+    setOpenEditPostModal(!openEditPostModal);
+    setPostEditnew(post);
+  };
+  const handleOpenEditEx = (exercise: IExerciseObject) => {
+    setOpenEditExModal(!openEditExModal);
+    setExEditnew(exercise);
+  };
+
+  // HANDLE DELETE POST
+  const [openDelPostModal, setOpenDelPostModal] = useState<boolean>(false);
+  const modalClassDelPost = classNames({
+    "modal modal-bottom sm:modal-middle": true,
+    "modal-open": openDelPostModal,
+  });
+  const handleOpenDelModal = (post: IPostObject) => {
+    setOpenDelPostModal(!openDelPostModal);
+    setPostDelnew(post);
   };
   const { data: submission } = useQuery<ISubmitObject[]>({
     queryKey: ["submission", currentUser],
@@ -86,6 +124,15 @@ function ManageClassroomTab() {
     },
     initialData: [],
   });
+  const deleteMutation = useMutationQueryAPI({
+    action: deletePost,
+    queryKeyLog: ["classroom-posts"],
+    successMsg: "You just delete announcement successfully!",
+    errorMsg: "Fail to delete a announcement!",
+  });
+  const handleDelPost = () => {
+    deleteMutation.mutate(postDelnew);
+  };
   return (
     <>
       <ClassroomTemplate title="Manage Class | Thesis course registration system">
@@ -125,43 +172,51 @@ function ManageClassroomTab() {
                         className="text-xs border rounded-xl p-3 "
                       >
                         <div className=" flex flex-col gap-2">
-                          <div>
-                            <p className="capitalize font-bold text-green-700">
-                              {post?.author?.name}{" "}
-                              <span className="normal-case font-normal text-black">
-                                has post an announcement !!!
-                              </span>
-                            </p>
-                            <p className="text-[10px] ">
-                              Saturday, 10/14/2023 - 11:59 PM
-                            </p>
+                          <div className="flex justify-between items-center">
+                            <div>
+                              <p className="capitalize font-bold text-green-700">
+                                {post?.author?.name}{" "}
+                                <span className="normal-case font-normal text-black">
+                                  has post an announcement !!!
+                                </span>
+                              </p>
+                              <p className="text-[10px] ">
+                                Saturday, 10/14/2023 - 11:59 PM
+                              </p>
+                            </div>
+                            {currentUser?.role === ROLE_ASSIGNMENT.LECTURER && (
+                              <div className="dropdown dropdown-end">
+                                <div
+                                  tabIndex={0}
+                                  role="button"
+                                  className="p-2 font-bold"
+                                >
+                                  ...
+                                </div>
+                                <ul
+                                  tabIndex={0}
+                                  className="dropdown-content z-[1] menu shadow bg-base-100 w-32 text-xs rounded-none"
+                                >
+                                  <li
+                                    onClick={() =>
+                                      handleOpenModalEditPost(post)
+                                    }
+                                  >
+                                    <a className="rounded-none dark:bg-[#1f1f1f] dark:text-white dark:hover:bg-green-600">
+                                      Edit
+                                    </a>
+                                  </li>
+                                  <li onClick={() => handleOpenDelModal(post)}>
+                                    <a className="rounded-none dark:bg-[#1f1f1f] dark:text-white dark:hover:bg-green-600">
+                                      Delete
+                                    </a>
+                                  </li>
+                                </ul>
+                              </div>
+                            )}
                           </div>
                           <h5 className="font-medium">{post?.title}</h5>
-                          <div className="flex justify-between items-end">
-                            <div className="">
-                              {currentUser?.role ===
-                                ROLE_ASSIGNMENT.LECTURER && (
-                                <div className="flex gap-1">
-                                  <button className="flex gap-2 px-2 py-1 text-xs items-center">
-                                    <svg
-                                      className="w-4 h-4"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      fill="none"
-                                      viewBox="0 0 24 24"
-                                      stroke="currentColor"
-                                    >
-                                      <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-                                      />
-                                    </svg>
-                                    <p>Edit</p>
-                                  </button>
-                                </div>
-                              )}
-                            </div>
+                          <div className="flex justify-end items-end">
                             <Button
                               otherType="subscribe"
                               handleActions={() => handleOpenPostModal(post)}
@@ -190,11 +245,12 @@ function ManageClassroomTab() {
                             animate={{ opacity: 1 }}
                             transition={{ duration: 1, delay: index * 0.5 }}
                             key={exercise.id}
-                            className="rounded-xl shadow-lg"
+                            className="rounded-xl shadow-lg overflow-hidden"
                           >
                             <NewFeedCard
                               handleOpenTaskModal={handleOpenExModal}
                               task={exercise}
+                              handleOpenEditEx={handleOpenEditEx}
                             />
                             <div className="px-5 py-2 flex flex-col">
                               <ContentComment
@@ -237,6 +293,38 @@ function ManageClassroomTab() {
           exercise={exRenew}
           setOpenModalEx={setOpenModalEx}
           openModalEx={openModalEx}
+        />
+
+        {/* UPDATE POST & EXERCISE */}
+        <dialog id="modal_update_post" className={modalClassEditPost}>
+          <div className="w-5/12 bg-white p-5 h-fit shadow-2xl rounded-xl">
+            <EditPostForm
+              setToggleForm={setOpenEditPostModal}
+              toggleForm={openEditPostModal}
+              classroom={authClassroomState || INITIATE_CLASSROOM}
+              postObject={postEditnew}
+            />
+          </div>
+        </dialog>
+        <dialog id="modal_update_exercise" className={modalClassEditEx}>
+          <div className="w-5/12 bg-white p-5 h-fit shadow-2xl rounded-xl">
+            <EditExerciseForm
+              setToggleForm={setOpenEditExModal}
+              toggleForm={openEditExModal}
+              classroom={authClassroomState || INITIATE_CLASSROOM}
+              exercise={exEditnew}
+            />
+          </div>
+        </dialog>
+        <ModalConfirm
+          modalClass={modalClassDelPost}
+          setOpenModal={setOpenDelPostModal}
+          openModal={openDelPostModal}
+          action={handleDelPost}
+          typeButton="subscribe"
+          underMessage="Once you delete this announcement if will be gone forever"
+          title="Message!!!"
+          message="Are you sure that you want to delete this announcement?"
         />
       </ClassroomTemplate>
     </>

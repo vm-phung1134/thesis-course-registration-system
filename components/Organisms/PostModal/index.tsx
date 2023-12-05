@@ -31,7 +31,7 @@ export const PostModal: FC<IPostModalProps> = ({
             <div className="flex items-center justify-between">
               <div className="flex gap-5 items-center mb-2">
                 <p className="text-xs px-3 py-1 bg-green-700 cursor-pointer rounded-md text-white w-fit">
-                  {post?.type === "post" ? "Message" : "Postercise"}
+                  Post
                 </p>
                 <p>|</p>
                 <p className="text-sm">{post?.category?.label} Stage</p>
@@ -44,13 +44,12 @@ export const PostModal: FC<IPostModalProps> = ({
               </button>
             </div>
 
-            <h3 className="font-medium text-green-700 text-lg capitalize">
+            <h3 className="font-medium text-green-700 text-base capitalize">
               {post?.title}
             </h3>
-
             <div className="flex gap-3 items-center py-1">
               <p className="font-medium text-sm capitalize">
-                {convertToUnaccentedString(post?.lecturer?.name)}
+                {convertToUnaccentedString(post?.author?.name)}
               </p>
               <p className="text-xs">
                 {`20, August 2023 - `}

@@ -87,10 +87,12 @@ export const CardRequireMember: FC<ICardRequireMemberProps> = ({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: index * 0.2 }}
-        onClick={() => handleShowModalRequire(require)}
         className="p-3 bg-slate-50 shadow-lg rounded-xl cursor-pointer"
       >
-        <div className="flex gap-4 items-center">
+        <div
+          className="flex gap-4 items-center"
+          onClick={() => handleShowModalRequire(require)}
+        >
           <Avatar
             online={true}
             widthStr="w-10 h-10"

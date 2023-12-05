@@ -23,7 +23,7 @@ export const CriticalTask: FC<ICriticalTaskProps> = ({
     );
   };
   return (
-    <div className="h-[14.5rem] p-5 relative overflow-hidden shadow-xl rounded-lg">
+    <div className="h-fit p-5 relative overflow-hidden shadow-xl rounded-lg">
       <div className="absolute top-0 bottom-0 -left-48 w-full h-full bg-slate-100 -skew-x-[30deg]"></div>
       <div className="relative">
         <div className="flex flex-col gap-2">

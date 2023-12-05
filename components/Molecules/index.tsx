@@ -37,5 +37,7 @@ export * from "./PointCard";
 export * from "./ContentCommentModal";
 export * from "./EmptySpace";
 export * from "./RegistrationTopicFormV2";
-export * from "./PrivateCommentForm"
-export * from "./UnavailableScheduleForm"
+export * from "./PrivateCommentForm";
+export * from "./UnavailableScheduleForm";
+export * from "./EditPostForm";
+export * from "./EditExerciseForm"

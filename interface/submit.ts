@@ -12,7 +12,7 @@ export interface IGeneralLinkAttachment {
 export interface ISubmitObject {
   id?: string;
   exerciseID: string;
-  userID: string;
+  authorID: string;
   attachments: IGeneralLinkAttachment[];
   status: string;
 }

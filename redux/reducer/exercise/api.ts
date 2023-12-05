@@ -65,7 +65,7 @@ const createExercise = createAsyncThunk(
       }
     );
 
-    if (response.status === 201) {
+    if (response.status === 200) {
       return response.data;
     }
     throw new Error("Failed to create exercise");
@@ -77,7 +77,7 @@ const updateExercise = createAsyncThunk(
   "exercise/updateExercise",
   async (postData: IExerciseObject) => {
     const response = await axios.put(
-      `${apiURL}/${postData.id}`,
+      `http://qthuy2k1.shop/upload/exercise/${postData.id}`,
       { exercise: postData },
       {
         headers: {

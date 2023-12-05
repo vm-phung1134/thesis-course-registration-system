@@ -96,7 +96,7 @@ export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
       </h3>
       <h4 className="text-[24px] font-semibold uppercase">{lecturer?.name}</h4>
       <div className="flex justify-between items-center">
-        <h5 className="font-medium text-green-700 my-1">
+        <h5 className="font-medium text-green-700 my-1 capitalize">
           Major / {lecturer?.major}
         </h5>
         <button className="flex gap-2 px-2 py-1 text-sm items-center">

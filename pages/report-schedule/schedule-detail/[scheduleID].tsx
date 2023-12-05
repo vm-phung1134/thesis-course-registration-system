@@ -91,9 +91,7 @@ function ScheduleDetail() {
                   <div className="bg-green-700 h-[0.5px] w-full my-3"></div>
                   <div className="flex gap-3 flex-col-reverse tracking-wider">
                     {councilInSchedule?.council
-                      ?.slice()
-                      .reverse()
-                      .map((council, index) => (
+                      ?.map((council, index) => (
                         <div
                           key={council?.id}
                           className="shadow-lg overflow-hidden relative w-full rounded-xl px-5 py-4 flex flex-col justify-center"

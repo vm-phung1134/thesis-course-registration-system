@@ -19,7 +19,7 @@ export interface IExerciseObject {
   category: ICategoryObject;
   author: IAuthObject;
   description: string;
-  deadline: IDateTime;
+  deadline: IDateTime | any;
   attachments?: IGeneralLinkAttachment[] | any[];
   createAt?: string;
   updateAt?: string;

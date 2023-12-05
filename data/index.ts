@@ -138,7 +138,7 @@ export const INITIATE_COMMENT_INPUT: ICommentObject = {
 
 export const INITIATE_SUBMIT: ISubmitObject = {
   exerciseID: "",
-  userID: "",
+  authorID: "",
   attachments: [],
   status: "",
 };
@@ -228,4 +228,4 @@ export enum TYPE_ACTION_NOTIFICATION {
   ADD_POST = "add-post",
 }
 
-export const roleInCouncil = ["Chairman", "secretary", "Commissioner"];
+export const roleInCouncil = ["secretary", "Chairman", "Commissioner"];

@@ -87,7 +87,7 @@ export const RegistrationTopicForm: FC<IRegistrationTopicFormProps> = ({
       {(formik) => {
         const { values, setFieldValue } = formik;
         const handleChangeQuantityMember = (newValue: number) => {
-          setFieldValue("memberQuantiy", newValue);
+          setFieldValue("memberQuantity", newValue);
         };
         return (
           <>
@@ -130,7 +130,6 @@ export const RegistrationTopicForm: FC<IRegistrationTopicFormProps> = ({
                   value={values?.memberEmail}
                 />
               )}
-
               <FormField
                 type="text"
                 label={t.acc_register_item6}

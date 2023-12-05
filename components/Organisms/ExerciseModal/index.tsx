@@ -99,7 +99,10 @@ export const ExerciseModal: FC<IExerciseModalProps> = ({
                         <Image
                           width={20}
                           height={20}
-                          src={arr.thumbnail}
+                          src={
+                            arr.thumbnail ||
+                            "https://cdn-icons-png.flaticon.com/128/9496/9496432.png"
+                          }
                           alt="icon-file-pdf"
                         />
                         <div>
