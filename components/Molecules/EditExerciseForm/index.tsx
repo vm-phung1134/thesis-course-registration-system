@@ -1,14 +1,11 @@
-import { Button, FormField, SelectBox, SelectInForm } from "@/components/Atoms";
-import { useClassroomStateContext } from "@/contexts/classroomState";
+import { Button, FormField, SelectInForm } from "@/components/Atoms";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
 import { INITIATE_CATEGORY, INITIATE_EXERCISE_INPUT } from "@/data";
 import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
 import { useSelectStage } from "@/hooks/useSelectStage";
-import { ICategoryObject } from "@/interface/category";
 import { IClassroomObject } from "@/interface/classroom";
 import { IExerciseObject, IExerciseObjectInput } from "@/interface/exercise";
-import { IOptionItem } from "@/interface/filter";
-import { createExercise, updateExercise } from "@/redux/reducer/exercise/api";
+import { updateExercise } from "@/redux/reducer/exercise/api";
 import { Form, Formik } from "formik";
 import Image from "next/image";
 import { FC, useState, useRef } from "react";
@@ -82,7 +79,7 @@ export const EditExerciseForm: FC<IEditExerciseFormProps> = ({
             categoryID: selectedStage.id,
             attachments: selectedFiles,
             authorID: currentUser.id,
-          })
+          });
           resetForm();
           setSelectedFiles([]);
           setSelectedStage(INITIATE_CATEGORY);

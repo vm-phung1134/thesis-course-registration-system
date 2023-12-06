@@ -112,10 +112,10 @@ export const INITIATE_MEMBER: IMemberObject = {
   id: "",
 };
 
-export const INITIATE_COMMENT: ICommentObjectInput = {
-  userID: "",
+export const INITIATE_COMMENT: ICommentObject = {
+  user: INITIATE_AUTH,
   content: "",
-  exerciseID: "",
+  exercise: INITIATE_EXERCISE,
 };
 
 export const INITIATE_PRIVATE_COMMENT: IPrivateComment = {
@@ -183,8 +183,8 @@ export const INITIATE_FILE: IGeneralLinkAttachment = {
   author: INITIATE_AUTH,
   mimeType: "",
   thumbnail: "",
-  fileName: ""
-}
+  fileName: "",
+};
 
 export const INITIATE_UPLOAD_REPORT: IUploadReportObject = {
   author: INITIATE_AUTH,

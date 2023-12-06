@@ -1,13 +1,9 @@
-import { Avatar, Button, NormalAvatar } from "@/components/Atoms";
+import { Button, NormalAvatar } from "@/components/Atoms";
 import { InforUserForm } from "@/components/Molecules";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
-import { INITIATE_AUTH } from "@/data";
-import { useUserCookies } from "@/hooks/useCookies";
-import { useCurrentUser } from "@/hooks/useGetCurrentUser";
+import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
 import { IAuthObject } from "@/interface/auth";
 import { updateAuth } from "@/redux/reducer/auth/api";
-import { useAppDispatch } from "@/redux/store";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import classNames from "classnames";
 import { Formik } from "formik";
 import { FC, useState } from "react";
@@ -15,34 +11,18 @@ import { FC, useState } from "react";
 export interface IPersonalInformationProps {}
 
 export const PersonalInformation: FC<IPersonalInformationProps> = () => {
-  const dispatch = useAppDispatch();
-  const queryClient = useQueryClient();
   const [toggle, setToggle] = useState<boolean>(false);
   const modalClass = classNames({
     "modal modal-bottom sm:modal-middle": true,
     "modal-open": toggle,
   });
   const { currentUser } = useCurrentUserContext();
-
-  const updateMutation = useMutation(
-    (postData: IAuthObject) => {
-      return new Promise((resolve, reject) => {
-        dispatch(updateAuth(postData))
-          .unwrap()
-          .then((data) => {
-            resolve(data);
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["auth", currentUser]);
-      },
-    }
-  );
+  const updateMutation = useMutationQueryAPI({
+    action: updateAuth,
+    queryKeyLog: ["get-one-auth"],
+    successMsg: "Update personal information successfully!",
+    errorMsg: "Fail to update the information!",
+  });
 
   const initialValues: IAuthObject = currentUser;
   return (

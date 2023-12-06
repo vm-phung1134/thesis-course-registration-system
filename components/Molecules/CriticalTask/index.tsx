@@ -1,6 +1,4 @@
-import { Button } from "@/components/Atoms";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
-import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { IExerciseObject } from "@/interface/exercise";
 import { ISubmitObject } from "@/interface/submit";
 import { convertDateTime } from "@/utils/covertDate";

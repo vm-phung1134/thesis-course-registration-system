@@ -15,13 +15,11 @@ import {
   getOneRoomDef,
 } from "@/redux/reducer/room-def/api";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import classNames from "classnames";
 import { FC, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import useToastifyMessage from "@/hooks/useToastify";
-import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer } from "react-toastify";
 import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
 
 interface ICreateRoomTab {}
@@ -73,7 +71,11 @@ export const CreateRoomTab: FC<ICreateRoomTab> = ({}) => {
     "modal modal-bottom sm:modal-middle": true,
     "modal-open": openModalClearRoom,
   });
-  useToastifyMessage(deleteMutation, "Room has been deleted successfully!", "Fail to delete room defense!");
+  useToastifyMessage(
+    deleteMutation,
+    "Room has been deleted successfully!",
+    "Fail to delete room defense!"
+  );
   return (
     <div className="grid grid-cols-12 gap-5">
       <div className="col-span-5 p-5 mt-5 border shadow-md">
@@ -252,13 +254,6 @@ export const CreateRoomTab: FC<ICreateRoomTab> = ({}) => {
         underMessage="Once you delete this rooms if will be gone forever"
         title="Message!!!"
         message="Are you sure do you want to delete this rooms"
-      />
-      <ToastContainer
-        toastStyle={{
-          color: "black",
-          fontSize: "14px",
-          fontFamily: "Red Hat Text",
-        }}
       />
     </div>
   );

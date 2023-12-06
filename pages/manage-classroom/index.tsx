@@ -1,7 +1,6 @@
 import {
   CommentForm,
   ContentComment,
-  CreatePostForm,
   CriticalTask,
   EditExerciseForm,
   EditPostForm,
@@ -10,13 +9,12 @@ import {
 } from "@/components/Molecules";
 import { ClassroomTemplate } from "@/components/Templates";
 import classNames from "classnames";
-import { SetStateAction, useState } from "react";
+import { useState } from "react";
 import { ExerciseModal, PostModal } from "@/components/Organisms";
 import { useQuery } from "@tanstack/react-query";
 import { IPostObject } from "@/interface/post";
-import { deletePost, getPost } from "@/redux/reducer/post/api";
+import { deletePost } from "@/redux/reducer/post/api";
 import { useAppDispatch } from "@/redux/store";
-import { deleteExercise, getExercise } from "@/redux/reducer/exercise/api";
 import { IExerciseObject } from "@/interface/exercise";
 import { useClassroomStateContext } from "@/contexts/classroomState";
 import Image from "next/image";

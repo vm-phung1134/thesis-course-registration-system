@@ -1,5 +1,4 @@
 import { Button, FormField, SelectBox, SelectInForm } from "@/components/Atoms";
-import { useClassroomStateContext } from "@/contexts/classroomState";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
 import { INITIATE_CATEGORY, INITIATE_EXERCISE_INPUT } from "@/data";
 import { useMutationQueryAPI } from "@/hooks/useMutationAPI";

@@ -1,13 +1,8 @@
 import { Button } from "@/components/Atoms";
-import {
-  CommentForm,
-  ContentComment,
-  ContentCommentModal,
-} from "@/components/Molecules";
+import { CommentForm, ContentCommentModal } from "@/components/Molecules";
 import { IPostObject } from "@/interface/post";
 import { convertToUnaccentedString } from "@/utils/convertString";
 import { FC } from "react";
-import Link from "next/link";
 import Image from "next/image";
 
 export interface IPostModalProps {

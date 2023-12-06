@@ -1,13 +1,6 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import { Form, Formik } from "formik";
 import { Button, FormField } from "@/components/Atoms";
-import { INITIATE_ROOM_DEF } from "@/data";
-import { useAppDispatch } from "@/redux/store";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { IRoomDefObject } from "@/interface/room";
-import { createRoomDef } from "@/redux/reducer/room-def/api";
-import useToastifyMessage from "@/hooks/useToastify";
-
 export interface IChangePassFormProps {}
 
 export const ChangePassForm: FC<IChangePassFormProps> = ({}) => {
@@ -30,7 +23,8 @@ export const ChangePassForm: FC<IChangePassFormProps> = ({}) => {
               <div className="flex gap-5">
                 <div className="flex flex-col w-fit">
                   <p className="text-sm mb-2">
-                    If you wish to reset your password, please enter your current password first!!
+                    If you wish to reset your password, please enter your
+                    current password first!!
                   </p>
                   <FormField
                     label="Current password"

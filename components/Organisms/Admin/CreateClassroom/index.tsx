@@ -18,12 +18,10 @@ import {
   updateClassroom,
 } from "@/redux/reducer/classroom/api";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import classNames from "classnames";
 import { FC, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer } from "react-toastify";
 import useToastifyMessage from "@/hooks/useToastify";
 import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
 
@@ -576,13 +574,6 @@ export const CreateClassroomTab: FC<ICreateClassroomTab> = ({}) => {
         underMessage="Once you delete this classrooms if will be gone forever"
         title="Message!!!"
         message="Are you sure do you want to delete this classrooms"
-      />
-      <ToastContainer
-        toastStyle={{
-          color: "black",
-          fontSize: "14px",
-          fontFamily: "Red Hat Text",
-        }}
       />
     </div>
   );

@@ -9,7 +9,6 @@ import {
 import { ROLE_ASSIGNMENT } from "@/contexts/authContext";
 import { useClassroomStateContext } from "@/contexts/classroomState";
 import { useSubscribeStateContext } from "@/contexts/subscribeState";
-import { IMemberObject } from "@/interface/member";
 import { STATE_AUTH_CLASSROOM } from "@/data";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
 import { BREADCRUMB_MAINBOARD } from "@/components/Organisms/MainboardStatus/mock-data";

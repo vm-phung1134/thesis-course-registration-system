@@ -7,17 +7,10 @@ import {
   ClassroomDetailModal,
 } from "@/components/Molecules";
 import { createRequirement } from "@/redux/reducer/requirement/api";
-import { IMemberObject, IMemberObjectInput } from "@/interface/member";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useAppDispatch } from "@/redux/store";
-import { useCurrentUser } from "@/hooks/useGetCurrentUser";
-import { getAllMemberClassroom } from "@/redux/reducer/member/api";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer } from "react-toastify";
 import { NormalAvatar } from "@/components/Atoms";
 import { motion } from "framer-motion";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
+import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
 
 interface IClassroomCardProps {
   item: IClassroomObject;
@@ -32,31 +25,12 @@ export const ClassroomCard: FC<IClassroomCardProps> = ({ item, index }) => {
     "modal-open": openModalClassroomDetail,
   });
   // HANDLE CALL API
-  const queryClient = useQueryClient();
-  const dispatch = useAppDispatch();
-  const addRequirementMutation = useMutation(
-    (postData: IMemberObjectInput) => {
-      return dispatch(createRequirement(postData))
-        .unwrap()
-        .then((data) => {
-          toast.success(data.message, {
-            position: toast.POSITION.BOTTOM_LEFT,
-            autoClose: 3000,
-          });
-        })
-        .catch((error) => {
-          toast.error(error?.message, {
-            position: toast.POSITION.BOTTOM_LEFT,
-            autoClose: 3000,
-          });
-        });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["subscribe-state"]);
-      },
-    }
-  );
+  const addRequirementMutation = useMutationQueryAPI({
+    action: createRequirement,
+    queryKeyLog: ["subscribe-state"],
+    successMsg: "You have been send request successfully!",
+    errorMsg: "Fail to send the request!",
+  });
   const { currentUser } = useCurrentUserContext();
   const handleSubcribeClass = () => {
     if (!addRequirementMutation.isLoading) {
@@ -94,13 +68,6 @@ export const ClassroomCard: FC<IClassroomCardProps> = ({ item, index }) => {
         openModalClassroomDetail={openModalClassroomDetail}
         handleSubcribeClass={handleSubcribeClass}
         modalClass={modalClass}
-      />
-      <ToastContainer
-        toastStyle={{
-          color: "black",
-          fontSize: "14px",
-          fontFamily: "Red Hat Text",
-        }}
       />
     </>
   );

@@ -10,8 +10,6 @@ import { getTopic } from "@/redux/reducer/topic/api";
 import { ITopicObject } from "@/interface/topic";
 import classNames from "classnames";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
-import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer } from "react-toastify";
 import { motion } from "framer-motion";
 import { useLanguageContext } from "@/contexts/languageContext";
 
@@ -156,13 +154,6 @@ function AccountStudentPage() {
                 />
               </div>
             </dialog>
-            <ToastContainer
-              toastStyle={{
-                color: "black",
-                fontSize: "14px",
-                fontFamily: "Red Hat Text",
-              }}
-            />
           </motion.div>
         )}
       </MainboardTemplate>

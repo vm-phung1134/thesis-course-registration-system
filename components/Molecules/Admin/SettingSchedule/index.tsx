@@ -1,4 +1,4 @@
-import { Button, CountInput, FormField } from "@/components/Atoms";
+import { Button, CountInput } from "@/components/Atoms";
 import { Form, Formik } from "formik";
 import { FC } from "react";
 
@@ -53,7 +53,9 @@ export const SettingSchedule: FC<ISettingScheduleProps> = ({}) => {
                             valueNumber={0}
                             onChange={function (newValue: number): void {
                               throw new Error("Function not implemented.");
-                            } } limit={0}                          />
+                            }}
+                            limit={0}
+                          />
                         </div>
                         <div className="w-60 flex-grow">
                           <CountInput
@@ -62,7 +64,9 @@ export const SettingSchedule: FC<ISettingScheduleProps> = ({}) => {
                             valueNumber={0}
                             onChange={function (newValue: number): void {
                               throw new Error("Function not implemented.");
-                            } } limit={0}                          />
+                            }}
+                            limit={0}
+                          />
                         </div>
                       </div>
                     </div>
@@ -95,7 +99,9 @@ export const SettingSchedule: FC<ISettingScheduleProps> = ({}) => {
                             valueNumber={0}
                             onChange={function (newValue: number): void {
                               throw new Error("Function not implemented.");
-                            } } limit={0}                          />
+                            }}
+                            limit={0}
+                          />
                         </div>
                       </div>
                     </div>

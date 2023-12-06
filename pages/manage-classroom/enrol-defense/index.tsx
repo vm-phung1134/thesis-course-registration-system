@@ -3,23 +3,6 @@ import { useState } from "react";
 import { MemberEnrolled, MemberUnregister } from "@/components/Organisms";
 
 function EnrollTab() {
-  // HANDLE API ENROL MEMBER
-  //   const dispatch = useAppDispatch();
-  //   const { authClassroomState } = useClassroomStateContext();
-  //   const { topic } = useAppSelector((state) => state.topicReducer);
-  //   const { data: members } = useQuery<IMemberObject[]>({
-  //     queryKey: ["members", authClassroomState],
-  //     queryFn: async () => {
-  //       const action = await dispatch(
-  //         getAllMemberClassroom(authClassroomState)
-  //       );
-  //       return action.payload || [];
-  //     },
-  //     initialData: [],
-  //   });
-  //   const handleGetTopicMember = (member: IMemberObject) => {
-  //     dispatch(getTopic(member?.member));
-  //   };
   type MenuItem = {
     id: number;
     label: string;

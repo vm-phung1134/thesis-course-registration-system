@@ -1,9 +1,8 @@
 import { ClassroomTemplate } from "@/components/Templates";
-import { getAllPointDefs, getOnePointDef } from "@/redux/reducer/point-def/api";
-import { useCurrentUser } from "@/hooks/useGetCurrentUser";
+import { getAllPointDefs } from "@/redux/reducer/point-def/api";
 import { useAppDispatch } from "@/redux/store";
 import { useQuery } from "@tanstack/react-query";
-import { IAssessItem, IPointDefObject } from "@/interface/pointDef";
+import { IPointDefObject } from "@/interface/pointDef";
 import { FilterScheduledForm } from "@/components/Molecules";
 import { AnimatePresence, motion } from "framer-motion";
 import useCheckedBox from "@/hooks/useCheckedBox";

@@ -4,7 +4,6 @@ import { Breadcrumb, NormalAvatar, SnipperRound } from "@/components/Atoms";
 import { BREADCRUMB_ACCOUNT_LECTURER } from "./mock-data";
 import { ChangePassForm, InforUserForm } from "@/components/Molecules";
 import classNames from "classnames";
-import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
 import { ToastContainer } from "react-toastify";
 

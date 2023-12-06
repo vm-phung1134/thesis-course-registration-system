@@ -8,13 +8,10 @@ import { IStudentDefObject } from "@/interface/studef";
 import { getAllMemberClassroom } from "@/redux/reducer/member/api";
 import { createStudentDef } from "@/redux/reducer/student-def/api";
 import { useAppDispatch } from "@/redux/store";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import classNames from "classnames";
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer } from "react-toastify";
 import { convertDateTimeFromString } from "@/utils/covertDate";
 import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
 
@@ -223,13 +220,6 @@ export const MemberEnrolled: FC<IMemberEnrolledProps> = ({}) => {
           </div>
         </div>
       </div>
-      <ToastContainer
-        toastStyle={{
-          color: "black",
-          fontSize: "14px",
-          fontFamily: "Red Hat Text",
-        }}
-      />
       <ModalConfirm
         modalClass={modalClassCreateConfirm}
         setOpenModal={setOpenCreateConfirm}

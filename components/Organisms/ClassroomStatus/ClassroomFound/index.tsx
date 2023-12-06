@@ -7,7 +7,6 @@ import {
 } from "../mock-data";
 import { CardLecturerInClass, CountDown } from "@/components/Molecules";
 import { IClassroomObject } from "@/interface/classroom";
-import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
 
 export interface IClassroomFoundProps {
@@ -24,16 +23,16 @@ export const ClassroomFound: FC<IClassroomFoundProps> = ({
 }) => {
   const { currentUser } = useCurrentUserContext();
   const [timeLeft, setTimeLeft] = useState<number>(0);
-  // useEffect(() => {
-  //   const calculateTimeLeft = () => {
-  //     const countdownDate = new Date("2023-12-24T00:00:00Z").getTime();
-  //     const now = new Date().getTime();
-  //     const difference = countdownDate - now;
-  //     setTimeLeft(Math.floor(difference / 1000));
-  //   };
-  //   const timer = setInterval(calculateTimeLeft, 1000);
-  //   return () => clearInterval(timer);
-  // }, []);
+  useEffect(() => {
+    const calculateTimeLeft = () => {
+      const countdownDate = new Date("2023-12-24T00:00:00Z").getTime();
+      const now = new Date().getTime();
+      const difference = countdownDate - now;
+      setTimeLeft(Math.floor(difference / 1000));
+    };
+    const timer = setInterval(calculateTimeLeft, 1000);
+    return () => clearInterval(timer);
+  }, []);
   return (
     <div className="px-5 border-l">
       <div className="grid grid-cols-12 gap-4 my-3">

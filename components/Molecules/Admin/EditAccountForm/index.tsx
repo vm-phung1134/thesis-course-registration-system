@@ -1,6 +1,5 @@
 import { Button, FormField } from "@/components/Atoms";
 import { IAuthObject } from "@/interface/auth";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Form, Formik } from "formik";
 import { FC, useState } from "react";
 import { INITIATE_AUTH } from "@/data";

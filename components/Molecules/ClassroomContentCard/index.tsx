@@ -1,13 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 import { FC } from "react";
-import { Button, ItemUserInfor, NormalAvatar } from "@/components/Atoms";
+import { Button } from "@/components/Atoms";
 import { IClassroomObject } from "@/interface/classroom";
 import { useSubscribeStateContext } from "@/contexts/subscribeState";
 import { IMemberObject } from "@/interface/member";
 import { STATE_AUTH_CLASSROOM, STATE_LECTURER_CLASSROOM } from "@/data";
-import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { ROLE_ASSIGNMENT } from "@/contexts/authContext";
-import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 import { useAppDispatch } from "@/redux/store";
 import { getAllMemberClassroom } from "@/redux/reducer/member/api";

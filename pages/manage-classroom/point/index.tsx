@@ -1,10 +1,8 @@
 import { ClassroomTemplate } from "@/components/Templates";
 import { getOnePointDef } from "@/redux/reducer/point-def/api";
-import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { useAppDispatch } from "@/redux/store";
 import { useQuery } from "@tanstack/react-query";
-import { IMemberObject } from "@/interface/member";
-import { IAssessItem, IPointDefObject } from "@/interface/pointDef";
+import { IPointDefObject } from "@/interface/pointDef";
 import { INITIATE_POINT_DEF } from "@/data";
 import { NormalAvatar } from "@/components/Atoms";
 import { ICouncilDef } from "@/interface/schedule";

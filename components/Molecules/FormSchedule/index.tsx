@@ -1,29 +1,18 @@
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import { Form, Formik } from "formik";
 import { Button, CountInput, FormField } from "@/components/Atoms";
 import { useAppDispatch } from "@/redux/store";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { IThesisDef } from "@/interface/schedule";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createScheduleDef } from "@/redux/reducer/schedule-def/api";
 import { IAuthObject } from "@/interface/auth";
 import { getAllCouncilDefs } from "@/redux/reducer/council-def/api";
 import { getAllStudentDefs } from "@/redux/reducer/student-def/api";
 import { getAllRoomDefs } from "@/redux/reducer/room-def/api";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer } from "react-toastify";
 import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
-export interface IScheduleFormProps {
-  setCreateScheduled: any;
-  createScheduled: React.Dispatch<any>;
-}
+export interface IScheduleFormProps {}
 
-export const ScheduleForm: FC<IScheduleFormProps> = ({
-  setCreateScheduled,
-  createScheduled,
-}) => {
+export const ScheduleForm: FC<IScheduleFormProps> = ({}) => {
   const dispatch = useAppDispatch();
-  const queryClient = useQueryClient();
   const { data: council_def } = useQuery<IAuthObject[]>({
     queryKey: ["get-council-def"],
     queryFn: async () => {
@@ -169,13 +158,6 @@ export const ScheduleForm: FC<IScheduleFormProps> = ({
                 </p>
               </div>
             </Form>
-            <ToastContainer
-              toastStyle={{
-                color: "black",
-                fontSize: "14px",
-                fontFamily: "Red Hat Text",
-              }}
-            />
           </>
         );
       }}

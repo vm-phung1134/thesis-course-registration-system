@@ -1,5 +1,4 @@
 import { ClassroomTemplate } from "@/components/Templates";
-import { DATA_CARD_STUDENT, DATA_FILTER_MEMBER } from "./mock-data";
 import { SelectBox } from "@/components/Atoms";
 import { ICategoryObject } from "@/interface/category";
 import { IOptionItem } from "@/interface/filter";
@@ -8,7 +7,7 @@ import { CardMember } from "@/components/Molecules";
 import { useQuery } from "@tanstack/react-query";
 import { IMemberObject } from "@/interface/member";
 import { getAllMemberClassroom } from "@/redux/reducer/member/api";
-import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { useAppDispatch } from "@/redux/store";
 import { useClassroomStateContext } from "@/contexts/classroomState";
 import {
   DATA_FILTER_COURSE,

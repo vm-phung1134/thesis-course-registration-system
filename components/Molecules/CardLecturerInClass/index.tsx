@@ -1,10 +1,6 @@
 import { ROLE_ASSIGNMENT } from "@/contexts/authContext";
 import { useClassroomStateContext } from "@/contexts/classroomState";
-import {
-  INITIATE_CLASSROOM,
-  INITIATE_MEMBER,
-  STATE_LECTURER_CLASSROOM,
-} from "@/data";
+import { INITIATE_MEMBER, STATE_LECTURER_CLASSROOM } from "@/data";
 import { IAuthObject } from "@/interface/auth";
 import { updateClassroom } from "@/redux/reducer/classroom/api";
 import { FC, useState } from "react";

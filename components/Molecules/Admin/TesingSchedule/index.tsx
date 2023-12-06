@@ -1,6 +1,6 @@
-import { Button, CountInput, FormField } from "@/components/Atoms";
+import { Button, CountInput } from "@/components/Atoms";
 import { Form, Formik } from "formik";
-import { FC, useEffect, useState } from "react"; // Import useState hook
+import { FC, useState } from "react"; // Import useState hook
 import { AnimatePresence, motion } from "framer-motion";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAppDispatch } from "@/redux/store";
@@ -83,7 +83,8 @@ export const TestingSchedule: FC<ITestingScheduleprops> = ({}) => {
           id: `GV${i}`,
         });
         const randomStudentCount =
-          Math.floor(Math.random() * (remainingStudents / teacherCount)) + (remainingStudents / teacherCount);
+          Math.floor(Math.random() * (remainingStudents / teacherCount)) +
+          remainingStudents / teacherCount;
         remainingStudents -= randomStudentCount;
         for (let j = 1; j < randomStudentCount + 1; j++) {
           addStudefMutation.mutate({
@@ -264,7 +265,9 @@ export const TestingSchedule: FC<ITestingScheduleprops> = ({}) => {
                 </label>
               </div>
             </Form>
-            <h4 className="font-medium text-green-700 mt-5">The mock testing api result</h4>
+            <h4 className="font-medium text-green-700 mt-5">
+              The mock testing api result
+            </h4>
             <div className="w-1/2">
               <div className="flex flex-col">
                 <div className="overflow-x-auto">

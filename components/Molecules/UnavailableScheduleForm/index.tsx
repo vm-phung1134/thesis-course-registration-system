@@ -1,44 +1,28 @@
 import { Button, FormField } from "@/components/Atoms";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
 import { INITIATE_UNAVAIABLE_SCHEDULE_ITEM } from "@/data";
-import { IUnavailableDate } from "@/interface/unavailableDate";
+import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
 import { createUnavaiableDate } from "@/redux/reducer/unavailable-date/api";
-import { useAppDispatch } from "@/redux/store";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Form, Formik } from "formik";
 import { FC } from "react";
-export interface IUnavailableFormProps {}
 import { v4 as uuidv4 } from "uuid";
 
+interface IUnavailableFormProps {}
+
 export const UnavailableForm: FC<IUnavailableFormProps> = ({}) => {
-  const queryClient = useQueryClient();
-  const dispatch = useAppDispatch();
   const { currentUser } = useCurrentUserContext();
-  const addMutation = useMutation(
-    (postData: IUnavailableDate) => {
-      return new Promise((resolve, reject) => {
-        dispatch(createUnavaiableDate(postData))
-          .unwrap()
-          .then((data) => {
-            resolve(data);
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["unavailable-date"]);
-      },
-    }
-  );
-  const objectId = uuidv4();
+  const addMutation = useMutationQueryAPI({
+    action: createUnavaiableDate,
+    queryKeyLog: ["unavailable-date"],
+    successMsg: "You setup your schedule busy successfully!",
+    errorMsg: "Fail to set the schedule!",
+  });
   return (
     <Formik
       initialValues={INITIATE_UNAVAIABLE_SCHEDULE_ITEM}
       enableReinitialize
       onSubmit={(values, { setSubmitting, resetForm }) => {
+        let objectId = uuidv4();
         setTimeout(() => {
           addMutation.mutate({
             lecturer: currentUser,

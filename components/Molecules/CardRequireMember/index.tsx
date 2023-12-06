@@ -1,7 +1,6 @@
 import { Avatar, Button } from "@/components/Atoms";
 import { IMemberObject } from "@/interface/member";
 import { createMember } from "@/redux/reducer/member/api";
-import { deleteRequirement } from "@/redux/reducer/requirement/api";
 import { getTopic } from "@/redux/reducer/topic/api";
 import { useAppDispatch } from "@/redux/store";
 import { convertToUnaccentedString } from "@/utils/convertString";

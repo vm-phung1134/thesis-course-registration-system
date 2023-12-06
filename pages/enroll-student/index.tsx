@@ -7,7 +7,6 @@ import {
 import { EnrollSuccess } from "@/components/Organisms/MemberState/EnrollSuccess";
 import { MainboardTemplate } from "@/components/Templates";
 import { INITIATE_MEMBER, INITIATE_UPLOAD_REPORT, roleInCouncil } from "@/data";
-import { useUserCookies } from "@/hooks/useCookies";
 import { IMemberObject } from "@/interface/member";
 import { ICouncilDef } from "@/interface/schedule";
 import { IUploadReportObject } from "@/interface/upload";
@@ -15,7 +14,7 @@ import { getMember, updateMember } from "@/redux/reducer/member/api";
 import { getScheduleForStudent } from "@/redux/reducer/schedule-def/api";
 import { getUploadReport } from "@/redux/reducer/upload-def/api";
 import { useAppDispatch } from "@/redux/store";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";

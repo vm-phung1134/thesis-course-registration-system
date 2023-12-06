@@ -5,7 +5,6 @@ import {
 } from "@/components/Organisms";
 import { ROLE_ASSIGNMENT } from "@/contexts/authContext";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
-import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import Head from "next/head";
 import { FC } from "react";
 import { ToastContainer } from "react-toastify";

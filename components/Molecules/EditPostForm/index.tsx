@@ -1,15 +1,11 @@
-import { Button, FormField, SelectBox, SelectInForm } from "@/components/Atoms";
+import { Button, FormField, SelectInForm } from "@/components/Atoms";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
-import { INITIATE_CATEGORY, INITIATE_POST } from "@/data";
+import { INITIATE_CATEGORY } from "@/data";
 import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
 import { useSelectStage } from "@/hooks/useSelectStage";
-import { ICategoryObject } from "@/interface/category";
 import { IClassroomObject } from "@/interface/classroom";
-import { IOptionItem } from "@/interface/filter";
 import { IPostObject } from "@/interface/post";
-import { ISubmitObject } from "@/interface/submit";
-import { createPost, getPost, updatePost } from "@/redux/reducer/post/api";
-import { useQuery } from "@tanstack/react-query";
+import { updatePost } from "@/redux/reducer/post/api";
 import { Form, Formik } from "formik";
 import Image from "next/image";
 import { FC, useRef, useState } from "react";

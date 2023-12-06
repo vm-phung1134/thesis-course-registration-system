@@ -21,6 +21,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import classNames from "classnames";
 import { IUnavailableDate } from "@/interface/unavailableDate";
+import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
 
 export interface IPersonalSchedule {}
 
@@ -35,26 +36,12 @@ export const PersonalSchedule: FC<IPersonalSchedule> = () => {
     },
     initialData: INITIATE_UNAVAIABLE_SCHEDULE,
   });
-  const queryClient = useQueryClient();
-  const deleteMutation = useMutation(
-    (postData: UndateParams) => {
-      return new Promise((resolve, reject) => {
-        dispatch(deleteUnavaiableDate(postData))
-          .unwrap()
-          .then((data) => {
-            resolve(data);
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["unavailable-date"]);
-      },
-    }
-  );
+  const deleteMutation = useMutationQueryAPI({
+    action: deleteUnavaiableDate,
+    queryKeyLog: ["unavailable-date"],
+    successMsg: "You delete your schedule busy successfully!",
+    errorMsg: "Fail to delete the schedule!",
+  });
   const [valueUndate, setValueUndate] = useState<UndateParams>({
     idAuth: "",
     idUndate: "",

@@ -1,12 +1,6 @@
 import { FC } from "react";
 import { Form } from "formik";
-import {
-  Button,
-  FormField,
-  IconButton,
-  LineUnder,
-  TitleFormField,
-} from "@/components/Atoms";
+import { Button, FormField, IconButton, LineUnder } from "@/components/Atoms";
 import Link from "next/link";
 import { useAuthContext } from "@/contexts/authContext";
 
@@ -22,7 +16,10 @@ export interface IEmailLoginProps {
 const ActionFormField = () => {
   return (
     <div className="flex justify-end mb-6">
-      <Link href="/" className="text-[13px] text-red-600 hover:underline tracking-wide">
+      <Link
+        href="/"
+        className="text-[13px] text-red-600 hover:underline tracking-wide"
+      >
         Forgot password?
       </Link>
     </div>

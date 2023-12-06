@@ -2,18 +2,17 @@ import { Avatar, Button } from "@/components/Atoms";
 import { InforMemberModal } from "@/components/Organisms";
 import { ROLE_ASSIGNMENT } from "@/contexts/authContext";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
-import { INITIATE_AUTH, INITIATE_TOPIC } from "@/data";
-import { IAuthObject } from "@/interface/auth";
+import { INITIATE_TOPIC } from "@/data";
 import { IMemberObject } from "@/interface/member";
 import { ITopicObject } from "@/interface/topic";
 import { getTopic } from "@/redux/reducer/topic/api";
 import { useAppDispatch } from "@/redux/store";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import classNames from "classnames";
 import { FC, useState } from "react";
 import { ModalConfirm } from "..";
 import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
-import { deleteMember, updateMember } from "@/redux/reducer/member/api";
+import { deleteMember } from "@/redux/reducer/member/api";
 
 export interface ICardMemberClassProps {
   member: IMemberObject;

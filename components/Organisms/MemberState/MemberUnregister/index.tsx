@@ -1,8 +1,7 @@
-import { Avatar, Button, NormalAvatar } from "@/components/Atoms";
+import { Button, NormalAvatar } from "@/components/Atoms";
 import { FilterScheduledForm } from "@/components/Molecules";
 import { useClassroomStateContext } from "@/contexts/classroomState";
 import { IMemberObject } from "@/interface/member";
-import { DATA_LECTURER_CIT } from "@/pages/admin/classroom-management/mock-data";
 import { getAllMemberClassroom } from "@/redux/reducer/member/api";
 import { useAppDispatch } from "@/redux/store";
 import { useQuery } from "@tanstack/react-query";
