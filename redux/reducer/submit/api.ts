@@ -95,13 +95,16 @@ const updateSubmit = createAsyncThunk(
 const getAllSubmitStud = createAsyncThunk(
   "submit/getAllSubmitStud",
   async (postData: IAuthObject) => {
-    const response = await axios.get(`${apiURL}/student/${postData.id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axios.get(
+      `http://qthuy2k1.shop/api/auth/${postData.id}/submit`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     if (response.status === 200) {
-      return response.data;
+      return response.data.submissions;
     }
     throw new Error("Failed to get all submit of student");
   }

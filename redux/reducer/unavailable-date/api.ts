@@ -4,18 +4,18 @@ import { UndateParams, token } from "./type";
 import { IAuthObject } from "@/interface/auth";
 import { IUnavailableDate } from "@/interface/unavailableDate";
 
+const apiURL =
+  "https://thesis-course-registration-system-backend-vm-phung1134.vercel.app/api/unavailable-date";
+
 // GET ALL INVALID DATE OF INSTRUCTOR
 const getAllUnavaiableDates = createAsyncThunk(
   "unavailable-date/getAllUnavaiableDates",
   async (postData: IAuthObject) => {
-    const response = await axios.get(
-      `http://localhost:5000/api/unavailable-date/${postData.id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.get(`${apiURL}/${postData.id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
       return response.data;
     }
@@ -27,14 +27,11 @@ const getAllUnavaiableDates = createAsyncThunk(
 const getAllUnavaiableDate = createAsyncThunk(
   "unavailable-date/getAllUnavaiableDate",
   async () => {
-    const response = await axios.get(
-      `http://localhost:5000/api/unavailable-date`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.get(`${apiURL}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
       return response.data;
     }
@@ -45,15 +42,11 @@ const getAllUnavaiableDate = createAsyncThunk(
 const createUnavaiableDate = createAsyncThunk(
   "unavailable-date/createUnavaiableDate",
   async (postData: IUnavailableDate) => {
-    const response = await axios.post(
-      `http://localhost:5000/api/unavailable-date/`,
-      postData,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.post(`${apiURL}`, postData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
       return response.data;
     }
@@ -65,7 +58,7 @@ const deleteUnavaiableDate = createAsyncThunk(
   "unavailable-date/deleteUnavaiableDate",
   async (postData: UndateParams) => {
     const response = await axios.delete(
-      `http://localhost:5000/api/unavailable-date/${postData.idAuth}&${postData.idUndate}`,
+      `${apiURL}/${postData.idAuth}&${postData.idUndate}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

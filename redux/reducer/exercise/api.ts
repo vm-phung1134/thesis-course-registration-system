@@ -75,16 +75,31 @@ const createExercise = createAsyncThunk(
 // UPDATE EXERCISE
 const updateExercise = createAsyncThunk(
   "exercise/updateExercise",
-  async (postData: IExerciseObject) => {
+  async (postData: IExerciseObjectInput) => {
+    const formData = new FormData();
+    formData.append("title", postData.title);
+    formData.append("categoryID", postData.categoryID);
+    formData.append("classroomID", postData.classroomID);
+    formData.append("authorID", postData.authorID);
+    formData.append("description", postData.description);
+    formData.append("deadline", postData.deadline);
+
+    if (postData.attachments) {
+      for (let i = 0; i < postData.attachments.length; i++) {
+        formData.append("attachments", postData.attachments[i]);
+      }
+    }
     const response = await axios.put(
       `http://qthuy2k1.shop/upload/exercise/${postData.id}`,
-      { exercise: postData },
+      formData,
       {
         headers: {
           Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
         },
       }
     );
+      console.log(response)
     if (response.status === 200) {
       return response.data;
     }

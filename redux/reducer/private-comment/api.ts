@@ -4,18 +4,18 @@ import { token } from "./type";
 import { IPrivateComment } from "@/interface/privateComment";
 import { IAuthObject } from "@/interface/auth";
 
+const apiURL =
+  "https://thesis-course-registration-system-backend-vm-phung1134.vercel.app/api/private-comment";
+
 // GET ALL COMMENTS
 const getAllPrivateComments = createAsyncThunk(
   "private-comment/getAllPrivateComments",
   async (postData: IAuthObject) => {
-    const response = await axios.get(
-      `http://localhost:5000/api/private-comment/${postData.id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.get(`${apiURL}/${postData.id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
       return response.data;
     }
@@ -28,7 +28,7 @@ const getAllPrivateCommentForLecturer = createAsyncThunk(
   "private-comment/getAllPrivateCommentForLecturer",
   async (postData: IAuthObject) => {
     const response = await axios.get(
-      `http://localhost:5000/api/private-comment/lecturer-message/${postData.id}`,
+      `${apiURL}/lecturer-message/${postData.id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -45,16 +45,12 @@ const getAllPrivateCommentForLecturer = createAsyncThunk(
 const createPrivateComment = createAsyncThunk(
   "private-comment/createPrivateComment",
   async (postData: IPrivateComment) => {
-    console.log(postData)
-    const response = await axios.post(
-      `http://localhost:5000/api/private-comment/`,
-      postData,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    console.log(postData);
+    const response = await axios.post(`${apiURL}`, postData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
       return response.data;
     }

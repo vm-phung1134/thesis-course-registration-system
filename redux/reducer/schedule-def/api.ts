@@ -1,9 +1,8 @@
-import { ICouncilDef, IThesisDef } from "@/interface/schedule";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { token } from "./type";
 
-const apiURL = `http://localhost:5000/api/schedule-report`;
+const apiURL = `https://thesis-course-registration-system-backend-vm-phung1134.vercel.app//api/schedule-report`;
 
 const createScheduleDef = createAsyncThunk(
   "schedule/createScheduleDef",

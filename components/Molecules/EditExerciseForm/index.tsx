@@ -73,6 +73,16 @@ export const EditExerciseForm: FC<IEditExerciseFormProps> = ({
             attachments: selectedFiles,
             authorID: currentUser.id,
           });
+          console.log({
+            id: values.id,
+            title: values.title,
+            description: values.description,
+            deadline: values.deadline,
+            classroomID: classroom.id,
+            categoryID: selectedStage.id,
+            attachments: selectedFiles,
+            authorID: currentUser.id,
+          })
           resetForm();
           setSelectedFiles([]);
           setSelectedStage(INITIATE_CATEGORY);
