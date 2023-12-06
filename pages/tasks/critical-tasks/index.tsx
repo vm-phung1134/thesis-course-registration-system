@@ -114,7 +114,7 @@ function CriticalTasks() {
     return ex?.filter(
       (item) =>
         !submits.some(
-          (sub) => sub.exerciseID === item.id && sub.userID === currentUser.id
+          (sub) => sub.exerciseID === item.id && sub.authorID === currentUser.id
         )
     );
   };

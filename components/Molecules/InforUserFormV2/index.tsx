@@ -24,8 +24,8 @@ export const InforUserFormV2: FC<IInforUserFormV2Props> = ({
   const updateMutation = useMutationQueryAPI({
     action: updateAuth,
     queryKeyLog: ["get-one-auth"],
-    successMsg: "Your information has been updated!!!",
-    errorMsg: "Fail to update your information!!!",
+    // successMsg: "Your information has been updated!!!",
+    // errorMsg: "Fail to update your information!!!",
   });
   useEffect(() => {
     setTimeout(() => {

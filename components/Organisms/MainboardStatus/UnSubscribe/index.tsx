@@ -35,12 +35,12 @@ export const UnSubscribeView: FC<IUnSubscribeViewProps> = ({ classroom }) => {
                 <img
                   src="https://wildrift.leagueoflegends.com/static/volt-bottom-04-56cf6b160f445315e4c6a87da5bc5f23.png"
                   alt="bg-create-class"
-                  className="bg-no-repeat w-[83vw] h-[100vh] bg-cover transform rotate-180"
+                  className="bg-no-repeat w-[84vw] h-[100vh] bg-cover transform rotate-180 dark:bg-[#141E37]"
                 />
               </div>
             </div>
           </div>
-          <div className="relative left-3">
+          <div className="relative left-3 dark:text-[#141E37]">
             <div className="flex justify-between">
               <div className="flex justify-between w-9/12">
                 <div className="w-96 relative h-fit">
@@ -94,7 +94,7 @@ export const UnSubscribeView: FC<IUnSubscribeViewProps> = ({ classroom }) => {
               transition={{ duration: 2, ease: "easeOut" }}
             >
               <Link href={"/manage-classroom"}>
-                <button className="ml-5 mt-5 py-3 px-8 bg-green-700 hover:bg-[#141E37] transform ease-linear duration-300 text-white uppercase font-medium -skew-x-[20deg]">
+                <button className="ml-5 mt-5 py-3 px-8 bg-green-700 dark:bg-[#141E37] hover:bg-[#141E37] transform ease-linear duration-300 text-white uppercase font-medium -skew-x-[20deg]">
                   <p className="skew-x-12">Go to classroom</p>
                 </button>
               </Link>

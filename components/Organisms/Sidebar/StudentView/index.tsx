@@ -14,7 +14,7 @@ export const SidebarStudentView: FC<ISidebarStudentViewProps> = memo(({}) => {
         <LogoApp
           width={30}
           height={30}
-          className="text-green-700 font-bold text-xl justify-center"
+          className="text-green-700 font-bold text-xl justify-center dark:bg-[#141E37] dark:text-green-500"
         />
       </div>
 

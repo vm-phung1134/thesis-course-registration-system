@@ -23,7 +23,7 @@ export const MainboardTemplate: FC<IMainboardProps> = ({ children, title }) => {
         <title>{title}</title>
       </Head>
       <main>
-        <div className="grid grid-cols-12 bg-base-100 tracking-wide dark:bg-[#0d0d0e] dark:text-[#dedede]">
+        <div className="grid grid-cols-12 bg-base-100 tracking-wide dark:bg-[#141E37] dark:text-[#dedede]">
           <div className="col-span-2 border-r h-screen dark:border-gray-500">
             {currentUser?.role === ROLE_ASSIGNMENT.STUDENT && (
               <SidebarStudentView />
@@ -34,7 +34,7 @@ export const MainboardTemplate: FC<IMainboardProps> = ({ children, title }) => {
           </div>
           <div className="col-span-10">
             <Navbar />
-            <div className="px-5 h-full">{children}</div>
+            <div className="px-5 h-full border-l">{children}</div>
             <ToastContainer
               toastStyle={{
                 color: "black",

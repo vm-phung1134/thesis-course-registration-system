@@ -59,7 +59,7 @@ function AccountStudentPage() {
           >
             <Breadcrumb dataBreadcrumb={BREADCRUMB_ACCOUNT_STUDENT} />
             <div className="my-3 py-2 flex gap-2 items-center">
-              <h4 className="text-xl capitalize text-green-700 font-medium ">
+              <h4 className="text-xl capitalize text-green-700 font-medium dark:text-green-500">
                 {t.acc_register_title_page}
               </h4>
               <div className="flex-grow h-[0.5px] bg-green-700"></div>
@@ -87,7 +87,7 @@ function AccountStudentPage() {
                     <div className="mx-5">
                       <button
                         onClick={() => setToggle(!toggle)}
-                        className="border bg-green-700 text-white flex gap-2 px-6 py-2 rounded-full text-sm"
+                        className="border bg-green-700 text-white flex gap-2 px-6 py-2 rounded-full text-sm dark:border-none"
                       >
                         <svg
                           className="w-4 h-4"

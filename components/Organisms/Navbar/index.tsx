@@ -62,7 +62,7 @@ export const Navbar: FC<INavbarProps> = memo(() => {
     setSelectedItem(item);
   };
   return (
-    <div className="navbar shadow-sm border-b rounded-br-[3rem] dark:border-gray-500 p-5 top-0 sticky dark:bg-black bg-white z-10">
+    <div className="navbar shadow-sm border-b rounded-br-[3rem] dark:border-gray-500 p-5 top-0 sticky dark:bg-[#141E37] dark:text-[#dedede] bg-white z-10">
       <div className="justify-between w-full">
         <SearchForm />
         <div className="flex gap-10">
@@ -76,21 +76,21 @@ export const Navbar: FC<INavbarProps> = memo(() => {
                 alt="icon-language"
               />
               <button
-                className={`${localeValue === "en" && "text-green-700 "} px-3`}
+                className={`${localeValue === "en" && "text-green-700 dark:text-green-500"} px-3`}
                 onClick={() => handleChangeLanguage("en")}
               >
                 English
               </button>
               <span className="border-r border-gray-300"></span>
               <button
-                className={`${localeValue === "vi" && "text-green-700 "} px-3`}
+                className={`${localeValue === "vi" && "text-green-700 dark:text-green-500"} px-3`}
                 onClick={() => handleChangeLanguage("vi")}
               >
                 Vietnam
               </button>
             </div>
             <button className="btn btn-ghost btn-circle">
-              <div className="indicator text-lg p-1">
+              <div className="indicator text-lg p-1 dark:bg-gray-200 dark:rounded-full">
                 <Image
                   width={18}
                   height={18}
@@ -113,7 +113,7 @@ export const Navbar: FC<INavbarProps> = memo(() => {
                   htmlFor="my-drawer-message"
                   className="drawer-button btn btn-primary btn-ghost btn-circle"
                 >
-                  <div className="indicator text-lg p-1">
+                  <div className="indicator text-lg p-1 dark:bg-gray-200 dark:rounded-full">
                     <Image
                       width={18}
                       height={18}
@@ -398,7 +398,7 @@ export const Navbar: FC<INavbarProps> = memo(() => {
                   htmlFor="my-drawer-notification"
                   className="drawer-button btn btn-primary btn-ghost btn-circle"
                 >
-                  <div className="indicator text-lg p-1">
+                  <div className="indicator text-lg p-1 dark:bg-gray-200 dark:rounded-full">
                     <Image
                       width={18}
                       height={18}
@@ -453,7 +453,7 @@ export const Navbar: FC<INavbarProps> = memo(() => {
               <p className="font-medium text-sm capitalize">
                 {currentUser?.name}
               </p>
-              <p className="text-green-800 text-sm capitalize">
+              <p className="text-green-800 text-sm capitalize dark:text-green-500">
                 Pov: {currentUser?.role}
               </p>
             </div>
@@ -472,7 +472,7 @@ export const Navbar: FC<INavbarProps> = memo(() => {
           </div>
           <ul
             tabIndex={0}
-            className="dropdown-content z-[1] menu mt-5 p-2 shadow-lg bg-base-100 dark:bg-black rounded-none w-56"
+            className="dropdown-content z-[1] menu mt-5 p-2 shadow-lg bg-base-100 dark:bg-[#141E37] dark:text-[#dedede] rounded-none w-56"
           >
             <li>
               <a className="rounded-none dark:bg-[#1f1f1f] dark:text-white dark:hover:bg-green-600">
@@ -480,18 +480,18 @@ export const Navbar: FC<INavbarProps> = memo(() => {
               </a>
             </li>
             <li>
-              <div className="rounded-none flex justify-between dark:bg-[#000000] dark:text-white dark:hover:bg-green-600">
+              <div className="rounded-none flex justify-between dark:bg-[#141E37] dark:text-[#dedede] dark:hover:bg-green-600">
                 <a href="">{t.navBarItem2}</a>
                 <DarkModeToggle />
               </div>
             </li>
             <li>
-              <a className="rounded-none dark:bg-[#000000] dark:text-white dark:hover:bg-green-600">
+              <a className="rounded-none dark:bg-[#141E37] dark:text-[#dedede] dark:hover:bg-green-600">
                 {t.navBarItem3}
               </a>
             </li>
             <li onClick={logout}>
-              <a className="rounded-none dark:bg-[#000000] dark:text-white dark:hover:bg-green-600">
+              <a className="rounded-none dark:bg-[#141E37] dark:text-[#dedede] dark:hover:bg-green-600">
                 {t.navBarItem4}
               </a>
             </li>

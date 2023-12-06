@@ -24,7 +24,7 @@ export const ContentComment: FC<IContentCommentProps> = memo(
     });
     return (
       <>
-        <p className="text-sm text-gray-600 tracking-wider pb-1">
+        <p className="text-sm text-gray-600 tracking-wider pb-1 dark:text-white">
           {comments?.length} Comments in this report progress
         </p>
         {comments?.map((comment, index) => {

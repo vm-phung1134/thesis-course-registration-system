@@ -14,7 +14,7 @@ export const PostReportCard: FC<IPostReportCardProps> = ({
   return (
     <div
       onClick={() => handleOpenTaskModal(post)}
-      className="bg-slate-100 shadow-md flex mt-5 p-5 justify-between gap-10 text-sm rounded-xl cursor-pointer"
+      className="bg-slate-100 shadow-md flex mt-5 p-5 justify-between gap-10 text-sm rounded-xl cursor-pointer dark:bg-slate-700 dark:text-white"
     >
       <div className="flex gap-3 items-center">
         <svg
@@ -36,7 +36,7 @@ export const PostReportCard: FC<IPostReportCardProps> = ({
         </svg>
         <div className="flex flex-col gap-1">
           <p className="capitalize font-medium text-xs">
-            {post?.lecturer?.name}
+            {post?.author?.name}
             <span className="normal-case font-normal"> has added new post</span>
           </p>
           <p className="font-medium truncate w-80">{post?.title}</p>

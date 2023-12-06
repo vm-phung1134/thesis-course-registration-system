@@ -176,7 +176,7 @@ function ManageClassroomTab() {
                             <div>
                               <p className="capitalize font-bold text-green-700">
                                 {post?.author?.name}{" "}
-                                <span className="normal-case font-normal text-black">
+                                <span className="normal-case font-normal text-black dark:text-white">
                                   has post an announcement !!!
                                 </span>
                               </p>
@@ -245,7 +245,7 @@ function ManageClassroomTab() {
                             animate={{ opacity: 1 }}
                             transition={{ duration: 1, delay: index * 0.5 }}
                             key={exercise.id}
-                            className="rounded-xl shadow-lg overflow-hidden"
+                            className="rounded-xl shadow-lg overflow-hidden dark:border"
                           >
                             <NewFeedCard
                               handleOpenTaskModal={handleOpenExModal}

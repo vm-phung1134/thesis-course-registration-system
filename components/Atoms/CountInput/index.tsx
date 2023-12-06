@@ -57,14 +57,14 @@ export const CountInput: FC<ICountInputProps> = ({
         <button
           type="button"
           data-action="decrement"
-          className="bg-slate-200 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-full rounded-l-full cursor-pointer outline-none"
+          className="bg-slate-200 text-gray-600 hover:text-gray-700 hover:bg-gray-400 dark:bg-slate-700 dark:text-white h-full w-full rounded-l-full cursor-pointer outline-none"
           onClick={decrement}
         >
           <span className="m-auto text-2xl font-thin">−</span>
         </button>
         <input
           type="number"
-          className="focus:outline-none text-center w-full bg-slate-200 text-md hover:text-black focus:text-black md:text-base cursor-default flex items-center text-gray-700 outline-none"
+          className="focus:outline-none text-center w-full bg-slate-200 dark:bg-slate-700 dark:text-white text-md hover:text-black focus:text-black md:text-base cursor-default flex items-center text-gray-700 outline-none"
           name="custom-input-number"
           value={value}
           onChange={handleInputChange}
@@ -72,7 +72,7 @@ export const CountInput: FC<ICountInputProps> = ({
         <button
           type="button"
           data-action="increment"
-          className="bg-slate-200 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-full rounded-r-full cursor-pointer"
+          className="bg-slate-200 text-gray-600 hover:text-gray-700 hover:bg-gray-400 dark:bg-slate-700 dark:text-white h-full w-full rounded-r-full cursor-pointer"
           onClick={increment}
         >
           <span className="m-auto text-2xl font-thin">+</span>

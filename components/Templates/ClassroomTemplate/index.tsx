@@ -49,7 +49,7 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
         <title>{title}</title>
       </Head>
       <main>
-        <div className="grid grid-cols-12 bg-base-100 tracking-wide">
+        <div className="grid grid-cols-12 bg-base-100 tracking-wide dark:bg-[#141E37] dark:text-[#dedede]">
           <div className="col-span-2 border-r h-screen dark:border-gray-500">
             {currentUser?.role === ROLE_ASSIGNMENT.STUDENT && (
               <SidebarStudentView />

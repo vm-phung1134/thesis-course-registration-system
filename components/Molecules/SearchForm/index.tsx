@@ -46,7 +46,7 @@ export const SearchForm: FC<ISearchFormProps> = ({}) => {
                 placeholder="Search for anything..."
                 type="text"
                 id="search"
-                className="input placeholder:text-gray-300 placeholder:text-sm placeholder:font-thin placeholder:tracking-wide rounded-full dark:bg-black h-10 text-[15px] focus:outline-none flex-1"
+                className="input placeholder:text-gray-300 placeholder:text-sm placeholder:font-thin placeholder:tracking-wide rounded-full dark:bg-[#141E37] dark:text-[#dedede] h-10 text-[15px] focus:outline-none flex-1"
               />
             </div>
           </Form>

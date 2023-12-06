@@ -35,7 +35,7 @@ export const ClassroomFound: FC<IClassroomFoundProps> = ({
   //   return () => clearInterval(timer);
   // }, []);
   return (
-    <div className="px-5">
+    <div className="px-5 border-l">
       <div className="grid grid-cols-12 gap-4 my-3">
         <div className="col-span-4 p-5 border rounded-xl">
           <CardLecturerInClass lecturer={classroom?.lecturer} />

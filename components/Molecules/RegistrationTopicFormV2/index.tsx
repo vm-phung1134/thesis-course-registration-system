@@ -37,8 +37,8 @@ export const RegistrationTopicFormV2: FC<IRegistrationTopicFormV2Props> = ({
   const updateMutation = useMutationQueryAPI({
     action: updateTopic,
     queryKeyLog: ["register-topic"],
-    successMsg: "Update topic successfully!",
-    errorMsg: "Fail to update topic!",
+    // successMsg: "Update topic successfully!",
+    // errorMsg: "Fail to update topic!",
   });
   useEffect(() => {
     setTimeout(() => {

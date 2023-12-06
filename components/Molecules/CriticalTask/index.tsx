@@ -19,12 +19,12 @@ export const CriticalTask: FC<ICriticalTaskProps> = ({
   const checkCompletedTask = (submits: ISubmitObject[]): boolean => {
     return submits?.some(
       (item) =>
-        item.exerciseID === exercise?.id && currentUser.id === item.userID
+        item.exerciseID === exercise?.id && currentUser.id === item.authorID
     );
   };
   return (
-    <div className="h-fit p-5 relative overflow-hidden shadow-xl rounded-lg">
-      <div className="absolute top-0 bottom-0 -left-48 w-full h-full bg-slate-100 -skew-x-[30deg]"></div>
+    <div className="h-fit p-5 relative overflow-hidden shadow-xl rounded-lg dark:border">
+      <div className="absolute top-0 bottom-0 -left-48 w-full h-full bg-slate-100 -skew-x-[30deg] dark:bg-gray-600"></div>
       <div className="relative">
         <div className="flex flex-col gap-2">
           <div className="justify-between flex text-sm">
@@ -34,15 +34,15 @@ export const CriticalTask: FC<ICriticalTaskProps> = ({
             </p>
           </div>
           {exercise?.deadline && (
-            <p className="text-red-600 font-medium text-sm mb-2">
+            <p className="text-red-600 font-medium text-sm mb-2 dark:text-orange-500">
               Deadline {convertDateTime(exercise?.deadline)}
             </p>
           )}
         </div>
-        <h1 className="font-bold capitalize mb-2 text-[#141E37]">
+        <h1 className="font-bold capitalize mb-2 text-[#141E37] dark:text-white">
           {exercise?.title}
         </h1>
-        <p className="text-sm text-gray-500 font-thin">
+        <p className="text-sm text-gray-500 font-thin dark:text-white">
           To achieve the desired effect of having the content inside the div
           with the orange background color using...
         </p>

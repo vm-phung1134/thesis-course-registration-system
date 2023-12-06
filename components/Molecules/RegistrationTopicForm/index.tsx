@@ -96,7 +96,7 @@ export const RegistrationTopicForm: FC<IRegistrationTopicFormProps> = ({
               <FormField
                 placeholder="Ex: Build a website..."
                 type="text"
-                className="rounded-xl bg-slate-100 border-none"
+                className="rounded-xl bg-slate-100 border-none dark:bg-slate-700 dark:text-white"
                 label={t.acc_register_item2}
                 nameField="title"
                 value={values?.title}
@@ -106,14 +106,14 @@ export const RegistrationTopicForm: FC<IRegistrationTopicFormProps> = ({
                   placeholder="Ex: Website, Mobile, AI..."
                   type="text"
                   label={t.acc_register_item3}
-                  className="rounded-xl bg-slate-100 border-none"
+                  className="rounded-xl bg-slate-100 border-none dark:bg-slate-700 dark:text-white"
                   nameField="typeTopic"
                   value={values?.typeTopic}
                 />
                 <div>
                   <CountInput
                     valueNumber={values.memberQuantity}
-                    className="h-12"
+                    className="h-12 dark:text-white"
                     onChange={handleChangeQuantityMember}
                     label={t.acc_register_item4}
                     limit={5}
@@ -125,7 +125,7 @@ export const RegistrationTopicForm: FC<IRegistrationTopicFormProps> = ({
                   placeholder="Ex: nameb1910xxx@student.ctu.edu.vn"
                   type="text"
                   label={t.acc_register_item5}
-                  className="rounded-xl bg-slate-100 border-none"
+                  className="rounded-xl bg-slate-100 border-none dark:bg-slate-700 dark:text-white"
                   nameField="memberEmail"
                   value={values?.memberEmail}
                 />
@@ -133,7 +133,7 @@ export const RegistrationTopicForm: FC<IRegistrationTopicFormProps> = ({
               <FormField
                 type="text"
                 label={t.acc_register_item6}
-                className="rounded-xl bg-slate-100 border-none"
+                className="rounded-xl bg-slate-100 border-none dark:bg-slate-700 dark:text-white"
                 nameField="description"
                 value={values?.description}
               />
@@ -146,7 +146,7 @@ export const RegistrationTopicForm: FC<IRegistrationTopicFormProps> = ({
                 <Button
                   type="submit"
                   title="Confirm"
-                  className="hover:bg-[#165b31] rounded-xl bg-green-700 text-white px-8"
+                  className="hover:bg-[#165b31] rounded-xl bg-green-700 text-white px-8 dark:border-none"
                 />
               </div>
             </Form>

@@ -17,8 +17,8 @@ export const CommentForm: FC<ICommentFormProps> = ({ task }) => {
   const addMutation = useMutationQueryAPI({
     action: createComment,
     queryKeyLog: ["task-comments"],
-    successMsg: "You just commented a comment to the post!",
-    errorMsg: "Fail to send the comment!",
+    // successMsg: "You just commented a comment to the post!",
+    // errorMsg: "Fail to send the comment!",
   });
   return (
     <Formik
