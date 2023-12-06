@@ -66,7 +66,7 @@ function SearchPage() {
             </div>
             <div className="flex flex-wrap gap-5 mt-5">
               {classrooms?.map((item, index) => {
-                return <ClassroomCard key={item.id} item={item} />;
+                return <ClassroomCard index={index} key={item.id} item={item} />;
               })}
             </div>
             <div className="mt-3 uppercase text-sm font-medium flex items-center gap-3 w-1/2">
