@@ -3,11 +3,11 @@ import { useQuery } from "@tanstack/react-query";
 import {
   Breadcrumb,
   Button,
+  IBreadcrumbItem,
   SelectBox,
   SnipperRound,
 } from "@/components/Atoms";
 import { MainboardTemplate } from "@/components/Templates";
-import { BREADCRUMB_REQUIREMENT } from "./mock-data";
 import { CardRequireMember, FilterScheduledForm } from "@/components/Molecules";
 import { IMemberObject } from "@/interface/member";
 import { getAllRequirementClassroom } from "@/redux/reducer/requirement/api";
@@ -23,6 +23,23 @@ import {
 import { useTableSearch } from "@/hooks/useTableSearch";
 import { motion } from "framer-motion";
 import { useClassroomStateContext } from "@/contexts/classroomState";
+export const BREADCRUMB_REQUIREMENT: IBreadcrumbItem[] = [
+  {
+    id: "1",
+    href: "/",
+    title: "TCR System",
+  },
+  {
+    id: "2",
+    href: "/activities",
+    title: "Activities",
+  },
+  {
+    id: "3",
+    href: "/activities/requirements",
+    title: "Requirements",
+  },
+];
 
 function RequirementPage() {
   const { authClassroomState } = useClassroomStateContext();

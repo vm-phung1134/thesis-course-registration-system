@@ -12,9 +12,9 @@ import { getOneCouncilInScheduleStudent } from "@/redux/reducer/schedule-def/api
 import { ICouncilDef } from "@/interface/schedule";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
-import { BREADCRUMB_SCHEDULE_DEDTAIL } from "./mock-data";
 import { FilterScheduledForm } from "@/components/Molecules";
 import { AnimatePresence, motion } from "framer-motion";
+import { BREADCRUMB_SCHEDULE_DEDTAIL } from ".";
 
 function ScheduleDetailPage() {
   const dispatch = useAppDispatch();

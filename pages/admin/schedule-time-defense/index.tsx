@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Breadcrumb, SnipperRound } from "@/components/Atoms";
+import { Breadcrumb, IBreadcrumbItem, SnipperRound } from "@/components/Atoms";
 import { AdminTemplate } from "@/components/Templates";
 import {
   ManualTestingSchedule,
@@ -10,8 +10,48 @@ import { useAppDispatch } from "@/redux/store";
 import { getScheduleDef } from "@/redux/reducer/schedule-def/api";
 import { IThesisDef } from "@/interface/schedule";
 import { useQuery } from "@tanstack/react-query";
-import { BREADCRUMB_SCHEDULE } from "./mock-data";
 import { ScheduleTime } from "@/components/Organisms";
+
+export const BREADCRUMB_SCHEDULE_DEDTAIL: IBreadcrumbItem[] = [
+  {
+    id: "1",
+    href: "/",
+    title: "TCR System",
+  },
+  {
+    id: "2",
+    href: "/admin",
+    title: "Admin",
+  },
+  {
+    id: "3",
+    href: "/schedule-time-defense",
+    title: "Schedule time defense",
+  },
+  {
+    id: "4",
+    href: "/9530624b-de7f-4cf1-8bdd-98466b7d0abd",
+    title: "Council 1",
+  },
+];
+
+export const BREADCRUMB_SCHEDULE: IBreadcrumbItem[] = [
+  {
+    id: "1",
+    href: "/",
+    title: "TCR System",
+  },
+  {
+    id: "2",
+    href: "/admin",
+    title: "Admin",
+  },
+  {
+    id: "3",
+    href: "/schedule-time-defense",
+    title: "Schedule time defense",
+  },
+];
 
 function DashboardPage() {
   type MenuItem = {

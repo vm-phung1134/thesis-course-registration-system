@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { MainboardTemplate } from "@/components/Templates";
-import { Breadcrumb, SnipperRound } from "@/components/Atoms";
-import { BREADCRUMB_REPORT_DETAIL_PAGE } from "./mock-data";
+import { Breadcrumb, IBreadcrumbItem, SnipperRound } from "@/components/Atoms";
 import {
   ExerciseCard,
   PostReportCard,
@@ -20,7 +19,28 @@ import { useClassroomStateContext } from "@/contexts/classroomState";
 import { getReportStage } from "@/redux/reducer/report-stage/api";
 import { ICategoryObject } from "@/interface/category";
 import { INITIATE_CATEGORY, INITIATE_EXERCISE, INITIATE_POST } from "@/data";
-
+export const BREADCRUMB_REPORT_DETAIL_PAGE: IBreadcrumbItem[] = [
+  {
+    id: "1",
+    href: "/mainboard",
+    title: "TCR System",
+  },
+  {
+    id: "2",
+    href: "/manage-classroom",
+    title: "Manage classroom",
+  },
+  {
+    id: "3",
+    href: "/manage-classroom/report-progress",
+    title: "Report progress",
+  },
+  {
+    id: "4",
+    href: "/manage-classroom/report-progress/report-detail/123",
+    title: "Report stage detail",
+  },
+];
 function ReportStageDetailPage() {
   const dispatch = useAppDispatch();
   const params = useSearchParams();

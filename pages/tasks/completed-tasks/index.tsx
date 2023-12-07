@@ -2,15 +2,13 @@ import { useState, useEffect } from "react";
 import { MainboardTemplate } from "@/components/Templates";
 import {
   Breadcrumb,
+  IBreadcrumbItem,
   SelectBox,
   SelectInForm,
   SnipperRound,
 } from "@/components/Atoms";
-import { BREADCRUMB_COMPLETED_TASKS } from "./mock-data";
-import { DATA_STATE_REPORT } from "@/pages/manage-classroom/report-progress/mock-data";
 import { IOptionItem } from "@/interface/filter";
 import { ICategoryObject } from "@/interface/category";
-import { DATA_FILTER_TASKS } from "../critical-tasks/mock-data";
 import { CriticalTask, ExerciseCard } from "@/components/Molecules";
 import { useAppDispatch } from "@/redux/store";
 import { IExerciseObject } from "@/interface/exercise";
@@ -27,6 +25,26 @@ import { useCurrentUserContext } from "@/contexts/currentUserContext";
 import { motion } from "framer-motion";
 import { getAllExerciseInClass } from "@/redux/reducer/classroom/api";
 import { useLanguageContext } from "@/contexts/languageContext";
+import { getAllReportStage } from "@/redux/reducer/report-stage/api";
+import { DATA_FILTER_TASKS } from "../critical-tasks";
+
+export const BREADCRUMB_COMPLETED_TASKS: IBreadcrumbItem[] = [
+  {
+    id: "1",
+    href: "/",
+    title: "TCR System",
+  },
+  {
+    id: "2",
+    href: "/",
+    title: "Assigned tasks",
+  },
+  {
+    id: "3",
+    href: "/tasks/completed-tasks",
+    title: "Completed tasks",
+  },
+];
 
 function CriticalTasks() {
   const { t } = useLanguageContext();
@@ -88,6 +106,14 @@ function CriticalTasks() {
       )
     );
   };
+  const { data: reportStages } = useQuery<ICategoryObject[]>({
+    queryKey: ["reportStages"],
+    queryFn: async () => {
+      const action = await dispatch(getAllReportStage());
+      return action.payload;
+    },
+    initialData: [],
+  });
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
@@ -116,7 +142,7 @@ function CriticalTasks() {
                 <div className="flex items-center gap-5">
                   <div className="flex-grow">
                     <SelectInForm
-                      options={DATA_STATE_REPORT}
+                      options={reportStages}
                       selectedStage={selectedStage}
                       setSelectedStage={setSelectedStage}
                     />

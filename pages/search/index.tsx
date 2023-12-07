@@ -1,6 +1,5 @@
-import { Breadcrumb, SnipperRound } from "@/components/Atoms";
+import { Breadcrumb, IBreadcrumbItem, SnipperRound } from "@/components/Atoms";
 import { MainboardTemplate } from "@/components/Templates";
-import { BREADCRUMB_SEARCH_PAGE } from "./mock-data";
 import { ClassroomCard } from "@/components/Organisms";
 import { useEffect, useState } from "react";
 import { IClassroomObject } from "@/interface/classroom";
@@ -8,6 +7,23 @@ import { useSearchContext } from "@/contexts/useSearchContext";
 import { getAllClassrooms } from "@/redux/reducer/classroom/api";
 import { useAppDispatch } from "@/redux/store";
 import { useQuery } from "@tanstack/react-query";
+export const BREADCRUMB_SEARCH_PAGE: IBreadcrumbItem[] = [
+  {
+    id: "1",
+    href: "/",
+    title: "TCR System",
+  },
+  {
+    id: "2",
+    href: "/search",
+    title: "Searching",
+  },
+  {
+    id: "3",
+    href: "/result-searching",
+    title: "Result searching",
+  },
+];
 
 function SearchPage() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -66,7 +82,9 @@ function SearchPage() {
             </div>
             <div className="flex flex-wrap gap-5 mt-5">
               {classrooms?.map((item, index) => {
-                return <ClassroomCard index={index} key={item.id} item={item} />;
+                return (
+                  <ClassroomCard index={index} key={item.id} item={item} />
+                );
               })}
             </div>
             <div className="mt-3 uppercase text-sm font-medium flex items-center gap-3 w-1/2">

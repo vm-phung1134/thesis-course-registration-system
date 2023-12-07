@@ -14,6 +14,21 @@ import {
   DATA_FILTER_TOPICS,
 } from "@/components/Organisms/MainboardStatus/mock-data";
 
+export const DATA_FILTER_MEMBER: IOptionItem[] = [
+  {
+    value: "name-a-z",
+    label: "Sort Name A - Z",
+  },
+  {
+    value: "name-z-a",
+    label: "Sort Name Z - A",
+  },
+  {
+    value: "class",
+    label: "Sort class",
+  },
+];
+
 function MemberTab() {
   const [filterCourse, setFilterCourse] = useState<
     IOptionItem | ICategoryObject

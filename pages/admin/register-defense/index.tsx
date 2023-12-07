@@ -1,5 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
-import { Breadcrumb, Button, SnipperRound } from "@/components/Atoms";
+import {
+  Breadcrumb,
+  Button,
+  IBreadcrumbItem,
+  SnipperRound,
+} from "@/components/Atoms";
 import { AdminTemplate } from "@/components/Templates";
 import { useState, useEffect } from "react";
 import useCheckedBox from "@/hooks/useCheckedBox";
@@ -11,9 +16,31 @@ import { usePagination } from "@/hooks/usePagination";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTableSearch } from "@/hooks/useTableSearch";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
-import { BREADCRUMB_REGISTER_DEFENSE_ADMIN } from "./mock-data";
 import { ITopicObject } from "@/interface/topic";
 import { INITIATE_TOPIC } from "@/data";
+
+export const BREADCRUMB_REGISTER_DEFENSE_ADMIN: IBreadcrumbItem[] = [
+  {
+    id: "1",
+    href: "/",
+    title: "TCR System",
+  },
+  {
+    id: "2",
+    href: "/admin",
+    title: "Admin",
+  },
+  {
+    id: "3",
+    href: "/admin/alumnus",
+    title: "Alumnus",
+  },
+  {
+    id: "4",
+    href: "/admin/alumnus/register-defense",
+    title: "List student register defense",
+  },
+];
 
 function RegisterDefensePageAdmin() {
   const [loading, setLoading] = useState<boolean>(true);

@@ -2,13 +2,12 @@ import { useState, useEffect } from "react";
 import { MainboardTemplate } from "@/components/Templates";
 import {
   Breadcrumb,
+  IBreadcrumbItem,
   SelectBox,
   SelectInForm,
   SnipperRound,
 } from "@/components/Atoms";
-import { BREADCRUMB_CRITICAL_TASKS, DATA_FILTER_TASKS } from "./mock-data";
 import { ICategoryObject } from "@/interface/category";
-import { DATA_STATE_REPORT } from "@/pages/manage-classroom/report-progress/mock-data";
 import { IOptionItem } from "@/interface/filter";
 import {
   CriticalTask,
@@ -34,6 +33,40 @@ import {
   getAllPostInClass,
 } from "@/redux/reducer/classroom/api";
 import { useLanguageContext } from "@/contexts/languageContext";
+import { getAllReportStage } from "@/redux/reducer/report-stage/api";
+
+export const BREADCRUMB_CRITICAL_TASKS: IBreadcrumbItem[] = [
+  {
+    id: "1",
+    href: "/",
+    title: "TCR System",
+  },
+  {
+    id: "2",
+    href: "/",
+    title: "Assigned tasks",
+  },
+  {
+    id: "3",
+    href: "/tasks-/critical-tasks",
+    title: "Critical tasks",
+  },
+];
+
+export const DATA_FILTER_TASKS: IOptionItem[] = [
+  {
+    value: "a-z",
+    label: "Name A - Z",
+  },
+  {
+    value: "z-a",
+    label: "Name Z - A",
+  },
+  {
+    value: "recent day",
+    label: "Recent day",
+  },
+];
 
 function CriticalTasks() {
   const { t } = useLanguageContext();
@@ -106,7 +139,14 @@ function CriticalTasks() {
     },
     initialData: [],
   });
-
+  const { data: reportStages } = useQuery<ICategoryObject[]>({
+    queryKey: ["reportStages"],
+    queryFn: async () => {
+      const action = await dispatch(getAllReportStage());
+      return action.payload;
+    },
+    initialData: [],
+  });
   const checkCriticalTask = (
     ex: IExerciseObject[],
     submits: ISubmitObject[]
@@ -146,7 +186,7 @@ function CriticalTasks() {
                 <div className="flex items-center gap-5">
                   <div className="flex-grow">
                     <SelectInForm
-                      options={DATA_STATE_REPORT}
+                      options={reportStages}
                       selectedStage={selectedStage}
                       setSelectedStage={setSelectedStage}
                     />

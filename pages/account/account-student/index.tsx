@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
 import { MainboardTemplate } from "@/components/Templates";
-import { Breadcrumb, NormalAvatar, SnipperRound } from "@/components/Atoms";
-import { BREADCRUMB_ACCOUNT_STUDENT } from "./mock-data";
+import {
+  Breadcrumb,
+  IBreadcrumbItem,
+  NormalAvatar,
+  SnipperRound,
+} from "@/components/Atoms";
 import { InforUserForm, RegistrationTopicForm } from "@/components/Molecules";
 import { INITIATE_TOPIC } from "@/data";
 import { useAppDispatch } from "@/redux/store";
@@ -12,6 +16,24 @@ import classNames from "classnames";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
 import { motion } from "framer-motion";
 import { useLanguageContext } from "@/contexts/languageContext";
+
+export const BREADCRUMB_ACCOUNT_STUDENT: IBreadcrumbItem[] = [
+  {
+    id: "1",
+    href: "/",
+    title: "TCR System",
+  },
+  {
+    id: "2",
+    href: "/account-student",
+    title: "Account personal",
+  },
+  {
+    id: "3",
+    href: "/",
+    title: "Account settings",
+  },
+];
 
 function AccountStudentPage() {
   const { t } = useLanguageContext();

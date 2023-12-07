@@ -1,13 +1,29 @@
 /* eslint-disable @next/next/no-img-element */
-import { Breadcrumb, SnipperRound } from "@/components/Atoms";
+import { Breadcrumb, IBreadcrumbItem, SnipperRound } from "@/components/Atoms";
 import { AdminTemplate } from "@/components/Templates";
-import { BREADCRUMB_ADMIN_CLASSROOM_MANAGEMENT } from "./mock-data";
 import { useState, useEffect } from "react";
 import {
   CreateAccountTab,
   CreateClassroomTab,
 } from "@/components/Organisms/Admin";
 
+export const BREADCRUMB_ADMIN_CLASSROOM_MANAGEMENT: IBreadcrumbItem[] = [
+  {
+    id: "1",
+    href: "/",
+    title: "TCR System",
+  },
+  {
+    id: "2",
+    href: "/admin/classroom-management",
+    title: "Classroom management",
+  },
+  {
+    id: "3",
+    href: "/admin/create-classroom",
+    title: "Create classroom",
+  },
+];
 function ClassroomManagement() {
   type MenuItem = {
     id: number;

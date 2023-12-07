@@ -1,11 +1,33 @@
 import { useState, useEffect } from "react";
 import { MainboardTemplate } from "@/components/Templates";
-import { Breadcrumb, NormalAvatar, SnipperRound } from "@/components/Atoms";
-import { BREADCRUMB_ACCOUNT_LECTURER } from "./mock-data";
+import {
+  Breadcrumb,
+  IBreadcrumbItem,
+  NormalAvatar,
+  SnipperRound,
+} from "@/components/Atoms";
 import { ChangePassForm, InforUserForm } from "@/components/Molecules";
 import classNames from "classnames";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
 import { ToastContainer } from "react-toastify";
+
+const BREADCRUMB_ACCOUNT_LECTURER: IBreadcrumbItem[] = [
+  {
+    id: "1",
+    href: "/",
+    title: "TCR System",
+  },
+  {
+    id: "2",
+    href: "/account-lecturer",
+    title: "Account personal",
+  },
+  {
+    id: "3",
+    href: "/",
+    title: "Account settings",
+  },
+];
 
 function AccountLecturerPage() {
   const [loading, setLoading] = useState<boolean>(true);
