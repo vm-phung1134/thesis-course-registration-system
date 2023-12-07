@@ -36,7 +36,6 @@ export const SubscribeStateContextProvider: React.FC<SubscribeStateProps> = ({
     },
     initialData: [],
   });
-  console.log(subscribeState)
   return (
     <SubscribeStateContext.Provider value={{ subscribeState: subscribeState }}>
       {children}

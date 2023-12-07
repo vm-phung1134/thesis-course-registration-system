@@ -84,7 +84,7 @@ function DashBoardPage(this: any) {
     {
       name: "2023",
       Instructor: 15,
-      Student: 209,
+      Student: 469,
     },
   ];
   const dispatch = useAppDispatch();

@@ -159,6 +159,65 @@ export const SidebarAdminView: FC<ISidebarAdminViewProps> = memo(({}) => {
             </Link>
           </li>
           <div className="w-full h-[1px] bg-green-700"></div>
+          <li>
+            <Link
+              className="rounded-none hover:bg-green-700 hover:text-white"
+              href="#"
+            >
+              <svg
+                className="w-5 h-5 fill-current inline-block"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
+                <path
+                  fill-rule="evenodd"
+                  d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+              <span className="mx-2 text-[15px] font-medium">Report</span>
+            </Link>
+          </li>
+          <li>
+            <Link
+              className="rounded-none hover:bg-green-700 hover:text-white"
+              href="#"
+            >
+              <svg
+                className="w-5 h-5 inline-block"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+              <span className="mx-2 text-[15px] font-medium">Calendar</span>
+            </Link>
+          </li>
+          <li>
+            <Link
+              className="rounded-none hover:bg-green-700 hover:text-white"
+              href="#"
+            >
+              <svg
+                className="w-5 h-5 fill-current inline-block"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM14 11a1 1 0 011 1v1h1a1 1 0 110 2h-1v1a1 1 0 11-2 0v-1h-1a1 1 0 110-2h1v-1a1 1 0 011-1z"></path>
+              </svg>
+              <span className="mx-2 text-[15px] font-medium">
+                UI Components
+              </span>
+            </Link>
+          </li>
         </ul>
         <div className="flex flex-col justify-end">
           <li>

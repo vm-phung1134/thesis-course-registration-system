@@ -14,19 +14,15 @@ import {
   INITIATE_TOPIC,
   INITIATE_UPLOAD_REPORT,
 } from "@/data";
-import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { IAssessItem } from "@/interface/pointDef";
 import { ICouncilDef } from "@/interface/schedule";
 import { ITopicObject } from "@/interface/topic";
 import { IUploadReportObject } from "@/interface/upload";
-import {
-  getOnePointDef,
-  getOnePointDefForLecturer,
-} from "@/redux/reducer/point-def/api";
+import { getOnePointDefForLecturer } from "@/redux/reducer/point-def/api";
 import { getScheduleForStudent } from "@/redux/reducer/schedule-def/api";
 import { getTopic } from "@/redux/reducer/topic/api";
 import { getUploadReport } from "@/redux/reducer/upload-def/api";
-import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { useAppDispatch } from "@/redux/store";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";

@@ -9,7 +9,7 @@ import {
 import useCheckedBox from "@/hooks/useCheckedBox";
 import { useTableSearch } from "@/hooks/useTableSearch";
 import { IAuthObject } from "@/interface/auth";
-import { IClassroomObject } from "@/interface/classroom";
+import { IClassroomObject, IClassroomObjectInput } from "@/interface/classroom";
 import { getAllLecturers } from "@/redux/reducer/auth/api";
 import {
   deleteClassroom,
@@ -81,11 +81,6 @@ export const CreateClassroomTab: FC<ICreateClassroomTab> = ({}) => {
     handleSearch: classroom_handleSearch,
   } = useTableSearch(classrooms);
 
-  // Handle lock all classrooms
-  const handleOpenModalLock = () => {
-    setOpenModalLock(!openModalLock);
-  };
-
   // Handle clear classrooms
   const deleteMutation = useMutationQueryAPI({
     action: deleteClassroom,
@@ -110,8 +105,11 @@ export const CreateClassroomTab: FC<ICreateClassroomTab> = ({}) => {
   const handleLockClassrooms = () => {
     checkedClassrooms.forEach(async (classroom: IClassroomObject) => {
       await updateMutation.mutate({
-        ...classroom,
-        status: "LOCK",
+        id: classroom.id,
+        lecturerID: classroom.lecturer.id,
+        classCourse: classroom.classCourse,
+        quantityStudent: classroom.quantityStudent,
+        status: classroom.status === "LOCK" ? "UN_LOCK" : "LOCK",
       });
     });
   };
