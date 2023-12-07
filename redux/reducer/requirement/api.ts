@@ -4,7 +4,7 @@ import { token } from "../auth/type";
 import { IMemberObject, IMemberObjectInput } from "@/interface/member";
 import { IClassroomObject } from "@/interface/classroom";
 
-const apiURL = `http://qthuy2k1.shop/api/requirement`;
+const apiURL = `https://qthuy2k1.shop/api/requirement`;
 
 // GET ALL REQUIREMENTS
 const getAllRequirements = createAsyncThunk(

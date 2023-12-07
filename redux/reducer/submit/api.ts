@@ -5,7 +5,7 @@ import { ISubmitObject, ISubmitObjectInput } from "@/interface/submit";
 import { IExerciseObject } from "@/interface/exercise";
 import { IAuthObject } from "@/interface/auth";
 
-const apiURL = `http://qthuy2k1.shop/api/submit`;
+const apiURL = `https://qthuy2k1.shop/api/submit`;
 
 // GET ALL SUBMITS
 const getAllSubmits = createAsyncThunk(

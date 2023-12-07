@@ -7,7 +7,7 @@ import {
 } from "@/interface/upload";
 import { IAuthObject } from "@/interface/auth";
 
-const apiURL = `http://qthuy2k1.shop/api/final-file`;
+const apiURL = `https://qthuy2k1.shop/api/final-file`;
 
 // GET ALL UPLOAD REPORT
 const getAllUploadReports = createAsyncThunk(

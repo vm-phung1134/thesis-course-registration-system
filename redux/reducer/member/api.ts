@@ -5,7 +5,7 @@ import { IMemberObject, IMemberObjectInput } from "@/interface/member";
 import { IClassroomObject } from "@/interface/classroom";
 import { IAuthObject } from "@/interface/auth";
 
-const apiURL = `http://qthuy2k1.shop/api/member`;
+const apiURL = `https://qthuy2k1.shop/api/member`;
 
 // GET ALL MEMBERS
 const getAllMembers = createAsyncThunk("member/getAllMembers", async () => {

@@ -3,7 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { token } from "./type";
 
-const apiURL = `http://qthuy2k1.shop/api/comment`;
+const apiURL = `https://qthuy2k1.shop/api/comment`;
 
 // GET ALL COMMENTS
 const getAllComments = createAsyncThunk(

@@ -3,7 +3,7 @@ import axios from "axios";
 import { token } from "./type";
 import { IAuthObject } from "@/interface/auth";
 
-const apiURL = `http://qthuy2k1.shop/api/auth`;
+const apiURL = `https://qthuy2k1.shop/api/auth`;
 
 // GET ONE AUTH
 const getOneAuth = createAsyncThunk(

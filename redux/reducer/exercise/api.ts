@@ -3,7 +3,7 @@ import axios from "axios";
 import { token } from "./type";
 import { IExerciseObject, IExerciseObjectInput } from "@/interface/exercise";
 
-const apiURL = `http://qthuy2k1.shop/api/exercise`;
+const apiURL = `https://qthuy2k1.shop/api/exercise`;
 
 // GET ALL EXERCISES
 const getAllExercises = createAsyncThunk(

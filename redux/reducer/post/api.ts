@@ -4,7 +4,7 @@ import { token } from "./type";
 import { IPostObject, IPostObjectInput } from "@/interface/post";
 import { IClassroomObject } from "@/interface/classroom";
 
-const apiURL = `http://qthuy2k1.shop/api/post`;
+const apiURL = `https://qthuy2k1.shop/api/post`;
 
 // GET ALL POSTS
 const getAllPosts = createAsyncThunk("post/getAllPost", async () => {

@@ -4,7 +4,7 @@ import axios from "axios";
 import { ITopicObjectInput } from "@/interface/topic";
 import { IAuthObject } from "@/interface/auth";
 
-const apiURL = `http://qthuy2k1.shop/api/topic`;
+const apiURL = `https://qthuy2k1.shop/api/topic`;
 
 // CREATE NEW TOPIC
 const createTopic = createAsyncThunk(

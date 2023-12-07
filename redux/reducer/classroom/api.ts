@@ -4,7 +4,7 @@ import { token } from "./type";
 import { IClassroomObject, IClassroomObjectInput } from "@/interface/classroom";
 import { IAuthObject } from "@/interface/auth";
 
-const apiURL = `http://qthuy2k1.shop/api/class`;
+const apiURL = `https://qthuy2k1.shop/api/class`;
 
 // GET ALL CLASSROOM
 const getAllClassrooms = createAsyncThunk(
