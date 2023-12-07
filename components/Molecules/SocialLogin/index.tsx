@@ -42,7 +42,7 @@ export const SocialLogin: FC<ISocialLoginProps> = ({
         classNameIcon=""
         title="Continue with Email"
         className="bg-green-700 text-white tracking-wide hover:bg-green-600"
-        srcIcon="https://cdn-icons-png.flaticon.com/128/546/546394.png"
+        srcIcon="https://cdn-icons-png.flaticon.com/128/9795/9795321.png"
       />
     </div>
   );

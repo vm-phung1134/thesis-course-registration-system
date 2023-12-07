@@ -1,4 +1,3 @@
-import { LearnMoreBtn } from "@/components/Atoms";
 import { LogoApp } from "@/components/Molecules";
 import { AuthForm } from "@/components/Organisms";
 import { AuthTemplate } from "@/components/Templates";
@@ -10,13 +9,16 @@ const IntroPage = () => {
   const textArray = text.split(" ");
   return (
     <div className="flex flex-col gap-5 w-full px-20">
-      <div className="flex gap-5 items-center w-full">
+      <div className="flex gap-5 items-center w-full flex-col">
         <Image
           src="https://yu.ctu.edu.vn/images/upload/article/2020/03/0305-logo-ctu.png"
           width="70"
           height="20"
           alt="Logo CTU"
         />
+        <h5 className="text-white font-medium tracking-wide">
+          Can Tho University
+        </h5>
         <div className="flex gap-3">
           {textArray.map((char, index) => (
             <motion.h2
@@ -35,15 +37,15 @@ const IntroPage = () => {
         initial={{ opacity: 0, x: -200 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.7, ease: "easeOut" }}
-        className="uppercase text-[53px] my-3 font-bold text-green-400 tracking-wider leading-[3.5rem]"
+        className="uppercase text-[53px] my-3 font-bold text-green-400 tracking-wider leading-[3.5rem] text-center"
       >
         The thesis course registration system
       </motion.h4>
       <div className="flex flex-col gap-10 max-w-2xl">
-        <p className="text-base text-gray-100 text-start tracking-wider">
+        <p className="text-sm text-gray-100 text-start tracking-wider">
           The thesis course registration system website for students is a useful
           and efficient tool for students to manage and register for their
-          theses easily...
+          theses easily ...
         </p>
         <motion.div
           className="flex justify-end"
@@ -51,9 +53,9 @@ const IntroPage = () => {
           animate={{ opacity: 1 }}
           transition={{ duration: 2, ease: "easeOut" }}
         >
-          <button className="ml-5 mt-5 py-3 px-8 text-xs bg-[#141E37] transform ease-linear duration-300 text-white uppercase font-medium -skew-x-[20deg]">
-            <p className="skew-x-12">Read more</p>
-          </button> 
+          <button className="btn normal-case bg-transparent text-orange-500 border-none hover:bg-transparent hover:border-none">
+            <p>Read more</p>
+          </button>
         </motion.div>
         <div className="flex justify-end">
           <div className="flex gap-5">
@@ -102,9 +104,6 @@ function SignInPage() {
           </div>
         </div>
         <div className="flex justify-end items-center w-full bg-white relative">
-          {/* <div className="absolute h-52 rounded-bl-full w-20 bg-green-700 top-0 right-0"></div> */}
-          {/* <div className="absolute h-32 rounded-bl-full w-20 bg-green-800 top-0 right-20"></div> */}
-          {/* <div className="absolute h-20 rounded-tr-full w-20 bg-green-800 bottom-0 left-0"></div> */}
           <div className="w-full px-48 tracking-wide">
             <LogoApp
               width={28}

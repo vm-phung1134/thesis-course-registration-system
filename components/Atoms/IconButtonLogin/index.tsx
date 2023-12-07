@@ -20,7 +20,7 @@ export const IconButtonLogin: FC<IIconButtonLoginProps> = ({
     <button
       onClick={methodLogin}
       type="button"
-      className={`btn rounded-full bg-transparent border-gray-400 tracking-wide font-medium capitalize ${className}`}
+      className={`btn rounded-full bg-gray-200 border-none tracking-wide font-medium capitalize ${className}`}
     >
       <Image
         className={classNameIcon}

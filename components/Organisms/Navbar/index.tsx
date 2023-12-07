@@ -1,23 +1,17 @@
 /* eslint-disable react/display-name */
 /* eslint-disable @next/next/no-img-element */
-import { Avatar, Button, NormalAvatar } from "@/components/Atoms";
+import { Button, NormalAvatar } from "@/components/Atoms";
 import DarkModeToggle from "@/components/Atoms/ToggleDarkMode";
 import {
-  CommentForm,
   FilterScheduledForm,
   PrivateCommentForm,
   SearchForm,
 } from "@/components/Molecules";
 import { ROLE_ASSIGNMENT, useAuthContext } from "@/contexts/authContext";
 import { useLanguageContext } from "@/contexts/languageContext";
-import { INITIATE_PRIVATE_COMMENT, TYPE_ACTION_NOTIFICATION } from "@/data";
-import { useUserCookies } from "@/hooks/useCookies";
+import { INITIATE_PRIVATE_COMMENT } from "@/data";
 import { useCurrentUser } from "@/hooks/useGetCurrentUser";
-import { INotification } from "@/interface/notification";
-import {
-  IPrivateComment,
-  IPrivateCommentItem,
-} from "@/interface/privateComment";
+import { IPrivateComment } from "@/interface/privateComment";
 import {
   getAllPrivateCommentForLecturer,
   getAllPrivateComments,
@@ -33,7 +27,7 @@ export interface INavbarProps {}
 export const Navbar: FC<INavbarProps> = memo(() => {
   const { t } = useLanguageContext();
   const dispatch = useAppDispatch();
-  const { logout } = useAuthContext();
+  const { logout, checkUserLoginState } = useAuthContext();
   const { currentUser } = useCurrentUser();
   const { handleChangeLanguage, localeValue } = useLanguageContext();
   const { data: comments } = useQuery<IPrivateComment>({
@@ -61,6 +55,9 @@ export const Navbar: FC<INavbarProps> = memo(() => {
   const handleClick = (item: IPrivateComment) => {
     setSelectedItem(item);
   };
+  useEffect(() => {
+    checkUserLoginState();
+  }, [checkUserLoginState]);
   return (
     <div className="navbar shadow-sm border-b rounded-br-[3rem] dark:border-gray-500 p-5 top-0 sticky dark:bg-[#141E37] dark:text-[#dedede] bg-white z-10">
       <div className="justify-between w-full">
@@ -76,14 +73,18 @@ export const Navbar: FC<INavbarProps> = memo(() => {
                 alt="icon-language"
               />
               <button
-                className={`${localeValue === "en" && "text-green-700 dark:text-green-500"} px-3`}
+                className={`${
+                  localeValue === "en" && "text-green-700 dark:text-green-500"
+                } px-3`}
                 onClick={() => handleChangeLanguage("en")}
               >
                 English
               </button>
               <span className="border-r border-gray-300"></span>
               <button
-                className={`${localeValue === "vi" && "text-green-700 dark:text-green-500"} px-3`}
+                className={`${
+                  localeValue === "vi" && "text-green-700 dark:text-green-500"
+                } px-3`}
                 onClick={() => handleChangeLanguage("vi")}
               >
                 Vietnam
