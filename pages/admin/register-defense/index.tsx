@@ -1,26 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
-import {
-  Breadcrumb,
-  Button,
-  NormalAvatar,
-  SnipperRound,
-} from "@/components/Atoms";
+import { Breadcrumb, Button, SnipperRound } from "@/components/Atoms";
 import { AdminTemplate } from "@/components/Templates";
 import { useState, useEffect } from "react";
 import useCheckedBox from "@/hooks/useCheckedBox";
 import { IStudentDefObject } from "@/interface/studef";
-import { useAppDispatch, useAppSelector } from "@/redux/store";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { FilterScheduledForm, Pagination } from "@/components/Molecules";
 import { InforMemberModal } from "@/components/Organisms";
-import { getTopic } from "@/redux/reducer/topic/api";
 import classNames from "classnames";
 import { usePagination } from "@/hooks/usePagination";
-import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { AnimatePresence, motion } from "framer-motion";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer } from "react-toastify";
 import { useTableSearch } from "@/hooks/useTableSearch";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
 import { BREADCRUMB_REGISTER_DEFENSE_ADMIN } from "./mock-data";

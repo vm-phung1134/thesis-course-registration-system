@@ -10,10 +10,7 @@ import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import {
-  PieChart,
-  Pie,
   Sector,
-  ResponsiveContainer,
   LineChart,
   CartesianGrid,
   XAxis,
@@ -39,7 +36,6 @@ import { getAllStudentDefs } from "@/redux/reducer/student-def/api";
 import { IClassroomObject } from "@/interface/classroom";
 import { getAllClassrooms } from "@/redux/reducer/classroom/api";
 import { getAllCouncilDefs } from "@/redux/reducer/council-def/api";
-import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
 
 function DashBoardPage(this: any) {
@@ -326,8 +322,8 @@ function DashBoardPage(this: any) {
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Line type="monotone"  dataKey="Instructor" stroke="#8884d8" />
-                <Line type="monotone"  dataKey="Student" stroke="#82ca9d" />
+                <Line type="monotone" dataKey="Instructor" stroke="#8884d8" />
+                <Line type="monotone" dataKey="Student" stroke="#82ca9d" />
               </LineChart>
             </div>
             <div className="flex flex-wrap gap-3 h-fit w-full">

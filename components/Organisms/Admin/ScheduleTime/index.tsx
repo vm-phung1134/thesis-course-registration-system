@@ -7,16 +7,10 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useTableSearch } from "@/hooks/useTableSearch";
 
 export interface IScheduleTimeProps {
-  setCreateScheduled: React.Dispatch<any>;
-  createScheduled: any;
   scheduled: IThesisDef | null;
 }
 
-export const ScheduleTime: FC<IScheduleTimeProps> = ({
-  setCreateScheduled,
-  createScheduled,
-  scheduled,
-}) => {
+export const ScheduleTime: FC<IScheduleTimeProps> = ({ scheduled }) => {
   const {
     filteredData: schedule_filteredData,
     handleSearch: schedule_handleSearch,
@@ -24,10 +18,7 @@ export const ScheduleTime: FC<IScheduleTimeProps> = ({
   return (
     <>
       <div className="w-full mt-5 px-3">
-        <ScheduleForm
-          setCreateScheduled={setCreateScheduled}
-          createScheduled={createScheduled}
-        />
+        <ScheduleForm />
         <div className="flex gap-5 justify-between">
           <div className="">
             <p className="py-1 text-sm">Noted</p>

@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Avatar, Breadcrumb, Button, SnipperRound } from "@/components/Atoms";
+import { Breadcrumb, SnipperRound } from "@/components/Atoms";
 import { AdminTemplate } from "@/components/Templates";
 import {
-  FilterScheduledForm,
   ManualTestingSchedule,
-  ScheduleForm,
   SettingSchedule,
   TestingSchedule,
 } from "@/components/Molecules";
@@ -12,7 +10,6 @@ import { useAppDispatch } from "@/redux/store";
 import { getScheduleDef } from "@/redux/reducer/schedule-def/api";
 import { IThesisDef } from "@/interface/schedule";
 import { useQuery } from "@tanstack/react-query";
-import Link from "next/link";
 import { BREADCRUMB_SCHEDULE } from "./mock-data";
 import { ScheduleTime } from "@/components/Organisms";
 
@@ -29,7 +26,6 @@ function DashboardPage() {
     { id: 5, label: "Calender" },
   ];
   const [loading, setLoading] = useState<boolean>(true);
-  const [createScheduled, setCreateScheduled] = useState<any>({});
   const dispatch = useAppDispatch();
   const { data: scheduled } = useQuery<IThesisDef | null>({
     queryKey: ["admin-schedule-def"],
@@ -82,13 +78,7 @@ function DashboardPage() {
                   </li>
                 ))}
               </ul>
-              {selectedItem.id === 1 && (
-                <ScheduleTime
-                  scheduled={scheduled}
-                  setCreateScheduled={setCreateScheduled}
-                  createScheduled={createScheduled}
-                />
-              )}
+              {selectedItem.id === 1 && <ScheduleTime scheduled={scheduled} />}
               {selectedItem.id === 2 && <SettingSchedule />}
               {selectedItem.id === 3 && <ManualTestingSchedule />}
               {selectedItem.id === 4 && <TestingSchedule />}

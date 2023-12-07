@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { Avatar, Breadcrumb, Button, SnipperRound } from "@/components/Atoms";
+import { Breadcrumb, SnipperRound } from "@/components/Atoms";
 import { AdminTemplate } from "@/components/Templates";
 import { useState, useEffect } from "react";
 import { BREADCRUMB_ADMIN_CLASSROOM_MANAGEMENT } from "../classroom-management/mock-data";
