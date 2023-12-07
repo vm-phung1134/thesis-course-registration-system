@@ -6,9 +6,10 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { IRoomDefObject } from "@/interface/room";
 import { updateRoomDef } from "@/redux/reducer/room-def/api";
 import useToastifyMessage from "@/hooks/useToastify";
+import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
 
 export interface IEditRoomFormProps {
-  room: IRoomDefObject;
+  room: Omit<IRoomDefObject, "id">;
   setToggleForm?: React.Dispatch<React.SetStateAction<boolean>>;
   toggleForm?: boolean;
 }
@@ -18,30 +19,11 @@ export const EditRoomForm: FC<IEditRoomFormProps> = ({
   setToggleForm,
   toggleForm,
 }) => {
-  const dispatch = useAppDispatch();
-  const queryClient = useQueryClient();
-  const updateMutation = useMutation(
-    (postData: IRoomDefObject) => {
-      return new Promise((resolve, reject) => {
-        dispatch(updateRoomDef(postData))
-          .unwrap()
-          .then((data) => {
-            resolve(data);
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["room-defs"]);
-      },
-    }
-  );
-
+  const updateMutation = useMutationQueryAPI({
+    action: updateRoomDef,
+    queryKeyLog: ["room-defs"],
+  });
   useToastifyMessage(updateMutation, "Update room defense was successfully");
-
   return (
     <Formik
       initialValues={room}

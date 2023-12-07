@@ -26,7 +26,6 @@ interface ICreateRoomTab {}
 
 export const CreateRoomTab: FC<ICreateRoomTab> = ({}) => {
   const dispatch = useAppDispatch();
-  const queryClient = useQueryClient();
   // ROOM SERVICE
   // Open edit room modal
   const [openEditRoom, setOpenEditRoom] = useState<boolean>(false);
