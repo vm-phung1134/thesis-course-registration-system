@@ -28,7 +28,7 @@ const getSubmit = createAsyncThunk(
   "submit/getSubmit",
   async (submitData: any) => {
     const response = await axios.get(
-      `http://qthuy2k1.shop/api/exercise/${submitData.exerciseID}/submit/${submitData.studentID}`,
+      `https://qthuy2k1.shop/api/exercise/${submitData.exerciseID}/submit/${submitData.studentID}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -57,7 +57,7 @@ const createSubmit = createAsyncThunk(
     }
 
     const response = await axios.post(
-      `http://qthuy2k1.shop/upload/submit`,
+      `https://qthuy2k1.shop/upload/submit`,
       formData,
       {
         headers: {
@@ -96,7 +96,7 @@ const getAllSubmitStud = createAsyncThunk(
   "submit/getAllSubmitStud",
   async (postData: IAuthObject) => {
     const response = await axios.get(
-      `http://qthuy2k1.shop/api/auth/${postData.id}/submit`,
+      `https://qthuy2k1.shop/api/auth/${postData.id}/submit`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

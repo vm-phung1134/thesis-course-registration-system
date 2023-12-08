@@ -40,7 +40,7 @@ const getAllPostInReportStage = createAsyncThunk(
   "post/getAllPostInReportStage",
   async (postData: { classroomId: string; categoryId: string }) => {
     const response = await axios.get(
-      `http://qthuy2k1.shop/api/class/${postData.classroomId}/post/stage/${postData.categoryId}`,
+      `https://qthuy2k1.shop/api/class/${postData.classroomId}/post/stage/${postData.categoryId}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

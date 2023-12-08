@@ -55,7 +55,7 @@ const createUploadReport = createAsyncThunk(
     }
 
     const response = await axios.post(
-      `http://qthuy2k1.shop/upload/final-file`,
+      `https://qthuy2k1.shop/upload/final-file`,
       formData,
       {
         headers: {
@@ -78,7 +78,7 @@ const deleteUploadReport = createAsyncThunk(
   "upload/deleteUploadReport",
   async (id: string) => {
     const response = await axios.delete(
-      `http://qthuy2k1.shop/api/attachment/${id}`,
+      `https://qthuy2k1.shop/api/attachment/${id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

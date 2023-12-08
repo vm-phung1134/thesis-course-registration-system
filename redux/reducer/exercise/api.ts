@@ -55,7 +55,7 @@ const createExercise = createAsyncThunk(
       }
     }
     const response = await axios.post(
-      `http://qthuy2k1.shop/upload/exercise`,
+      `https://qthuy2k1.shop/upload/exercise`,
       formData,
       {
         headers: {
@@ -64,7 +64,7 @@ const createExercise = createAsyncThunk(
         },
       }
     );
-
+    console.log(response);
     if (response.status === 200) {
       return response.data;
     }
@@ -90,7 +90,7 @@ const updateExercise = createAsyncThunk(
       }
     }
     const response = await axios.put(
-      `http://qthuy2k1.shop/upload/exercise/${postData.id}`,
+      `https://qthuy2k1.shop/upload/exercise/${postData.id}`,
       formData,
       {
         headers: {
@@ -99,7 +99,6 @@ const updateExercise = createAsyncThunk(
         },
       }
     );
-      console.log(response)
     if (response.status === 200) {
       return response.data;
     }
@@ -128,7 +127,7 @@ const getAllExerciseInReportStage = createAsyncThunk(
   "exercise/getAllExerciseInReportStage",
   async (postData: { classroomId: string; categoryId: string }) => {
     const response = await axios.get(
-      `http://qthuy2k1.shop/api/class/${postData.classroomId}/exercise/stage/${postData.categoryId}`,
+      `https://qthuy2k1.shop/api/class/${postData.classroomId}/exercise/stage/${postData.categoryId}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

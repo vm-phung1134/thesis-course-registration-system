@@ -9,7 +9,7 @@ const apiURL = `https://qthuy2k1.shop/api/comment`;
 const getAllComments = createAsyncThunk(
   "comment/getAllComments",
   async (id: string) => {
-    const response = await axios.get(`http://qthuy2k1.shop/api/exercise/${id}`, {
+    const response = await axios.get(`https://qthuy2k1.shop/api/exercise/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

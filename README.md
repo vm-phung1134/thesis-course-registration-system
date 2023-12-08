@@ -114,7 +114,11 @@ Step by step project installation:
    npm run dev
    ```
 6. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-   ```
+
+7. Account testing
+
+
+
 ### Preview
 ![image](https://github.com/vm-phung1134/thesis-course-registration-system/assets/106596859/165c0183-2cf3-49d3-b73d-847dfdffd729)
 ![image](https://github.com/vm-phung1134/thesis-course-registration-system/assets/106596859/2781918c-73b3-4c1e-9198-a6c6ca7699e0)
