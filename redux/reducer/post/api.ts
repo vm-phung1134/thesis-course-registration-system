@@ -2,7 +2,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { token } from "./type";
 import { IPostObject, IPostObjectInput } from "@/interface/post";
-import { IClassroomObject } from "@/interface/classroom";
 
 const apiURL = `https://qthuy2k1.shop/api/post`;
 
@@ -72,7 +71,7 @@ const createPost = createAsyncThunk(
     }
 
     const response = await axios.post(
-      `http://qthuy2k1.shop/upload/post`,
+      `https://qthuy2k1.shop/upload/post`,
       formData,
       {
         headers: {

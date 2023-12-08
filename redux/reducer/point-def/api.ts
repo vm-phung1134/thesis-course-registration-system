@@ -7,7 +7,7 @@ import { IAuthObject } from "@/interface/auth";
 const apiURL =
   "https://thesis-course-registration-system-backend-vm-phung1134.vercel.app/api/point-def";
 
-// GET ONE COUNCIL DEF
+// GET ONE POINT DEF
 const getOnePointDef = createAsyncThunk(
   "point/getOnePointDef",
   async (postData: IAuthObject) => {
@@ -19,11 +19,11 @@ const getOnePointDef = createAsyncThunk(
     if (response.status === 200) {
       return response.data;
     }
-    throw new Error("Failed to get one auth");
+    throw new Error("Failed to get one point");
   }
 );
 
-// GET ONE COUNCIL DEF FOR LECTURER
+// GET ONE POINT DEF FOR LECTURER
 const getOnePointDefForLecturer = createAsyncThunk(
   "point/getOnePointDefForLecturer",
   async (postData: IAssessLecturerItem) => {
@@ -38,27 +38,30 @@ const getOnePointDefForLecturer = createAsyncThunk(
     if (response.status === 200) {
       return response.data;
     }
-    throw new Error("Failed to get one auth");
+    throw new Error("Failed to get one point");
   }
 );
 
-// GET ALL COUNCIL DEFS
+// GET ALL POINT DEFS
 const getAllPointDefs = createAsyncThunk(
   "point/getAllPointDefs",
   async (postData: IAuthObject) => {
-    const response = await axios.get(`${apiURL}/${postData?.id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axios.get(
+      `${apiURL}/student-point/${postData?.id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     if (response.status === 200) {
       return response.data;
     }
-    throw new Error("Failed to get all auths");
+    throw new Error("Failed to get all points");
   }
 );
 
-// CREATE COUNCIL DEF
+// CREATE POINT DEF
 const createPointDef = createAsyncThunk(
   "point/createPointDef",
   async (postData: IPointDefObject) => {
@@ -74,7 +77,7 @@ const createPointDef = createAsyncThunk(
   }
 );
 
-// UPDATE COUNCIL DEF
+// UPDATE POINT DEF
 const updatePointDef = createAsyncThunk(
   "point/updatePointDef",
   async (postData: IPointDefObject) => {
@@ -90,7 +93,7 @@ const updatePointDef = createAsyncThunk(
   }
 );
 
-// DELETE COUNCIL DEF
+// DELETE POINT DEF
 const deletePointDef = createAsyncThunk(
   "point/deletePointDef",
   async (postData: IPointDefObject) => {

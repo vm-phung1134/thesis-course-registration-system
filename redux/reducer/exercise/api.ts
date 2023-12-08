@@ -64,7 +64,6 @@ const createExercise = createAsyncThunk(
         },
       }
     );
-    console.log(response);
     if (response.status === 200) {
       return response.data;
     }
@@ -77,6 +76,7 @@ const updateExercise = createAsyncThunk(
   "exercise/updateExercise",
   async (postData: IExerciseObjectInput) => {
     const formData = new FormData();
+    formData.append("id", postData.id || "");
     formData.append("title", postData.title);
     formData.append("categoryID", postData.categoryID);
     formData.append("classroomID", postData.classroomID);

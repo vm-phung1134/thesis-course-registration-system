@@ -6,10 +6,14 @@ export interface IIConTitleProps {
   children: React.ReactNode;
 }
 
-export const IConTitle: FC<IIConTitleProps> = ({ className, title, children }) => {
+export const IConTitle: FC<IIConTitleProps> = ({
+  className,
+  title,
+  children,
+}) => {
   return (
     <div className="flex gap-3 items-center">
-        {children}
+      {children}
       <p className={`${className}`}>{title}</p>
     </div>
   );
