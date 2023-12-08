@@ -28,7 +28,7 @@ const getOnePointDefForLecturer = createAsyncThunk(
   "point/getOnePointDefForLecturer",
   async (postData: IAssessLecturerItem) => {
     const response = await axios.get(
-      `${apiURL}/${postData.studentId}&${postData.lecturerId}`,
+      `${apiURL}/student-point/${postData.studentId}&${postData.lecturerId}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
