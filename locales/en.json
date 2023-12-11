@@ -37,7 +37,7 @@
   "acc_profile_item7": "Major",
 
   "classroom_item1": "Thesis Graduation - CT550",
-  "classroom_item_clock": "Clocked",
+  "classroom_item_clock": "Locked",
   "classroom_item_unsub": "Leave Group",
   "classroom_item_open": "Opening",
   "classroom_item_menu1": "Newfeeds",
@@ -45,7 +45,7 @@
   "classroom_item_menu3": "Members",
   "classroom_item_menu4": "Point",
   "classroom_item_countdown": "Countdown Report",
-  
+
   "enroll_item_1": "Your schedule for defending your graduation thesis in",
   "enroll_item_2": "Upload your final files",
   "enroll_item_3": "The thesis committee",
