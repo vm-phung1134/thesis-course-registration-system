@@ -116,15 +116,19 @@ Step by step project installation:
 6. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 7. Account testing
-
-
+   ```sh
+   Because this is a project developed for IT industry members, testing from outside the organization is limited.
+   ```
 
 ### Preview
-![image](https://github.com/vm-phung1134/thesis-course-registration-system/assets/106596859/165c0183-2cf3-49d3-b73d-847dfdffd729)
+![image](https://github.com/vm-phung1134/thesis-course-registration-system/assets/106596859/e090bdfe-db15-4940-9c8b-7c0d7a950d17)
 ![image](https://github.com/vm-phung1134/thesis-course-registration-system/assets/106596859/2781918c-73b3-4c1e-9198-a6c6ca7699e0)
 ![image](https://github.com/vm-phung1134/thesis-course-registration-system/assets/106596859/a4077408-c0b7-4fcd-8396-270c6466c513)
 ![image](https://github.com/vm-phung1134/thesis-course-registration-system/assets/106596859/1a879c59-b640-41ae-aaef-3d0670473d34)
 ![image](https://github.com/vm-phung1134/thesis-course-registration-system/assets/106596859/bdf11f73-927d-4d5a-8980-d5236f89603a)
+![image](https://github.com/vm-phung1134/thesis-course-registration-system/assets/106596859/09b5ba25-f032-4a5b-9da7-f81d3b95cf9f)
+![image](https://github.com/vm-phung1134/thesis-course-registration-system/assets/106596859/b1c7c8d7-d054-478f-a1d7-baaaec3107b9)
+![image](https://github.com/vm-phung1134/thesis-course-registration-system/assets/106596859/675a28b4-4e6b-4441-baa0-6831a24e971b)
 
 <!-- USAGE EXAMPLES -->
 ## Usage
