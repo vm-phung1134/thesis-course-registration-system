@@ -20,7 +20,7 @@ export const SidebarLecturerView: FC<ISidebarLecturerViewProps> = memo(({}) => {
           <li>
             <Link
               className="rounded-none hover:bg-green-700 hover:text-white"
-              href="/mainboard"
+              href="/manage-classroom"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -62,7 +62,7 @@ export const SidebarLecturerView: FC<ISidebarLecturerViewProps> = memo(({}) => {
             </Link>
           </li>
           <div className="w-full h-[1px] bg-green-700"></div>
-          <li>
+          {/* <li>
             <Link
               className="rounded-none hover:bg-green-700 hover:text-white"
               href={"/manage-classroom"}
@@ -83,7 +83,7 @@ export const SidebarLecturerView: FC<ISidebarLecturerViewProps> = memo(({}) => {
               </svg>
               <span className="mx-2 text-[15px] font-medium">Manage class</span>
             </Link>
-          </li>
+          </li> */}
           <li>
             <Link
               className="rounded-none hover:bg-green-700 hover:text-white"

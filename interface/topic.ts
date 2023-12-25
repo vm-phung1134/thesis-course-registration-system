@@ -4,7 +4,7 @@ export interface ITopicObject {
   id?: string;
   title: string;
   typeTopic: string;
-  memberQuantiy: number;
+  memberQuantity: number;
   student: IAuthObject;
   memberEmail: string;
   description: string;

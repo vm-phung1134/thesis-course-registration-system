@@ -1,13 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 import { FC } from "react";
-import { Button, ItemUserInfor, NormalAvatar } from "@/components/Atoms";
+import { Button } from "@/components/Atoms";
 import { IClassroomObject } from "@/interface/classroom";
 import { useSubscribeStateContext } from "@/contexts/subscribeState";
 import { IMemberObject } from "@/interface/member";
 import { STATE_AUTH_CLASSROOM, STATE_LECTURER_CLASSROOM } from "@/data";
-import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { ROLE_ASSIGNMENT } from "@/contexts/authContext";
-import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 import { useAppDispatch } from "@/redux/store";
 import { getAllMemberClassroom } from "@/redux/reducer/member/api";
@@ -37,7 +35,7 @@ export const ClassroomContentCard: FC<IClassroomContentCardProps> = ({
     }
   };
   const { data: members } = useQuery<IMemberObject[]>({
-    queryKey: ["members-in-classroom", item],
+    queryKey: ["classroom-members", item],
     queryFn: async () => {
       const action = await dispatch(getAllMemberClassroom(item));
       return action.payload || [];
@@ -135,15 +133,16 @@ export const ClassroomContentCard: FC<IClassroomContentCardProps> = ({
                       <p className="text-sm normal-case font-medium">Opening</p>
                     </button>
                   )}
-                  {currentUser.role === ROLE_ASSIGNMENT.STUDENT && subscribeState.status === STATE_AUTH_CLASSROOM.NO_SUB && (
-                    <Button
-                      id={item.id}
-                      otherType="subscribe"
-                      title="Subscribe"
-                      handleActions={handleSubcribeClass}
-                      className="hover:bg-[#165b31] rounded-lg w-28 border-none btn-sm bg-green-700 text-white"
-                    />
-                  )}
+                  {currentUser.role === ROLE_ASSIGNMENT.STUDENT &&
+                    members.length < item.quantityStudent && (
+                      <Button
+                        id={item.id}
+                        otherType="subscribe"
+                        title="Subscribe"
+                        handleActions={handleSubcribeClass}
+                        className="hover:bg-[#165b31] rounded-lg w-28 border-none btn-sm bg-green-700 text-white"
+                      />
+                    )}
                 </>
               )}
             </div>

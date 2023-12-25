@@ -152,11 +152,14 @@ export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
           )}
           {currentUser?.role === ROLE_ASSIGNMENT.STUDENT &&
             authClassroomState?.status === STATE_LECTURER_CLASSROOM.UN_LOCK && (
-              <button
-                onClick={handleOpenModalLeave}
-                className="ml-5 mt-5 py-2 px-5 text-xs rounded-lg bg-white border border-red-500 transform ease-linear duration-300 text-red-600 hover:bg-red-600 hover:text-white font-bold -skew-x-[20deg]"
-              >
-                <p className="skew-x-12">Leave Group</p>
+              <button className="btn border-none hover:border-none capitalize bg-transparent hover:bg-transparent">
+                <Image
+                  width={40}
+                  height={40}
+                  alt="icon-message"
+                  src={"https://cdn-icons-gif.flaticon.com/10352/10352708.gif"}
+                />
+                <p className="text-xs">Opening</p>
               </button>
             )}
           {currentUser?.role === ROLE_ASSIGNMENT.STUDENT &&

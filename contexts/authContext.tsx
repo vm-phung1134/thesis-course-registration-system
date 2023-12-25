@@ -115,7 +115,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         };
         setUserCookies(authObject);
         setIsAuthenticated(true);
-        router.push("/mainboard");
+        router.push("/manage-classroom");
       })
       .catch((error) => {
         setMessage(() => "Account or password incorrect !!!");

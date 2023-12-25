@@ -37,3 +37,4 @@ export * from "./PointCard";
 export * from "./ContentCommentModal";
 export * from "./EmptySpace";
 export * from "./UnavailableScheduleForm"
+export * from "./RegistrationTopicFormV2"

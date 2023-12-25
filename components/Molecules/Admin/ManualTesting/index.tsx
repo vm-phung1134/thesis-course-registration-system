@@ -1,8 +1,8 @@
-import { Button, CountInput, FormField } from "@/components/Atoms";
+import { Button, CountInput } from "@/components/Atoms";
 import { Form, Formik } from "formik";
 import { FC, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useAppDispatch } from "@/redux/store";
 import { IStudentDefObject } from "@/interface/studef";
 import {
@@ -12,32 +12,18 @@ import {
 } from "@/redux/reducer/student-def/api";
 import { IAuthObject } from "@/interface/auth";
 import { getAllCouncilDefs } from "@/redux/reducer/council-def/api";
+import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
+import useToastifyMessage from "@/hooks/useToastify";
 
 export interface IManualTestingScheduleprops {}
 
 export const ManualTestingSchedule: FC<IManualTestingScheduleprops> = ({}) => {
   const [isChecked, setIsChecked] = useState(false);
   const dispatch = useAppDispatch();
-  const queryClient = useQueryClient();
-  const addStudefMutation = useMutation(
-    (postData: IStudentDefObject) => {
-      return new Promise((resolve, reject) => {
-        dispatch(createStudentDef(postData))
-          .unwrap()
-          .then((data) => {
-            resolve(data);
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["stud-defs", "council-defs"]);
-      },
-    }
-  );
+  const addStudefMutation = useMutationQueryAPI({
+    action: createStudentDef,
+    queryKeyLog: ["admin-student-def", "admin-council-def"],
+  });
   const createMockDataScheduleArrange = async (
     teacherCount: IAuthObject[],
     studentCount: number
@@ -47,7 +33,8 @@ export const ManualTestingSchedule: FC<IManualTestingScheduleprops> = ({}) => {
     let remainingStudents = studentCount;
     for (let i = 0; i < teacherCount.length; i++) {
       const randomStudentCount =
-        Math.floor(Math.random() * (remainingStudents / teacherCount.length)) + 20;
+        Math.floor(Math.random() * (remainingStudents / teacherCount.length)) +
+        20;
       remainingStudents -= randomStudentCount;
       for (let j = 1; j < randomStudentCount + 1; j++) {
         addStudefMutation.mutate({
@@ -68,7 +55,7 @@ export const ManualTestingSchedule: FC<IManualTestingScheduleprops> = ({}) => {
     }
   };
   const { data: council_defs } = useQuery<IAuthObject[]>({
-    queryKey: ["council-defs"],
+    queryKey: ["admin-council-def"],
     queryFn: async () => {
       const action = await dispatch(getAllCouncilDefs());
       return action.payload || [];
@@ -76,13 +63,18 @@ export const ManualTestingSchedule: FC<IManualTestingScheduleprops> = ({}) => {
     initialData: [],
   });
   const { data: stud_defs } = useQuery<IStudentDefObject[]>({
-    queryKey: ["stud-defs"],
+    queryKey: ["admin-student-def"],
     queryFn: async () => {
       const action = await dispatch(getAllStudentDefs());
       return action.payload || [];
     },
     initialData: [],
   });
+
+  useToastifyMessage(
+    addStudefMutation,
+    "Generating mock students successfully!"
+  );
   return (
     <Formik
       initialValues={{

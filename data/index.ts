@@ -73,7 +73,6 @@ export const INITIATE_EXERCISE: IExerciseObject = {
 };
 
 export const INITIATE_TOPIC: ITopicObject = {
-  id: "",
   title: "",
   typeTopic: "",
   memberQuantiy: 0,

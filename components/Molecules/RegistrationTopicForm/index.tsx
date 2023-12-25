@@ -68,6 +68,7 @@ export const RegistrationTopicForm: FC<IRegistrationTopicFormProps> = ({
                 ...values,
                 student: currentUser,
               });
+              console.log({ ...values, student: currentUser })
           setSubmitting(false);
         }, 400);
       }}

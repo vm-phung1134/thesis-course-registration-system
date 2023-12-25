@@ -25,10 +25,11 @@ export const EnrollSuccess: FC<IEnrollSuccessProps> = () => {
               height="300"
               objectFit="cover"
               objectPosition="center"
+              className="dark:rounded-full"
             />
             <div className="flex gap-3 flex-col items-start">
               <div className="w-[30rem] relative h-fit">
-                <h4 className="uppercase text-[35px] text-[#141E37] italic font-bold leading-snug pl-8">
+                <h4 className="uppercase text-[35px] text-[#141E37] italic font-bold leading-snug pl-8 dark:text-white">
                   You subscribed for thesis defense in
                   <span className="uppercase font-medium"> CT550/HK1-2023</span>
                 </h4>
@@ -41,7 +42,9 @@ export const EnrollSuccess: FC<IEnrollSuccessProps> = () => {
               </p>
               <div className="flex gap-3">
                 <button className="ml-5 mt-5 py-3 px-8 bg-green-700 hover:bg-[#141E37] transform ease-in-out duration-500 text-white -skew-x-[20deg]">
-                  <p className="skew-x-12">Your schedule expected - Saturday, 25/11/2023</p>
+                  <p className="skew-x-12">
+                    Your schedule expected - Saturday, 25/11/2023
+                  </p>
                 </button>
               </div>
             </div>

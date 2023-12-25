@@ -1,9 +1,12 @@
 import { Button, NormalAvatar, SnipperRound } from "@/components/Atoms";
-import { InforUserFormV2, UploadFinalFileForm } from "@/components/Molecules";
+import {
+  InforUserFormV2,
+  RegistrationTopicFormV2,
+  UploadFinalFileForm,
+} from "@/components/Molecules";
 import { EnrollSuccess } from "@/components/Organisms/MemberState/EnrollSuccess";
 import { MainboardTemplate } from "@/components/Templates";
 import { INITIATE_MEMBER, INITIATE_UPLOAD_REPORT, roleInCouncil } from "@/data";
-import { useUserCookies } from "@/hooks/useCookies";
 import { IMemberObject } from "@/interface/member";
 import { ICouncilDef } from "@/interface/schedule";
 import { IUploadReportObject } from "@/interface/upload";
@@ -17,8 +20,10 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
+import { useLanguageContext } from "@/contexts/languageContext";
 
 function EnrollStudentPage() {
+  const { t } = useLanguageContext();
   const [switchingForm, setSwitchingForm] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(true);
   const dispatch = useAppDispatch();
@@ -41,16 +46,22 @@ function EnrollStudentPage() {
   const updateMutation = useMutationQueryAPI({
     action: updateMember,
     queryKeyLog: ["get-one-member"],
-    successMsg: "You have successfully registered!",
+    successMsg: "Enrollment reported successful!",
     errorMsg: "Fail to register thesis defense!",
   });
   const handleEnrollMember = () => {
-    updateMutation.mutate({ ...member, registerDefense: true });
+    updateMutation.mutate({
+      id: member.id,
+      registerDefense: true,
+      memberID: member.member.id,
+      status: "",
+      classroomID: member.classroom.id,
+    });
   };
 
   // HANDLE FINAL UPLOAD
   const { data: uploadReport } = useQuery<IUploadReportObject>({
-    queryKey: ["upload-def", currentUser.id],
+    queryKey: ["get-one-upload", currentUser],
     queryFn: async () => {
       const action = await dispatch(getUploadReport(currentUser.id));
       return action.payload || INITIATE_UPLOAD_REPORT;
@@ -72,6 +83,7 @@ function EnrollStudentPage() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.7, ease: "easeOut" }}
+          className="h-full"
         >
           {studentScheduled?.id ? (
             <>
@@ -85,8 +97,8 @@ function EnrollStudentPage() {
                   objectPosition="center"
                 />
                 <div>
-                  <h4 className="uppercase text-xl text-[#141E37] italic font-bold leading-snug">
-                    You schedule for thesis defense in
+                  <h4 className="uppercase text-xl text-[#141E37] italic font-bold leading-snug w-[27rem]">
+                    {t.enroll_item_1}
                     <span className="uppercase font-medium">
                       {" "}
                       CT550/HK1-2023
@@ -94,7 +106,7 @@ function EnrollStudentPage() {
                   </h4>
                   <div className="w-[27rem]">
                     <h4 className="my-2 text-xs italic font-medium tracking-wider uppercase">
-                      Upload your final files
+                      {t.enroll_item_2}
                     </h4>
                     <UploadFinalFileForm uploadReport={uploadReport} />
                   </div>
@@ -103,7 +115,7 @@ function EnrollStudentPage() {
               <div className="flex gap-4 w-full my-10">
                 <div className="flex flex-grow w-10/12 text-sm p-5 flex-col gap-2 border rounded-xl">
                   <h5 className="text-lg text-green-700 font-bold capitalize tracking-wider">
-                    The thesis committee
+                    {t.enroll_item_3}
                   </h5>
                   <div className="grid grid-cols-3 gap-3">
                     {studentScheduled?.council?.map((lecturer, index) => (
@@ -132,10 +144,10 @@ function EnrollStudentPage() {
                 </div>
                 <div className="flex flex-grow p-5 flex-col gap-2 border rounded-xl w-fit">
                   <h5 className="text-lg text-green-700 font-bold capitalize tracking-wider">
-                    Your schedule thesis defense
+                    {t.enroll_item_4}
                   </h5>
                   <p className="font-thin text-xs italic text-orange-600">
-                    Noticed: Please arrive at the room 10 minutes in advance to
+                    Noticed: Please arrive at the room 60 minutes in advance to
                     prepare!!!
                   </p>
                   <ul className="capitalize flex flex-col gap-2 text-sm">
@@ -211,15 +223,22 @@ function EnrollStudentPage() {
                   </div>
                   <div className="flex h-fit items-center">
                     <div className="p-5 w-[70%] mt-5 shadow-xl rounded-xl">
-                      {switchingForm === 1 ? (
+                      {switchingForm === 1 && (
                         <InforUserFormV2
                           setSwitchingForm={setSwitchingForm}
                           switchingForm={switchingForm}
                         />
-                      ) : (
-                        <>
+                      )}
+                      {switchingForm === 2 && (
+                        <RegistrationTopicFormV2
+                          setSwitchingForm={setSwitchingForm}
+                          switchingForm={switchingForm}
+                        />
+                      )}
+                      {switchingForm === 3 && (
+                        <div>
                           <h3 className="text-xs font-medium mb-3 text-green-700">
-                            Step {switchingForm} of 2
+                            Step {switchingForm} of 3
                           </h3>
                           <div className="h-[50vh] flex flex-col gap-5 items-center justify-center">
                             <h3 className="uppercase text-green-700 font-bold">
@@ -252,7 +271,7 @@ function EnrollStudentPage() {
                               />
                             </div>
                           </div>
-                        </>
+                        </div>
                       )}
                     </div>
                   </div>

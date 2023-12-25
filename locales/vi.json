@@ -8,5 +8,47 @@
   "sideBarStudentItem7": "Sắp tới hạn",
   "sideBarStudentItem8": "Đã hoàn thành",
   "sideBarStudentItem9": "Điểm I",
-  "sideBarStudentItem10": "Cài đặt"
+  "sideBarStudentItem10": "Cài đặt",
+  "sideBarStudentItem11": "Đăng ký bảo vệ",
+  "sideBarStudentItem12": "Hỗ trợ & giúp đỡ",
+
+  "navBarItem1": "Hồ sơ",
+  "navBarItem2": "Chế độ tối",
+  "navBarItem3": "Cài đặt",
+  "navBarItem4": "Đăng xuất",
+
+  "unsub_title1": "Chào mừng bạn đến với lớp học",
+  "unsub_title2": "Trường công nghệ thông tin & truyền thông",
+
+  "acc_register_title_page": "Quản lý hồ sơ cá nhân",
+  "acc_register_item1": "Đăng ký thông tin đề tài",
+  "acc_register_item2": "Tên đề tài",
+  "acc_register_item3": "Loại đề tài",
+  "acc_register_item4": "SL thành viên",
+  "acc_register_item5": "Email thành viên",
+  "acc_register_item6": "Mô tả đề tài",
+
+
+  "acc_profile_item1": "Thông tin cơ bản",
+  "acc_profile_item2": "Họ & tên",
+  "acc_profile_item3": "Mã số sinh viên",
+  "acc_profile_item4": "Email",
+  "acc_profile_item5": "Số điện thoại",
+  "acc_profile_item6": "Lớp chuyên ngành",
+  "acc_profile_item7": "Ngành học",
+
+
+  "classroom_item1": "Luận văn tốt nghiệp - CT550",
+  "classroom_item_clock": "Đã khóa",
+  "classroom_item_unsub": "Rời nhóm",
+  "classroom_item_open": "Đang mở",
+
+
+  "enroll_item_1": "Lịch trình bảo vệ luận văn tốt nghiệp của bạn trong khóa",
+  "enroll_item_2": "Cập nhật quyển luận văn hoàn chỉnh",
+  "enroll_item_3": "Hội đồng luận văn",
+  "enroll_item_4": "Chi tiết lịch trình của bạn",
+
+  "task_item_1": "Báo cáo tiến độ tới hạn",
+  "completed_item_1": "Báo cáo tiến độ đã hoàn thành"
 }

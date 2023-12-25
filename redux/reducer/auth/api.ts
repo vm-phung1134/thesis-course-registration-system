@@ -179,5 +179,5 @@ export {
   getAllLecturers,
   checkStateSubscribe,
   checkAuthRoleForClassroomState,
-  deleteAuth
+  deleteAuth,
 };

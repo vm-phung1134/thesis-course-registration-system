@@ -13,7 +13,6 @@ import React from "react";
 import { SearchProvider } from "@/contexts/useSearchContext";
 import { ClassroomStateContextProvider } from "@/contexts/classroomState";
 import { SubscribeStateContextProvider } from "@/contexts/subscribeState";
-import { SocketProvider } from "@/contexts/useSocketContext";
 import { CurrentUserContextProvider } from "@/contexts/currentUserContext";
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -24,17 +23,15 @@ function MyApp({ Component, pageProps }: AppProps) {
         <Hydrate state={pageProps.dehydrateState}>
           <AuthProvider>
             <LanguageProvider>
-              <SocketProvider>
-                <CurrentUserContextProvider>
-                  <SubscribeStateContextProvider>
-                    <ClassroomStateContextProvider>
-                      <SearchProvider>
-                        <Component {...pageProps} />
-                      </SearchProvider>
-                    </ClassroomStateContextProvider>
-                  </SubscribeStateContextProvider>
-                </CurrentUserContextProvider>
-              </SocketProvider>
+              <CurrentUserContextProvider>
+                <SubscribeStateContextProvider>
+                  <ClassroomStateContextProvider>
+                    <SearchProvider>
+                      <Component {...pageProps} />
+                    </SearchProvider>
+                  </ClassroomStateContextProvider>
+                </SubscribeStateContextProvider>
+              </CurrentUserContextProvider>
             </LanguageProvider>
           </AuthProvider>
         </Hydrate>
