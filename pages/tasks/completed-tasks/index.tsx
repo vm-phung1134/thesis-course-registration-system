@@ -6,7 +6,6 @@ import {
   SelectInForm,
   SnipperRound,
 } from "@/components/Atoms";
-import { DATA_STATE_REPORT } from "@/pages/manage-classroom/report-progress/mock-data";
 import { IOptionItem } from "@/interface/filter";
 import { ICategoryObject } from "@/interface/category";
 import { DATA_FILTER_TASKS } from "../critical-tasks/mock-data";
@@ -22,7 +21,7 @@ import {
 import classNames from "classnames";
 import { ExerciseModal } from "@/components/Organisms";
 import Image from "next/image";
-import { INITIATE_EXERCISE } from "@/data";
+import { DATA_STATE_REPORT, INITIATE_EXERCISE } from "@/data";
 import { ISubmitObject } from "@/interface/submit";
 import { getAllSubmitStud } from "@/redux/reducer/submit/api";
 import { getExerciseWithNearestDeadline } from "@/utils/getDeadline";

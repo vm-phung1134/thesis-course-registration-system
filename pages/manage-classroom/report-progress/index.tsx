@@ -1,4 +1,3 @@
-import { DATA_STATE_REPORT } from "./mock-data";
 import { StateReportThesis } from "@/components/Molecules";
 import { ClassroomTemplate } from "@/components/Templates";
 import { ICategoryObject } from "@/interface/category";

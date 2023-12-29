@@ -7,7 +7,6 @@ import {
   SnipperRound,
 } from "@/components/Atoms";
 import { ICategoryObject } from "@/interface/category";
-import { DATA_STATE_REPORT } from "@/pages/manage-classroom/report-progress/mock-data";
 import { IOptionItem } from "@/interface/filter";
 import {
   CriticalTask,
@@ -29,7 +28,7 @@ import { getAllPostInClass, getPost } from "@/redux/reducer/post/api";
 import Image from "next/image";
 import { ISubmitObject } from "@/interface/submit";
 import { getAllSubmitStud } from "@/redux/reducer/submit/api";
-import { INITIATE_EXERCISE, INITIATE_POST } from "@/data";
+import { DATA_STATE_REPORT, INITIATE_EXERCISE, INITIATE_POST } from "@/data";
 import { getExerciseWithNearestDeadline } from "@/utils/getDeadline";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
 import { motion } from "framer-motion";

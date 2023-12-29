@@ -7,7 +7,6 @@ import {
   SnipperRound,
 } from "@/components/Atoms";
 import { ICategoryObject } from "@/interface/category";
-import { DATA_STATE_REPORT } from "@/pages/manage-classroom/report-progress/mock-data";
 import { CriticalTask, ExerciseCard } from "@/components/Molecules";
 import { IExerciseObject } from "@/interface/exercise";
 import { useAppDispatch } from "@/redux/store";
@@ -19,7 +18,7 @@ import {
 } from "@/redux/reducer/exercise/api";
 import classNames from "classnames";
 import { ExerciseModal } from "@/components/Organisms";
-import { INITIATE_EXERCISE } from "@/data";
+import { DATA_STATE_REPORT, INITIATE_EXERCISE } from "@/data";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { IBreadcrumbItem } from "@/components/Atoms";
