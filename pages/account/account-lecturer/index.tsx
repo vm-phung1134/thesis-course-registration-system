@@ -1,12 +1,33 @@
 import { useState, useEffect } from "react";
 import { MainboardTemplate } from "@/components/Templates";
-import { Breadcrumb, NormalAvatar, SnipperRound } from "@/components/Atoms";
-import { BREADCRUMB_ACCOUNT_LECTURER } from "./mock-data";
+import {
+  Breadcrumb,
+  IBreadcrumbItem,
+  NormalAvatar,
+  SnipperRound,
+} from "@/components/Atoms";
 import { ChangePassForm, InforUserForm } from "@/components/Molecules";
 import classNames from "classnames";
-import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
 import { ToastContainer } from "react-toastify";
+
+export const BREADCRUMB_ACCOUNT_LECTURER: IBreadcrumbItem[] = [
+  {
+    id: "1",
+    href: "/",
+    title: "TCR System",
+  },
+  {
+    id: "2",
+    href: "/account-lecturer",
+    title: "Account personal",
+  },
+  {
+    id: "3",
+    href: "/",
+    title: "Account settings",
+  },
+];
 
 function AccountLecturerPage() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -156,7 +177,7 @@ function AccountLecturerPage() {
               <h4 className="font-medium text-green-700 mb-5">
                 Change password
               </h4>
-              <ChangePassForm />
+              <ChangePassForm currentUser={currentUser} />
             </div>
             <dialog id="modal_infor_instructor" className={modalClass}>
               <div className="w-5/12 bg-white p-5 h-fit shadow-2xl rounded-xl">

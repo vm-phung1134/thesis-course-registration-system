@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import { Form, Formik } from "formik";
 import { Button, FormField } from "@/components/Atoms";
 import { INITIATE_ROOM_DEF } from "@/data";
@@ -45,7 +45,7 @@ export const CreateRoomForm: FC<ICreateRoomFormProps> = ({}) => {
       onSubmit={(values, { setSubmitting, resetForm }) => {
         setTimeout(() => {
           addMutation.mutate(values);
-          resetForm()
+          resetForm();
         }, 400);
       }}
     >

@@ -1,17 +1,11 @@
 import { FC } from "react";
 import { Field, Form, Formik } from "formik";
-import { ICommentObject } from "@/interface/comment";
 import { IPostObject } from "@/interface/post";
 import { IExerciseObject } from "@/interface/exercise";
-import { useCurrentUser } from "@/hooks/useGetCurrentUser";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createComment } from "@/redux/reducer/comment/api";
-import { useAppDispatch } from "@/redux/store";
-import { INITIATE_COMMENT, TYPE_ACTION_NOTIFICATION } from "@/data";
-import { IAuthObject } from "@/interface/auth";
-import { useSocket } from "@/contexts/useSocketContext";
+import { INITIATE_COMMENT } from "@/data";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
 import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
+import { createComment } from "@/redux/reducer/comment/api";
 
 export interface ICommentFormProps {
   task: IPostObject | IExerciseObject;
@@ -22,9 +16,7 @@ export const CommentForm: FC<ICommentFormProps> = ({ task }) => {
   const { currentUser } = useCurrentUserContext();
   const addMutation = useMutationQueryAPI({
     action: createComment,
-    queryKeyLog: ["comments", "comments-modal"],
-    successMsg: "You just added a comment!",
-    errorMsg: "Fail to send the comment!",
+    queryKeyLog: ["task-comments"],
   });
   return (
     <Formik
@@ -41,6 +33,7 @@ export const CommentForm: FC<ICommentFormProps> = ({ task }) => {
             user: currentUser,
           });
           resetForm();
+          setSubmitting(false);
         }, 400);
       }}
     >

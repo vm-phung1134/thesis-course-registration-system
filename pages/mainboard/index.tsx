@@ -20,7 +20,7 @@ type MenuItem = {
   label: string;
 };
 const menuItems: MenuItem[] = [
-  { id: 1, label: "Class Registration" },
+  { id: 1, label: "Subscribe classroom" },
   { id: 2, label: "Waiting" },
 ];
 
@@ -74,7 +74,7 @@ function MainboardPage() {
           <li
             key={item.id}
             className={`px-3 py-2 tracking-wider ${
-              selectedItem?.id === item?.id ? "border-green-700 border-b-2" : ""
+              selectedItem?.id === item?.id ? "border-orange-500 border-b-2 text-orange-500" : ""
             }`}
             onClick={() => handleClick(item)}
           >
@@ -116,10 +116,8 @@ function MainboardPage() {
               STATE_AUTH_CLASSROOM.NO_SUB
             ) &&
             renderMenuItems()}
-
           {/* GET UI FOR LECTURER ROLE */}
-          {(currentUser?.role === ROLE_ASSIGNMENT.LECTURER ||
-            currentUser?.role === ROLE_ASSIGNMENT.GUEST) && <NoSubscribeView />}
+          {currentUser?.role === ROLE_ASSIGNMENT.LECTURER && <NoSubscribeView />}
           {/* GET UI FOR STUDENT ROLE */}
           {currentUser?.role === ROLE_ASSIGNMENT.STUDENT && renderStudentView()}
         </MainboardTemplate>

@@ -2,20 +2,17 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { token } from "./type";
 import { IAuthObject } from "@/interface/auth";
-import { ICouncilDef } from "@/interface/schedule";
+import { apiURL } from "@/data";
 
 // GET ONE COUNCIL DEF
 const getOneCouncilDef = createAsyncThunk(
   "council/getOneCouncilDef",
-  async (postData: IAuthObject) => {
-    const response = await axios.get(
-      `http://localhost:5000/api/council-def/${postData.id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+  async (user: IAuthObject) => {
+    const response = await axios.get(`${apiURL}/council-def/${user.id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
       return response.data;
     }
@@ -27,7 +24,7 @@ const getOneCouncilDef = createAsyncThunk(
 const getAllCouncilDefs = createAsyncThunk(
   "council/getAllCouncilDefs",
   async () => {
-    const response = await axios.get(`http://localhost:5000/api/council-def`, {
+    const response = await axios.get(`${apiURL}/council-def`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -43,15 +40,11 @@ const getAllCouncilDefs = createAsyncThunk(
 const createCouncilDef = createAsyncThunk(
   "council/createCouncilDef",
   async (postData: IAuthObject) => {
-    const response = await axios.post(
-      "http://localhost:5000/api/council-def",
-      postData,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.post(`${apiURL}/council-def`, postData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
       return response.data;
     }
@@ -64,7 +57,7 @@ const updateCouncilDef = createAsyncThunk(
   "council/updateCouncilDef",
   async (postData: IAuthObject) => {
     const response = await axios.put(
-      `http://localhost:5000/api/council-def/${postData.id}`,
+      `${apiURL}/council-def/${postData.id}`,
       postData,
       {
         headers: {
@@ -84,7 +77,7 @@ const deleteCouncilDef = createAsyncThunk(
   "council/deleteCouncilDef",
   async (postData: IAuthObject) => {
     const response = await axios.delete(
-      `http://localhost:5000/api/council-def/${postData.id}`,
+      `${apiURL}/council-def/${postData.id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -102,14 +95,11 @@ const deleteCouncilDef = createAsyncThunk(
 const deleteAllCouncilDef = createAsyncThunk(
   "council/deleteAllCouncilDef",
   async () => {
-    const response = await axios.delete(
-      `http://localhost:5000/api/council-def/`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.delete(`${apiURL}/council-def/`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
       return response.data;
     }

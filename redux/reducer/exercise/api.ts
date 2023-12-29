@@ -3,12 +3,13 @@ import axios from "axios";
 import { token } from "./type";
 import { IExerciseObject } from "@/interface/exercise";
 import { IClassroomObject } from "@/interface/classroom";
+import { apiURL } from "@/data";
 
 // GET ALL EXERCISES
 const getAllExercises = createAsyncThunk(
   "exercise/getAllExercises",
   async () => {
-    const response = await axios.get(`http://localhost:5000/api/exercise`, {
+    const response = await axios.get(`${apiURL}/exercise`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -24,14 +25,11 @@ const getAllExercises = createAsyncThunk(
 const getExercise = createAsyncThunk(
   "exercise/getExercise",
   async (postData: IExerciseObject) => {
-    const response = await axios.get(
-      `http://localhost:5000/api/exercise/${postData.id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.get(`${apiURL}/exercise/${postData.id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
       return response.data;
     }
@@ -58,16 +56,12 @@ const createExercise = createAsyncThunk(
       }
     }
 
-    const response = await axios.post(
-      "http://localhost:5000/api/exercise/",
-      formData,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const response = await axios.post(`${apiURL}/exercise/`, formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      },
+    });
 
     if (response.status === 200) {
       return response.data;
@@ -82,7 +76,7 @@ const updateExercise = createAsyncThunk(
   "exercise/updateExercise",
   async (postData: IExerciseObject) => {
     const response = await axios.put(
-      `http://localhost:5000/api/exercise/${postData.id}`,
+      `${apiURL}/exercise/${postData.id}`,
       postData,
       {
         headers: {
@@ -101,14 +95,11 @@ const updateExercise = createAsyncThunk(
 const deleteExercise = createAsyncThunk(
   "exercise/deleteExercise",
   async (postData: IExerciseObject) => {
-    const response = await axios.delete(
-      `http://localhost:5000/api/exercise/${postData.id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.delete(`${apiURL}/exercise/${postData.id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
       return response.data;
     }
@@ -121,7 +112,7 @@ const getAllExerciseInClass = createAsyncThunk(
   "exercise/getAllExerciseInClass",
   async (postData: IClassroomObject | null) => {
     const response = await axios.get(
-      `http://localhost:5000/api/exercise/class/${postData?.id}`,
+      `${apiURL}/exercise/class/${postData?.id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -138,9 +129,9 @@ const getAllExerciseInClass = createAsyncThunk(
 // GET ALL EXERCISE FOLLOW REPORT STAGE
 const getAllExerciseInReportStage = createAsyncThunk(
   "exercise/getAllExerciseInReportStage",
-  async (postData: any) => {
+  async (postData: { classroomId: string; categoryId: string }) => {
     const response = await axios.get(
-      `http://localhost:5000/api/exercise/stage/${postData.classroomId}&${postData.categoryId}`,
+      `${apiURL}/exercise/stage/${postData.classroomId}&${postData.categoryId}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

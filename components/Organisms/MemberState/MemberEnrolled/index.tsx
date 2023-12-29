@@ -12,8 +12,6 @@ import { useQuery } from "@tanstack/react-query";
 import classNames from "classnames";
 import { FC, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer } from "react-toastify";
 import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
 
 interface IMemberEnrolledProps {}
@@ -221,13 +219,6 @@ export const MemberEnrolled: FC<IMemberEnrolledProps> = ({}) => {
           </div>
         </div>
       </div>
-      <ToastContainer
-        toastStyle={{
-          color: "black",
-          fontSize: "14px",
-          fontFamily: "Red Hat Text",
-        }}
-      />
       <ModalConfirm
         modalClass={modalClassCreateConfirm}
         setOpenModal={setOpenCreateConfirm}

@@ -8,6 +8,8 @@ export interface IFormFieldProps {
   placeholder?: string;
   value: string | number | Date;
   className?: string;
+  disabled?: boolean;
+  autocomplete?: string;
 }
 
 export const FormField: FC<IFormFieldProps> = ({
@@ -17,6 +19,8 @@ export const FormField: FC<IFormFieldProps> = ({
   placeholder,
   className,
   value,
+  disabled,
+  autocomplete
 }) => {
   return (
     <div className="flex flex-col gap-2 mb-4 w-full">
@@ -30,6 +34,8 @@ export const FormField: FC<IFormFieldProps> = ({
         placeholder={placeholder}
         name={nameField}
         value={value}
+        disabled={disabled}
+        autocomplete={autocomplete}
       />
       <ErrorMessage
         className="text-red-500 text-[13px] mt-[-7px]"

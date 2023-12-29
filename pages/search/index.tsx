@@ -1,6 +1,5 @@
-import { Breadcrumb, SnipperRound } from "@/components/Atoms";
+import { Breadcrumb, IBreadcrumbItem, SnipperRound } from "@/components/Atoms";
 import { MainboardTemplate } from "@/components/Templates";
-import { BREADCRUMB_SEARCH_PAGE } from "./mock-data";
 import { ClassroomCard } from "@/components/Organisms";
 import { useEffect, useState } from "react";
 import { IClassroomObject } from "@/interface/classroom";
@@ -9,6 +8,24 @@ import { getAllClassrooms } from "@/redux/reducer/classroom/api";
 import { useAppDispatch } from "@/redux/store";
 import { useQuery } from "@tanstack/react-query";
 import { useDebounce } from "@uidotdev/usehooks";
+
+export const BREADCRUMB_SEARCH_PAGE: IBreadcrumbItem[] = [
+  {
+    id: "1",
+    href: "/",
+    title: "TCR System",
+  },
+  {
+    id: "2",
+    href: "/search",
+    title: "Searching",
+  },
+  {
+    id: "3",
+    href: "/result-searching",
+    title: "Result searching",
+  },
+];
 
 function SearchPage() {
   const [loading, setLoading] = useState<boolean>(true);

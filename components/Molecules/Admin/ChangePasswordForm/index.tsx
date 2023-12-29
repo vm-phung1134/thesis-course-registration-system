@@ -1,25 +1,54 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import { Form, Formik } from "formik";
 import { Button, FormField } from "@/components/Atoms";
-import { INITIATE_ROOM_DEF } from "@/data";
-import { useAppDispatch } from "@/redux/store";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { IRoomDefObject } from "@/interface/room";
-import { createRoomDef } from "@/redux/reducer/room-def/api";
-import useToastifyMessage from "@/hooks/useToastify";
+import { IAuthObject } from "@/interface/auth";
+import { useAuthContext } from "@/contexts/authContext";
 
-export interface IChangePassFormProps {}
+export interface IChangePassFormProps {
+  currentUser: IAuthObject;
+}
 
-export const ChangePassForm: FC<IChangePassFormProps> = ({}) => {
+export const ChangePassForm: FC<IChangePassFormProps> = ({ currentUser }) => {
+  const { changePassword } = useAuthContext();
   return (
     <Formik
-      initialValues={{}}
+      initialValues={{
+        currentPassword: "",
+        newPassword: "",
+        confirmPassword: "",
+      }}
       validate={(values) => {
-        const errors = {};
+        let errors: any = {};
+        if (!values.currentPassword) {
+          errors.currentPassword = "! Current password is required";
+        } else if (!(values.currentPassword == currentUser.password)) {
+          errors.currentPassword = "! Password incorrect";
+        } else if (!values.currentPassword.match(/^[a-zA-Z0-9\s]*$/)) {
+          errors.currentPassword =
+            "! The password does not contain special characters";
+        }
+        if (!values.newPassword.trim()) {
+          errors.newPassword = "! New Password is required";
+        } else if (!values.newPassword.match(/^[a-zA-Z0-9\s]*$/)) {
+          errors.newPassword =
+            "! The password does not contain special characters";
+        } else if (values.newPassword.length < 6) {
+          errors.newPassword = "! Password must have minimum 6 characters";
+        }
+        if (!values.confirmPassword.match(/^[a-zA-Z0-9\s]*$/)) {
+          errors.confirmPassword;
+          ("! The password does not contain special characters");
+        } else if (!(values.confirmPassword === values.newPassword)) {
+          errors.confirmPassword = "! The password not match";
+        }
         return errors;
       }}
       onSubmit={(values, { setSubmitting, resetForm }) => {
-        setTimeout(() => {}, 400);
+        setTimeout(() => {
+          changePassword(currentUser, values.newPassword.trim());
+          resetForm();
+          setSubmitting(false);
+        }, 400);
       }}
     >
       {(formik) => {
@@ -30,28 +59,30 @@ export const ChangePassForm: FC<IChangePassFormProps> = ({}) => {
               <div className="flex gap-5">
                 <div className="flex flex-col w-fit">
                   <p className="text-sm mb-2">
-                    If you wish to reset your password, please enter your current password first!!
+                    If you wish to reset your password, please enter your
+                    current password first!!
                   </p>
                   <FormField
                     label="Current password"
-                    type="text"
-                    nameField="name"
+                    type="password"
+                    nameField="currentPassword"
                     className="rounded-xl bg-slate-100 border-none"
-                    value={""}
+                    value={values.currentPassword}
+                    autocomplete="new-password"
                   />
                   <FormField
                     label="New password"
-                    type="text"
+                    type="password"
                     className="rounded-xl bg-slate-100 border-none"
-                    nameField="type"
-                    value={""}
+                    nameField="newPassword"
+                    value={values.newPassword}
                   />
                   <FormField
                     label="Confirm password"
-                    type="text"
+                    type="password"
                     className="rounded-xl bg-slate-100 border-none"
-                    nameField="type"
-                    value={""}
+                    nameField="confirmPassword"
+                    value={values.confirmPassword}
                   />
                   <div className="flex justify-end items-center mt-3">
                     <Button

@@ -71,7 +71,7 @@ function ScheduleDetail() {
                     Graduate thesis committee
                   </h4>
                   <p className="normal-case font-medium text-sm my-2">
-                   Instructor{" "}
+                    Instructor{" "}
                     <span className="text-red-600 font-medium capitalize">
                       {
                         councilInSchedule?.schedule?.timeSlots[0]?.student

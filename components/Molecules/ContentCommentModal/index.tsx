@@ -6,7 +6,7 @@ import { IPostObject } from "@/interface/post";
 import { getAllComments } from "@/redux/reducer/comment/api";
 import { useAppDispatch } from "@/redux/store";
 import { useQuery } from "@tanstack/react-query";
-import { FC, useEffect, memo } from "react";
+import { FC, memo } from "react";
 
 export interface IContentCommentModalProps {
   task: IPostObject | IExerciseObject;
@@ -22,7 +22,7 @@ export const ContentCommentModal: FC<IContentCommentModalProps> = memo(
         const action = await dispatch(getAllComments(task.uid));
         return action.payload || [];
       },
-      initialData: []
+      initialData: [],
     });
     return (
       <>

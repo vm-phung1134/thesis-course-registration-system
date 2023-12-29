@@ -1,4 +1,4 @@
-import { Breadcrumb, SelectBox, SnipperRound } from "@/components/Atoms";
+import { SelectBox, SnipperRound } from "@/components/Atoms";
 import { EmptySpace, FilterScheduledForm } from "@/components/Molecules";
 import { ICategoryObject } from "@/interface/category";
 import { IOptionItem } from "@/interface/filter";
@@ -6,7 +6,7 @@ import { FC, useState, useEffect } from "react";
 import { DATA_FILTER_COURSE, DATA_FILTER_TOPICS } from "../mock-data";
 import { ClassroomCard } from "../..";
 import { useAppDispatch } from "@/redux/store";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { IClassroomObject } from "@/interface/classroom";
 import { getAllClassrooms } from "@/redux/reducer/classroom/api";
 import { useTableSearch } from "@/hooks/useTableSearch";
@@ -43,13 +43,6 @@ export const NoSubscribeView: FC<INoSubscribeViewProps> = () => {
       setLoading(false);
     }, 1200);
   }, []);
-  const queryClient = useQueryClient();
-  useEffect(() => {
-    queryClient.prefetchQuery(["all-classrooms"], async () => {
-      const action = await dispatch(getAllClassrooms());
-      return action.payload || [];
-    });
-  }, [dispatch, queryClient]);
   return (
     <>
       {loading ? (

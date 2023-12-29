@@ -1,17 +1,13 @@
-import { Avatar, Breadcrumb, Button, SnipperRound } from "@/components/Atoms";
-import { FilterScheduledForm } from "@/components/Molecules";
+import { Breadcrumb, SnipperRound } from "@/components/Atoms";
 import { BREADCRUMB_MAINBOARD } from "@/components/Organisms/MainboardStatus/mock-data";
 import { MainboardTemplate } from "@/components/Templates";
-import { useCurrentUser } from "@/hooks/useGetCurrentUser";
-import { useTableSearch } from "@/hooks/useTableSearch";
 import { ICouncilDef } from "@/interface/schedule";
 import { getScheduleForLecturer } from "@/redux/reducer/schedule-def/api";
 import { useAppDispatch } from "@/redux/store";
 import { useQuery } from "@tanstack/react-query";
-import Link from "next/link";
 import React from "react";
 import { useState, useEffect } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
 import {
   PersonalSchedule,
@@ -52,7 +48,9 @@ function ScheduleThesisDefensePage() {
           <li
             key={item.id}
             className={`px-3 py-2 tracking-wider ${
-              selectedItem?.id === item?.id ? "border-orange-600 border-b-2 text-orange-600" : ""
+              selectedItem?.id === item?.id
+                ? "border-orange-600 border-b-2 text-orange-600"
+                : ""
             }`}
             onClick={() => handleClick(item)}
           >

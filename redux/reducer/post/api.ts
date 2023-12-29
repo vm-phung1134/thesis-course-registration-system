@@ -3,10 +3,11 @@ import axios from "axios";
 import { token } from "./type";
 import { IPostObject } from "@/interface/post";
 import { IClassroomObject } from "@/interface/classroom";
+import { apiURL } from "@/data";
 
 // GET ALL POSTS
 const getAllPosts = createAsyncThunk("post/getAllPost", async () => {
-  const response = await axios.get(`http://localhost:5000/api/post`, {
+  const response = await axios.get(`${apiURL}/post`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -18,36 +19,27 @@ const getAllPosts = createAsyncThunk("post/getAllPost", async () => {
 });
 
 // GET ONE POST
-const getPost = createAsyncThunk(
-  "post/getPost",
-  async (postData: IPostObject) => {
-    const response = await axios.get(
-      `http://localhost:5000/api/post/${postData.id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    if (response.status === 200) {
-      return response.data;
-    }
-    throw new Error("Failed to get one post");
+const getPost = createAsyncThunk("post/getPost", async (post: IPostObject) => {
+  const response = await axios.get(`${apiURL}/post/${post.id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (response.status === 200) {
+    return response.data;
   }
-);
+  throw new Error("Failed to get one post");
+});
 
 // GET ALL POST FOLLOW CLASS
 const getAllPostInClass = createAsyncThunk(
   "post/getAllPostInClass",
-  async (postData: IClassroomObject | null) => {
-    const response = await axios.get(
-      `http://localhost:5000/api/post/class/${postData?.id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+  async (classroom: IClassroomObject | null) => {
+    const response = await axios.get(`${apiURL}/post/class/${classroom?.id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
       return response.data;
     }
@@ -58,9 +50,9 @@ const getAllPostInClass = createAsyncThunk(
 // GET ALL POST FOLLOW REPORT STAGE
 const getAllPostInReportStage = createAsyncThunk(
   "post/getAllPostInReportStage",
-  async (postData: any) => {
+  async (post: any) => {
     const response = await axios.get(
-      `http://localhost:5000/api/post/stage/${postData.classroomId}&${postData.categoryId}`,
+      `${apiURL}/post/stage/${post.classroomId}&${post.categoryId}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -77,31 +69,27 @@ const getAllPostInReportStage = createAsyncThunk(
 // CREATE POST
 const createPost = createAsyncThunk(
   "post/createPost",
-  async (postData: IPostObject) => {
+  async (post: IPostObject) => {
     const formData = new FormData();
-    formData.append("uid", postData.uid);
-    formData.append("title", postData.title);
-    formData.append("category", JSON.stringify(postData.category));
-    formData.append("classroom", JSON.stringify(postData.classroom));
-    formData.append("lecturer", JSON.stringify(postData.lecturer));
-    formData.append("description", postData.description);
-    formData.append("type", postData.type);
-    if (postData.attachments) {
-      for (let i = 0; i < postData.attachments.length; i++) {
-        formData.append("attachment", postData.attachments[i]);
+    formData.append("uid", post.uid);
+    formData.append("title", post.title);
+    formData.append("category", JSON.stringify(post.category));
+    formData.append("classroom", JSON.stringify(post.classroom));
+    formData.append("lecturer", JSON.stringify(post.lecturer));
+    formData.append("description", post.description);
+    formData.append("type", post.type);
+    if (post.attachments) {
+      for (let i = 0; i < post.attachments.length; i++) {
+        formData.append("attachment", post.attachments[i]);
       }
     }
 
-    const response = await axios.post(
-      "http://localhost:5000/api/post/",
-      formData,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const response = await axios.post(`${apiURL}/post/`, formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      },
+    });
 
     if (response.status === 200) {
       return response.data;
@@ -114,16 +102,12 @@ const createPost = createAsyncThunk(
 // UPDATE POST
 const updatePost = createAsyncThunk(
   "post/updatePost",
-  async (postData: IPostObject) => {
-    const response = await axios.put(
-      `http://localhost:5000/api/post/${postData.id}`,
-      postData,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+  async (post: IPostObject) => {
+    const response = await axios.put(`${apiURL}/post/${post.id}`, post, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
       return response.data;
     }
@@ -134,15 +118,12 @@ const updatePost = createAsyncThunk(
 // DELETE POST
 const deletePost = createAsyncThunk(
   "post/deletePost",
-  async (postData: IPostObject) => {
-    const response = await axios.delete(
-      `http://localhost:5000/api/post/${postData.id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+  async (post: IPostObject) => {
+    const response = await axios.delete(`${apiURL}/post/${post.id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
       return response.data;
     }

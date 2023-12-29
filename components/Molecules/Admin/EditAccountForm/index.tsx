@@ -18,7 +18,9 @@ export const EditAccountForm: FC<IEditAccountFormProps> = ({
   lecturer,
 }) => {
   const queryClient = useQueryClient();
-  const [isChecked, setIsChecked] = useState<boolean>(() => lecturer?.role === ROLE_ASSIGNMENT.LECTURER);
+  const [isChecked, setIsChecked] = useState<boolean>(
+    () => lecturer?.role === ROLE_ASSIGNMENT.LECTURER
+  );
   const updateMockLecturer = (lecturer: IAuthObject) => {
     return fetch(
       `https://6548626ddd8ebcd4ab22d6a1.mockapi.io/api/cit-user/cit_lectuters/${lecturer.id}`,
@@ -54,7 +56,7 @@ export const EditAccountForm: FC<IEditAccountFormProps> = ({
         setTimeout(async () => {
           await editLecturerMutation.mutate({
             ...values,
-            role: isChecked ? ROLE_ASSIGNMENT.LECTURER : ROLE_ASSIGNMENT.GUEST,
+            role: ROLE_ASSIGNMENT.LECTURER,
           });
         }, 400);
       }}

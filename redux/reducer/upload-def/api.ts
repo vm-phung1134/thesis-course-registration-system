@@ -3,19 +3,17 @@ import axios from "axios";
 import { token } from "./type";
 import { IUploadReportObject } from "@/interface/upload";
 import { IAuthObject } from "@/interface/auth";
+import { apiURL } from "@/data";
 
 // GET ALL UPLOAD REPORT
 const getAllUploadReports = createAsyncThunk(
   "upload/getAllUploadReports",
   async () => {
-    const response = await axios.get(
-      `http://localhost:5000/api/upload-report`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.get(`${apiURL}/upload-report`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
       return response.data;
     }
@@ -27,14 +25,11 @@ const getAllUploadReports = createAsyncThunk(
 const getUploadReport = createAsyncThunk(
   "upload/getUploadReport",
   async (id: string) => {
-    const response = await axios.get(
-      `http://localhost:5000/api/upload-report/${id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.get(`${apiURL}/upload-report/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
       return response.data;
     }
@@ -56,16 +51,12 @@ const createUploadReport = createAsyncThunk(
       }
     }
 
-    const response = await axios.post(
-      "http://localhost:5000/api/upload-report/",
-      formData,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const response = await axios.post(`${apiURL}/upload-report/`, formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      },
+    });
 
     if (response.status === 200) {
       return response.data;
@@ -80,7 +71,7 @@ const updateUploadReport = createAsyncThunk(
   "upload/updateUploadReport",
   async (postData: IUploadReportObject) => {
     const response = await axios.put(
-      `http://localhost:5000/api/upload-report/${postData.id}`,
+      `${apiURL}/upload-report/${postData.id}`,
       postData,
       {
         headers: {
@@ -100,7 +91,7 @@ const deleteUploadReport = createAsyncThunk(
   "upload/deleteUploadReport",
   async (postData: IUploadReportObject) => {
     const response = await axios.delete(
-      `http://localhost:5000/api/upload-report/${postData.id}`,
+      `${apiURL}/upload-report/${postData.id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

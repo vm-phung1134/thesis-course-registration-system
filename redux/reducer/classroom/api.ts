@@ -2,13 +2,13 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { token } from "./type";
 import { IClassroomObject } from "@/interface/classroom";
-import { IAuthObject } from "@/interface/auth";
+import { apiURL } from "@/data";
 
-// GET ALL CLASSROOM
+// GET LIST CLASSROOMS
 const getAllClassrooms = createAsyncThunk(
   "classroom/getAllClassrooms",
   async () => {
-    const response = await axios.get("http://localhost:5000/api/classroom", {
+    const response = await axios.get(`${apiURL}/classroom`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -20,18 +20,15 @@ const getAllClassrooms = createAsyncThunk(
   }
 );
 
-// GET ONE CLASSROOM
+// GET ONE DETAIL CLASSROOM
 const getClassroom = createAsyncThunk(
   "classroom/getClassroom",
-  async (id: string) => {
-    const response = await axios.get(
-      `http://localhost:5000/api/classroom/${id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+  async (classroomId: string) => {
+    const response = await axios.get(`${apiURL}/classroom/${classroomId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
       return response.data;
     }
@@ -42,16 +39,12 @@ const getClassroom = createAsyncThunk(
 // CREATE CLASSROOM
 const createClassroom = createAsyncThunk(
   "classroom/createClassroom",
-  async (postData: Omit<IClassroomObject, "id">) => {
-    const response = await axios.post(
-      "http://localhost:5000/api/classroom",
-      postData,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+  async (classroom: Omit<IClassroomObject, "id">) => {
+    const response = await axios.post(`${apiURL}/classroom`, classroom, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
       return response.data;
     }
@@ -64,7 +57,7 @@ const updateClassroom = createAsyncThunk(
   "classroom/updateClassroom",
   async (postData: IClassroomObject) => {
     const response = await axios.put(
-      `http://localhost:5000/api/classroom/${postData.id}`,
+      `${apiURL}/classroom/${postData.id}`,
       postData,
       {
         headers: {
@@ -82,14 +75,11 @@ const updateClassroom = createAsyncThunk(
 const deleteClassroom = createAsyncThunk(
   "classroom/deleteClassroom",
   async (postData: IClassroomObject) => {
-    const response = await axios.delete(
-      `http://localhost:5000/api/classroom/${postData.id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.delete(`${apiURL}/classroom/${postData.id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
       return response.data;
     }

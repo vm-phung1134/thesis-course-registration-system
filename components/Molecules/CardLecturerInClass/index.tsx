@@ -1,6 +1,6 @@
 import { ROLE_ASSIGNMENT } from "@/contexts/authContext";
 import { useClassroomStateContext } from "@/contexts/classroomState";
-import { INITIATE_CLASSROOM, STATE_LECTURER_CLASSROOM } from "@/data";
+import { STATE_LECTURER_CLASSROOM } from "@/data";
 import { IAuthObject } from "@/interface/auth";
 import { unsubscribeState } from "@/redux/reducer/auth/api";
 import { updateClassroom } from "@/redux/reducer/classroom/api";
@@ -46,8 +46,8 @@ export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
   const updateMutation = useMutationQueryAPI({
     action: updateClassroom,
     queryKeyLog: ["get-one-classroom"],
-    successMsg: "Classroom is currently locked!!!",
-    errorMsg: "Fail to lock classroom!!",
+    successMsg: "Classroom state has changed!!!",
+    errorMsg: "Fail to change state the classroom!!",
   });
   const handleOpenModal = () => {
     setOpenLockClass(!openLockClass);
@@ -58,7 +58,7 @@ export const CardLecturerInClass: FC<ICardLecturerInClassProps> = ({
   const handleLockClassroom = (e: React.MouseEvent<HTMLButtonElement>) => {
     const status_class: string = e.currentTarget.value;
     updateMutation.mutate({
-      ...(authClassroomState || INITIATE_CLASSROOM),
+      ...authClassroomState,
       status: status_class,
     });
   };

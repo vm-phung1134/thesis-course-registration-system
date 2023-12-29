@@ -23,8 +23,8 @@ export const PointCard: FC<IPointCardClassProps> = ({
   const dispatch = useAppDispatch();
   const { topic } = useAppSelector((state) => state.topicReducer);
   useEffect(() => {
-    dispatch(getTopic(member?.member));
-  }, [dispatch, member?.member]);
+    dispatch(getTopic(member?.member.id));
+  }, [dispatch, member?.member.id]);
   return (
     <div className="p-3 bg-slate-100 rounded-xl shadow-lg">
       <div className="flex gap-4 items-center">

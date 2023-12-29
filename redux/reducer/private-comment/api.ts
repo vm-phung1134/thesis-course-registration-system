@@ -4,13 +4,14 @@ import axios from "axios";
 import { token } from "./type";
 import { IPrivateComment } from "@/interface/privateComment";
 import { IAuthObject } from "@/interface/auth";
+import { apiURL } from "@/data";
 
 // GET ALL COMMENTS
 const getAllPrivateComments = createAsyncThunk(
   "private-comment/getAllPrivateComments",
-  async (postData: IAuthObject) => {
+  async (pComment: IAuthObject) => {
     const response = await axios.get(
-      `http://localhost:5000/api/private-comment/${postData.id}`,
+      `${apiURL}/private-comment/${pComment.id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -27,9 +28,9 @@ const getAllPrivateComments = createAsyncThunk(
 // GET ALL COMMENTS LECTURER
 const getAllPrivateCommentForLecturer = createAsyncThunk(
   "private-comment/getAllPrivateCommentForLecturer",
-  async (postData: IAuthObject) => {
+  async (pComment: IAuthObject) => {
     const response = await axios.get(
-      `http://localhost:5000/api/private-comment/lecturer-message/${postData.id}`,
+      `${apiURL}/private-comment/lecturer-message/${pComment.id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -45,10 +46,10 @@ const getAllPrivateCommentForLecturer = createAsyncThunk(
 
 const createPrivateComment = createAsyncThunk(
   "private-comment/createPrivateComment",
-  async (postData: IPrivateComment) => {
+  async (pComment: IPrivateComment) => {
     const response = await axios.post(
-      `http://localhost:5000/api/private-comment/`,
-      postData,
+      `${apiURL}/private-comment/`,
+      pComment,
       {
         headers: {
           Authorization: `Bearer ${token}`,

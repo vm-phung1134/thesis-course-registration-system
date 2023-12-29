@@ -1,12 +1,12 @@
-import { INITIATE_CLASSROOM } from "@/data";
+import { INITIATE_CLASSROOM, INITIATE_MEMBER } from "@/data";
+import { useUserCookies } from "@/hooks/useCookies";
 import { IClassroomObject } from "@/interface/classroom";
 import { IMemberObject } from "@/interface/member";
 import { getClassroom } from "@/redux/reducer/classroom/api";
 import { getMember } from "@/redux/reducer/member/api";
 import { useAppDispatch } from "@/redux/store";
 import { useQuery } from "@tanstack/react-query";
-import React, { createContext, useContext, useEffect } from "react";
-import Cookies from "js-cookie";
+import React, { createContext, useContext } from "react";
 
 interface IClassroomStateContext {
   authClassroomState: IClassroomObject | null;
@@ -26,40 +26,34 @@ export const ClassroomStateContextProvider: React.FC<ClassroomStateProps> = ({
   children,
 }) => {
   const dispatch = useAppDispatch();
-  const uid = Cookies.get("uid");
-
-  const classroomQuery = useQuery<IClassroomObject | null>({
-    queryKey: ["get-one-classroom", uid],
+  const [user] = useUserCookies();
+  const { data: classroom } = useQuery<IClassroomObject | null>({
+    queryKey: ["get-one-classroom", user],
     queryFn: async () => {
-      if (uid) {
-        const action = await dispatch(getClassroom(uid));
+      if (user) {
+        const action = await dispatch(getClassroom(user.id));
         return action.payload || null;
       }
+      return null;
     },
     initialData: null,
   });
-
-  const memberQuery = useQuery<IMemberObject | null>({
-    queryKey: ["get-one-member", uid],
+  const { data: member } = useQuery<IMemberObject | null>({
+    queryKey: ["get-one-member", user],
     queryFn: async () => {
-      if (uid) {
-        const action = await dispatch(getMember(uid));
+      if (user) {
+        const action = await dispatch(getMember(user.id));
         return action.payload || null;
       }
+      return null;
     },
     initialData: null,
   });
-
-  useEffect(() => {
-    // Prefetch the data for classroom and member
-    classroomQuery.refetch();
-    memberQuery.refetch();
-  }, [classroomQuery, classroomQuery.refetch, memberQuery, memberQuery.refetch]);
 
   return (
     <ClassroomStateContext.Provider
       value={{
-        authClassroomState: memberQuery.data ? memberQuery.data.classroom : classroomQuery.data,
+        authClassroomState: member ? member.classroom : classroom,
       }}
     >
       {children}

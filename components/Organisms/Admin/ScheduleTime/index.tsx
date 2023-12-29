@@ -2,11 +2,8 @@ import { Button } from "@/components/Atoms";
 import { FilterScheduledForm, ScheduleForm } from "@/components/Molecules";
 import { IThesisDef } from "@/interface/schedule";
 import Link from "next/link";
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import useToastifyMessage from "@/hooks/useToastify";
-import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer } from "react-toastify";
 import { useTableSearch } from "@/hooks/useTableSearch";
 
 export interface IScheduleTimeProps {
@@ -122,14 +119,10 @@ export const ScheduleTime: FC<IScheduleTimeProps> = ({
                     <div className="font-medium text-left">Session</div>
                   </th>
                   <th className="px-5 py-4 whitespace-nowrap">
-                    <div className="font-medium text-center">
-                      Q. members
-                    </div>
+                    <div className="font-medium text-center">Q. members</div>
                   </th>
                   <th className="px-5 py-4 whitespace-nowrap">
-                    <div className="font-medium text-center">
-                      Q. students
-                    </div>
+                    <div className="font-medium text-center">Q. students</div>
                   </th>
                   <th className="px-5 py-4 whitespace-nowrap">
                     <div className="font-medium text-end">Actions</div>
@@ -155,7 +148,9 @@ export const ScheduleTime: FC<IScheduleTimeProps> = ({
                               <ul>
                                 {scheduled?.council?.map((council: any) => {
                                   return (
-                                    <li className="capitalize" key={council.id}>{council.name}</li>
+                                    <li className="capitalize" key={council.id}>
+                                      {council.name}
+                                    </li>
                                   );
                                 })}
                               </ul>
@@ -201,7 +196,9 @@ export const ScheduleTime: FC<IScheduleTimeProps> = ({
                               <Link
                                 href={`/admin/schedule-time-defense/${scheduled?.id}`}
                               >
-                                <button className="text-blue-500">Detail</button>
+                                <button className="text-blue-500">
+                                  Detail
+                                </button>
                               </Link>
                             </div>
                           </td>

@@ -6,7 +6,6 @@ import {
   SelectInForm,
   SnipperRound,
 } from "@/components/Atoms";
-import { BREADCRUMB_CRITICAL_TASKS, DATA_FILTER_TASKS } from "./mock-data";
 import { ICategoryObject } from "@/interface/category";
 import { DATA_STATE_REPORT } from "@/pages/manage-classroom/report-progress/mock-data";
 import { IOptionItem } from "@/interface/filter";
@@ -34,6 +33,40 @@ import { INITIATE_EXERCISE, INITIATE_POST } from "@/data";
 import { getExerciseWithNearestDeadline } from "@/utils/getDeadline";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
 import { motion } from "framer-motion";
+import { IBreadcrumbItem } from "@/components/Atoms";
+
+export const BREADCRUMB_CRITICAL_TASKS: IBreadcrumbItem[] = [
+  {
+    id: "1",
+    href: "/",
+    title: "TCR System",
+  },
+  {
+    id: "2",
+    href: "/",
+    title: "Assigned tasks",
+  },
+  {
+    id: "3",
+    href: "/tasks-/critical-tasks",
+    title: "Critical tasks",
+  },
+];
+
+export const DATA_FILTER_TASKS: IOptionItem[] = [
+  {
+    value: "a-z",
+    label: "Name A - Z",
+  },
+  {
+    value: "z-a",
+    label: "Name Z - A",
+  },
+  {
+    value: "recent day",
+    label: "Recent day",
+  },
+];
 
 function CriticalTasks() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -75,7 +108,7 @@ function CriticalTasks() {
   const { currentUser } = useCurrentUserContext();
   const { authClassroomState } = useClassroomStateContext();
   const { data: exercises } = useQuery<IExerciseObject[]>({
-    queryKey: ["exercises", authClassroomState],
+    queryKey: ["classroom-exercises", authClassroomState],
     queryFn: async () => {
       const action = await dispatch(getAllExerciseInClass(authClassroomState));
       return action.payload || [];
@@ -84,7 +117,7 @@ function CriticalTasks() {
   });
   // HANDLE EXERCISE
   const { data: ex_fetch } = useQuery<IExerciseObject>({
-    queryKey: ["exercise", exRenew],
+    queryKey: ["get-one-exercise", exRenew],
     queryFn: async () => {
       const action = await dispatch(getExercise(exRenew));
       return action.payload || {};
@@ -93,7 +126,7 @@ function CriticalTasks() {
   });
 
   const { data: posts } = useQuery<IExerciseObject[]>({
-    queryKey: ["posts", authClassroomState],
+    queryKey: ["classroom-posts", authClassroomState],
     queryFn: async () => {
       const action = await dispatch(getAllPostInClass(authClassroomState));
       return action.payload || [];
@@ -152,7 +185,7 @@ function CriticalTasks() {
             <div className="my-3 py-2 flex gap-2 items-center">
               <h4 className="text-xl capitalize text-green-700 font-medium ">
                 Critical{" "}
-                <span className="text-orange-500"> Report progress</span>
+                <span className="text-green-700 "> Report progress</span>
               </h4>
               <div className="flex-grow h-[0.5px] bg-green-700"></div>
             </div>
@@ -236,13 +269,13 @@ function CriticalTasks() {
             </div>
             <ExerciseModal
               modalClass={modalClassEx}
-              exercise={ex_fetch}
+              exercise={exRenew}
               setOpenModalEx={setOpenModalEx}
               openModalEx={openModalEx}
             />
             <PostModal
               modalClass={modalClassPost}
-              post={post_fetch}
+              post={postRenew}
               setOpenModalPost={setOpenModalPost}
               openModalPost={openModalPost}
             />

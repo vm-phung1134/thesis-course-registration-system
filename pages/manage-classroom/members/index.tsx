@@ -1,5 +1,4 @@
 import { ClassroomTemplate } from "@/components/Templates";
-import { DATA_CARD_STUDENT, DATA_FILTER_MEMBER } from "./mock-data";
 import { SelectBox } from "@/components/Atoms";
 import { ICategoryObject } from "@/interface/category";
 import { IOptionItem } from "@/interface/filter";
@@ -14,6 +13,21 @@ import {
   DATA_FILTER_COURSE,
   DATA_FILTER_TOPICS,
 } from "@/components/Organisms/MainboardStatus/mock-data";
+
+export const DATA_FILTER_MEMBER: IOptionItem[] = [
+  {
+    value: "name-a-z",
+    label: "Sort Name A - Z",
+  },
+  {
+    value: "name-z-a",
+    label: "Sort Name Z - A",
+  },
+  {
+    value: "class",
+    label: "Sort class",
+  },
+];
 
 function MemberTab() {
   const [filterCourse, setFilterCourse] = useState<
@@ -32,7 +46,7 @@ function MemberTab() {
   const dispatch = useAppDispatch();
   const { authClassroomState } = useClassroomStateContext();
   const { data: members } = useQuery<IMemberObject[]>({
-    queryKey: ["members", authClassroomState],
+    queryKey: ["classroom-members", authClassroomState],
     queryFn: async () => {
       const action = await dispatch(getAllMemberClassroom(authClassroomState));
       return action.payload || [];
@@ -45,9 +59,9 @@ function MemberTab() {
         <div className="flex flex-col">
           <h4 className="text-base py-5 text-green-700 font-medium">
             List students{" "}
-            <span className="text-xs">{`( ${
+            <span className="text-sm">{`( ${
               members.length | 0
-            }/15 Members )`}</span>
+            } / 15 Members )`}</span>
           </h4>
           <div>
             <div className="flex justify-between items-center">

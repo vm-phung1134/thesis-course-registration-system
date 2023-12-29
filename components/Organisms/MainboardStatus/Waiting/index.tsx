@@ -1,33 +1,18 @@
-import {
-  Breadcrumb,
-  Button,
-  SelectBox,
-  SnipperRound,
-} from "@/components/Atoms";
-import Image from "next/image";
+import { SelectBox, SnipperRound } from "@/components/Atoms";
 import { FC, useEffect, useState } from "react";
 import { IClassroomObject } from "@/interface/classroom";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { IAuthObject } from "@/interface/auth";
 import { unsubscribeState } from "@/redux/reducer/auth/api";
 import { useAppDispatch } from "@/redux/store";
-import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import classNames from "classnames";
-import {
-  EmptySpace,
-  FilterScheduledForm,
-  ModalConfirm,
-} from "@/components/Molecules";
+import { FilterScheduledForm, ModalConfirm } from "@/components/Molecules";
 import { ClassroomCard } from "../..";
 import { useSubscribeStateContext } from "@/contexts/subscribeState";
 import { IMemberObject } from "@/interface/member";
 import { ICategoryObject } from "@/interface/category";
 import { IOptionItem } from "@/interface/filter";
-import {
-  BREADCRUMB_MAINBOARD,
-  DATA_FILTER_COURSE,
-  DATA_FILTER_TOPICS,
-} from "../mock-data";
+import { DATA_FILTER_COURSE, DATA_FILTER_TOPICS } from "../mock-data";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
 
 export interface IWaitingViewProps {

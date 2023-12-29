@@ -15,8 +15,6 @@ import { ICategoryObject } from "@/interface/category";
 import { IOptionItem } from "@/interface/filter";
 import { SnipperRound } from "@/components/Atoms";
 import { useClassroomStateContext } from "@/contexts/classroomState";
-import { useCurrentUser } from "@/hooks/useGetCurrentUser";
-import { useUserCookies } from "@/hooks/useCookies";
 import { INITIATE_CLASSROOM } from "@/data";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
 import { ToastContainer } from "react-toastify";
@@ -35,18 +33,6 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
     "modal modal-bottom sm:modal-middle": true,
     "modal-open": openCreatePostModal,
   });
-  // useEffect(() => {
-  //   const calculateTimeLeft = () => {
-  //     const countdownDate = new Date("2023-10-01T00:00:00Z").getTime();
-  //     const now = new Date().getTime();
-  //     const difference = countdownDate - now;
-
-  //     setTimeLeft(Math.floor(difference / 1000));
-  //   };
-  //   const timer = setInterval(calculateTimeLeft, 1000);
-  //   return () => clearInterval(timer);
-  // }, []);
-
   // HANDLE API
   const { currentUser } = useCurrentUserContext();
   const [loading, setLoading] = useState<boolean>(true);
@@ -54,7 +40,7 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
   useEffect(() => {
     const timeOutLoading = setTimeout(() => {
       setLoading(false);
-    }, 1200);
+    }, 1300);
     return () => clearTimeout(timeOutLoading);
   }, []);
   return (
@@ -63,7 +49,7 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
         <title>{title}</title>
       </Head>
       <main>
-        <div className="grid grid-cols-12 bg-base-100 tracking-wide">
+        <div className="grid grid-cols-12 bg-base-100 tracking-wide dark:bg-[#141E37] dark:text-[#dedede]">
           <div className="col-span-2 border-r h-screen dark:border-gray-500">
             {currentUser?.role === ROLE_ASSIGNMENT.STUDENT && (
               <SidebarStudentView />
@@ -78,9 +64,8 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
               <SnipperRound />
             ) : (
               <>
-                {(authClassroomState !== null) && (
+                {authClassroomState !== null && (
                   <ClassroomFound
-                  
                     classroom={authClassroomState || INITIATE_CLASSROOM}
                     setCreatePostModal={setCreatePostModal}
                     openCreatePostModal={openCreatePostModal}
@@ -93,14 +78,14 @@ export const ClassroomTemplate: FC<IClassroomProps> = ({ children, title }) => {
             )}
           </div>
           <ToastContainer
-              toastStyle={{
-                color: "black",
-                fontSize: "14px",
-                fontFamily: "Red Hat Text",
-              }}
-            />
+            toastStyle={{
+              color: "black",
+              fontSize: "14px",
+              fontFamily: "Red Hat Text",
+            }}
+          />
           {/* POST / EXERCISE */}
-          <dialog id="modal_switch_post_exercise" className={modalClassPost}>
+          <dialog id="my_modal_3" className={modalClassPost}>
             <div className="w-5/12 bg-white p-5 h-fit shadow-2xl rounded-xl">
               {selected === DATA_LIST_OPTIONS[0] ? (
                 <CreateExerciseForm

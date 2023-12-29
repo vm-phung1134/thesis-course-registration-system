@@ -2,10 +2,10 @@
 import { Avatar, Breadcrumb, Button, SnipperRound } from "@/components/Atoms";
 import { AdminTemplate } from "@/components/Templates";
 import { useState, useEffect } from "react";
-import { BREADCRUMB_ADMIN_CLASSROOM_MANAGEMENT } from "../classroom-management/mock-data";
 import { CouncilManagementTab } from "@/components/Organisms/Admin/CouncilManagement";
 import { CreateRoomTab } from "@/components/Organisms/Admin/RoomManagement";
 import { InstructorSchedule } from "@/components/Organisms";
+import { BREADCRUMB_ADMIN_CLASSROOM_MANAGEMENT } from "../classroom-management";
 
 function ThesisCommittee() {
   type MenuItem = {

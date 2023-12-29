@@ -10,8 +10,26 @@ import { useAppDispatch } from "@/redux/store";
 import { getScheduleDef } from "@/redux/reducer/schedule-def/api";
 import { IThesisDef } from "@/interface/schedule";
 import { useQuery } from "@tanstack/react-query";
-import { BREADCRUMB_SCHEDULE } from "./mock-data";
 import { ScheduleTime } from "@/components/Organisms";
+import { IBreadcrumbItem } from "@/components/Atoms";
+
+export const BREADCRUMB_SCHEDULE: IBreadcrumbItem[] = [
+  {
+    id: "1",
+    href: "/",
+    title: "TCR System",
+  },
+  {
+    id: "2",
+    href: "/admin",
+    title: "Admin",
+  },
+  {
+    id: "3",
+    href: "/schedule-time-defense",
+    title: "Schedule time defense",
+  },
+];
 
 function DashboardPage() {
   type MenuItem = {

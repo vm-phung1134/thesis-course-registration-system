@@ -11,7 +11,6 @@ import { createExercise } from "@/redux/reducer/exercise/api";
 import { Form, Formik } from "formik";
 import Image from "next/image";
 import { FC, useState, useRef } from "react";
-import { ToastContainer } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
 
 export interface ICreateExerciseFormProps {
@@ -66,8 +65,7 @@ export const CreateExerciseForm: FC<ICreateExerciseFormProps> = ({
         } else if (values.title.length > 100) {
           errors.password = "! Title less than than 100 characters";
         } else if (!values.title.match(/^[a-zA-Z0-9\s]*$/)) {
-          errors.title =
-            "! Title The title does not contain special characters";
+          errors.title = "! The title does not contain special characters";
         }
         if (!values.description) {
           errors.description = "! Description is required";
@@ -80,7 +78,9 @@ export const CreateExerciseForm: FC<ICreateExerciseFormProps> = ({
         let objectId = uuidv4();
         setTimeout(() => {
           addMutation.mutate({
-            ...values,
+            title: values.title,
+            description: values.description,
+            deadline: values.deadline,
             type: "exercise",
             uid: objectId,
             classroom: classroom,

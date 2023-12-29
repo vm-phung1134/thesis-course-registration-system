@@ -8,7 +8,7 @@ export interface IPrivateCommentItem {
 
 export interface IPrivateComment {
   id?: string;
-  userId: string;
-  lecturerId: string;
+  user: IAuthObject;
+  lecturer: IAuthObject;
   comments: IPrivateCommentItem[];
 }

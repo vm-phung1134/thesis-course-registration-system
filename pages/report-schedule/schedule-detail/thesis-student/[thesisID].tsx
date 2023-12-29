@@ -1,15 +1,9 @@
-import {
-  Avatar,
-  Breadcrumb,
-  NormalAvatar,
-  SnipperRound,
-} from "@/components/Atoms";
+import { Breadcrumb, SnipperRound } from "@/components/Atoms";
 import { AssessForm } from "@/components/Molecules";
 import { BREADCRUMB_MAINBOARD } from "@/components/Organisms/MainboardStatus/mock-data";
 import { MainboardTemplate } from "@/components/Templates";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
 import { INITIATE_ASSESS, INITIATE_AUTH, INITIATE_TOPIC } from "@/data";
-import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { IAssessItem } from "@/interface/pointDef";
 import { ICouncilDef } from "@/interface/schedule";
 import { ITopicObject } from "@/interface/topic";

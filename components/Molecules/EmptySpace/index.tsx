@@ -1,5 +1,4 @@
-import { Button, IConTitle } from "@/components/Atoms";
-import { IExerciseObject } from "@/interface/exercise";
+import { Button } from "@/components/Atoms";
 import Image from "next/image";
 import Link from "next/link";
 import { FC } from "react";

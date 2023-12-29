@@ -3,6 +3,7 @@ import {
   Avatar,
   Breadcrumb,
   Button,
+  IBreadcrumbItem,
   NormalAvatar,
   SnipperRound,
 } from "@/components/Atoms";
@@ -12,9 +13,30 @@ import { getOneCouncilInScheduleStudent } from "@/redux/reducer/schedule-def/api
 import { ICouncilDef } from "@/interface/schedule";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
-import { BREADCRUMB_SCHEDULE_DEDTAIL } from "./mock-data";
 import { FilterScheduledForm } from "@/components/Molecules";
 import { AnimatePresence, motion } from "framer-motion";
+export const BREADCRUMB_SCHEDULE_DEDTAIL: IBreadcrumbItem[] = [
+  {
+    id: "1",
+    href: "/",
+    title: "TCR System",
+  },
+  {
+    id: "2",
+    href: "/admin",
+    title: "Admin",
+  },
+  {
+    id: "3",
+    href: "/schedule-time-defense",
+    title: "Schedule time defense",
+  },
+  {
+    id: "4",
+    href: "/9530624b-de7f-4cf1-8bdd-98466b7d0abd",
+    title: "Detail of council",
+  },
+];
 
 function ScheduleDetailPage() {
   const dispatch = useAppDispatch();

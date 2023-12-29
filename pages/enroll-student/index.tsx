@@ -45,9 +45,7 @@ function EnrollStudentPage() {
   });
   const updateMutation = useMutationQueryAPI({
     action: updateMember,
-    queryKeyLog: ["get-one-member"],
-    successMsg: "Enrollment reported successful!",
-    errorMsg: "Fail to register thesis defense!",
+    queryKeyLog: ["get-one-member"]
   });
   const handleEnrollMember = () => {
     updateMutation.mutate({

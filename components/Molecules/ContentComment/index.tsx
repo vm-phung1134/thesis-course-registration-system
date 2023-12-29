@@ -1,9 +1,6 @@
 /* eslint-disable react/display-name */
 import { NormalAvatar } from "@/components/Atoms";
-import { INITIATE_COMMENT } from "@/data";
 import { ICommentObject } from "@/interface/comment";
-import { IExerciseObject } from "@/interface/exercise";
-import { IPostObject } from "@/interface/post";
 import { getAllComments } from "@/redux/reducer/comment/api";
 import { useAppDispatch } from "@/redux/store";
 import { useQuery } from "@tanstack/react-query";
@@ -18,7 +15,7 @@ export const ContentComment: FC<IContentCommentProps> = memo(
   ({ taskId, quantity }) => {
     const dispatch = useAppDispatch();
     const { data: comments } = useQuery<ICommentObject[]>({
-      queryKey: ["comments", taskId],
+      queryKey: ["task-comments", taskId],
       queryFn: async () => {
         const action = await dispatch(getAllComments(taskId));
         return action.payload || [];
@@ -30,7 +27,7 @@ export const ContentComment: FC<IContentCommentProps> = memo(
         <p className="text-sm text-gray-600 tracking-wider pb-1">
           {comments?.length} Comment in this post
         </p>
-        {comments?.map((comment, index) => {
+        {comments?.slice().reverse().map((comment, index) => {
           return (
             index < quantity && (
               <div key={index} className="flex gap-2 py-3 border-t">

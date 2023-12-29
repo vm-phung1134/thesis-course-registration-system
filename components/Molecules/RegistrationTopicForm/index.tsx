@@ -1,12 +1,12 @@
 import { Button, CountInput, FormField } from "@/components/Atoms";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
+import { useLanguageContext } from "@/contexts/languageContext";
 import { INITIATE_TOPIC } from "@/data";
 import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
 import { ITopicObject } from "@/interface/topic";
 import { createTopic, updateTopic } from "@/redux/reducer/topic/api";
 import { Form, Formik } from "formik";
 import { FC } from "react";
-import { ToastContainer } from "react-toastify";
 
 export interface IRegistrationTopicFormProps {
   topic: ITopicObject;
@@ -15,6 +15,7 @@ export interface IRegistrationTopicFormProps {
 export const RegistrationTopicForm: FC<IRegistrationTopicFormProps> = ({
   topic,
 }) => {
+  const { t } = useLanguageContext();
   const { currentUser } = useCurrentUserContext();
   const updateMutation = useMutationQueryAPI({
     action: updateTopic,
@@ -26,7 +27,7 @@ export const RegistrationTopicForm: FC<IRegistrationTopicFormProps> = ({
     action: createTopic,
     queryKeyLog: ["register-topic"],
     successMsg: "Update topic successfully!",
-    errorMsg: "Fail to update topic!",
+    errorMsg: "Fail to create topic!",
   });
   return (
     <Formik
@@ -62,13 +63,23 @@ export const RegistrationTopicForm: FC<IRegistrationTopicFormProps> = ({
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
           !topic.id
-            ? addMutation.mutate({ ...values, student: currentUser })
-            : updateMutation.mutate({
-                id: topic.id,
-                ...values,
+            ? addMutation.mutate({
+                title: values.title,
+                typeTopic: values.typeTopic,
                 student: currentUser,
+                memberQuantity: values.memberQuantity,
+                memberEmail: values.memberEmail,
+                description: values.description,
+              })
+            : updateMutation.mutate({
+                id: values.id,
+                title: values.title,
+                typeTopic: values.typeTopic,
+                student: currentUser,
+                memberQuantity: values.memberQuantity,
+                memberEmail: values.memberEmail,
+                description: values.description,
               });
-              console.log({ ...values, student: currentUser })
           setSubmitting(false);
         }, 400);
       }}
@@ -76,19 +87,17 @@ export const RegistrationTopicForm: FC<IRegistrationTopicFormProps> = ({
       {(formik) => {
         const { values, setFieldValue } = formik;
         const handleChangeQuantityMember = (newValue: number) => {
-          setFieldValue("memberQuantiy", newValue);
+          setFieldValue("memberQuantity", newValue);
         };
         return (
           <>
             <Form>
-              <h4 className="text-xl font-bold mb-5">
-                Registration of research topics
-              </h4>
+              <h4 className="text-xl font-bold mb-5">{t.acc_register_item1}</h4>
               <FormField
                 placeholder="Ex: Build a website..."
                 type="text"
-                className="rounded-xl bg-slate-100 border-none"
-                label="Name of research topic"
+                className="rounded-xl bg-slate-100 border-none dark:bg-slate-700 dark:text-white"
+                label={t.acc_register_item2}
                 nameField="title"
                 value={values?.title}
               />
@@ -96,36 +105,35 @@ export const RegistrationTopicForm: FC<IRegistrationTopicFormProps> = ({
                 <FormField
                   placeholder="Ex: Website, Mobile, AI..."
                   type="text"
-                  label="Type of topic"
-                  className="rounded-xl bg-slate-100 border-none"
+                  label={t.acc_register_item3}
+                  className="rounded-xl bg-slate-100 border-none dark:bg-slate-700 dark:text-white"
                   nameField="typeTopic"
                   value={values?.typeTopic}
                 />
                 <div>
                   <CountInput
-                    valueNumber={values.memberQuantiy}
-                    className="h-12"
+                    valueNumber={values.memberQuantity}
+                    className="h-12 dark:text-white"
                     onChange={handleChangeQuantityMember}
-                    label="QL. Member"
-                    limit={5}
+                    label={t.acc_register_item4}
+                    limit={1}
                   />
                 </div>
               </div>
-              {values.memberQuantiy > 0 && (
+              {values.memberQuantity > 0 && (
                 <FormField
                   placeholder="Ex: nameb1910xxx@student.ctu.edu.vn"
                   type="text"
-                  label="Email member"
-                  className="rounded-xl bg-slate-100 border-none"
+                  label={t.acc_register_item5}
+                  className="rounded-xl bg-slate-100 border-none dark:bg-slate-700 dark:text-white"
                   nameField="memberEmail"
                   value={values?.memberEmail}
                 />
               )}
-
               <FormField
                 type="text"
-                label="Description"
-                className="rounded-xl bg-slate-100 border-none"
+                label={t.acc_register_item6}
+                className="rounded-xl bg-slate-100 border-none dark:bg-slate-700 dark:text-white"
                 nameField="description"
                 value={values?.description}
               />
@@ -138,7 +146,7 @@ export const RegistrationTopicForm: FC<IRegistrationTopicFormProps> = ({
                 <Button
                   type="submit"
                   title="Confirm"
-                  className="hover:bg-[#165b31] rounded-xl bg-green-700 text-white px-8"
+                  className="hover:bg-[#165b31] rounded-xl bg-green-700 text-white px-8 dark:border-none"
                 />
               </div>
             </Form>

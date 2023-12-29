@@ -1,7 +1,6 @@
 import { Avatar, Button } from "@/components/Atoms";
 import { IMemberObject } from "@/interface/member";
 import { createMember } from "@/redux/reducer/member/api";
-import { deleteRequirement } from "@/redux/reducer/requirement/api";
 import { getTopic } from "@/redux/reducer/topic/api";
 import { useAppDispatch } from "@/redux/store";
 import { convertToUnaccentedString } from "@/utils/convertString";
@@ -14,6 +13,7 @@ import { IAuthObject } from "@/interface/auth";
 import { InforMemberModal } from "@/components/Organisms";
 import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
 import classNames from "classnames";
+import { createPrivateComment } from "@/redux/reducer/private-comment/api";
 
 export interface ICardRequireMemberProps {
   index: number;
@@ -44,20 +44,32 @@ export const CardRequireMember: FC<ICardRequireMemberProps> = ({
     successMsg: "You just add a student to your classroom!",
     errorMsg: "Fail to add a student!",
   });
-  const deleteMutation = useMutationQueryAPI({
-    action: deleteRequirement,
-    queryKeyLog: ["classroom-requirements"],
-    successMsg: "You refused a student to your classroom!",
-    errorMsg: "Fail to refuse a require!",
+  const addPrivateCommentMutation = useMutationQueryAPI({
+    action: createPrivateComment,
+    queryKeyLog: ["private-lecturer-comments"],
   });
   const handleAcceptClass = () => {
-    addMutation.mutate({
-      registerDefense: false,
-      member: require.member,
-      classroom: require.classroom,
-    });
-    deleteMutation.mutate(require);
+    addMutation.mutate(
+      {
+        registerDefense: false,
+        member: require.member,
+        classroom: require.classroom,
+      },
+      {
+        onSuccess: () => {
+          addPrivateCommentMutation.mutate({
+            user: require.member,
+            lecturer: require.classroom.lecturer,
+            comments: [],
+          });
+        },
+        onError: (error) => {
+          console.error("Fail to create private comment", error);
+        },
+      }
+    );
   };
+
   // GET TOPIC FOR EACH USER
   const { data: topic_fetch } = useQuery<ITopicObject>({
     queryKey: ["get-one-topic", topicRenew],

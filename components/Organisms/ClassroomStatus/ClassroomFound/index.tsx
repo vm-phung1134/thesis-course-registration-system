@@ -1,13 +1,12 @@
 import { CodeClass, MenuClassroom, NormalAvatar } from "@/components/Atoms";
 import { ROLE_ASSIGNMENT } from "@/contexts/authContext";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import {
   DATA_MENU_CLASSROOM_LECTURER,
   DATA_MENU_CLASSROOM_STUDENT,
 } from "../mock-data";
 import { CardLecturerInClass, CountDown } from "@/components/Molecules";
 import { IClassroomObject } from "@/interface/classroom";
-import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
 
 export interface IClassroomFoundProps {
@@ -15,22 +14,30 @@ export interface IClassroomFoundProps {
   setCreatePostModal: React.Dispatch<React.SetStateAction<boolean>>;
   openCreatePostModal: boolean;
   classroom: IClassroomObject;
-  setLoading?:  React.Dispatch<React.SetStateAction<boolean>>
 }
 export const ClassroomFound: FC<IClassroomFoundProps> = ({
   children,
   setCreatePostModal,
   openCreatePostModal,
   classroom,
-  setLoading
 }) => {
   const { currentUser } = useCurrentUserContext();
   const [timeLeft, setTimeLeft] = useState<number>(0);
+  useEffect(() => {
+    const calculateTimeLeft = () => {
+      const countdownDate = new Date("2024-02-01T00:00:00Z").getTime();
+      const now = new Date().getTime();
+      const difference = countdownDate - now;
+      setTimeLeft(Math.floor(difference / 1000));
+    };
+    const timer = setInterval(calculateTimeLeft, 1000);
+    return () => clearInterval(timer);
+  }, []);
   return (
-    <div className="px-5">
+    <div className="px-5 border-l">
       <div className="grid grid-cols-12 gap-4 my-3">
         <div className="col-span-4 p-5 border rounded-xl">
-          <CardLecturerInClass setLoading={setLoading} lecturer={classroom?.lecturer} />
+          <CardLecturerInClass lecturer={classroom?.lecturer} />
         </div>
         <div className="bg-gray-800 col-span-8 h-fit w-full text-white rounded-xl">
           <div className="p-5">

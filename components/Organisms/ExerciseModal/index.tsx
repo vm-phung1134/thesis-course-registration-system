@@ -106,24 +106,25 @@ export const ExerciseModal: FC<IExerciseModalProps> = ({
                     return (
                       <div
                         key={arr.id}
-                        className="flex gap-3 text-blue-700 font-medium rounded-md items-center px-3 py-2 bg-slate-200 shadow-md"
+                        className="flex gap-3 text-blue-700 font-medium rounded-md items-center px-3 py-2 bg-slate-100 shadow-md"
                       >
                         <Image
                           width={20}
                           height={20}
-                          src={
-                            "https://cdn-icons-png.flaticon.com/128/4726/4726010.png"
-                          }
+                          src={"https://cdn-icons-png.flaticon.com/128/9496/9496432.png"}
                           alt="icon-file-pdf"
                         />
-                        <a
-                          className="text-[13px]"
-                          target="_blank"
-                          key={index}
-                          href={arr.src}
-                        >
-                          {arr.name}
-                        </a>
+                        <div>
+                          <a
+                            className="text-[13px]"
+                            target="_blank"
+                            key={index}
+                            href={arr.src}
+                          >
+                            {arr.name || "Document preferences"}
+                          </a>
+                          <p className="text-xs font-thin">{arr.mimeType || "PDF / Word"}</p>
+                        </div>
                       </div>
                     );
                   })}

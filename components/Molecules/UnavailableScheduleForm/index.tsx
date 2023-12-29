@@ -7,9 +7,9 @@ import { useAppDispatch } from "@/redux/store";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Form, Formik } from "formik";
 import { FC } from "react";
-export interface IUnavailableFormProps {}
 import { v4 as uuidv4 } from "uuid";
 
+export interface IUnavailableFormProps {}
 export const UnavailableForm: FC<IUnavailableFormProps> = ({}) => {
   const queryClient = useQueryClient();
   const dispatch = useAppDispatch();
@@ -46,7 +46,7 @@ export const UnavailableForm: FC<IUnavailableFormProps> = ({}) => {
               { id: objectId, date: values.date, reason: values.reason },
             ],
           });
-          resetForm()
+          resetForm();
         }, 500);
       }}
     >

@@ -3,9 +3,26 @@ import { AdminTemplate } from "@/components/Templates";
 import { Breadcrumb, NormalAvatar, SnipperRound } from "@/components/Atoms";
 import { ChangePassForm, InforUserForm } from "@/components/Molecules";
 import classNames from "classnames";
-import { useCurrentUser } from "@/hooks/useGetCurrentUser";
-import { BREADCRUMB_ACCOUNT_ADMIN } from "./mock-data";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
+import { IBreadcrumbItem } from "@/components/Atoms";
+
+export const BREADCRUMB_ACCOUNT_ADMIN: IBreadcrumbItem[] = [
+  {
+    id: "1",
+    href: "/",
+    title: "TCR System",
+  },
+  {
+    id: "2",
+    href: "/account-lecturer",
+    title: "Account personal",
+  },
+  {
+    id: "3",
+    href: "/",
+    title: "Account settings",
+  },
+];
 
 function AccountAdminPage() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -132,7 +149,9 @@ function AccountAdminPage() {
               </section>
             </div>
             <div className="my-5 w-full">
-              <h4 className="font-medium text-green-700 mb-5">Change password</h4>
+              <h4 className="font-medium text-green-700 mb-5">
+                Change password
+              </h4>
               <ChangePassForm />
             </div>
             <dialog id="modal_update_infor_instructor" className={modalClass}>

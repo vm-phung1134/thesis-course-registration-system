@@ -2,21 +2,20 @@ import { FC } from "react";
 import { Field, Form, Formik } from "formik";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAppDispatch } from "@/redux/store";
-import { INITIATE_PRIVATE_COMMENT_ITEM } from "@/data";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
 import { createPrivateComment } from "@/redux/reducer/private-comment/api";
 import { IPrivateComment } from "@/interface/privateComment";
 import { v4 as uuidv4 } from "uuid";
 import { useClassroomStateContext } from "@/contexts/classroomState";
 import { ROLE_ASSIGNMENT } from "@/contexts/authContext";
+import { INITIATE_AUTH, INITIATE_PRIVATE_COMMENT_ITEM } from "@/data";
+import { IAuthObject } from "@/interface/auth";
 
 export interface IPrivateCommentFormProps {
-  userId?: string;
+  user?: IAuthObject;
 }
 
-export const PrivateCommentForm: FC<IPrivateCommentFormProps> = ({
-  userId,
-}) => {
+export const PrivateCommentForm: FC<IPrivateCommentFormProps> = ({ user }) => {
   const initialValues = INITIATE_PRIVATE_COMMENT_ITEM;
   const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
@@ -25,7 +24,6 @@ export const PrivateCommentForm: FC<IPrivateCommentFormProps> = ({
   const addMutation = useMutation(
     (postData: IPrivateComment) => {
       return new Promise((resolve, reject) => {
-        console.log(postData);
         dispatch(createPrivateComment(postData))
           .unwrap()
           .then((data) => {
@@ -56,8 +54,8 @@ export const PrivateCommentForm: FC<IPrivateCommentFormProps> = ({
           {
             currentUser.role === ROLE_ASSIGNMENT.STUDENT &&
               addMutation.mutate({
-                userId: currentUser.id,
-                lecturerId: authClassroomState?.lecturer.id || "",
+                user: currentUser,
+                lecturer: authClassroomState?.lecturer || INITIATE_AUTH,
                 comments: [
                   {
                     id: objectId,
@@ -70,8 +68,8 @@ export const PrivateCommentForm: FC<IPrivateCommentFormProps> = ({
           {
             currentUser.role === ROLE_ASSIGNMENT.LECTURER &&
               addMutation.mutate({
-                userId: userId || "",
-                lecturerId: currentUser.id,
+                user: user || INITIATE_AUTH,
+                lecturer: currentUser,
                 comments: [
                   {
                     id: objectId,

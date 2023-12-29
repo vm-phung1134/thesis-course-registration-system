@@ -4,7 +4,7 @@ import { Button } from "@/components/Atoms";
 import { IClassroomObject } from "@/interface/classroom";
 import { useSubscribeStateContext } from "@/contexts/subscribeState";
 import { IMemberObject } from "@/interface/member";
-import { STATE_AUTH_CLASSROOM, STATE_LECTURER_CLASSROOM } from "@/data";
+import { STATE_LECTURER_CLASSROOM } from "@/data";
 import { ROLE_ASSIGNMENT } from "@/contexts/authContext";
 import { useQuery } from "@tanstack/react-query";
 import { useAppDispatch } from "@/redux/store";

@@ -1,34 +1,46 @@
 /* eslint-disable @next/next/no-img-element */
-import {
-  Breadcrumb,
-  Button,
-  NormalAvatar,
-  SnipperRound,
-} from "@/components/Atoms";
+import { Breadcrumb, Button, SnipperRound } from "@/components/Atoms";
 import { AdminTemplate } from "@/components/Templates";
 import { useState, useEffect } from "react";
-import { BREADCRUMB_REGISTER_DEFENSE_ADMIN } from "./mock-data";
 import useCheckedBox from "@/hooks/useCheckedBox";
 import { IStudentDefObject } from "@/interface/studef";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
-import { useQueryClient } from "@tanstack/react-query";
 import { FilterScheduledForm, Pagination } from "@/components/Molecules";
 import { InforMemberModal } from "@/components/Organisms";
 import { getTopic } from "@/redux/reducer/topic/api";
 import classNames from "classnames";
 import { usePagination } from "@/hooks/usePagination";
-import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { AnimatePresence, motion } from "framer-motion";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer } from "react-toastify";
 import { useTableSearch } from "@/hooks/useTableSearch";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
+import { IBreadcrumbItem } from "@/components/Atoms";
+
+export const BREADCRUMB_REGISTER_DEFENSE_ADMIN: IBreadcrumbItem[] = [
+  {
+    id: "1",
+    href: "/",
+    title: "TCR System",
+  },
+  {
+    id: "2",
+    href: "/admin",
+    title: "Admin",
+  },
+  {
+    id: "3",
+    href: "/admin/alumnus",
+    title: "Alumnus",
+  },
+  {
+    id: "4",
+    href: "/admin/alumnus/register-defense",
+    title: "List student register defense",
+  },
+];
 
 function RegisterDefensePageAdmin() {
   const [loading, setLoading] = useState<boolean>(true);
   const dispatch = useAppDispatch();
-  const queryClient = useQueryClient();
   const { currentUser } = useCurrentUserContext();
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages] = useState<number>(10);
@@ -57,7 +69,7 @@ function RegisterDefensePageAdmin() {
     handleCheckItem: handleCheckStudent,
   } = useCheckedBox<IStudentDefObject>(studentDef);
   const { filteredData: stuf_filteredData, handleSearch: stuf_handleSearch } =
-  useTableSearch(studentDef);
+    useTableSearch(studentDef);
   const handleGetTopicMember = (studef: IStudentDefObject) => {
     dispatch(getTopic(studef?.infor?.id));
     setOpenModalStudefDetail(!openModalStudefDetail);
@@ -106,7 +118,10 @@ function RegisterDefensePageAdmin() {
                 />
                 <Button title="All" className="px-5 btn-sm rounded-none" />
               </div>
-              <FilterScheduledForm handleSearch={stuf_handleSearch} holderText="Search student ..." />
+              <FilterScheduledForm
+                handleSearch={stuf_handleSearch}
+                holderText="Search student ..."
+              />
             </div>
             {/*---------------------------TABLE----------------------------- */}
             <div className="w-full mx-auto shadow-xl min-h-[70vh]">
@@ -176,9 +191,8 @@ function RegisterDefensePageAdmin() {
                             {stuf_filteredData?.map((stu, index) => (
                               <motion.tr
                                 layout
-                                initial={{ opacity: 0,  y:200 }}
-                                animate={{ opacity: 1, y:0 }}
-                 
+                                initial={{ opacity: 0, y: 200 }}
+                                animate={{ opacity: 1, y: 0 }}
                                 key={stu.id}
                                 className="hover:bg-gray-100  cursor-pointer dark:hover:bg-gray-700"
                               >

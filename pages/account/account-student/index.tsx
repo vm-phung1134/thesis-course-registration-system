@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { MainboardTemplate } from "@/components/Templates";
 import { Breadcrumb, NormalAvatar, SnipperRound } from "@/components/Atoms";
-import { BREADCRUMB_ACCOUNT_STUDENT } from "./mock-data";
 import { InforUserForm, RegistrationTopicForm } from "@/components/Molecules";
 import { INITIATE_TOPIC } from "@/data";
 import { useAppDispatch } from "@/redux/store";
@@ -10,11 +9,30 @@ import { getTopic } from "@/redux/reducer/topic/api";
 import { ITopicObject } from "@/interface/topic";
 import classNames from "classnames";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
-import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer } from "react-toastify";
 import { motion } from "framer-motion";
+import { IBreadcrumbItem } from "@/components/Atoms";
+import { useLanguageContext } from "@/contexts/languageContext";
+
+export const BREADCRUMB_ACCOUNT_STUDENT: IBreadcrumbItem[] = [
+  {
+    id: "1",
+    href: "/",
+    title: "TCR System",
+  },
+  {
+    id: "2",
+    href: "/account-student",
+    title: "Account personal",
+  },
+  {
+    id: "3",
+    href: "/",
+    title: "Account settings",
+  },
+];
 
 function AccountStudentPage() {
+  const { t } = useLanguageContext();
   const [loading, setLoading] = useState<boolean>(true);
   const [toggle, setToggle] = useState<boolean>(false);
   const modalClass = classNames({
@@ -31,11 +49,11 @@ function AccountStudentPage() {
   }
   const [lastName, middleName, firstName] = splitFullName(currentUser?.name);
   const dispatch = useAppDispatch();
-  const { data } = useQuery<ITopicObject>({
-    queryKey: ["topic", currentUser.id],
+  const { data: topic } = useQuery<ITopicObject>({
+    queryKey: ["get-one-topic", currentUser.id],
     queryFn: async () => {
       const action = await dispatch(getTopic(currentUser.id));
-      return action.payload;
+      return action.payload || INITIATE_TOPIC;
     },
     initialData: INITIATE_TOPIC,
   });
@@ -47,7 +65,7 @@ function AccountStudentPage() {
   return (
     <>
       <MainboardTemplate title="Account & Registration topics | Thesis course registration system">
-        {loading && data ? (
+        {loading && topic ? (
           <SnipperRound />
         ) : (
           <motion.div
@@ -65,7 +83,7 @@ function AccountStudentPage() {
             <div className="my-5">
               <div className="grid grid-cols-2 gap-10">
                 <section className="shadow-lg p-5 rounded-xl border">
-                  <RegistrationTopicForm topic={data} />
+                  <RegistrationTopicForm topic={topic} />
                 </section>
                 <section>
                   <div className="flex items-center justify-between border rounded-xl">
@@ -154,13 +172,6 @@ function AccountStudentPage() {
                 />
               </div>
             </dialog>
-            <ToastContainer
-              toastStyle={{
-                color: "black",
-                fontSize: "14px",
-                fontFamily: "Red Hat Text",
-              }}
-            />
           </motion.div>
         )}
       </MainboardTemplate>

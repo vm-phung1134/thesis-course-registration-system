@@ -7,7 +7,6 @@ import {
   SnipperRound,
 } from "@/components/Atoms";
 import { MainboardTemplate } from "@/components/Templates";
-import { BREADCRUMB_REQUIREMENT } from "./mock-data";
 import { CardRequireMember, FilterScheduledForm } from "@/components/Molecules";
 import { IMemberObject } from "@/interface/member";
 import { getAllRequirementClassroom } from "@/redux/reducer/requirement/api";
@@ -23,6 +22,25 @@ import {
 import { useTableSearch } from "@/hooks/useTableSearch";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
 import { motion } from "framer-motion";
+import { IBreadcrumbItem } from "@/components/Atoms";
+
+export const BREADCRUMB_REQUIREMENT: IBreadcrumbItem[] = [
+  {
+    id: "1",
+    href: "/",
+    title: "TCR System",
+  },
+  {
+    id: "2",
+    href: "/activities",
+    title: "Activities",
+  },
+  {
+    id: "3",
+    href: "/activities/requirements",
+    title: "Requirements",
+  },
+];
 
 function RequirementPage() {
   const { currentUser } = useCurrentUserContext();
@@ -42,10 +60,12 @@ function RequirementPage() {
   // HANDLE CALL API
   const dispatch = useAppDispatch();
   const { data: requirements } = useQuery<IMemberObject[]>({
-    queryKey: ["requirements", currentUser],
+    queryKey: ["classroom-requirements", currentUser],
     queryFn: async () => {
-      const action = await dispatch(getAllRequirementClassroom(currentUser));
-      return action.payload || [];
+      if (currentUser) {
+        const action = await dispatch(getAllRequirementClassroom(currentUser));
+        return action.payload || [];
+      }
     },
     initialData: [],
   });
@@ -74,7 +94,7 @@ function RequirementPage() {
           <div>
             <div className="my-3 py-2 flex gap-2 items-center">
               <h4 className="text-xl capitalize text-green-700 font-medium ">
-                Queue for <span className="text-orange-600"> requests</span>
+                Queue for <span className="text-green-700"> requests</span>
               </h4>
               <div className="flex-grow h-[0.5px] bg-green-700"></div>
             </div>

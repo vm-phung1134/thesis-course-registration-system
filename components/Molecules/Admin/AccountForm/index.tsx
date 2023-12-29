@@ -54,7 +54,7 @@ export const AccountForm: FC<IAccountFormProps> = ({
         setTimeout(async () => {
           await addMutation.mutate({
             ...values,
-            role: isChecked ? ROLE_ASSIGNMENT.LECTURER : ROLE_ASSIGNMENT.GUEST,
+            role: ROLE_ASSIGNMENT.LECTURER,
           });
         }, 400);
       }}
@@ -78,7 +78,7 @@ export const AccountForm: FC<IAccountFormProps> = ({
                     <input
                       type="checkbox"
                       className="checkbox h-5 w-5 text-green-500 checkbox-success"
-                      checked={isChecked}
+                      checked={true}
                       onChange={() => setIsChecked(!isChecked)}
                     />
                     <span className="ml-2 text-sm font-medium">

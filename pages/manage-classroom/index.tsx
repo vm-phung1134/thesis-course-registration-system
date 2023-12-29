@@ -6,16 +6,13 @@ import {
 } from "@/components/Molecules";
 import { ClassroomTemplate } from "@/components/Templates";
 import classNames from "classnames";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ExerciseModal, PostModal } from "@/components/Organisms";
 import { useQuery } from "@tanstack/react-query";
 import { IPostObject } from "@/interface/post";
-import { getAllPostInClass, getPost } from "@/redux/reducer/post/api";
-import { useAppDispatch, useAppSelector } from "@/redux/store";
-import {
-  getAllExerciseInClass,
-  getExercise,
-} from "@/redux/reducer/exercise/api";
+import { getAllPostInClass } from "@/redux/reducer/post/api";
+import { useAppDispatch } from "@/redux/store";
+import { getAllExerciseInClass } from "@/redux/reducer/exercise/api";
 import { IExerciseObject } from "@/interface/exercise";
 import { useClassroomStateContext } from "@/contexts/classroomState";
 import Image from "next/image";
@@ -23,11 +20,9 @@ import { Button } from "@/components/Atoms";
 import { INITIATE_EXERCISE, INITIATE_POST } from "@/data";
 import { motion } from "framer-motion";
 import { ISubmitObject } from "@/interface/submit";
-import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { getAllSubmitStud } from "@/redux/reducer/submit/api";
 import { getExerciseWithNearestDeadline } from "@/utils/getDeadline";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
-import { ToastContainer } from "react-toastify";
 
 function ManageClassroomTab() {
   const { currentUser } = useCurrentUserContext();
@@ -70,26 +65,6 @@ function ManageClassroomTab() {
     setOpenModalEx(!openModalEx);
     setExRenew(task);
   };
-
-  // HANDLE POST
-  const { data: post_fetch } = useQuery<IPostObject>({
-    queryKey: ["get-one-post", postRenew],
-    queryFn: async () => {
-      const action = await dispatch(getPost(postRenew));
-      return action.payload || {};
-    },
-    initialData: postRenew,
-  });
-
-  // HANDLE EXERCISE
-  const { data: ex_fetch } = useQuery<IExerciseObject>({
-    queryKey: ["get-one-exercise", exRenew],
-    queryFn: async () => {
-      const action = await dispatch(getExercise(exRenew));
-      return action.payload || {};
-    },
-    initialData: exRenew,
-  });
   const { data: submissions } = useQuery<ISubmitObject[]>({
     queryKey: ["classroom-submissions", currentUser],
     queryFn: async () => {
@@ -220,22 +195,15 @@ function ManageClassroomTab() {
         </div>
         <PostModal
           modalClass={modalClassPost}
-          post={post_fetch}
+          post={postRenew}
           setOpenModalPost={setOpenModalPost}
           openModalPost={openModalPost}
         />
         <ExerciseModal
           modalClass={modalClassEx}
-          exercise={ex_fetch}
+          exercise={exRenew}
           setOpenModalEx={setOpenModalEx}
           openModalEx={openModalEx}
-        />
-        <ToastContainer
-          toastStyle={{
-            color: "black",
-            fontSize: "14px",
-            fontFamily: "Red Hat Text",
-          }}
         />
       </ClassroomTemplate>
     </>

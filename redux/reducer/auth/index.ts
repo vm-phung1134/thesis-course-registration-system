@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 import { AuthState } from "./type";
 import { INITIATE_AUTH, INITIATE_CLASSROOM } from "@/data";
 import {
-  checkAuthRoleForClassroomState,
   checkStateSubscribe,
   deleteAuth,
   getAllAuths,
@@ -140,24 +139,6 @@ const authSlice = createSlice({
       state.isSuccess = false;
       state.error = action.error.message ?? "Something went wrong.";
     });
-
-    builder.addCase(checkAuthRoleForClassroomState.pending, (state) => {
-      state.isLoading = true;
-    });
-    builder.addCase(
-      checkAuthRoleForClassroomState.fulfilled,
-      (state, action) => {
-        state.isLoading = false;
-        state.auth = action.payload;
-      }
-    );
-    builder.addCase(
-      checkAuthRoleForClassroomState.rejected,
-      (state, action) => {
-        state.isLoading = false;
-        state.error = action.error.message ?? "Something went wrong.";
-      }
-    );
   },
 });
 

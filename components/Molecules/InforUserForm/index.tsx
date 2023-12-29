@@ -2,6 +2,7 @@ import { Button, FormField } from "@/components/Atoms";
 import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
 import { IAuthObject } from "@/interface/auth";
 import { updateAuth } from "@/redux/reducer/auth/api";
+import { convertToUnaccentedString } from "@/utils/convertString";
 import { Form, Formik } from "formik";
 import { FC } from "react";
 
@@ -45,7 +46,8 @@ export const InforUserForm: FC<IInforUserFormProps> = ({
                 nameField="name"
                 placeholder="Ex: Nguyen Van Anh"
                 className="rounded-xl bg-slate-100 border-none capitalize"
-                value={values.name}
+                value={convertToUnaccentedString(values.name)}
+                disabled={true}
               />
               <div className="flex gap-3 w-full">
                 <div className="w-1/3">
@@ -82,6 +84,7 @@ export const InforUserForm: FC<IInforUserFormProps> = ({
                   className="rounded-xl bg-slate-100 border-none"
                   placeholder="Ex: Nameb1910xxx@student.ctu.edu.vn"
                   value={values.email}
+                  disabled={true}
                 />
               </div>
               <div className="flex justify-end items-center">

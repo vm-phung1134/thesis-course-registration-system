@@ -1,13 +1,8 @@
 import { Button } from "@/components/Atoms";
-import {
-  CommentForm,
-  ContentComment,
-  ContentCommentModal,
-} from "@/components/Molecules";
+import { CommentForm, ContentCommentModal } from "@/components/Molecules";
 import { IPostObject } from "@/interface/post";
 import { convertToUnaccentedString } from "@/utils/convertString";
 import { FC } from "react";
-import Link from "next/link";
 import Image from "next/image";
 
 export interface IPostModalProps {
@@ -24,14 +19,14 @@ export const PostModal: FC<IPostModalProps> = ({
   post,
 }) => {
   return (
-    <dialog id="modal_post_form" className={modalClass}>
+    <dialog id="my_modal_2" className={modalClass}>
       <div className="w-5/12 bg-white p-3 h-fit shadow-2xl rounded-xl">
         <div className="h-full px-3">
           <div className="border-b pb-5">
             <div className="flex items-center justify-between">
               <div className="flex gap-5 items-center mb-2">
                 <p className="text-xs px-3 py-1 bg-green-700 cursor-pointer rounded-md text-white w-fit">
-                  {post?.type === "post" ? "Message" : "Postercise"}
+                  Post
                 </p>
                 <p>|</p>
                 <p className="text-sm">{post?.category?.label} Stage</p>
@@ -44,13 +39,12 @@ export const PostModal: FC<IPostModalProps> = ({
               </button>
             </div>
 
-            <h3 className="font-medium text-green-700 text-lg capitalize">
+            <h3 className="font-medium text-green-700 text-base capitalize">
               {post?.title}
             </h3>
-
             <div className="flex gap-3 items-center py-1">
               <p className="font-medium text-sm capitalize">
-                {convertToUnaccentedString(post?.lecturer?.name)}
+                {convertToUnaccentedString(post?.lecturer.name)}
               </p>
               <p className="text-xs">
                 {`20, August 2023 - `}
@@ -72,24 +66,29 @@ export const PostModal: FC<IPostModalProps> = ({
                 return (
                   <div
                     key={arr.id}
-                    className="flex gap-3 text-blue-700 font-medium rounded-md items-center px-3 py-2 bg-slate-200 shadow-md"
+                    className="flex gap-3 text-blue-700 font-medium rounded-md items-center px-3 py-2 bg-slate-100 shadow-md"
                   >
                     <Image
                       width={20}
                       height={20}
                       src={
-                        "https://cdn-icons-png.flaticon.com/128/4726/4726010.png"
+                        "https://cdn-icons-png.flaticon.com/128/9496/9496432.png"
                       }
                       alt="icon-file-pdf"
                     />
-                    <a
-                      className="text-[13px]"
-                      target="_blank"
-                      key={index}
-                      href={arr.src}
-                    >
-                      {arr.name}
-                    </a>
+                    <div>
+                      <a
+                        className="text-[13px]"
+                        target="_blank"
+                        key={index}
+                        href={arr.src}
+                      >
+                        {arr.name || "Document preferences"}
+                      </a>
+                      <p className="text-xs font-thin">
+                        {arr.mimeType || "PDF / Word"}
+                      </p>
+                    </div>
                   </div>
                 );
               })}

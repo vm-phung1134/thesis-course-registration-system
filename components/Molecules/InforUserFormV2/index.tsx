@@ -5,12 +5,8 @@ import {
   TitleFormField,
 } from "@/components/Atoms";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
-import { useCurrentUser } from "@/hooks/useGetCurrentUser";
 import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
-import { IAuthObject } from "@/interface/auth";
 import { updateAuth } from "@/redux/reducer/auth/api";
-import { useAppDispatch } from "@/redux/store";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Form, Formik } from "formik";
 import { FC, useEffect, useState } from "react";
 

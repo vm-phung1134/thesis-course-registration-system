@@ -4,19 +4,17 @@ import { token } from "./type";
 import { ISubmitObject } from "@/interface/submit";
 import { IExerciseObject } from "@/interface/exercise";
 import { IAuthObject } from "@/interface/auth";
+import { apiURL } from "@/data";
 
 // GET ALL SUBMITS
 const getAllSubmits = createAsyncThunk(
   "submit/getAllSubmit",
-  async (postData: IExerciseObject) => {
-    const response = await axios.get(
-      `http://localhost:5000/api/submit/ex/${postData.uid}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+  async (exercise: IExerciseObject) => {
+    const response = await axios.get(`${apiURL}/submit/ex/${exercise.uid}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
       return response.data;
     }
@@ -29,7 +27,7 @@ const getSubmit = createAsyncThunk(
   "submit/getSubmit",
   async (submitData: any) => {
     const response = await axios.get(
-      `http://localhost:5000/api/submit/${submitData.exerciseId}&${submitData.studentId}`,
+      `${apiURL}/submit/${submitData.exerciseId}&${submitData.studentId}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -57,22 +55,15 @@ const createSubmit = createAsyncThunk(
         formData.append("attachment", submitData.attachments[i]);
       }
     }
-
-    const response = await axios.post(
-      "http://localhost:5000/api/submit/",
-      formData,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
-
+    const response = await axios.post(`${apiURL}/submit/`, formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      },
+    });
     if (response.status === 200) {
       return response.data;
     }
-
     throw new Error("Failed to create submit");
   }
 );
@@ -82,7 +73,7 @@ const updateSubmit = createAsyncThunk(
   "submit/updateSubmit",
   async (submitData: ISubmitObject) => {
     const response = await axios.put(
-      `http://localhost:5000/api/submit/${submitData.id}`,
+      `${apiURL}/submit/${submitData.id}`,
       submitData,
       {
         headers: {
@@ -102,7 +93,7 @@ const getAllSubmitStud = createAsyncThunk(
   "submit/getAllSubmitStud",
   async (postData: IAuthObject) => {
     const response = await axios.get(
-      `http://localhost:5000/api/submit/student/${postData.id}`,
+      `${apiURL}/submit/student/${postData.id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -120,14 +111,11 @@ const getAllSubmitStud = createAsyncThunk(
 const deleteSubmit = createAsyncThunk(
   "submit/deleteSubmit",
   async (submitData: ISubmitObject) => {
-    const response = await axios.delete(
-      `http://localhost:5000/api/submit/${submitData.id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.delete(`${apiURL}/submit/${submitData.id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
       return response.data;
     }

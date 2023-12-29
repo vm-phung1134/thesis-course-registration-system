@@ -80,7 +80,7 @@ export const RegistrationTopicFormV2: FC<IRegistrationTopicFormV2Props> = ({
             id: values.id,
             title: values.title,
             typeTopic: values.typeTopic,
-            studentID: currentUser.id,
+            student: currentUser,
             memberQuantity: values.memberQuantity,
             memberEmail: values.memberEmail,
             description: values.description,
@@ -93,7 +93,7 @@ export const RegistrationTopicFormV2: FC<IRegistrationTopicFormV2Props> = ({
       {(formik) => {
         const { values, setFieldValue } = formik;
         const handleChangeQuantityMember = (newValue: number) => {
-          setFieldValue("memberQuantiy", newValue);
+          setFieldValue("memberQuantity", newValue);
         };
         return (
           <>
@@ -133,7 +133,7 @@ export const RegistrationTopicFormV2: FC<IRegistrationTopicFormV2Props> = ({
                         className="h-12"
                         onChange={handleChangeQuantityMember}
                         label="QL. Member"
-                        limit={5}
+                        limit={1}
                       />
                     </div>
                   </div>

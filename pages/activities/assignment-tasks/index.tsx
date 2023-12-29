@@ -8,9 +8,7 @@ import {
 } from "@/components/Atoms";
 import { ICategoryObject } from "@/interface/category";
 import { DATA_STATE_REPORT } from "@/pages/manage-classroom/report-progress/mock-data";
-import { IOptionItem } from "@/interface/filter";
 import { CriticalTask, ExerciseCard } from "@/components/Molecules";
-import { BREADCRUMB_ASSIGNMENT_TASKS, DATA_FILTER_TASKS } from "./mock-data";
 import { IExerciseObject } from "@/interface/exercise";
 import { useAppDispatch } from "@/redux/store";
 import { useQuery } from "@tanstack/react-query";
@@ -24,6 +22,41 @@ import { ExerciseModal } from "@/components/Organisms";
 import { INITIATE_EXERCISE } from "@/data";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { IBreadcrumbItem } from "@/components/Atoms";
+import { IOptionItem } from "@/interface/filter";
+
+export const BREADCRUMB_ASSIGNMENT_TASKS: IBreadcrumbItem[] = [
+  {
+    id: "1",
+    href: "/",
+    title: "TCR System",
+  },
+  {
+    id: "2",
+    href: "/",
+    title: "Assigned tasks",
+  },
+  {
+    id: "3",
+    href: "/tasks-/critical-tasks",
+    title: "Assignment tasks",
+  },
+];
+
+export const DATA_FILTER_TASKS: IOptionItem[] = [
+  {
+    value: "a-z",
+    label: "Name A - Z",
+  },
+  {
+    value: "z-a",
+    label: "Name Z - A",
+  },
+  {
+    value: "recent day",
+    label: "Recent day",
+  },
+];
 
 function AssignmentTasks() {
   const [loading, setLoading] = useState<boolean>(true);

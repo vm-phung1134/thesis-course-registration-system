@@ -1,9 +1,8 @@
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import { Form, Formik } from "formik";
 import { Button, CountInput, FormField } from "@/components/Atoms";
 import { useAppDispatch } from "@/redux/store";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { IThesisDef } from "@/interface/schedule";
 import { createScheduleDef } from "@/redux/reducer/schedule-def/api";
 import { IAuthObject } from "@/interface/auth";
 import { getAllCouncilDefs } from "@/redux/reducer/council-def/api";
@@ -98,10 +97,10 @@ export const ScheduleForm: FC<IScheduleFormProps> = ({
         } else if (
           handleNumberRoomDef(values.quantityWeek, student_def.length) >
           room_def.length
-        ){
+        ) {
           errors.quantityWeek = "! Quantity week invalid";
         }
-          return errors;
+        return errors;
       }}
       onSubmit={(values, { setSubmitting, resetForm }) => {
         setTimeout(() => {

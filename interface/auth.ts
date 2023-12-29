@@ -8,5 +8,4 @@ export interface IAuthObject {
   major?: string;
   class?: string;
   password?: string;
-  socketId?: string;
 }

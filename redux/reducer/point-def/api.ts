@@ -3,19 +3,17 @@ import axios from "axios";
 import { IAssessLecturerItem, token } from "./type";
 import { IPointDefObject } from "@/interface/pointDef";
 import { IAuthObject } from "@/interface/auth";
+import { apiURL } from "@/data";
 
 // GET ONE COUNCIL DEF
 const getOnePointDef = createAsyncThunk(
   "point/getOnePointDef",
-  async (postData: IAuthObject) => {
-    const response = await axios.get(
-      `http://localhost:5000/api/point-def/${postData.id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+  async (user: IAuthObject) => {
+    const response = await axios.get(`${apiURL}/point-def/${user.id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
       return response.data;
     }
@@ -26,9 +24,9 @@ const getOnePointDef = createAsyncThunk(
 // GET ONE COUNCIL DEF FOR LECTURER
 const getOnePointDefForLecturer = createAsyncThunk(
   "point/getOnePointDefForLecturer",
-  async (postData: IAssessLecturerItem) => {
+  async (point: IAssessLecturerItem) => {
     const response = await axios.get(
-      `http://localhost:5000/api/point-def/student-point/${postData.studentId}&${postData.lecturerId}`,
+      `${apiURL}/point-def/student-point/${point.studentId}&${point.lecturerId}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -45,9 +43,9 @@ const getOnePointDefForLecturer = createAsyncThunk(
 // GET ALL COUNCIL DEFS
 const getAllPointDefs = createAsyncThunk(
   "point/getAllPointDefs",
-  async (postData: IAuthObject) => {
+  async (user: IAuthObject) => {
     const response = await axios.get(
-      `http://localhost:5000/api/point-def/student-point/${postData?.id}`,
+      `${apiURL}/point-def/student-point/${user?.id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -64,16 +62,12 @@ const getAllPointDefs = createAsyncThunk(
 // CREATE COUNCIL DEF
 const createPointDef = createAsyncThunk(
   "point/createPointDef",
-  async (postData: IPointDefObject) => {
-    const response = await axios.post(
-      "http://localhost:5000/api/point-def",
-      postData,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+  async (point: IPointDefObject) => {
+    const response = await axios.post("${apiURL}/point-def", point, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
       return response.data;
     }
@@ -84,16 +78,12 @@ const createPointDef = createAsyncThunk(
 // UPDATE COUNCIL DEF
 const updatePointDef = createAsyncThunk(
   "point/updatePointDef",
-  async (postData: IPointDefObject) => {
-    const response = await axios.put(
-      `http://localhost:5000/api/point-def/${postData.id}`,
-      postData,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+  async (point: IPointDefObject) => {
+    const response = await axios.put(`${apiURL}/point-def/${point.id}`, point, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
       return response.data;
     }
@@ -104,15 +94,12 @@ const updatePointDef = createAsyncThunk(
 // DELETE COUNCIL DEF
 const deletePointDef = createAsyncThunk(
   "point/deletePointDef",
-  async (postData: IPointDefObject) => {
-    const response = await axios.delete(
-      `http://localhost:5000/api/point-def/${postData.id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+  async (point: IPointDefObject) => {
+    const response = await axios.delete(`${apiURL}/point-def/${point.id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
       return response.data;
     }

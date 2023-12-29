@@ -2,18 +2,18 @@ import React, { FC, useEffect, useRef, useState } from "react";
 import { Form, Formik } from "formik";
 import { Button } from "@/components/Atoms";
 import { INITIATE_SUBMIT } from "@/data";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useAppDispatch } from "@/redux/store";
 import { v4 as uuidv4 } from "uuid";
 import Image from "next/image";
 import { IUploadReportObject } from "@/interface/upload";
-import { createUploadReport } from "@/redux/reducer/upload-def/api";
+import {
+  createUploadReport,
+  deleteUploadReport,
+} from "@/redux/reducer/upload-def/api";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer } from "react-toastify";
+import classNames from "classnames";
+import { useMutationQueryAPI } from "@/hooks/useMutationAPI";
+import { ModalConfirm } from "..";
 
-const objectId = uuidv4();
 interface IUploadFinalFileFormProps {
   uploadReport?: IUploadReportObject;
 }
@@ -24,8 +24,6 @@ export const UploadFinalFileForm: FC<IUploadFinalFileFormProps> = ({
   const fileInputRef = useRef<HTMLInputElement>(null!);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const { currentUser } = useCurrentUserContext();
-  const dispatch = useAppDispatch();
-  const queryClient = useQueryClient();
   const handleUploadClick = () => {
     fileInputRef.current?.click();
   };
@@ -36,36 +34,26 @@ export const UploadFinalFileForm: FC<IUploadFinalFileFormProps> = ({
       setSelectedFiles((prevFiles) => [...prevFiles, ...newFiles]);
     }
   };
-  const addMutation = useMutation(
-    (postData: IUploadReportObject) => {
-      return new Promise((resolve, reject) => {
-        dispatch(createUploadReport(postData))
-          .unwrap()
-          .then((data) => {
-            resolve(data);
-          })
-          .catch((error) => {
-            reject(error);
-          });
-      });
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["uploads"]);
-      },
-    }
-  );
-  useEffect(() => {
-    if (addMutation.isSuccess) {
-      toast.success(
-        "Your final file thesis defense has been send successfully",
-        {
-          position: toast.POSITION.BOTTOM_LEFT,
-          autoClose: 2000,
-        }
-      );
-    }
-  }, [addMutation.isSuccess]);
+  const [openDelFile, setOpenDelFile] = useState<boolean>(false);
+  const modalClassDelFile = classNames({
+    "modal modal-bottom sm:modal-middle": true,
+    "modal-open": openDelFile,
+  });
+  const addMutation = useMutationQueryAPI({
+    action: createUploadReport,
+    queryKeyLog: ["get-one-upload"],
+    successMsg: "Upload final file successfully!",
+    errorMsg: "Fail to upload final file!",
+  });
+  const deleteMutation = useMutationQueryAPI({
+    action: deleteUploadReport,
+    queryKeyLog: ["get-one-upload"],
+    successMsg: "Unsend Final File successfully!",
+    errorMsg: "Fail to unsend Final File!",
+  });
+  const handleDelFinalFile = () => {
+    deleteMutation.mutate(uploadReport?.id);
+  };
   return (
     <Formik
       initialValues={INITIATE_SUBMIT}
@@ -74,6 +62,7 @@ export const UploadFinalFileForm: FC<IUploadFinalFileFormProps> = ({
         return errors;
       }}
       onSubmit={(values, { setSubmitting }) => {
+        let objectId = uuidv4();
         setTimeout(() => {
           addMutation.mutate({
             student: currentUser,
@@ -198,12 +187,15 @@ export const UploadFinalFileForm: FC<IUploadFinalFileFormProps> = ({
               />
             )}
           </Form>
-          <ToastContainer
-            toastStyle={{
-              color: "black",
-              fontSize: "14px",
-              fontFamily: "Red Hat Text",
-            }}
+          <ModalConfirm
+            modalClass={modalClassDelFile}
+            setOpenModal={setOpenDelFile}
+            openModal={openDelFile}
+            action={handleDelFinalFile}
+            typeButton="subscribe"
+            underMessage="No Message"
+            title="Message!!!"
+            message="Are you sure to unsend the final file to the council?"
           />
         </>
       )}

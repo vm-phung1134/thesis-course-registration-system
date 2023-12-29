@@ -2,19 +2,17 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { StudentDefLimit, token } from "./type";
 import { IStudentDefObject } from "@/interface/studef";
+import { apiURL } from "@/data";
 
 // GET ONE STUDENT DEF
 const getOneStudentDef = createAsyncThunk(
   "studef/getOneStudentDef",
   async (postData: IStudentDefObject) => {
-    const response = await axios.get(
-      `http://localhost:5000/api/student-def/${postData.id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.get(`${apiURL}/student-def/${postData.id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
       return response.data;
     }
@@ -26,7 +24,7 @@ const getOneStudentDef = createAsyncThunk(
 const getAllStudentDefs = createAsyncThunk(
   "studef/getAllStudentDefs",
   async () => {
-    const response = await axios.get(`http://localhost:5000/api/student-def`, {
+    const response = await axios.get(`${apiURL}/student-def`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -43,7 +41,7 @@ const getAllStudentDefPag = createAsyncThunk(
   "studef/getAllStudentDefPag",
   async (params: StudentDefLimit) => {
     const response = await axios.get(
-      `http://localhost:5000/api/student-def/list-studef/id=${params.uid}?page=${params.page}&limit=${params.limit}`,
+      `${apiURL}/student-def/list-studef/id=${params.uid}?page=${params.page}&limit=${params.limit}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -61,15 +59,11 @@ const getAllStudentDefPag = createAsyncThunk(
 const createStudentDef = createAsyncThunk(
   "studef/createStudentDef",
   async (postData: IStudentDefObject) => {
-    const response = await axios.post(
-      "http://localhost:5000/api/student-def",
-      postData,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.post(`${apiURL}/student-def`, postData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
       return response.data;
     }
@@ -82,7 +76,7 @@ const updateStudentDef = createAsyncThunk(
   "studef/updateStudentDef",
   async (postData: IStudentDefObject) => {
     const response = await axios.put(
-      `http://localhost:5000/api/student-def/${postData.id}`,
+      `${apiURL}/student-def/${postData.id}`,
       postData,
       {
         headers: {
@@ -102,7 +96,7 @@ const deleteStudentDef = createAsyncThunk(
   "studef/deleteStudentDef",
   async (postData: IStudentDefObject) => {
     const response = await axios.delete(
-      `http://localhost:5000/api/student-def/${postData.id}`,
+      `${apiURL}/student-def/${postData.id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -120,14 +114,11 @@ const deleteStudentDef = createAsyncThunk(
 const deleteAllStudentDef = createAsyncThunk(
   "studef/deleteAllStudentDef",
   async () => {
-    const response = await axios.delete(
-      `http://localhost:5000/api/student-def/`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.delete(`${apiURL}/student-def/`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
       return response.data;
     }

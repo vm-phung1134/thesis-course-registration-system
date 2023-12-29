@@ -1,20 +1,16 @@
-import { ICouncilDef, IThesisDef } from "@/interface/schedule";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { token } from "./type";
+import { apiURL } from "@/data";
 
 const createScheduleDef = createAsyncThunk(
   "schedule/createScheduleDef",
   async (postData: { quantityWeek: number; startDate: string }) => {
-    const response = await axios.post(
-      `http://localhost:5000/api/schedule-report/`,
-      postData,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.post(`${apiURL}/schedule-report/`, postData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     if (response.status === 200) {
       return response.data;
     }
@@ -23,14 +19,11 @@ const createScheduleDef = createAsyncThunk(
 );
 
 const getScheduleDef = createAsyncThunk("schedule/getScheduleDef", async () => {
-  const response = await axios.get(
-    `http://localhost:5000/api/schedule-report/`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
+  const response = await axios.get(`${apiURL}/schedule-report/`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
   if (response.status === 200) {
     return response.data;
   }
@@ -41,7 +34,7 @@ const getOneCouncilInScheduleStudent = createAsyncThunk(
   "schedule/getOneCouncilInScheduleStudent",
   async (id: string) => {
     const response = await axios.get(
-      `http://localhost:5000/api/schedule-report/student/${id}`,
+      `${apiURL}/schedule-report/student/${id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -59,7 +52,7 @@ const getOneCouncilInScheduleLecturer = createAsyncThunk(
   "schedule/getOneCouncilInScheduleLecturer",
   async (id: string) => {
     const response = await axios.get(
-      `http://localhost:5000/api/schedule-report/lecturer/${id}`,
+      `${apiURL}/schedule-report/lecturer/${id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -77,7 +70,7 @@ const getScheduleForStudent = createAsyncThunk(
   "schedule/getScheduleForStudent",
   async (id: string) => {
     const response = await axios.get(
-      `http://localhost:5000/api/schedule-report/student-schedule/${id}`,
+      `${apiURL}/schedule-report/student-schedule/${id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -95,7 +88,7 @@ const getScheduleForLecturer = createAsyncThunk(
   "schedule/getScheduleForLecturer",
   async (id: string) => {
     const response = await axios.get(
-      `http://localhost:5000/api/schedule-report/lecturer-schedule/${id}`,
+      `${apiURL}/schedule-report/lecturer-schedule/${id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

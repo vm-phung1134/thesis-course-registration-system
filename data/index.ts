@@ -75,7 +75,7 @@ export const INITIATE_EXERCISE: IExerciseObject = {
 export const INITIATE_TOPIC: ITopicObject = {
   title: "",
   typeTopic: "",
-  memberQuantiy: 0,
+  memberQuantity: 0,
   student: INITIATE_AUTH,
   memberEmail: "",
   description: "",
@@ -186,3 +186,5 @@ export enum TYPE_ACTION_NOTIFICATION {
   ADD_POST = "add-post",
 }
 export const roleInCouncil = ["Chairman", "secretary", "Commissioner"];
+
+export const apiURL = "http://localhost:5000/api";
