@@ -8,7 +8,6 @@ import {
 } from "@/components/Atoms";
 import { IOptionItem } from "@/interface/filter";
 import { ICategoryObject } from "@/interface/category";
-import { DATA_FILTER_TASKS } from "../critical-tasks/mock-data";
 import { CriticalTask, ExerciseCard } from "@/components/Molecules";
 import { useAppDispatch } from "@/redux/store";
 import { IExerciseObject } from "@/interface/exercise";
@@ -28,6 +27,7 @@ import { getExerciseWithNearestDeadline } from "@/utils/getDeadline";
 import { useCurrentUserContext } from "@/contexts/currentUserContext";
 import { motion } from "framer-motion";
 import { IBreadcrumbItem } from "@/components/Atoms";
+import { DATA_FILTER_TASKS } from "../critical-tasks";
 
 export const BREADCRUMB_COMPLETED_TASKS: IBreadcrumbItem[] = [
   {
