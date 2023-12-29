@@ -1,4 +1,4 @@
-import { INITIATE_COURSE } from "@/data";
+import { INITIATE_CLASSROOM } from "@/data";
 import { IPostObject } from "@/interface/post";
 
 export const DATA_POST_MODAL: IPostObject = {
@@ -21,6 +21,6 @@ export const DATA_POST_MODAL: IPostObject = {
   },
   description: "",
   uid: "",
-  classroom: INITIATE_COURSE,
+  classroom: INITIATE_CLASSROOM,
   type: ""
 };
