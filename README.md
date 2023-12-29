@@ -10,14 +10,15 @@
   <p align="center">
     Building a management system for the graduation thesis registration process <br /> for information technology students at Can Tho University
     <br />
-    <a href="https://github.com/vm-phung1134/thesis-course-registration-system/files/13791776/TCR-sytem-guidelines.pdf"><strong>Documents and utilize TCR Sytem »</strong></a>
-    <br />
-    <br />
     <p>
       The link website: 
-      <a href="https://tcr-system.vercel.app">https://tcr-system.vercel.app</a>
+      <a href="https://tcr-system-other-version.vercel.app">https://tcr-system-other-version.vercel.app</a>
     </p>
-    
+    <p>
+      The link document: 
+      <a href="https://docs.google.com/document/d/19_0Xj4ZXEhy3Xw30gXQCkZEd3ncX-g4PcpIWGXqV8jA/edit?usp=sharing">https://docs.google.com/document/d/19_0Xj4ZXEhy3Xw30gXQCkZEd3ncX-g4PcpIWGXqV8jA/edit?usp=sharing</a>
+    </p>
+    <p>Account use to test right bellow! let's take a look</p>
   </p>
 </div>
 
@@ -119,9 +120,17 @@ Step by step project installation:
 6. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 7. Account testing
-   ```sh
-   Because this is a project developed for IT industry members, testing from outside the organization is limited.
-   ```
+
+```
+Note that to test the entire system, three roles must interact with each other:
+
+Role Student: You can use any your email
+Role Lecturer: You have to login with Email and password via email form
+
+  Email: testcase1134@cit.ctu.edu.vn
+  Password: 123123
+
+```
 
 ### Preview
 
