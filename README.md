@@ -10,7 +10,7 @@
   <p align="center">
     Building a management system for the graduation thesis registration process <br /> for information technology students at Can Tho University
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/vm-phung1134/thesis-course-registration-system/files/13791776/TCR-sytem-guidelines.pdf"><strong>Documents and utilize TCR Sytem »</strong></a>
     <br />
     <br />
     <p>
@@ -48,9 +48,8 @@
   </ol>
 </details>
 
-
-
 <!-- ABOUT THE PROJECT -->
+
 ## Introduction about the project
 
 <p align="justify">
@@ -65,6 +64,7 @@ to schedule thesis presentations and committees.
 </p>
 
 ### Built with
+
 The major frameworks/libraries used to build the project:
 
 ![Typescript](https://img.shields.io/badge/Typescript-007acc?style=for-the-badge&labelColor=black&logo=typescript&logoColor=007acc)
@@ -80,6 +80,7 @@ The major frameworks/libraries used to build the project:
 ![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
 
 <!-- GETTING STARTED -->
+
 ## Getting Started
 
 Here is a process that can help you get started with your thesis registration management system project:
@@ -87,14 +88,16 @@ Here is a process that can help you get started with your thesis registration ma
 ### Prerequisites
 
 This is how to list things you need to use the software and how to install them.
-* npm
+
+- npm
   ```sh
   npm install npm@latest -g
   ```
-* yarn
+- yarn
   ```sh
   yarn global add npm@latest
   ```
+
 ### Installation
 
 Step by step project installation:
@@ -121,6 +124,7 @@ Step by step project installation:
    ```
 
 ### Preview
+
 ![image](https://github.com/vm-phung1134/thesis-course-registration-system/assets/106596859/e090bdfe-db15-4940-9c8b-7c0d7a950d17)
 ![image](https://github.com/vm-phung1134/thesis-course-registration-system/assets/106596859/2781918c-73b3-4c1e-9198-a6c6ca7699e0)
 ![image](https://github.com/vm-phung1134/thesis-course-registration-system/assets/106596859/a4077408-c0b7-4fcd-8396-270c6466c513)
@@ -131,15 +135,17 @@ Step by step project installation:
 ![image](https://github.com/vm-phung1134/thesis-course-registration-system/assets/106596859/675a28b4-4e6b-4441-baa0-6831a24e971b)
 
 <!-- USAGE EXAMPLES -->
+
 ## Usage
 
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
 
 _For more examples, please refer to the [Documentation](https://example.com)_
 
-
 <!-- ROADMAP -->
+
 ## Features
+
 - [x] Register for a thesis research topic
 - [x] Update progress reports by phase
 - [x] Applying genetic algorithms to schedule reports and dissertation committees.
@@ -149,12 +155,12 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 - [x] Register for the thesis group and instructors.
 - [x] Dark mode Support
 - [x] Multi-language Support
-    - [x] Vietnam
-    - [x] English
+  - [x] Vietnam
+  - [x] English
 - More...
 
-
 <!-- CONTRIBUTING -->
+
 ## Contributing
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
@@ -168,38 +174,36 @@ Don't forget to give the project a star! Thanks again!
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-
 <!-- LICENSE -->
+
 ## License
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
 
-
 <!-- CONTACT -->
+
 ## Contact
 
 Email - vmphung1134@gmail.com
 
 Github - https://github.com/vm-phung1134
 
-
-
-
 <!-- ACKNOWLEDGMENTS -->
+
 ## Acknowledgments
 
-* [Choose an Open Source License](https://choosealicense.com)
-* [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
-* [Malven's Flexbox Cheatsheet](https://flexbox.malven.co/)
-* [Malven's Grid Cheatsheet](https://grid.malven.co/)
-* [Img Shields](https://shields.io)
-* [GitHub Pages](https://pages.github.com)
-* [Font Awesome](https://fontawesome.com)
-* [React Icons](https://react-icons.github.io/react-icons/search)
-
+- [Choose an Open Source License](https://choosealicense.com)
+- [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
+- [Malven's Flexbox Cheatsheet](https://flexbox.malven.co/)
+- [Malven's Grid Cheatsheet](https://grid.malven.co/)
+- [Img Shields](https://shields.io)
+- [GitHub Pages](https://pages.github.com)
+- [Font Awesome](https://fontawesome.com)
+- [React Icons](https://react-icons.github.io/react-icons/search)
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+
 [contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
 [contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge

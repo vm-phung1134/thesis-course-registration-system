@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 
 export interface RoomDefState {
   rooms: IRoomDefObject[];
-  room: IRoomDefObject;
+  room: Omit<IRoomDefObject, "id">;
   isLoading: boolean;
   error: string | null;
 }
