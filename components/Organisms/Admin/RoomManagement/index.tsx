@@ -50,7 +50,8 @@ export const CreateRoomTab: FC<ICreateRoomTab> = ({}) => {
     checkedItems: checkedRooms,
     handleCheckAll: handleCheckAllRoom,
     handleCheckItem: handleCheckRoom,
-  } = useCheckedBox<IRoomDefObject>(rooms);
+  } = useCheckedBox<any>(rooms);
+
   const { filteredData: room_filteredData, handleSearch: room_handleSearch } =
     useTableSearch(rooms);
   const { room } = useAppSelector((state) => state.roomDefReducer);

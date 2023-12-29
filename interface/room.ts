@@ -1,5 +1,5 @@
 export interface IRoomDefObject {
-  id: string;
+  id?: string;
   name: string;
   type: string;
   school: string;
