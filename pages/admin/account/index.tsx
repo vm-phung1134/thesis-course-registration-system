@@ -152,7 +152,7 @@ function AccountAdminPage() {
               <h4 className="font-medium text-green-700 mb-5">
                 Change password
               </h4>
-              <ChangePassForm />
+              <ChangePassForm currentUser={currentUser} />
             </div>
             <dialog id="modal_update_infor_instructor" className={modalClass}>
               <div className="w-5/12 bg-white p-5 h-fit shadow-2xl rounded-xl">
