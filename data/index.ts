@@ -101,9 +101,9 @@ export const INITIATE_PRIVATE_COMMENT_ITEM: IPrivateCommentItem = {
 };
 
 export const INITIATE_PRIVATE_COMMENT: IPrivateComment = {
-  userId: "",
+  user: INITIATE_AUTH,
   comments: [],
-  lecturerId: "",
+  lecturer: INITIATE_AUTH,
 };
 
 export const INITIATE_SUBMIT: ISubmitObject = {
@@ -187,4 +187,5 @@ export enum TYPE_ACTION_NOTIFICATION {
 }
 export const roleInCouncil = ["Chairman", "secretary", "Commissioner"];
 
-export const apiURL = "http://localhost:5000/api";
+export const apiURL =
+  "https://thesis-course-registration-system-backend.vercel.app/api";
