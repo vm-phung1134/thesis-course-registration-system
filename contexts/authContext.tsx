@@ -111,7 +111,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         setIsAuthenticated(true);
         email === "tcrsystem911@gmail.com"
           ? router.push("/admin/dashboard")
-          : "/manage-classroom";
+          : router.push("/manage-classroom");
       })
       .catch((error) => {
         setMessage(() => "Account or password incorrect !!!");
