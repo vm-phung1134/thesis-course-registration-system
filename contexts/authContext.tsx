@@ -109,7 +109,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         };
         setUserCookies(authObject);
         setIsAuthenticated(true);
-        router.push("/manage-classroom");
+        email === "tcrsystem911@gmail.com"
+          ? router.push("/admin/dashboard")
+          : "/manage-classroom";
       })
       .catch((error) => {
         setMessage(() => "Account or password incorrect !!!");
@@ -157,7 +159,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const changePassword = (account: IAuthObject, newAccountPassword: string) => {
     const user = auth.currentUser;
-    console.log(newAccountPassword)
+    console.log(newAccountPassword);
     if (user) {
       updatePassword(user, newAccountPassword)
         .then(() => {
