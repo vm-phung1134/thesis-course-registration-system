@@ -16,9 +16,11 @@
     </p>
     <p>
       The link document: 
-      <a href="https://docs.google.com/document/d/19_0Xj4ZXEhy3Xw30gXQCkZEd3ncX-g4PcpIWGXqV8jA/edit?usp=sharing">https://docs.google.com/document/d/19_0Xj4ZXEhy3Xw30gXQCkZEd3ncX-g4PcpIWGXqV8jA/edit?usp=sharing</a>
+      <a href="https://docs.google.com/document/d/19_0Xj4ZXEhy3Xw30gXQCkZEd3ncX-g4PcpIWGXqV8jA/edit?usp=sharing">Documents about project</a>
     </p>
-    <p>Account use to test right bellow! let's take a look</p>
+    <strong>*** Noticed ***</strong>
+    <p>This is re-up version therefore if you're dealing with some problems please reaload website again!</p>
+    <p>Accounts used to test right bellow! let's take a look</p>
   </p>
 </div>
 
@@ -129,6 +131,11 @@ Role Lecturer: You have to login with Email and password via email form
 
   Email: testcase1134@cit.ctu.edu.vn
   Password: 123123
+
+Role Admin: Same role lecturer
+
+  Email: tcrsystem911@gmail.com
+  Password: nopassword
 
 ```
 
