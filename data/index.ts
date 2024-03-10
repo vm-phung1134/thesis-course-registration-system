@@ -225,5 +225,6 @@ export enum TYPE_ACTION_NOTIFICATION {
 }
 export const roleInCouncil = ["Chairman", "secretary", "Commissioner"];
 
-export const apiURL =
-  "https://thesis-course-registration-system-backend.vercel.app/api";
+export const apiURL = "https://thesis-course-registration-system-backend.vercel.app/api";
+// http://localhost:5000/api
+// https://thesis-course-registration-system-backend.vercel.app/api

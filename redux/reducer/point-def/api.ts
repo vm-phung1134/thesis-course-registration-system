@@ -63,7 +63,7 @@ const getAllPointDefs = createAsyncThunk(
 const createPointDef = createAsyncThunk(
   "point/createPointDef",
   async (point: IPointDefObject) => {
-    const response = await axios.post("${apiURL}/point-def", point, {
+    const response = await axios.post(`${apiURL}/point-def`, point, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
