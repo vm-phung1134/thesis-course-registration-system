@@ -11,10 +11,6 @@
     Building a management system for the graduation thesis registration process <br /> for information technology students at Can Tho University
     <br />
     <p>
-      The link website: 
-      <a href="https://tcr-system-other-version.vercel.app">https://tcr-system-other-version.vercel.app</a>
-    </p>
-    <p>
       The link document: 
       <a href="https://docs.google.com/document/d/19_0Xj4ZXEhy3Xw30gXQCkZEd3ncX-g4PcpIWGXqV8jA/edit?usp=sharing">Documents about project</a>
     </p>
